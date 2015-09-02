@@ -140,9 +140,14 @@ public class Cargo implements Serializable {
         return true;
     }
 
+    /*  @Override
+    public String toString() {
+    return "bean.Cargo[ codigoCargo=" + codigoCargo + " ]";
+    }*/
     @Override
     public String toString() {
-        return "bean.Cargo[ codigoCargo=" + codigoCargo + " ]";
+        return "codigoCargo=" + codigoCargo + ", nombre=" + nombre + ", fechaCreacion=" + fechaCreacion + ", sueldo=" + sueldo + ", actividades=" + actividades;
     }
+    
     
 }

@@ -47,6 +47,8 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Empleado.findByFechaNacimiento", query = "SELECT e FROM Empleado e WHERE e.fechaNacimiento = :fechaNacimiento")})
 public class Empleado implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEmpleado")
+    private Collection<Actividades> actividadesCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEmpleado")
     private Collection<Asistencia> asistenciaCollection;
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
@@ -267,6 +269,14 @@ public class Empleado implements Serializable {
 
     public void setAsistenciaCollection(Collection<Asistencia> asistenciaCollection) {
         this.asistenciaCollection = asistenciaCollection;
+    }
+
+    public Collection<Actividades> getActividadesCollection() {
+        return actividadesCollection;
+    }
+
+    public void setActividadesCollection(Collection<Actividades> actividadesCollection) {
+        this.actividadesCollection = actividadesCollection;
     }
     
 }

@@ -65,6 +65,10 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         mItem_editarEmpleado = new javax.swing.JMenuItem();
         mItem_eliminarEmpleado = new javax.swing.JMenuItem();
         mItem_buscarEmpleado = new javax.swing.JMenuItem();
+        menu_actividades = new javax.swing.JMenu();
+        mItem_registrarAct = new javax.swing.JMenuItem();
+        mItem_modificarAct = new javax.swing.JMenuItem();
+        mItem_eliminarAct = new javax.swing.JMenuItem();
         menu_salir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -272,6 +276,34 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
         jMenuBar1.add(menu_empleado);
 
+        menu_actividades.setText("Actividades");
+
+        mItem_registrarAct.setText("Registrar Actividad");
+        mItem_registrarAct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_registrarActActionPerformed(evt);
+            }
+        });
+        menu_actividades.add(mItem_registrarAct);
+
+        mItem_modificarAct.setText("Modificar Actividad");
+        mItem_modificarAct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_modificarActActionPerformed(evt);
+            }
+        });
+        menu_actividades.add(mItem_modificarAct);
+
+        mItem_eliminarAct.setText("Eliminar Actividad");
+        mItem_eliminarAct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_eliminarActActionPerformed(evt);
+            }
+        });
+        menu_actividades.add(mItem_eliminarAct);
+
+        jMenuBar1.add(menu_actividades);
+
         menu_salir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_salir.setText("Cerrar Sesión");
         menu_salir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -287,7 +319,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 698, Short.MAX_VALUE)
+            .addGap(0, 778, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -495,6 +527,21 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         EmpleadoBuscar.main(args);
     }//GEN-LAST:event_mItem_buscarEmpleadoActionPerformed
 
+    private void mItem_registrarActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_registrarActActionPerformed
+        // TODO add your handling code here:
+         String args[]=new String[1];
+        args[0]="Registrar Actividad de Empleado";
+        RegistrarActividad.main(args);
+    }//GEN-LAST:event_mItem_registrarActActionPerformed
+
+    private void mItem_modificarActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_modificarActActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mItem_modificarActActionPerformed
+
+    private void mItem_eliminarActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarActActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mItem_eliminarActActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -551,15 +598,19 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_editarEmpleado;
     private javax.swing.JMenuItem mItem_editarHabit;
     private javax.swing.JMenuItem mItem_editarPS;
+    private javax.swing.JMenuItem mItem_eliminarAct;
     private javax.swing.JMenuItem mItem_eliminarCH;
     private javax.swing.JMenuItem mItem_eliminarCategPS;
     private javax.swing.JMenuItem mItem_eliminarEmpleado;
     private javax.swing.JMenuItem mItem_eliminarHabit;
     private javax.swing.JMenuItem mItem_eliminarPS;
+    private javax.swing.JMenuItem mItem_modificarAct;
+    private javax.swing.JMenuItem mItem_registrarAct;
     private javax.swing.JMenu menu_CategHabitacion;
     private javax.swing.JMenu menu_CategPS;
     private javax.swing.JMenu menu_Habitacion;
     private javax.swing.JMenu menu_PS;
+    private javax.swing.JMenu menu_actividades;
     private javax.swing.JMenu menu_empleado;
     private javax.swing.JMenu menu_informePO;
     private javax.swing.JMenu menu_salir;

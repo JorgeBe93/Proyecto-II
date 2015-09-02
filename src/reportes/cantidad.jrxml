@@ -34,7 +34,7 @@ group by codigoReserva]]>
 		<variableExpression><![CDATA[$F{dif}]]></variableExpression>
 		<initialValueExpression><![CDATA[new Double(0.0)]]></initialValueExpression>
 	</variable>
-	<variable name="desocupacion" class="java.lang.Integer" calculation="System">
+	<variable name="desocupacion" class="java.lang.Integer">
 		<variableExpression><![CDATA[$P{CantDias}-$V{dif_1}.intValue()]]></variableExpression>
 		<initialValueExpression><![CDATA[$P{CantDias}]]></initialValueExpression>
 	</variable>

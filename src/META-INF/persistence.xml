@@ -21,6 +21,7 @@
     <class>bean.Presupuesto</class>
     <class>bean.Cliente_1</class>
     <class>bean.CategHabitacion_1</class>
+    <class>bean.Actividades</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hotel db?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value="user"/>
