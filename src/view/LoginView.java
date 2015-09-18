@@ -11,6 +11,7 @@
 
 package view;
 
+import ViewAdmHotel.MenuAdminHotel;
 import bean.AuditoriaSistema;
 import bean.Empleado;
 import bean.Usuario;

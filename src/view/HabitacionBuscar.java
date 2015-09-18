@@ -6,6 +6,7 @@
 
 package view;
 
+import ViewAdmHotel.MenuAdminHotel;
 import bean.CategHabitacion;
 import bean.Habitacion;
 import java.util.List;

@@ -6,6 +6,7 @@
 
 package view;
 
+import ViewAdmHotel.MenuAdminHotel;
 import bean.CategoriaProdSer;
 import java.util.List;
 import javax.swing.JFrame;

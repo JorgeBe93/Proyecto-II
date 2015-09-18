@@ -6,6 +6,7 @@
 
 package view;
 
+import ViewAdmHotel.MenuAdminHotel;
 import bean.Empleado;
 import java.util.List;
 import javax.persistence.EntityManager;
