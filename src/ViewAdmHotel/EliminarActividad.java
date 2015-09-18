@@ -8,17 +8,17 @@ package ViewAdmHotel;
 
 import bean.Actividad;
 import bean.AuditoriaSistema;
-import bean.Rol;
+import bean.SeguimientoActividad;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import view.LoginView;
-import static view.RolEliminar.tf_identi;
 
 /**
  *
@@ -235,12 +235,28 @@ public class EliminarActividad extends javax.swing.JFrame {
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
+        Query q;
+        int i;
         String valor;
+         JOptionPane.showMessageDialog(null, "Existen registros de seguimiento de actividad para esta actividad,"
+                    + "si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
         resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
         if(resp==JOptionPane.YES_OPTION){
             EntityManagerFactory fact=Persistence.createEntityManagerFactory("proyectoPU");
             EntityManager ema= fact.createEntityManager();
             ema.getTransaction().begin();
+             //eliminamos los lugares que tienen registros de seguimiento de actividad
+                q=ema.createNativeQuery("SELECT * FROM seguimiento_actividad WHERE "
+                        + "actividad= "
+                        + "'"+tf_codigo.getText()+"'",SeguimientoActividad.class);
+                List<SeguimientoActividad> s=q.getResultList();
+                if(s.size()>=1){
+                    for(i=0;i<s.size();i++){
+                        ema.remove(s.get(i));
+                    }
+                    ema.flush();
+                }
+                //
             Actividad a=ema.find(Actividad.class,Integer.parseInt(tf_codigo.getText()) );
             valor=a.toString();//guardamos el objeto antes de eliminar
             ema.remove(a);

@@ -31,6 +31,8 @@ import javax.swing.JOptionPane;
  */
 public class RegistrarSeguimiento extends javax.swing.JFrame {
     private int resp;
+    private char ch;
+    private int limite=11;
     private final  TextAutoCompleter textAutoCompleter;
     Date fecha=new Date();
     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -277,6 +279,16 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
 
     private void tf_codEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_codEmpleadoKeyTyped
         // TODO add your handling code here:
+         if(tf_codEmpleado.getText().length()==limite){
+            getToolkit().beep();
+            evt.consume(); //se le ignora
+
+        }
+         ch=evt.getKeyChar();
+        if(!Character.isDigit(ch)){
+            getToolkit().beep();
+            evt.consume();
+        }
        
     }//GEN-LAST:event_tf_codEmpleadoKeyTyped
 

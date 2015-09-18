@@ -6,12 +6,13 @@
 
 package ViewAdmHotel;
 
-import bean.Actividad;
 import bean.AuditoriaSistema;
 import bean.Lugar;
+import bean.SeguimientoActividad;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -235,12 +236,27 @@ private int resp;
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
         Query q;
+        int i;
         String valor;
+            JOptionPane.showMessageDialog(null, "Existen registros de seguimiento de actividad para este lugar,"
+                    + "si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
             resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
             if (resp==JOptionPane.YES_OPTION){
                 EntityManagerFactory fact=Persistence.createEntityManagerFactory("proyectoPU");
                 EntityManager ema= fact.createEntityManager();
                 ema.getTransaction().begin();
+                //eliminamos los lugares que tienen registros de seguimiento de actividad
+                q=ema.createNativeQuery("SELECT * FROM seguimiento_actividad WHERE "
+                        + "lugar= "
+                        + "'"+tf_codigo.getText()+"'",SeguimientoActividad.class);
+                List<SeguimientoActividad> s=q.getResultList();
+                if(s.size()>=1){
+                    for(i=0;i<s.size();i++){
+                        ema.remove(s.get(i));
+                    }
+                    ema.flush();
+                }
+                //
                 Lugar l=ema.find(Lugar.class,Integer.parseInt(tf_codigo.getText()) );
                 valor=l.toString();//guardamos el objeto antes de eliminar
                 ema.remove(l);

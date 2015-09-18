@@ -6,9 +6,16 @@
 
 package ViewAdmHotel;
 
+import bean.Actividad;
+import bean.AuditoriaSistema;
 import bean.Empleado;
+import bean.Lugar;
+import bean.SeguimientoActividad;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -23,7 +30,10 @@ import javax.swing.JOptionPane;
  * @author Jorge
  */
 public class EditarSeguimiento extends javax.swing.JFrame {
-     private final  TextAutoCompleter textAutoCompleter;
+    private int resp;
+    private char ch;
+    private int limite=11;
+    private final  TextAutoCompleter textAutoCompleter;
 
     /**
      * Creates new form EditarSeguimiento
@@ -209,6 +219,11 @@ public class EditarSeguimiento extends javax.swing.JFrame {
 
         btn_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
         btn_guardar.setText("Guardar");
+        btn_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_guardarActionPerformed(evt);
+            }
+        });
 
         btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete.png"))); // NOI18N
         btn_cancelar.setText("Cancelar");
@@ -253,7 +268,7 @@ public class EditarSeguimiento extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(panel_EditarLugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,13 +306,66 @@ public class EditarSeguimiento extends javax.swing.JFrame {
 
     private void tf_codEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_codEmpleadoKeyTyped
         // TODO add your handling code here:
-
+         if(tf_codEmpleado.getText().length()==limite){
+            getToolkit().beep();
+            evt.consume(); //se le ignora
+        }
+         ch=evt.getKeyChar();
+        if(!Character.isDigit(ch)){
+            getToolkit().beep();
+            evt.consume();
+        }
     }//GEN-LAST:event_tf_codEmpleadoKeyTyped
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
+        // TODO add your handling code here:
+        String antes;
+        String despues;
+         if (tf_codEmpleado.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Ingrese algún código de empleado", "Advertencia",JOptionPane.ERROR_MESSAGE);
+            return;
+        }else{
+              resp=  JOptionPane.showConfirmDialog(null,"Desea guardar los cambios?", "Confirmar Modificación",JOptionPane.YES_NO_OPTION );
+             if (resp==JOptionPane.YES_OPTION){
+                 EntityManager.getTransaction().begin();
+                 Query=EntityManager.createNamedQuery("SeguimientoActividad.findByCodigoSeguimiento");
+                 Query.setParameter("codigoSeguimiento", Integer.parseInt(tf_codigo.getText()));
+                 List<SeguimientoActividad> seg=Query.getResultList();
+                 antes=seg.get(0).toString();
+                 SeguimientoActividad se=new SeguimientoActividad();
+                 se.setCodigoSeguimiento(Integer.parseInt(tf_codigo.getText()));
+                 se.setFechaHora(tf_fechaHora.getText());
+                 Empleado e=obtenerEmpleado();
+                 se.setCodigoEmpleado(e);
+                 se.setLugar((Lugar) list_lugar.getSelectedItem());
+                 se.setActividad((Actividad) list_descripcion.getSelectedItem());
+                 EntityManager.merge(se);
+                 EntityManager.flush();
+                 despues=se.toString();
+                 //registramos los datos necesarios para la auditoria
+                 AuditoriaSistema as=new AuditoriaSistema();
+                 as.setAccion("Modificación");
+                 as.setTabla("Seguimiento de Actividad");
+                 as.setAntes(antes);
+                 as.setDespues(despues);
+                 //trabajamos con la fecha
+                 Date fecha=new Date();
+                 DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                 as.setFechaHora(formato.format(fecha));
+                 as.setUsuario("nadie");
+                 EntityManager.persist(as);
+                 EntityManager.getTransaction().commit();
+                 EntityManager.close();
+                 JOptionPane.showMessageDialog(null, "Modificación Exitosa");
+             }
+         }
+         this.dispose();
+    }//GEN-LAST:event_btn_guardarActionPerformed
 
     /**
      * @param args the command line arguments

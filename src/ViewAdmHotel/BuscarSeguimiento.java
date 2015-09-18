@@ -71,16 +71,16 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
         panel_BuscarActLayout.setHorizontalGroup(
             panel_BuscarActLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_BuscarActLayout.createSequentialGroup()
-                .addGap(93, 93, 93)
+                .addGap(88, 88, 88)
                 .addComponent(lbl_BuscarAct)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
         panel_BuscarActLayout.setVerticalGroup(
             panel_BuscarActLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_BuscarActLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_BuscarActLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_BuscarAct)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete.png"))); // NOI18N
@@ -190,7 +190,7 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
-            masterTable.getColumnModel().getColumn(2).setPreferredWidth(90);
+            masterTable.getColumnModel().getColumn(2).setPreferredWidth(120);
             masterTable.getColumnModel().getColumn(4).setPreferredWidth(60);
             masterTable.getColumnModel().getColumn(5).setPreferredWidth(60);
         }
@@ -200,19 +200,21 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(365, 365, 365)
+                        .addComponent(btn_cancelar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(72, 72, 72)
+                .addContainerGap(123, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panel_BuscarAct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_BuscarAct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(61, 61, 61))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_cancelar)
-                .addGap(327, 327, 327))
+                .addGap(117, 117, 117))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -397,6 +399,24 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
                  this.dispose();
                  break;
              case 2:
+                 fila=masterTable.getSelectedRow();
+                 codSeg=(Integer) masterTable.getValueAt(fila, 0);
+                 Query= EntityManager.createNamedQuery("SeguimientoActividad.findByCodigoSeguimiento");
+                 Query.setParameter("codigoSeguimiento", codSeg);
+                 List<SeguimientoActividad> se=Query.getResultList();
+                 JFrame f= new EliminarSeguimiento();
+                 EliminarSeguimiento.tf_codigo.setText(Integer.toString(codSeg));
+                 EliminarSeguimiento.tf_fechaHora.setText((String) masterTable.getValueAt(fila, 3));
+                 EliminarSeguimiento.tf_codEmpleado.setText(Integer.toString(se.get(0).getCodigoEmpleado().getCodigoEmpleado()));
+                 EliminarSeguimiento.tf_empleado.setText(se.get(0).getCodigoEmpleado().getNombre()+" "
+                 + se.get(0).getCodigoEmpleado().getApellido());
+                 EliminarSeguimiento.tf_lugar.setText(se.get(0).getLugar().getNombre());
+                 EliminarSeguimiento.tf_descripcion.setText(se.get(0).getActividad().getNombre());
+                 f.setVisible(true);
+                 f.setTitle("Eliminar Seguimiento de Actividad");
+                 f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                 f.setLocationRelativeTo(null);
+                 this.dispose();
                  break;
              case 3:
                  break;
