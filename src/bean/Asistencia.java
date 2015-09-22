@@ -34,9 +34,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Asistencia.findByHoraEntrada", query = "SELECT a FROM Asistencia a WHERE a.horaEntrada = :horaEntrada"),
     @NamedQuery(name = "Asistencia.findByHoraSalida", query = "SELECT a FROM Asistencia a WHERE a.horaSalida = :horaSalida"),
     @NamedQuery(name = "Asistencia.findByFechaAsistencia", query = "SELECT a FROM Asistencia a WHERE a.fechaAsistencia = :fechaAsistencia"),
-    @NamedQuery(name = "Asistencia.findByEsDiaHabil", query = "SELECT a FROM Asistencia a WHERE a.esDiaHabil = :esDiaHabil"),
-    @NamedQuery(name = "Asistencia.findByExtra", query = "SELECT a FROM Asistencia a WHERE a.extra = :extra"),
-    @NamedQuery(name = "Asistencia.findByHorasInconclusas", query = "SELECT a FROM Asistencia a WHERE a.horasInconclusas = :horasInconclusas")})
+    @NamedQuery(name = "Asistencia.findByHorasTrabajadas", query = "SELECT a FROM Asistencia a WHERE a.horasTrabajadas = :horasTrabajadas")})
 public class Asistencia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,13 +52,9 @@ public class Asistencia implements Serializable {
     @Column(name = "fechaAsistencia")
     @Temporal(TemporalType.DATE)
     private Date fechaAsistencia;
-    @Column(name = "es_dia_habil")
-    private String esDiaHabil;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "extra")
-    private Float extra;
-    @Column(name = "horas_inconclusas")
-    private Float horasInconclusas;
+    @Column(name = "horasTrabajadas")
+    private Float horasTrabajadas;
     @JoinColumn(name = "codigoEmpleado", referencedColumnName = "codigoEmpleado")
     @ManyToOne(optional = false)
     private Empleado codigoEmpleado;
@@ -109,28 +103,12 @@ public class Asistencia implements Serializable {
         this.fechaAsistencia = fechaAsistencia;
     }
 
-    public String getEsDiaHabil() {
-        return esDiaHabil;
+    public Float getHorasTrabajadas() {
+        return horasTrabajadas;
     }
 
-    public void setEsDiaHabil(String esDiaHabil) {
-        this.esDiaHabil = esDiaHabil;
-    }
-
-    public Float getExtra() {
-        return extra;
-    }
-
-    public void setExtra(Float extra) {
-        this.extra = extra;
-    }
-
-    public Float getHorasInconclusas() {
-        return horasInconclusas;
-    }
-
-    public void setHorasInconclusas(Float horasInconclusas) {
-        this.horasInconclusas = horasInconclusas;
+    public void setHorasTrabajadas(Float horasTrabajadas) {
+        this.horasTrabajadas = horasTrabajadas;
     }
 
     public Empleado getCodigoEmpleado() {

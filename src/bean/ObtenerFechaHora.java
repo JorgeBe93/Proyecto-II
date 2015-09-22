@@ -6,9 +6,14 @@
 package bean;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,17 +23,43 @@ public class ObtenerFechaHora {
     public static void main ( String args[] ) {
        String valor="Hola";
        String valor2="Chau";
+       float difH;
+       float difM;
+       float horasT;
+       float div;
+       String x;
        System.out.println(valor+"\n"+valor2);
-
+       DecimalFormat decimal= new DecimalFormat("0.0");
+//NumberFormat nf = NumberFormat.getInstance();		
+ // nf.setMaximumFractionDigits(1);
   Date fecha1 = new Date ();
   DateFormat formato=new SimpleDateFormat("dd-MM-yyyyy" );
-  DateFormat formato1=new SimpleDateFormat("HH:mm:ss ");
+  DateFormat formato1=new SimpleDateFormat("HH:mm");
+  // dif=as.get(0).getHoraSalida().getHours()-as.get(0).getHoraEntrada().getHours();
 
   System.out.println(fecha1.toString());
-
-  // Segun la versión utilizada de Java, los dos siguientes
-  // metodos pueden estar deprecated
-   System.out.println(formato1.format(fecha1));
+        try {
+            // Segun la versión utilizada de Java, los dos siguientes
+            // metodos pueden estar deprecated
+            difH=formato1.parse(formato1.format(fecha1)).getHours()-8;
+            System.out.println("Hora 1:"+" "+formato1.parse(formato1.format(fecha1)).getHours());
+            System.out.println("Hora 2: 8");
+            System.out.println("Diferencia hora:"+" "+difH);
+            difM=formato1.parse(formato1.format(fecha1)).getMinutes()-33;
+            System.out.println("Minuto 1:"+" "+formato1.parse(formato1.format(fecha1)).getMinutes());
+            System.out.println("Minuto 2: 00");
+            System.out.println("Diferencia Minutos:"+" "+difM);
+            
+            div=(float) (difM/60.0);
+            System.out.println(div);
+           horasT=horasT=difH+div;
+           x=decimal.format(horasT);
+           x=x.replaceAll(",",".");
+          float horasTT=Float.parseFloat(x);
+            System.out.println("Horas trabajadas:"+" "+horasTT);
+        } catch (ParseException ex) {
+            Logger.getLogger(ObtenerFechaHora.class.getName()).log(Level.SEVERE, null, ex);
+        }
   System.out.println(formato.format(fecha1));
   System.out.println(fecha1.toLocaleString());
   System.out.println(fecha1.toGMTString());

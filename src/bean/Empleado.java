@@ -43,6 +43,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Empleado.findByFechaNacimiento", query = "SELECT e FROM Empleado e WHERE e.fechaNacimiento = :fechaNacimiento")})
 public class Empleado implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEmpleado")
+    private Collection<Asistencia> asistenciaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEmpleado")
     private Collection<SeguimientoActividad> seguimientoActividadCollection;
     private static final long serialVersionUID = 1L;
     @Id
@@ -223,6 +225,14 @@ public class Empleado implements Serializable {
 
     public void setSeguimientoActividadCollection(Collection<SeguimientoActividad> seguimientoActividadCollection) {
         this.seguimientoActividadCollection = seguimientoActividadCollection;
+    }
+
+    public Collection<Asistencia> getAsistenciaCollection() {
+        return asistenciaCollection;
+    }
+
+    public void setAsistenciaCollection(Collection<Asistencia> asistenciaCollection) {
+        this.asistenciaCollection = asistenciaCollection;
     }
     
 }
