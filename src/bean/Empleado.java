@@ -43,6 +43,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Empleado.findByFechaNacimiento", query = "SELECT e FROM Empleado e WHERE e.fechaNacimiento = :fechaNacimiento")})
 public class Empleado implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEmpleado")
+    private Collection<Eventos> eventosCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEmpleado")
     private Collection<Asistencia> asistenciaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEmpleado")
     private Collection<SeguimientoActividad> seguimientoActividadCollection;
@@ -233,6 +235,14 @@ public class Empleado implements Serializable {
 
     public void setAsistenciaCollection(Collection<Asistencia> asistenciaCollection) {
         this.asistenciaCollection = asistenciaCollection;
+    }
+
+    public Collection<Eventos> getEventosCollection() {
+        return eventosCollection;
+    }
+
+    public void setEventosCollection(Collection<Eventos> eventosCollection) {
+        this.eventosCollection = eventosCollection;
     }
     
 }

@@ -430,7 +430,7 @@ public class AsistenciasRegistrar extends javax.swing.JFrame {
 
     private void btn_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmarActionPerformed
         // TODO add your handling code here:
-        if(!tf_identificacion.getText().equals("")){
+   /*     if(!tf_identificacion.getText().equals("")){
             if(!lbl_horaEntrada.getText().equals("")){
                 if(!tf_nombre.getText().equals("")){
                     int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea confirmar la operación?");

@@ -3,8 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Proyecto-II/src/ViewAdmHotel/RAsistencia.java</file>
-            <file>file:/C:/Proyecto-II/src/bean/ObtenerFechaHora.java</file>
+            <file>file:/C:/Proyecto-II/src/ViewAdmHotel/BuscarAsistencia.java</file>
+            <file>file:/C:/Proyecto-II/src/ViewAdmHotel/RegistrarAsistencia.java</file>
+            <file>file:/C:/Proyecto-II/src/view/VerAuditoriaSistema.java</file>
         </group>
     </open-files>
 </project-private>

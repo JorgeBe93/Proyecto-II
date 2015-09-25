@@ -25,6 +25,7 @@
     <class>bean.Lugar</class>
     <class>bean.SeguimientoActividad</class>
     <class>bean.Actividad</class>
+    <class>bean.Eventos</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hotel db?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value="user"/>

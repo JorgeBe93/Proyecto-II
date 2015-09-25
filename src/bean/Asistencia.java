@@ -43,11 +43,9 @@ public class Asistencia implements Serializable {
     @Column(name = "codigoAsistencia")
     private Integer codigoAsistencia;
     @Column(name = "horaEntrada")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date horaEntrada;
+    private String horaEntrada;
     @Column(name = "horaSalida")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date horaSalida;
+    private String horaSalida;
     @Basic(optional = false)
     @Column(name = "fechaAsistencia")
     @Temporal(TemporalType.DATE)
@@ -79,19 +77,19 @@ public class Asistencia implements Serializable {
         this.codigoAsistencia = codigoAsistencia;
     }
 
-    public Date getHoraEntrada() {
+    public String getHoraEntrada() {
         return horaEntrada;
     }
 
-    public void setHoraEntrada(Date horaEntrada) {
+    public void setHoraEntrada(String horaEntrada) {
         this.horaEntrada = horaEntrada;
     }
 
-    public Date getHoraSalida() {
+    public String getHoraSalida() {
         return horaSalida;
     }
 
-    public void setHoraSalida(Date horaSalida) {
+    public void setHoraSalida(String horaSalida) {
         this.horaSalida = horaSalida;
     }
 

@@ -316,7 +316,7 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         // TODO add your handling code here:
-        if(tf_codEmpleado.getText().length()==0){
+        if(tf_codEmpleado.getText().length()==0 ){
              JOptionPane.showMessageDialog(null,"Ingrese valor para codigo de empleado", "Advertencia",JOptionPane.ERROR_MESSAGE);
                 return;
         }
