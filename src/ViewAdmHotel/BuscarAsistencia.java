@@ -15,12 +15,13 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import view.ProdSerBuscar;
 
+
 /**
  *
  * @author Vladimir
  */
 public class BuscarAsistencia extends javax.swing.JFrame {
-
+private int fila;
     /**
      * Creates new form AsistenciaBuscar
      */
@@ -67,16 +68,16 @@ public class BuscarAsistencia extends javax.swing.JFrame {
         panel_BuscarRolLayout.setHorizontalGroup(
             panel_BuscarRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_BuscarRolLayout.createSequentialGroup()
-                .addContainerGap(205, Short.MAX_VALUE)
+                .addContainerGap(197, Short.MAX_VALUE)
                 .addComponent(lbl_BuscarRol)
-                .addGap(184, 184, 184))
+                .addGap(192, 192, 192))
         );
         panel_BuscarRolLayout.setVerticalGroup(
             panel_BuscarRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_BuscarRolLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panel_BuscarRolLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lbl_BuscarRol)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -172,6 +173,11 @@ public class BuscarAsistencia extends javax.swing.JFrame {
         columnBinding.setColumnClass(Float.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
+        masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                masterTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
             masterTable.getColumnModel().getColumn(2).setPreferredWidth(120);
@@ -197,14 +203,14 @@ public class BuscarAsistencia extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addComponent(jScrollPane2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(396, 396, 396)
-                                    .addComponent(btn_cancelar))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(134, 134, 134)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(396, 396, 396)
+                                .addComponent(btn_cancelar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(134, 134, 134)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 167, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -212,9 +218,9 @@ public class BuscarAsistencia extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(29, 29, 29)
                 .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -358,6 +364,31 @@ public class BuscarAsistencia extends javax.swing.JFrame {
          }
     }//GEN-LAST:event_list_filtrosFocusLost
 
+    private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
+        // TODO add your handling code here:
+         switch(MenuAdminHotel.opcion){
+            case 1:
+                fila=masterTable.getSelectedRow();
+                EliminarAsistencia.asistencia=obtenerAsistencia(fila);
+                JFrame frame=new EliminarAsistencia();
+                 frame.setVisible(true);
+                 frame.setTitle("Eliminar Asistencia");
+                 frame.setLocationRelativeTo(null);
+                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                 this.dispose();
+                break;
+            case 2:
+              
+                break;
+
+        }
+    }//GEN-LAST:event_masterTableMouseClicked
+    private Asistencia obtenerAsistencia(int fila){
+        query=entityManager.createNamedQuery("Asistencia.findByCodigoAsistencia");
+        query.setParameter("codigoAsistencia", masterTable.getValueAt(fila, 0));
+        Asistencia asis=(Asistencia) query.getSingleResult();
+        return asis;
+    }
     /**
      * @param args the command line arguments
      */

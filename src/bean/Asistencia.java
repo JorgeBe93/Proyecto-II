@@ -137,9 +137,14 @@ public class Asistencia implements Serializable {
         return true;
     }
 
+    /* @Override
+    public String toString() {
+    return "bean.Asistencia[ codigoAsistencia=" + codigoAsistencia + " ]";
+    }*/
     @Override
     public String toString() {
-        return "bean.Asistencia[ codigoAsistencia=" + codigoAsistencia + " ]";
+        return "codigoAsistencia=" + codigoAsistencia + ", horaEntrada=" + horaEntrada + ", horaSalida=" + horaSalida + ", fechaAsistencia=" + fechaAsistencia + ", horasTrabajadas=" + horasTrabajadas + ", codigoEmpleado=" + codigoEmpleado;
     }
+    
     
 }

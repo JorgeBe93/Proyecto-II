@@ -6,19 +6,27 @@
 
 package ViewAdmHotel;
 
-import ViewAdmHotel.RegistrarSeguimiento;
-import ViewAdmHotel.BuscarActividad;
-import ViewAdmHotel.BuscarLugar;
-import ViewAdmHotel.RegistrarActividad;
-import ViewAdmHotel.RegistrarLugar;
 import bean.AuditoriaSistema;
+import bean.PlanillaPagoSueldo;
+import java.awt.Image;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 import view.CategHabitBuscar;
 import view.CategHabitCreate;
 import view.CategPSBuscar;
@@ -38,6 +46,7 @@ import view.ProdSerCreate;
  */
 public class MenuAdminHotel extends javax.swing.JFrame {
     public static int opcion=0;
+    private Connection connection;
 
     /**
      * Creates new form MenuAdminHotel
@@ -84,13 +93,15 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         mItem_buscarEmpleado = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         menu_asistencia = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mItem_registrarAsist = new javax.swing.JMenuItem();
         mItem_eliminarAsist = new javax.swing.JMenuItem();
         mItem_buscarAsist = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        menu_eventos = new javax.swing.JMenu();
+        mItem_registrarEvento = new javax.swing.JMenuItem();
+        mItem_editarEvento = new javax.swing.JMenuItem();
+        mItem_eliminarEvento = new javax.swing.JMenuItem();
+        mItem_buscarEvento = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         mItem_planillaPagos = new javax.swing.JMenuItem();
         menu_actividad = new javax.swing.JMenu();
@@ -320,30 +331,76 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
         menu_asistencia.setText("Asistencia de Empleados");
 
-        jMenuItem1.setText("Registrar Asistencia");
-        menu_asistencia.add(jMenuItem1);
+        mItem_registrarAsist.setText("Registrar Asistencia");
+        mItem_registrarAsist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_registrarAsistActionPerformed(evt);
+            }
+        });
+        menu_asistencia.add(mItem_registrarAsist);
 
         mItem_eliminarAsist.setText("Eliminar Asistencia");
+        mItem_eliminarAsist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_eliminarAsistActionPerformed(evt);
+            }
+        });
         menu_asistencia.add(mItem_eliminarAsist);
 
         mItem_buscarAsist.setText("Buscar Asistencia");
+        mItem_buscarAsist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_buscarAsistActionPerformed(evt);
+            }
+        });
         menu_asistencia.add(mItem_buscarAsist);
 
         menu_RRHH.add(menu_asistencia);
         menu_RRHH.add(jSeparator3);
 
-        jMenu1.setText("Eventos");
+        menu_eventos.setText("Eventos");
 
-        jMenuItem2.setText("jMenuItem2");
-        jMenu1.add(jMenuItem2);
+        mItem_registrarEvento.setText("Registrar Evento");
+        mItem_registrarEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_registrarEventoActionPerformed(evt);
+            }
+        });
+        menu_eventos.add(mItem_registrarEvento);
 
-        jMenuItem3.setText("jMenuItem3");
-        jMenu1.add(jMenuItem3);
+        mItem_editarEvento.setText("Editar Evento");
+        mItem_editarEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_editarEventoActionPerformed(evt);
+            }
+        });
+        menu_eventos.add(mItem_editarEvento);
 
-        menu_RRHH.add(jMenu1);
+        mItem_eliminarEvento.setText("Eliminar  Evento");
+        mItem_eliminarEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_eliminarEventoActionPerformed(evt);
+            }
+        });
+        menu_eventos.add(mItem_eliminarEvento);
+
+        mItem_buscarEvento.setText("Buscar Evento");
+        mItem_buscarEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_buscarEventoActionPerformed(evt);
+            }
+        });
+        menu_eventos.add(mItem_buscarEvento);
+
+        menu_RRHH.add(menu_eventos);
         menu_RRHH.add(jSeparator2);
 
         mItem_planillaPagos.setText("Generar Planilla de Sueldos");
+        mItem_planillaPagos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_planillaPagosActionPerformed(evt);
+            }
+        });
         menu_RRHH.add(mItem_planillaPagos);
 
         jMenuBar1.add(menu_RRHH);
@@ -775,6 +832,135 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         BuscarSeguimiento.main(args);
     }//GEN-LAST:event_mIem_buscarSegActionPerformed
 
+    private void mItem_planillaPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_planillaPagosActionPerformed
+        // TODO add your handling code here:
+        int respuesta;
+        Query q;
+        respuesta = JOptionPane.showConfirmDialog(null, "¿Desea Generar la planilla de pagos de sueldos?","Confirmar Creación",JOptionPane.YES_NO_OPTION );
+        if (respuesta == JOptionPane.YES_OPTION){
+             EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
+             EntityManager ema = fact.createEntityManager();
+             q=ema.createNativeQuery("Select * from planilla_pago_sueldo where "
+                     + "month(fechaPago)=month(now()) and year(fechaPago)=year(now())");
+             List<PlanillaPagoSueldo>pps=q.getResultList();
+             if(pps.size()==0){
+                    Connection();//genero la planilla y despues consulto
+                     try
+                    {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
+                        HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
+                        JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/pagoSueldos.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
+                        JasperViewer jv = new JasperViewer(jp,false);
+                        jv.setVisible(true);
+                        jv.setTitle("Planilla de Pago de Sueldos");
+                        Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                        jv.setIconImage(icon);
+                        jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                   }
+                    catch(Exception e)
+                   {
+                        e.printStackTrace();
+                   }
+             }else{
+                      try
+                    {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
+                        HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
+                        JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/pagoSueldos.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
+                        JasperViewer jv = new JasperViewer(jp,false);
+                        jv.setVisible(true);
+                        jv.setTitle("Planilla de Pago de Sueldos");
+                        Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                        jv.setIconImage(icon);
+                        jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                   }
+                    catch(Exception e)
+                   {
+                        e.printStackTrace();
+                   }   
+             }
+            
+        }
+       
+        
+    }//GEN-LAST:event_mItem_planillaPagosActionPerformed
+
+    private void mItem_registrarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_registrarEventoActionPerformed
+        // TODO add your handling code here:
+   
+        String args[]=new String[1];
+        args[0]="Registrar Evento";
+        RegistrarEvento.main(args);                        
+    }//GEN-LAST:event_mItem_registrarEventoActionPerformed
+
+    private void mItem_registrarAsistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_registrarAsistActionPerformed
+        // TODO add your handling code here:
+        
+        String args[]=new String[1];
+        args[0]="Registrar Asistencia";
+        RegistrarAsistencia.main(args); 
+    }//GEN-LAST:event_mItem_registrarAsistActionPerformed
+
+    private void mItem_eliminarAsistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarAsistActionPerformed
+        // TODO add your handling code here:
+        opcion=1;
+        String args[]=new String[1];
+        args[0]="Buscar Asistencia";
+        BuscarAsistencia.main(args); 
+    }//GEN-LAST:event_mItem_eliminarAsistActionPerformed
+
+    private void mItem_buscarAsistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarAsistActionPerformed
+        // TODO add your handling code here:
+        opcion=2;
+        String args[]=new String[1];
+        args[0]="Buscar Asistencia";
+        BuscarAsistencia.main(args); 
+    }//GEN-LAST:event_mItem_buscarAsistActionPerformed
+
+    private void mItem_editarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_editarEventoActionPerformed
+        // TODO add your handling code here:
+         opcion=1;
+        String args[]=new String[1];
+        args[0]="Buscar Evento";
+        BuscarEvento.main(args);
+    }//GEN-LAST:event_mItem_editarEventoActionPerformed
+
+    private void mItem_eliminarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarEventoActionPerformed
+        // TODO add your handling code here:
+         opcion=2;
+        String args[]=new String[1];
+        args[0]="Buscar Evento";
+        BuscarEvento.main(args);
+    }//GEN-LAST:event_mItem_eliminarEventoActionPerformed
+
+    private void mItem_buscarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarEventoActionPerformed
+        // TODO add your handling code here:
+          opcion=3;
+        String args[]=new String[1];
+        args[0]="Buscar Evento";
+        BuscarEvento.main(args);
+    }//GEN-LAST:event_mItem_buscarEventoActionPerformed
+     private void Connection(){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String BaseDeDatos = "jdbc:mysql://localhost/hotel db?user=root&password=user";
+            connection = DriverManager.getConnection(BaseDeDatos);
+            if(connection != null){
+                System.out.println("Conexion Exitosa!");
+               // CallableStatement st=connection.prepareCall("{call planilla_pago (?,?,?,?)}");
+                 CallableStatement st=connection.prepareCall("{call planilla_pago }");
+                st.execute();
+                connection.close();
+            }else{
+                System.out.println("Conexion Fallida!");                
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -815,11 +1001,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
@@ -829,6 +1011,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_buscarAsist;
     private javax.swing.JMenuItem mItem_buscarCategPS;
     private javax.swing.JMenuItem mItem_buscarEmpleado;
+    private javax.swing.JMenuItem mItem_buscarEvento;
     private javax.swing.JMenuItem mItem_buscarHabit;
     private javax.swing.JMenuItem mItem_buscarLugar;
     private javax.swing.JMenuItem mItem_buscarPS;
@@ -841,6 +1024,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_editarCH;
     private javax.swing.JMenuItem mItem_editarCategPS;
     private javax.swing.JMenuItem mItem_editarEmpleado;
+    private javax.swing.JMenuItem mItem_editarEvento;
     private javax.swing.JMenuItem mItem_editarHabit;
     private javax.swing.JMenuItem mItem_editarLugar;
     private javax.swing.JMenuItem mItem_editarPS;
@@ -849,6 +1033,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_eliminarCH;
     private javax.swing.JMenuItem mItem_eliminarCategPS;
     private javax.swing.JMenuItem mItem_eliminarEmpleado;
+    private javax.swing.JMenuItem mItem_eliminarEvento;
     private javax.swing.JMenuItem mItem_eliminarHabit;
     private javax.swing.JMenuItem mItem_eliminarLugar;
     private javax.swing.JMenuItem mItem_eliminarPS;
@@ -856,6 +1041,8 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_modificarSeg;
     private javax.swing.JMenuItem mItem_planillaPagos;
     private javax.swing.JMenuItem mItem_registrarActividad;
+    private javax.swing.JMenuItem mItem_registrarAsist;
+    private javax.swing.JMenuItem mItem_registrarEvento;
     private javax.swing.JMenuItem mItem_registrarLugar;
     private javax.swing.JMenuItem mItem_registrarSeg;
     private javax.swing.JMenu menu_CategHabitacion;
@@ -865,6 +1052,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenu menu_RRHH;
     private javax.swing.JMenu menu_actividad;
     private javax.swing.JMenu menu_asistencia;
+    private javax.swing.JMenu menu_eventos;
     private javax.swing.JMenu menu_informePO;
     private javax.swing.JMenu menu_lugar;
     private javax.swing.JMenu menu_salir;

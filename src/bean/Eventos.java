@@ -6,6 +6,8 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -21,6 +23,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -37,6 +40,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Eventos.findByDuracion", query = "SELECT e FROM Eventos e WHERE e.duracion = :duracion"),
     @NamedQuery(name = "Eventos.findByDescripcion", query = "SELECT e FROM Eventos e WHERE e.descripcion = :descripcion")})
 public class Eventos implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,7 +84,9 @@ public class Eventos implements Serializable {
     }
 
     public void setIdEvento(Integer idEvento) {
+        Integer oldIdEvento = this.idEvento;
         this.idEvento = idEvento;
+        changeSupport.firePropertyChange("idEvento", oldIdEvento, idEvento);
     }
 
     public String getTipoEvento() {
@@ -87,7 +94,9 @@ public class Eventos implements Serializable {
     }
 
     public void setTipoEvento(String tipoEvento) {
+        String oldTipoEvento = this.tipoEvento;
         this.tipoEvento = tipoEvento;
+        changeSupport.firePropertyChange("tipoEvento", oldTipoEvento, tipoEvento);
     }
 
     public Date getFechaInicio() {
@@ -95,7 +104,9 @@ public class Eventos implements Serializable {
     }
 
     public void setFechaInicio(Date fechaInicio) {
+        Date oldFechaInicio = this.fechaInicio;
         this.fechaInicio = fechaInicio;
+        changeSupport.firePropertyChange("fechaInicio", oldFechaInicio, fechaInicio);
     }
 
     public Date getFechaFin() {
@@ -103,7 +114,9 @@ public class Eventos implements Serializable {
     }
 
     public void setFechaFin(Date fechaFin) {
+        Date oldFechaFin = this.fechaFin;
         this.fechaFin = fechaFin;
+        changeSupport.firePropertyChange("fechaFin", oldFechaFin, fechaFin);
     }
 
     public Integer getDuracion() {
@@ -111,7 +124,9 @@ public class Eventos implements Serializable {
     }
 
     public void setDuracion(Integer duracion) {
+        Integer oldDuracion = this.duracion;
         this.duracion = duracion;
+        changeSupport.firePropertyChange("duracion", oldDuracion, duracion);
     }
 
     public String getDescripcion() {
@@ -119,7 +134,9 @@ public class Eventos implements Serializable {
     }
 
     public void setDescripcion(String descripcion) {
+        String oldDescripcion = this.descripcion;
         this.descripcion = descripcion;
+        changeSupport.firePropertyChange("descripcion", oldDescripcion, descripcion);
     }
 
     public Empleado getCodigoEmpleado() {
@@ -127,7 +144,9 @@ public class Eventos implements Serializable {
     }
 
     public void setCodigoEmpleado(Empleado codigoEmpleado) {
+        Empleado oldCodigoEmpleado = this.codigoEmpleado;
         this.codigoEmpleado = codigoEmpleado;
+        changeSupport.firePropertyChange("codigoEmpleado", oldCodigoEmpleado, codigoEmpleado);
     }
 
     @Override
@@ -160,5 +179,13 @@ public class Eventos implements Serializable {
     @Override
     public String toString() {
         return "idEvento=" + idEvento + ", tipoEvento=" + tipoEvento + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", duracion=" + duracion + ", descripcion=" + descripcion + ", codigoEmpleado=" + codigoEmpleado;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
 }
