@@ -354,7 +354,7 @@ public class EliminarAsistencia extends javax.swing.JFrame {
        tf_fechaAsist.setText(format.format(asistencia.getFechaAsistencia()));
        tf_horaEntrada.setText(asistencia.getHoraEntrada());
        tf_horaSalida.setText(asistencia.getHoraSalida());
-       tf_horasT.setText(asistencia.getHorasTrabajadas().toString());
+       tf_horasT.setText(Float.toString(asistencia.getHorasTrabajadas()));
        tf_codAsistencia.setText(Integer.toString(asistencia.getCodigoAsistencia()));
     }
     /**

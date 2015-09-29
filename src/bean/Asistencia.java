@@ -50,9 +50,9 @@ public class Asistencia implements Serializable {
     @Column(name = "fechaAsistencia")
     @Temporal(TemporalType.DATE)
     private Date fechaAsistencia;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
     @Column(name = "horasTrabajadas")
-    private Float horasTrabajadas;
+    private float horasTrabajadas;
     @JoinColumn(name = "codigoEmpleado", referencedColumnName = "codigoEmpleado")
     @ManyToOne(optional = false)
     private Empleado codigoEmpleado;
@@ -64,9 +64,10 @@ public class Asistencia implements Serializable {
         this.codigoAsistencia = codigoAsistencia;
     }
 
-    public Asistencia(Integer codigoAsistencia, Date fechaAsistencia) {
+    public Asistencia(Integer codigoAsistencia, Date fechaAsistencia, float horasTrabajadas) {
         this.codigoAsistencia = codigoAsistencia;
         this.fechaAsistencia = fechaAsistencia;
+        this.horasTrabajadas = horasTrabajadas;
     }
 
     public Integer getCodigoAsistencia() {
@@ -101,11 +102,11 @@ public class Asistencia implements Serializable {
         this.fechaAsistencia = fechaAsistencia;
     }
 
-    public Float getHorasTrabajadas() {
+    public float getHorasTrabajadas() {
         return horasTrabajadas;
     }
 
-    public void setHorasTrabajadas(Float horasTrabajadas) {
+    public void setHorasTrabajadas(float horasTrabajadas) {
         this.horasTrabajadas = horasTrabajadas;
     }
 
@@ -137,14 +138,14 @@ public class Asistencia implements Serializable {
         return true;
     }
 
-    /* @Override
+   /* @Override
     public String toString() {
-    return "bean.Asistencia[ codigoAsistencia=" + codigoAsistencia + " ]";
-    }*/
+        return "bean.Asistencia[ codigoAsistencia=" + codigoAsistencia + " ]";
+    }
+    */
+
     @Override
     public String toString() {
         return "codigoAsistencia=" + codigoAsistencia + ", horaEntrada=" + horaEntrada + ", horaSalida=" + horaSalida + ", fechaAsistencia=" + fechaAsistencia + ", horasTrabajadas=" + horasTrabajadas + ", codigoEmpleado=" + codigoEmpleado;
     }
-    
-    
 }

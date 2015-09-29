@@ -549,7 +549,7 @@ public class RegistrarEvento extends javax.swing.JFrame {
                 }
                 tf_horaEntrada.setText(a.get(0).getHoraEntrada());
                 tf_horaSalida.setText(a.get(0).getHoraSalida());
-                tf_horasT.setText(a.get(0).getHorasTrabajadas().toString());
+                tf_horasT.setText(Float.toString(a.get(0).getHorasTrabajadas()));
                 //habiltar los demas labels
                 tf_descripcionE.setEnabled(true);
                 list_tipoEvento.setEnabled(true);

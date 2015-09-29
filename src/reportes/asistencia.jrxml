@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="14ecae6e-20a1-470f-8f15-97ca22e59608">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codigoEmpleado" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mes" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="año" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Proyecto-II\\src\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     asistencia.`codigoAsistencia` AS asistencia_codigoAsistencia,
+     asistencia.`codigoEmpleado` AS asistencia_codigoEmpleado,
+     asistencia.`horaEntrada` AS asistencia_horaEntrada,
+     asistencia.`horaSalida` AS asistencia_horaSalida,
+     asistencia.`fechaAsistencia` AS asistencia_fechaAsistencia,
+     asistencia.`horasTrabajadas` AS asistencia_horasTrabajadas,
+     empleado.`nombre` AS empleado_nombre,
+     empleado.`apellido` AS empleado_apellido,
+     planilla_pago_sueldo.`idPago` AS planilla_pago_sueldo_idPago,
+     planilla_pago_sueldo.`fechaPago` AS planilla_pago_sueldo_fechaPago,
+     planilla_pago_sueldo.`total_horas` AS planilla_pago_sueldo_total_horas,
+     planilla_pago_sueldo.`salarioBase` AS planilla_pago_sueldo_salarioBase,
+     planilla_pago_sueldo.`descuentoIPS` AS planilla_pago_sueldo_descuentoIPS,
+     planilla_pago_sueldo.`multas` AS planilla_pago_sueldo_multas,
+     planilla_pago_sueldo.`extras` AS planilla_pago_sueldo_extras,
+     planilla_pago_sueldo.`liquidoCobrado` AS planilla_pago_sueldo_liquidoCobrado
+FROM
+     `empleado` empleado INNER JOIN `asistencia` asistencia ON empleado.`codigoEmpleado` = asistencia.`codigoEmpleado`
+     INNER JOIN `planilla_pago_sueldo` planilla_pago_sueldo ON empleado.`codigoEmpleado` = planilla_pago_sueldo.`codigoEmpleado`
+WHERE
+     month(asistencia.`fechaAsistencia`) = $P{mes}
+     and year(asistencia.`fechaAsistencia`) = $P{año}
+     and asistencia.`codigoEmpleado` = $P{codigoEmpleado}]]>
+	</queryString>
+	<field name="asistencia_codigoAsistencia" class="java.lang.Integer"/>
+	<field name="asistencia_codigoEmpleado" class="java.lang.Integer"/>
+	<field name="asistencia_horaEntrada" class="java.lang.String"/>
+	<field name="asistencia_horaSalida" class="java.lang.String"/>
+	<field name="asistencia_fechaAsistencia" class="java.sql.Date"/>
+	<field name="asistencia_horasTrabajadas" class="java.lang.Float"/>
+	<field name="empleado_nombre" class="java.lang.String"/>
+	<field name="empleado_apellido" class="java.lang.String"/>
+	<field name="planilla_pago_sueldo_idPago" class="java.lang.Integer"/>
+	<field name="planilla_pago_sueldo_fechaPago" class="java.sql.Date"/>
+	<field name="planilla_pago_sueldo_total_horas" class="java.lang.Float"/>
+	<field name="planilla_pago_sueldo_salarioBase" class="java.lang.Integer"/>
+	<field name="planilla_pago_sueldo_descuentoIPS" class="java.lang.Integer"/>
+	<field name="planilla_pago_sueldo_multas" class="java.lang.Integer"/>
+	<field name="planilla_pago_sueldo_extras" class="java.lang.Integer"/>
+	<field name="planilla_pago_sueldo_liquidoCobrado" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8e4c1bfb-7d17-48c3-8aca-2bc530a330c4" x="187" y="0" width="191" height="30" forecolor="#FF0000"/>
+				<textElement>
+					<font fontName="MV Boli" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hotel Santa María]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="71cdba4c-7637-4c43-8943-8e3614aebec0" x="16" y="0" width="49" height="50"/>
+				<imageExpression><![CDATA["C:\\Proyecto-II\\src\\imagenes\\logo1.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="eee25c77-7d75-4ef1-bd64-7254e6791b12" x="139" y="30" width="296" height="20" forecolor="#999999"/>
+				<textElement>
+					<font size="14" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[INFORME DE ASISTENCIA DE EMPLEADO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="203719ba-4b02-44f4-9c2c-1d10023dfbf5" x="216" y="60" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empleado_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f8c9db1a-ac95-42c8-b3cf-124a9c089068" x="116" y="60" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empleado_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e53566b4-07de-4a77-a9a5-4ebfb7ec55cc" x="0" y="59" width="66" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empleado:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9af11e22-7f94-439f-b1e9-2a7b8105602f" x="65" y="59" width="41" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{asistencia_codigoEmpleado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7462cde0-2f3b-4779-b7ce-196dcc030fe9" x="328" y="59" width="117" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Correspondiente a:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="03a79055-305e-4bf1-abdf-3718392024b3" x="445" y="59" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="b6e79d0f-91cf-49d5-b609-3016c5cd2c27" x="0" y="0" width="555" height="20" backcolor="#CCCCCC"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="3f5c642d-00e5-433a-a107-ca50cb6d4d8b" x="0" y="0" width="93" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código Asistencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1d41160e-5df7-41c9-b5d6-17e3be8553f8" x="130" y="0" width="49" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fba643c3-b85c-4828-b56a-06e627e8845d" x="216" y="0" width="76" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora Entrada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="acd012fb-2800-4438-9736-00817dfef8fe" x="328" y="0" width="68" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora Salida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="62eae662-90e2-4251-9d1e-7799b1d1455d" x="435" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horas Trabajadas]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f4457819-48ad-4bf6-aa54-e55409c98579" x="0" y="0" width="41" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{asistencia_codigoAsistencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="027749c2-9bfe-4a24-8ff1-90bb3ee27812" x="130" y="0" width="49" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{asistencia_fechaAsistencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="49d051ee-8d3c-4fe5-9378-49b8549d5afb" x="216" y="0" width="76" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{asistencia_horaEntrada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a88bc608-79fc-4fdb-93aa-ec9c673cad34" x="328" y="0" width="68" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{asistencia_horaSalida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d516572e-ac39-42b0-a7f5-0e41e0cff069" x="435" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{asistencia_horasTrabajadas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0d7254e6-5ca2-4962-ad6f-3e84d9a3d78f" x="65" y="25" width="65" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_fechaPago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c2a8ba42-a5be-460f-89a0-a63298c30ef8" x="156" y="25" width="31" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="373bf530-f2b2-494a-8860-bf34cb5c05e6" x="227" y="25" width="59" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_salarioBase}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="ea1304a2-d45e-411c-80d6-5fb002d0bd32" x="306" y="25" width="32" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_descuentoIPS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="0ac04c40-b29a-4984-a0a2-af1dd9382337" x="362" y="25" width="44" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_multas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="4e359b10-df79-459e-9387-d9fba15743fd" x="435" y="25" width="41" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_extras}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="17fef3dc-3e01-4d1f-bc9c-a824eedc8100" x="503" y="25" width="52" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_liquidoCobrado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d64301a5-a27e-42cf-b006-32d999a5a218" x="0" y="25" width="53" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_idPago}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2b216b2a-bc19-42ed-a349-a0bba14f32f0" x="0" y="5" width="53" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f6359991-1cee-4fc5-a928-e062b4010a9a" x="65" y="5" width="65" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="be4708e0-7c23-4ab6-92bc-5d3baeeb744d" x="139" y="5" width="77" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hs Trabajadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3c734c2f-38eb-4aa6-a93e-432d340abb71" x="227" y="5" width="65" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Salario Base]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f771aa87-79f7-496e-8f82-252846799fc4" x="306" y="5" width="32" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[IPS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6a095eee-267b-46cb-951a-cf9b8cb2171e" x="362" y="5" width="44" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Multas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="05232ba8-d817-452d-baae-7ffe3e9dbcd1" x="435" y="5" width="41" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Extras]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ef6fdf2d-9d5a-4ce5-9a3e-791169d86113" x="503" y="5" width="51" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Líquido]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="32e46aab-4145-438b-99d7-fe8e605357d8" x="435" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="e65f1b5d-aab8-4e18-9923-28013e674e18" x="515" y="0" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="d95db8fc-982f-48c1-90de-3226d56866b9" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm a">
+				<reportElement uuid="085ddb36-f0bc-48ad-85e9-481636119090" x="100" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<subreport>
+				<reportElement uuid="efb92e2e-163c-4066-a40c-d2725e3fa6cc" x="-12" y="0" width="28" height="24"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA[$P{mes}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="año">
+					<subreportParameterExpression><![CDATA[$P{año}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="codigoEmpleado">
+					<subreportParameterExpression><![CDATA[$P{codigoEmpleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "eventos.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

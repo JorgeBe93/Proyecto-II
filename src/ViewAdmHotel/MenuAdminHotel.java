@@ -87,6 +87,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         mItem_buscarPS = new javax.swing.JMenuItem();
         menu_informePO = new javax.swing.JMenu();
         menu_RRHH = new javax.swing.JMenu();
+        menu_empleado = new javax.swing.JMenu();
         mItem_crearEmpleado = new javax.swing.JMenuItem();
         mItem_editarEmpleado = new javax.swing.JMenuItem();
         mItem_eliminarEmpleado = new javax.swing.JMenuItem();
@@ -104,6 +105,8 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         mItem_buscarEvento = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         mItem_planillaPagos = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        mItem_informeAsist = new javax.swing.JMenuItem();
         menu_actividad = new javax.swing.JMenu();
         mItem_registrarActividad = new javax.swing.JMenuItem();
         mItem_editarActividad = new javax.swing.JMenuItem();
@@ -293,13 +296,15 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_RRHH.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_RRHH.setText("Recursos Humanos");
 
+        menu_empleado.setText("Empleado");
+
         mItem_crearEmpleado.setText("Registrar Empleado");
         mItem_crearEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mItem_crearEmpleadoActionPerformed(evt);
             }
         });
-        menu_RRHH.add(mItem_crearEmpleado);
+        menu_empleado.add(mItem_crearEmpleado);
 
         mItem_editarEmpleado.setText("Editar Empleado");
         mItem_editarEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -307,7 +312,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
                 mItem_editarEmpleadoActionPerformed(evt);
             }
         });
-        menu_RRHH.add(mItem_editarEmpleado);
+        menu_empleado.add(mItem_editarEmpleado);
 
         mItem_eliminarEmpleado.setText("Eliminar Empleado");
         mItem_eliminarEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -315,7 +320,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
                 mItem_eliminarEmpleadoActionPerformed(evt);
             }
         });
-        menu_RRHH.add(mItem_eliminarEmpleado);
+        menu_empleado.add(mItem_eliminarEmpleado);
 
         mItem_buscarEmpleado.setText("Buscar Empleado");
         mItem_buscarEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -323,7 +328,9 @@ public class MenuAdminHotel extends javax.swing.JFrame {
                 mItem_buscarEmpleadoActionPerformed(evt);
             }
         });
-        menu_RRHH.add(mItem_buscarEmpleado);
+        menu_empleado.add(mItem_buscarEmpleado);
+
+        menu_RRHH.add(menu_empleado);
 
         jSeparator1.setAlignmentY(0.8F);
         jSeparator1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -402,6 +409,15 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_RRHH.add(mItem_planillaPagos);
+        menu_RRHH.add(jSeparator4);
+
+        mItem_informeAsist.setText("Generar Informe de Asistencia");
+        mItem_informeAsist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_informeAsistActionPerformed(evt);
+            }
+        });
+        menu_RRHH.add(mItem_informeAsist);
 
         jMenuBar1.add(menu_RRHH);
 
@@ -531,7 +547,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 967, Short.MAX_VALUE)
+            .addGap(0, 1012, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -942,6 +958,13 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         args[0]="Buscar Evento";
         BuscarEvento.main(args);
     }//GEN-LAST:event_mItem_buscarEventoActionPerformed
+
+    private void mItem_informeAsistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_informeAsistActionPerformed
+        // TODO add your handling code here:
+        String args[]=new String[1];
+        args[0]="Generar Informe de Asistencia";
+        GenerarInformeAsist.main(args);
+    }//GEN-LAST:event_mItem_informeAsistActionPerformed
      private void Connection(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -1005,6 +1028,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JMenuItem mIem_buscarSeg;
     private javax.swing.JMenuItem mItem_buscar;
     private javax.swing.JMenuItem mItem_buscarActividad;
@@ -1038,6 +1062,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_eliminarLugar;
     private javax.swing.JMenuItem mItem_eliminarPS;
     private javax.swing.JMenuItem mItem_eliminarSeg;
+    private javax.swing.JMenuItem mItem_informeAsist;
     private javax.swing.JMenuItem mItem_modificarSeg;
     private javax.swing.JMenuItem mItem_planillaPagos;
     private javax.swing.JMenuItem mItem_registrarActividad;
@@ -1052,6 +1077,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenu menu_RRHH;
     private javax.swing.JMenu menu_actividad;
     private javax.swing.JMenu menu_asistencia;
+    private javax.swing.JMenu menu_empleado;
     private javax.swing.JMenu menu_eventos;
     private javax.swing.JMenu menu_informePO;
     private javax.swing.JMenu menu_lugar;

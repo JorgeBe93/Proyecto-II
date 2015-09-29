@@ -381,8 +381,7 @@ public  void setFecha(){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               JFrame frame= new RegistrarSeguimiento();
-               
+               JFrame frame= new RegistrarSeguimiento(); 
                frame.setVisible(true);
                frame.setTitle("Registrar Seguimiento de Actividad");
                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
