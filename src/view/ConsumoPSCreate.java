@@ -58,6 +58,7 @@ private final  TextAutoCompleter textAutoCompleter;
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : query.getResultList();
         reservaQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT r FROM Reserva r");
         reservaList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : reservaQuery.getResultList();
+        reservaRenderizar1 = new renderizar.ReservaRenderizar();
         panel_registrarCPS = new javax.swing.JPanel();
         lbl_registrarCPS = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -76,6 +77,8 @@ private final  TextAutoCompleter textAutoCompleter;
         jPanel2 = new javax.swing.JPanel();
         btn_guardar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
+
+        reservaRenderizar1.setText("reservaRenderizar1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -155,6 +158,8 @@ private final  TextAutoCompleter textAutoCompleter;
                 tf_productoServicioFocusLost(evt);
             }
         });
+
+        list_codigoReserva.setRenderer(reservaRenderizar1);
 
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, reservaList, list_codigoReserva);
         bindingGroup.addBinding(jComboBoxBinding);
@@ -470,6 +475,7 @@ private final  TextAutoCompleter textAutoCompleter;
     private javax.persistence.Query query;
     private java.util.List<bean.Reserva> reservaList;
     private javax.persistence.Query reservaQuery;
+    private renderizar.ReservaRenderizar reservaRenderizar1;
     private javax.swing.JTextField tf_cantidad;
     private javax.swing.JTextField tf_huesped;
     private javax.swing.JTextField tf_precio;

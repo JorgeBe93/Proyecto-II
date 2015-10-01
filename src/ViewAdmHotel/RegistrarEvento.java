@@ -13,9 +13,12 @@ import bean.Eventos;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -563,15 +566,36 @@ public class RegistrarEvento extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_buscarActionPerformed
     public int calcularDias(){
             float decimal;
+            String d;
+            /* DecimalFormat deci= new DecimalFormat("0");
              final float MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
-           //  long cantidadDias = (dc_fechaFin.getDate().getTime() - dc_fechaInicio.getDate().getTime())/MILLSECS_PER_DAY;
-             System.out.println(dc_fechaInicio.getDate().getTime());
-             System.out.println(dc_fechaFin.getDate().getTime());
+             System.out.println("Día de la semana"+" "+dc_fechaInicio.getDate()+1);
+             System.out.println("Fecha Inicio"+" "+ dc_fechaInicio.getDate().getTime());
+             System.out.println("Fecha Fin"+" "+ dc_fechaFin.getDate().getTime());
              float cantidadDias = ((dc_fechaFin.getDate().getTime() - dc_fechaInicio.getDate().getTime())/MILLSECS_PER_DAY )+1;
-            //  System.out.println(cantidadDias);
-            // cantidadDias=(float) (cantidadDias+1.0);
-             System.out.println(cantidadDias);
-             return (int)cantidadDias;
+             d=deci.format(cantidadDias);
+             d=d.replaceAll(",",".");
+             cantidadDias=Float.parseFloat(d);
+             System.out.println("Cantidad Dias:"+" "+cantidadDias);
+             return (int)cantidadDias;*/
+            Calendar fechaInicial = new GregorianCalendar();
+            Calendar fechaFinal= new GregorianCalendar();
+            fechaInicial.setTime(dc_fechaInicio.getDate());
+            fechaFinal.setTime(dc_fechaFin.getDate());
+            System.out.println("Prueba fech 1"+" "+fechaInicial.getTime());
+            System.out.println("Prueba fech 2"+" "+fechaFinal.getTime());
+             int diffDays= 0;
+            //mientras la fecha inicial sea menor o igual que la fecha final se cuentan los dias
+             while (fechaInicial.getTime().before(fechaFinal.getTime())||fechaInicial.equals(fechaFinal)) {
+                    if (fechaInicial.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY && fechaInicial.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
+                         diffDays++;
+                         System.out.println("Cantidad Dias"+" "+diffDays);
+                    }
+                    fechaInicial.add(Calendar.DATE, 1);       
+                    System.out.println("Iteracion"+" "+fechaInicial.getTime());
+            }
+            System.out.println("Cantidad Dias"+" "+diffDays);
+            return diffDays;
     }
     
     /**

@@ -72,7 +72,7 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
             .addGroup(panel_BuscarCPSLayout.createSequentialGroup()
                 .addGap(87, 87, 87)
                 .addComponent(lbl_BuscarCPS)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         panel_BuscarCPSLayout.setVerticalGroup(
             panel_BuscarCPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,9 +130,9 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(43, 43, 43)
                 .addComponent(lbl_valor)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(btn_buscar)
@@ -178,6 +178,9 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${total}"));
         columnBinding.setColumnName("Total");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${numFactura.numFactura}"));
+        columnBinding.setColumnName("Factura");
+        columnBinding.setColumnClass(Integer.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -187,10 +190,10 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
-            masterTable.getColumnModel().getColumn(0).setPreferredWidth(30);
-            masterTable.getColumnModel().getColumn(1).setPreferredWidth(30);
+            masterTable.getColumnModel().getColumn(0).setPreferredWidth(20);
+            masterTable.getColumnModel().getColumn(1).setPreferredWidth(20);
             masterTable.getColumnModel().getColumn(3).setPreferredWidth(100);
-            masterTable.getColumnModel().getColumn(4).setPreferredWidth(10);
+            masterTable.getColumnModel().getColumn(4).setPreferredWidth(5);
             masterTable.getColumnModel().getColumn(5).setPreferredWidth(25);
         }
 
@@ -204,17 +207,16 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
                         .addGap(0, 20, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(121, 121, 121)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(panel_BuscarCPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(375, 375, 375)
-                                .addComponent(btn_cancelar)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(375, 375, 375)
+                        .addComponent(btn_cancelar)
+                        .addGap(0, 376, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(132, 132, 132)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panel_BuscarCPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

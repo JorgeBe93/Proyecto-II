@@ -573,13 +573,20 @@ public class RegistrarAsistencia extends javax.swing.JFrame {
          }
           else{
                   fecha2=formato.format(fecha);
-                //verificar si el empleado está suspendido
+                //verificar si el empleado tiene eventos asigandos
                 query=entityManager.createNativeQuery("SELECT * FROM eventos WHERE codigoEmpleado= "+id
                     +" AND ('"+fecha2+"' >=fecha_inicio AND "
                     +"'"+fecha2+"' <=fecha_fin )", Eventos.class);
                 List<Eventos> ev=query.getResultList();
                 if(ev.size()>=1){
-                    JOptionPane.showMessageDialog(null,"Empleado suspendido, no puede marcar asistencia", "Error",JOptionPane.ERROR_MESSAGE);
+                    if("Suspensión".equals(ev.get(0).getTipoEvento())){
+                        JOptionPane.showMessageDialog(null,"Empleado suspendido, no puede marcar asistencia", "Error",JOptionPane.ERROR_MESSAGE);
+                    }else if("Vacaciones".equals(ev.get(0).getTipoEvento())){
+                               JOptionPane.showMessageDialog(null,"Empleado de vacaciones, no puede marcar asistencia", "Error",JOptionPane.ERROR_MESSAGE);
+                    }else if("Permiso Justificado".equals(ev.get(0).getTipoEvento())){
+                            JOptionPane.showMessageDialog(null,"Empleado con permiso, no puede marcar asistencia", "Error",JOptionPane.ERROR_MESSAGE);
+                    }  
+                    tf_codigoEmpleado.setText(null);
                 }else{
                         // verificamos si ya marcó entrada
                          query=entityManager.createNativeQuery("SELECT * FROM asistencia WHERE codigoEmpleado= "+id

@@ -102,9 +102,9 @@ public class ConsumoFactura extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_generar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_generar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2))
                     .addComponent(btn_cancelar))
                 .addContainerGap())
@@ -227,8 +227,8 @@ public class ConsumoFactura extends javax.swing.JFrame {
         ruc=r.getCodigoCliente().getRuc();
         Date fecha=new Date();
         int total;
-         DateFormat formato=new SimpleDateFormat("dd-MM-yyyy");
-        query=entityManager.createNativeQuery("SELECT * FROM factura_cobro  "
+        DateFormat formato=new SimpleDateFormat("dd-MM-yyyy");
+       /* query=entityManager.createNativeQuery("SELECT * FROM factura_cobro  "
                     + "WHERE codigoReserva="
                     +"'"+codigo+"'"
                     +" AND concepto like '%liquidación de reserva%'", FacturaCobro.class);
@@ -241,8 +241,7 @@ public class ConsumoFactura extends javax.swing.JFrame {
           query=entityManager.createNativeQuery("SELECT SUM(total) FROM consumo_pro_ser  "
                     + "WHERE codigoReserva="
                     +"'"+codigo+"'"
-                    +"GROUP BY("  
-                     +"'"+codigo+"')");
+                    +" AND numFactura is null GROUP BY(codigoReserva)");
                     Object resultado=query.getSingleResult();
                     total=Integer.parseInt(resultado.toString());
                     //System.out.print(total);
@@ -250,7 +249,29 @@ public class ConsumoFactura extends javax.swing.JFrame {
           if(total==0){
                JOptionPane.showMessageDialog(null,"La reserva no tiene deudas hasta la fecha", "Aviso",JOptionPane.INFORMATION_MESSAGE);
                  return;
-          }
+          }*/
+          query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser  "
+                    + "WHERE codigoReserva="
+                    +"'"+codigo+"'"
+                    +" AND numFactura is null", ConsumoProSer.class);
+         List<ConsumoProSer>cps=query.getResultList();
+         if(cps.isEmpty()){
+             JOptionPane.showMessageDialog(null,"La reserva no tiene deudas hasta la fecha", "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                   return;
+                   
+         }
+         query=entityManager.createNativeQuery("SELECT SUM(total) FROM consumo_pro_ser  "
+                    + "WHERE codigoReserva="
+                    +"'"+codigo+"'"
+                    +" AND numFactura is null GROUP BY(codigoReserva)");
+                    Object resultado=query.getSingleResult();
+                    total=Integer.parseInt(resultado.toString());
+                    System.out.print(total);
+                    //insertamos en la tabla factura
+          if(total==0){
+               JOptionPane.showMessageDialog(null,"La reserva no tiene deudas hasta la fecha", "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                 return;
+          } 
           resp=  JOptionPane.showConfirmDialog(null,"Desea Generar una nueva factura?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
           if (resp==JOptionPane.YES_OPTION){
               entityManager.getTransaction().begin();

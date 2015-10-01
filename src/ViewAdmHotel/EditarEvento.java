@@ -6,20 +6,16 @@
 
 package ViewAdmHotel;
 
-import static ViewAdmHotel.EditarSeguimiento.list_descripcion;
-import static ViewAdmHotel.EditarSeguimiento.list_lugar;
-import static ViewAdmHotel.EditarSeguimiento.tf_codigo;
-import static ViewAdmHotel.EditarSeguimiento.tf_fechaHora;
-import bean.Actividad;
 import bean.AuditoriaSistema;
 import bean.Empleado;
 import bean.Eventos;
-import bean.Lugar;
-import bean.SeguimientoActividad;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -338,13 +334,40 @@ public class EditarEvento extends javax.swing.JFrame {
         dc_fechaFin.setDate(evento.getFechaFin());
     }
        public int calcularDias(){
-    
-             final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
-             long cantidadDias = (dc_fechaFin.getDate().getTime() - dc_fechaInicio.getDate().getTime())/MILLSECS_PER_DAY;
-             System.out.println(cantidadDias);
-             cantidadDias=cantidadDias+1;
-             System.out.println(cantidadDias);
-             return (int)cantidadDias;
+           /*  float decimal;
+             String d;
+             DecimalFormat deci= new DecimalFormat("0");
+             final float MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
+             System.out.println("Fecha Inicio"+" "+ dc_fechaInicio.getDate().getTime());
+             System.out.println("Fecha Fin"+" "+ dc_fechaFin.getDate().getTime());
+             float cantidadDias = ((dc_fechaFin.getDate().getTime() - dc_fechaInicio.getDate().getTime())/MILLSECS_PER_DAY )+1;
+             d=deci.format(cantidadDias);
+             d=d.replaceAll(",",".");
+             cantidadDias=Float.parseFloat(d);
+             System.out.println("Cantidad Dias:"+" "+cantidadDias);
+             return (int)cantidadDias;*/
+            Calendar fechaInicial = new GregorianCalendar();
+            Calendar fechaFinal= new GregorianCalendar();
+            fechaInicial.setTime(dc_fechaInicio.getDate());
+            fechaFinal.setTime(dc_fechaFin.getDate());
+            System.out.println("Prueba fech 1"+" "+fechaInicial.getTime().getDate());
+            System.out.println("Prueba fech 2"+" "+fechaFinal.getTime().getDate());
+             int diffDays=0;
+            //mientras la fecha inicial sea menor o igual que la fecha final se cuentan los dias
+             while (fechaInicial.before(fechaFinal)||fechaInicial.equals(fechaFinal)) {
+                    if (fechaInicial.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY && fechaInicial.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
+                         diffDays++;
+                         System.out.println("Cantidad Dias"+" "+diffDays);
+                    }
+                    fechaInicial.add(Calendar.DATE, 1);       
+                    System.out.println("Iteracion"+" "+fechaInicial.getTime());
+            }
+            if (fechaInicial.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY && fechaInicial.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
+                         diffDays++;
+                         System.out.println("Cantidad Dias"+" "+diffDays);
+             }
+            System.out.println("Cantidad Dias"+" "+diffDays);
+            return diffDays;
     }
         private Empleado obtenerEmpleado(){
         query = entityManager.createNamedQuery("Empleado.findByCodigoEmpleado");

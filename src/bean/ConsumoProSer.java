@@ -47,8 +47,11 @@ public class ConsumoProSer implements Serializable {
     @ManyToOne
     private ProductoServicio codigoPS;
     @JoinColumn(name = "codigoReserva", referencedColumnName = "codigoReserva")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Reserva codigoReserva;
+    @JoinColumn(name = "numFactura", referencedColumnName = "numFactura")
+    @ManyToOne
+    private FacturaCobro numFactura;
 
     public ConsumoProSer() {
     }
@@ -103,6 +106,14 @@ public class ConsumoProSer implements Serializable {
         this.codigoReserva = codigoReserva;
     }
 
+    public FacturaCobro getNumFactura() {
+        return numFactura;
+    }
+
+    public void setNumFactura(FacturaCobro numFactura) {
+        this.numFactura = numFactura;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -123,13 +134,13 @@ public class ConsumoProSer implements Serializable {
         return true;
     }
 
-    /*  @Override
+    /* @Override
     public String toString() {
     return "bean.ConsumoProSer[ codigoConsumo=" + codigoConsumo + " ]";
     }*/
     @Override
     public String toString() {
-        return "codigoConsumo=" + codigoConsumo + ", cantidad=" + cantidad + ", total=" + total + ", codigoPS=" + codigoPS + ", codigoReserva=" + codigoReserva;
+        return "codigoConsumo=" + codigoConsumo + ", cantidad=" + cantidad + ", total=" + total + ", codigoPS=" + codigoPS + ", codigoReserva=" + codigoReserva + ", numFactura=" + numFactura;
     }
     
     

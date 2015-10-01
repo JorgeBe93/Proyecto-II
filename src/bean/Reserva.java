@@ -7,6 +7,7 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,6 +39,10 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Reserva.findByMontoTotal", query = "SELECT r FROM Reserva r WHERE r.montoTotal = :montoTotal"),
     @NamedQuery(name = "Reserva.findByMontoAbonado", query = "SELECT r FROM Reserva r WHERE r.montoAbonado = :montoAbonado")})
 public class Reserva implements Serializable {
+    @OneToMany(mappedBy = "codigoReserva")
+    private Collection<FacturaCobro> facturaCobroCollection;
+    @OneToMany(mappedBy = "codigoReserva")
+    private Collection<ConsumoProSer> consumoProSerCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -183,6 +189,22 @@ public class Reserva implements Serializable {
     @Override
     public String toString() {
         return "codigoReserva=" + codigoReserva + ", checkIn=" + checkIn + ", checkOut=" + checkOut + ", cantPersonas=" + cantPersonas + ", montoTotal=" + montoTotal + ", montoAbonado=" + montoAbonado + ", numHabitacion=" + numHabitacion + ", codigoCliente=" + codigoCliente + ", numPresupuesto=" + numPresupuesto;
+    }
+
+    public Collection<FacturaCobro> getFacturaCobroCollection() {
+        return facturaCobroCollection;
+    }
+
+    public void setFacturaCobroCollection(Collection<FacturaCobro> facturaCobroCollection) {
+        this.facturaCobroCollection = facturaCobroCollection;
+    }
+
+    public Collection<ConsumoProSer> getConsumoProSerCollection() {
+        return consumoProSerCollection;
+    }
+
+    public void setConsumoProSerCollection(Collection<ConsumoProSer> consumoProSerCollection) {
+        this.consumoProSerCollection = consumoProSerCollection;
     }
     
     

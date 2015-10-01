@@ -7,6 +7,7 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -30,6 +32,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "Presupuesto.findByFechaEmision", query = "SELECT p FROM Presupuesto p WHERE p.fechaEmision = :fechaEmision"),
     @NamedQuery(name = "Presupuesto.findByCiCliente", query = "SELECT p FROM Presupuesto p WHERE p.ciCliente = :ciCliente")})
 public class Presupuesto implements Serializable {
+    @OneToMany(mappedBy = "numPresupuesto")
+    private Collection<Reserva> reservaCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -119,6 +123,14 @@ public class Presupuesto implements Serializable {
     @Override
     public String toString() {
         return  "numPresupuesto=" + numPresupuesto + ", estado=" + estado + ", fechaEmision=" + fechaEmision + ", ciCliente=" + ciCliente;
+    }
+
+    public Collection<Reserva> getReservaCollection() {
+        return reservaCollection;
+    }
+
+    public void setReservaCollection(Collection<Reserva> reservaCollection) {
+        this.reservaCollection = reservaCollection;
     }
     
     

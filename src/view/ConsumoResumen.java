@@ -201,7 +201,7 @@ public class ConsumoResumen extends javax.swing.JFrame {
         String letras;
         Reserva r=(Reserva) list_codigoReserva.getSelectedItem();
         int codigo=r.getCodigoReserva();
-         query=entityManager.createNativeQuery("SELECT * FROM factura_cobro  "
+       /*  query=entityManager.createNativeQuery("SELECT * FROM factura_cobro  "
                     + "WHERE codigoReserva="
                     +"'"+codigo+"'"
                     +" AND concepto like '%liquidación de reserva%'", FacturaCobro.class);
@@ -211,12 +211,21 @@ public class ConsumoResumen extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null,"Esta reserva ya ha cancelado su deuda", "Aviso",JOptionPane.INFORMATION_MESSAGE);
                    return;
                    
-         }
-          query=entityManager.createNativeQuery("SELECT SUM(total) FROM consumo_pro_ser  "
+         }*/
+         query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser  "
                     + "WHERE codigoReserva="
                     +"'"+codigo+"'"
-                    +"GROUP BY("  
-                     +"'"+codigo+"')");
+                    +" AND numFactura is null", ConsumoProSer.class);
+         List<ConsumoProSer>cps=query.getResultList();
+         if(cps.isEmpty()){
+             JOptionPane.showMessageDialog(null,"La reserva no tiene deudas hasta la fecha", "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                   return;
+                   
+         }
+         query=entityManager.createNativeQuery("SELECT SUM(total) FROM consumo_pro_ser  "
+                    + "WHERE codigoReserva="
+                    +"'"+codigo+"'"
+                    +" AND numFactura is null GROUP BY(codigoReserva)");
                     Object resultado=query.getSingleResult();
                     total=Integer.parseInt(resultado.toString());
                     System.out.print(total);

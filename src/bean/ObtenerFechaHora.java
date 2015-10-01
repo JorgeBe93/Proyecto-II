@@ -7,11 +7,11 @@ package bean;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,10 +29,12 @@ public class ObtenerFechaHora {
        float div;
        String x;
        System.out.println(valor+"\n"+valor2);
+       Date fecha1 = new Date ();
+       DateFormat formato=new SimpleDateFormat("dd-MM-yyyyy" );
        DecimalFormat decimal= new DecimalFormat("0.0");
 //NumberFormat nf = NumberFormat.getInstance();		
  // nf.setMaximumFractionDigits(1);
-  Date fecha1 = new Date ();
+/*  Date fecha1 = new Date ();
   DateFormat formato=new SimpleDateFormat("dd-MM-yyyyy" );
   DateFormat formato1=new SimpleDateFormat("HH:mm");
   // dif=as.get(0).getHoraSalida().getHours()-as.get(0).getHoraEntrada().getHours();
@@ -63,13 +65,35 @@ public class ObtenerFechaHora {
   System.out.println(formato.format(fecha1));
   System.out.println(fecha1.toLocaleString());
   System.out.println(fecha1.toGMTString());
-
   Calendar cal1 = Calendar.getInstance();
     System.out.println(""+cal1.get(Calendar.DATE)+"/"+cal1.get(Calendar.MONTH)
     +"/"+cal1.get(Calendar.YEAR)+" "+cal1.get(Calendar.HOUR)
     +":"+cal1.get(Calendar.MINUTE)+":"+cal1.get(Calendar.SECOND)
-    +":"+cal1.get(Calendar.MILLISECOND));
+    +":"+cal1.get(Calendar.MILLISECOND));*/
+    
+ Calendar fechaInicial = new GregorianCalendar();
+ Calendar fechaFinal= new GregorianCalendar(2015,10,11);
+ 
+     int diffDays= 1;
+        try {
+            fechaInicial.setTime(formato.parse(formato.format(fecha1)));
+        } catch (ParseException ex) {
+            Logger.getLogger(ObtenerFechaHora.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("fecha prueba"+" "+fechaInicial.getTime());
+        fechaInicial.add(Calendar.DAY_OF_YEAR,1);
+        System.out.println("fecha prueba suma"+" "+fechaInicial.getTime());
+    //mientras la fecha inicial sea menor o igual que la fecha final se cuentan los dias
+     while ( !fechaInicial.equals(fechaFinal)) {
+          if (fechaInicial.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY && fechaInicial.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
+                diffDays++;
 
- }
+            }
+         fechaInicial.add(Calendar.DATE, 1);
+         }
+
+        System.out.println(diffDays);
+
+    }
 
 }

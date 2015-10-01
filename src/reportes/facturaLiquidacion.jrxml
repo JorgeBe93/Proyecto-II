@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="19fb27fb-9c65-434d-bab9-261657fb6907">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="35"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
@@ -53,14 +53,16 @@
      consumo_pro_ser.`cantidad` AS consumo_pro_ser_cantidad,
      consumo_pro_ser.`total` AS consumo_pro_ser_total,
      consumo_pro_ser.`codigoReserva` AS consumo_pro_ser_codigoReserva,
-     consumo_pro_ser.`codigoPS` AS consumo_pro_ser_codigoPS
+     consumo_pro_ser.`codigoPS` AS consumo_pro_ser_codigoPS,
+     consumo_pro_ser.`numFactura` AS consumo_pro_ser_numFactura
 FROM
      `reserva` reserva INNER JOIN `factura_cobro` factura_cobro ON reserva.`codigoReserva` = factura_cobro.`codigoReserva`
      INNER JOIN `cliente` cliente ON reserva.`codigoCliente` = cliente.`codigoCliente`
      INNER JOIN `consumo_pro_ser` consumo_pro_ser ON reserva.`codigoReserva` = consumo_pro_ser.`codigoReserva`
+     AND factura_cobro.`numFactura` = consumo_pro_ser.`numFactura`
      INNER JOIN `producto_servicio` producto_servicio ON consumo_pro_ser.`codigoPS` = producto_servicio.`codigoPS`
 WHERE
-     factura_cobro.`numFactura` = $P{NumFactura} and  consumo_pro_ser.`total`!=0]]>
+     consumo_pro_ser.`numFactura` = $P{NumFactura}]]>
 	</queryString>
 	<field name="producto_servicio_nombre" class="java.lang.String"/>
 	<field name="producto_servicio_costo" class="java.lang.Integer"/>
@@ -80,6 +82,7 @@ WHERE
 	<field name="consumo_pro_ser_total" class="java.lang.Integer"/>
 	<field name="consumo_pro_ser_codigoReserva" class="java.lang.Integer"/>
 	<field name="consumo_pro_ser_codigoPS" class="java.lang.Integer"/>
+	<field name="consumo_pro_ser_numFactura" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

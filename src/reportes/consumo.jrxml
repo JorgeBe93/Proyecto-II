@@ -29,7 +29,7 @@ FROM
      INNER JOIN `habitacion` habitacion ON reserva.`numHabitacion` = habitacion.`numero`
      INNER JOIN `categ_habitacion` categ_habitacion ON habitacion.`codigoCategoria` = categ_habitacion.`codigoCategoria`
 WHERE
-     reserva.`codigoReserva` = $P{CodigoReserva} and consumo_pro_ser.`total`!=0]]>
+     reserva.`codigoReserva` = $P{CodigoReserva}  and consumo_pro_ser.`numFactura` is null]]>
 	</queryString>
 	<field name="consumo_pro_ser_codigoConsumo" class="java.lang.Integer"/>
 	<field name="consumo_pro_ser_cantidad" class="java.lang.Integer"/>
