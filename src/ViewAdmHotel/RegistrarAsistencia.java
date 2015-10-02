@@ -590,10 +590,10 @@ public class RegistrarAsistencia extends javax.swing.JFrame {
                 }else{
                         // verificamos si ya marcó entrada
                          query=entityManager.createNativeQuery("SELECT * FROM asistencia WHERE codigoEmpleado= "+id
-                        + " AND fechaAsistencia= "
-                        +"'"+fecha2+"'", Asistencia.class);
+                        + " AND horaSalida is null AND fechaAsistencia= (SELECT MAX(fechaAsistencia)"
+                                 + "FROM asistencia where codigoEmpleado="+id+" )", Asistencia.class);
                          as=query.getResultList();
-                         if(!as.isEmpty()){ //ya marco la entrada o marco entrada y salida
+                         if(!as.isEmpty()){ //ya marco la entrada 
                                  if(as.get(0).getHoraSalida()==null){
                                      lbl_empleado.setText(e.get(0).getNombre().toUpperCase()+" "+e.get(0).getApellido().toUpperCase());
                                      horaE=as.get(0).getHoraEntrada();
@@ -610,51 +610,60 @@ public class RegistrarAsistencia extends javax.swing.JFrame {
                                      asis.setHorasTrabajadas(horasTrabajadas());
                                      entityManager.merge(asis);
                                       //Auditoria de Sistema
+                                     AuditoriaSistema as=new AuditoriaSistema();
+                                     as.setAccion("Registro de Salida");
+                                     as.setTabla("Asistencia");
+                                     DateFormat form=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                                     as.setFechaHora(form.format(fecha));
+                                     as.setUsuario("nadie");
+                                     as.setAntes(asis.toString());
+                                     as.setDespues("No hay modificaciones");
+                                     entityManager.persist(as);
+                                     entityManager.getTransaction().commit();
+                                     emitirSonidoCorrecto();
+                                    // JOptionPane.showMessageDialog(null,"Registro de Salida Exitoso", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
+                                }
+                         }else{ //Aparentemente no marco
+                             //esta consulta es para verificar si ya marco E/S en la fecha
+                             query=entityManager.createNativeQuery("SELECT MAX(fechaAsistencia)"
+                                 + "FROM asistencia where codigoEmpleado="+id);
+                             Object fec=query.getSingleResult();
+                             System.out.println("fecha devuelta"+" "+fec);
+                             System.out.println("fecha sistema"+" "+fecha2);
+                             if(fecha2.equals(formato.format(fec))){
+                                 JOptionPane.showMessageDialog(null,"Ya se ha marcado la entrada y salida en la fecha", "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                                    tf_codigoEmpleado.setText(null);
+                             }else{
+                                    //se marca la entrada
+                                    lbl_empleado.setText(e.get(0).getNombre().toUpperCase()+" "+e.get(0).getApellido().toUpperCase());
+                                    horaE=formatoHora.format(fecha);
+                                    lbl_entrada2.setText(horaE);
+                                    Asistencia a=new Asistencia();
+                                    a.setCodigoEmpleado(e.get(0));
+                                    try {
+                                        a.setFechaAsistencia(formato.parse(formato.format(fecha)));
+                                        a.setHoraEntrada(horaE);
+                                    } catch (ParseException ex) {
+                                       Logger.getLogger(RegistrarAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                    entityManager.getTransaction().begin();
+                                    entityManager.persist(a);
+                                    entityManager.flush();
+                                    //Auditoria de Sistema
                                     AuditoriaSistema as=new AuditoriaSistema();
-                                    as.setAccion("Registro de Salida");
+                                    as.setAccion("Registro de Entrada");
                                     as.setTabla("Asistencia");
                                     DateFormat form=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                                     as.setFechaHora(form.format(fecha));
                                     as.setUsuario("nadie");
-                                    as.setAntes(asis.toString());
+                                    as.setAntes(a.toString());
                                     as.setDespues("No hay modificaciones");
                                     entityManager.persist(as);
-                                     entityManager.getTransaction().commit();
-                                     emitirSonidoCorrecto();
-                                    // JOptionPane.showMessageDialog(null,"Registro de Salida Exitoso", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
-                                }else{ //ya marco la entrada y salida
-                                    JOptionPane.showMessageDialog(null,"Ya se ha marcado la entrada y salida en la fecha", "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                                    tf_codigoEmpleado.setText(null);
-                                }
-                         }else{ //todavia no marcó entrada
-                             lbl_empleado.setText(e.get(0).getNombre().toUpperCase()+" "+e.get(0).getApellido().toUpperCase());
-                             horaE=formatoHora.format(fecha);
-                             lbl_entrada2.setText(horaE);
-                             Asistencia a=new Asistencia();
-                             a.setCodigoEmpleado(e.get(0));
-                             try {
-                                 a.setFechaAsistencia(formato.parse(formato.format(fecha)));
-                                 a.setHoraEntrada(horaE);
-                             } catch (ParseException ex) {
-                                Logger.getLogger(RegistrarAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+                                    entityManager.getTransaction().commit();
+                                    emitirSonidoCorrecto();
+                                  // JOptionPane.showMessageDialog(null,"Registro de Entrada Exitoso", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
                              }
-                             entityManager.getTransaction().begin();
-                             entityManager.persist(a);
-                             entityManager.flush();
-                             //Auditoria de Sistema
-                             AuditoriaSistema as=new AuditoriaSistema();
-                             as.setAccion("Registro de Entrada");
-                             as.setTabla("Asistencia");
-                             DateFormat form=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                             as.setFechaHora(form.format(fecha));
-                             as.setUsuario("nadie");
-                             as.setAntes(a.toString());
-                             as.setDespues("No hay modificaciones");
-                             entityManager.persist(as);
-                             entityManager.getTransaction().commit();
-                             emitirSonidoCorrecto();
-                           // JOptionPane.showMessageDialog(null,"Registro de Entrada Exitoso", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
-                        
+                            
                          }
                 }
                 //verificamos si el empleado ya marcó su entrada; si es asi se marca directo la salida
@@ -690,6 +699,9 @@ public float horasTrabajadas(){
        } catch (ParseException ex) {
            Logger.getLogger(RegistrarAsistencia.class.getName()).log(Level.SEVERE, null, ex);
        }
+            if(difH<0){
+                difH=difH+24;
+            }
              div=(difM/60);
              System.out.println("Division:"+" "+div);
              horasT=difH+div;

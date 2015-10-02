@@ -9,6 +9,7 @@ package view;
 import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -197,8 +198,7 @@ public class PerdidaOportunidades extends javax.swing.JFrame {
           SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
           String desde=format.format(ch_desde.getDate());
           String hasta=format.format(ch_hasta.getDate());
-          final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
-          long cantidadDias = (ch_hasta.getDate().getTime() - ch_desde.getDate().getTime())/MILLSECS_PER_DAY;
+         
            try
               {
                    Class.forName("com.mysql.jdbc.Driver");
@@ -206,7 +206,7 @@ public class PerdidaOportunidades extends javax.swing.JFrame {
                     HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
                     par.put("FechaDesde",desde );
                      par.put("FechaHasta",hasta );
-                     par.put("CantDias", cantidadDias);
+                     par.put("CantDias", cantidadDias());
                     JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/perdidasOportunidades.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
                     JasperViewer jv = new JasperViewer(jp,false);
                     jv.setVisible(true);
@@ -225,7 +225,12 @@ public class PerdidaOportunidades extends javax.swing.JFrame {
         // TODO add your handling code here:3
         this.dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
-
+    private long cantidadDias(){
+         final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
+         long cantidadDias = (ch_hasta.getDate().getTime() - ch_desde.getDate().getTime())/MILLSECS_PER_DAY;
+           System.out.println("Fecha calculada"+" "+cantidadDias);
+          return  cantidadDias;
+    }
     /**
      * @param args the command line arguments
      */

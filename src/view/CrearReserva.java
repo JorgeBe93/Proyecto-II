@@ -18,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -592,6 +593,8 @@ public class CrearReserva extends javax.swing.JFrame {
 
     private void btn_calcularMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_calcularMontoActionPerformed
         // TODO add your handling code here:
+        DecimalFormat deci= new DecimalFormat("0");
+        String d;
         java.util.Date fecha = new Date();
         if(jc_checkin.getDate() != null 
                 && jc_checkout.getDate() != null 
@@ -601,11 +604,16 @@ public class CrearReserva extends javax.swing.JFrame {
                    // &&jc_checkin.getDate().after(fecha)
                    //&&jc_checkout.getDate().after(fecha)
                     ){
-                final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
+                final float MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
                 long cantidadPersonas = Integer.parseInt(tf_cantidadPersonas.getText());
                 long precioxnoche = Integer.parseInt(tf_precioCategoria.getText());
-                long cantidadDias = (jc_checkout.getDate().getTime() - jc_checkin.getDate().getTime())/MILLSECS_PER_DAY;
-                long precioTotal = cantidadPersonas * precioxnoche * cantidadDias;
+                float cantidadDias = (jc_checkout.getDate().getTime() - jc_checkin.getDate().getTime())/MILLSECS_PER_DAY;
+                System.out.println("Cantidad de dias devuelto"+" "+cantidadDias);
+                d=deci.format(cantidadDias);
+                d=d.replaceAll(",",".");
+                cantidadDias=Float.parseFloat(d);
+                System.out.println("Cantidad de dias calculado"+" "+cantidadDias);
+                long precioTotal = (long) (cantidadPersonas * precioxnoche * cantidadDias);
                 tf_montoTotal.setText(Long.toString(precioTotal));
             }else{
                 JOptionPane.showMessageDialog(null, "Fecha de checkin posterior a checkout");

@@ -46,7 +46,7 @@ import view.ProdSerCreate;
  */
 public class MenuAdminHotel extends javax.swing.JFrame {
     public static int opcion=0;
-    private Connection connection;
+   
 
     /**
      * Creates new form MenuAdminHotel
@@ -850,56 +850,10 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
     private void mItem_planillaPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_planillaPagosActionPerformed
         // TODO add your handling code here:
-        int respuesta;
-        Query q;
-        respuesta = JOptionPane.showConfirmDialog(null, "¿Desea Generar la planilla de pagos de sueldos?","Confirmar Creación",JOptionPane.YES_NO_OPTION );
-        if (respuesta == JOptionPane.YES_OPTION){
-             EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
-             EntityManager ema = fact.createEntityManager();
-             q=ema.createNativeQuery("Select * from planilla_pago_sueldo where "
-                     + "month(fechaPago)=month(now()) and year(fechaPago)=year(now())");
-             List<PlanillaPagoSueldo>pps=q.getResultList();
-             if(pps.size()==0){
-                    Connection();//genero la planilla y despues consulto
-                     try
-                    {
-                        Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
-                        HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
-                        JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/pagoSueldos.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
-                        JasperViewer jv = new JasperViewer(jp,false);
-                        jv.setVisible(true);
-                        jv.setTitle("Planilla de Pago de Sueldos");
-                        Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
-                        jv.setIconImage(icon);
-                        jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                   }
-                    catch(Exception e)
-                   {
-                        e.printStackTrace();
-                   }
-             }else{
-                      try
-                    {
-                        Class.forName("com.mysql.jdbc.Driver");
-                        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
-                        HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
-                        JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/pagoSueldos.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
-                        JasperViewer jv = new JasperViewer(jp,false);
-                        jv.setVisible(true);
-                        jv.setTitle("Planilla de Pago de Sueldos");
-                        Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
-                        jv.setIconImage(icon);
-                        jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                   }
-                    catch(Exception e)
-                   {
-                        e.printStackTrace();
-                   }   
-             }
-            
-        }
-       
+         String args[]=new String[1];
+        args[0]="Generar Planilla de Pago de Sueldo";
+        PlanillaSueldo.main(args);
+      
         
     }//GEN-LAST:event_mItem_planillaPagosActionPerformed
 
@@ -965,25 +919,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         args[0]="Generar Informe de Asistencia";
         GenerarInformeAsist.main(args);
     }//GEN-LAST:event_mItem_informeAsistActionPerformed
-     private void Connection(){
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            String BaseDeDatos = "jdbc:mysql://localhost/hotel db?user=root&password=user";
-            connection = DriverManager.getConnection(BaseDeDatos);
-            if(connection != null){
-                System.out.println("Conexion Exitosa!");
-               // CallableStatement st=connection.prepareCall("{call planilla_pago (?,?,?,?)}");
-                 CallableStatement st=connection.prepareCall("{call planilla_pago }");
-                st.execute();
-                connection.close();
-            }else{
-                System.out.println("Conexion Fallida!");                
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        
-    }
+
     /**
      * @param args the command line arguments
      */

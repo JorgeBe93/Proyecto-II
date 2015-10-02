@@ -3,6 +3,12 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="Periodo_q" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Periodo_i" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      empleado.`nombre` AS empleado_nombre,
@@ -15,10 +21,12 @@
      planilla_pago_sueldo.`liquidoCobrado` AS planilla_pago_sueldo_liquidoCobrado,
      planilla_pago_sueldo.`codigoEmpleado` AS planilla_pago_sueldo_codigoEmpleado,
      planilla_pago_sueldo.`fechaPago` AS planilla_pago_sueldo_fechaPago,
-     planilla_pago_sueldo.`salarioBase` AS planilla_pago_sueldo_salarioBase
+     planilla_pago_sueldo.`salarioBase` AS planilla_pago_sueldo_salarioBase,
+     planilla_pago_sueldo.`periodo` AS planilla_pago_sueldo_periodo
 FROM
      `empleado` empleado INNER JOIN `planilla_pago_sueldo` planilla_pago_sueldo ON empleado.`codigoEmpleado` = planilla_pago_sueldo.`codigoEmpleado`
-where month(planilla_pago_sueldo.`fechaPago`)=month(now()) and year(planilla_pago_sueldo.`fechaPago`)=year(now())]]>
+WHERE
+  planilla_pago_sueldo.`periodo`=$P{Periodo_q}]]>
 	</queryString>
 	<field name="empleado_nombre" class="java.lang.String"/>
 	<field name="empleado_apellido" class="java.lang.String"/>
@@ -31,6 +39,7 @@ where month(planilla_pago_sueldo.`fechaPago`)=month(now()) and year(planilla_pag
 	<field name="planilla_pago_sueldo_codigoEmpleado" class="java.lang.Integer"/>
 	<field name="planilla_pago_sueldo_fechaPago" class="java.sql.Date"/>
 	<field name="planilla_pago_sueldo_salarioBase" class="java.lang.Integer"/>
+	<field name="planilla_pago_sueldo_periodo" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -43,11 +52,6 @@ where month(planilla_pago_sueldo.`fechaPago`)=month(now()) and year(planilla_pag
 				</textElement>
 				<text><![CDATA[PLANILLA DE PAGO DE SUELDOS]]></text>
 			</staticText>
-			<textField pattern="MMMMM , yyyy">
-				<reportElement uuid="cd3795e1-0bfd-4820-8da7-b9cc7ecd2597" x="158" y="70" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement uuid="d9bbc495-c9ab-452b-be00-5cc01e4d8d3c" x="58" y="70" width="100" height="20"/>
 				<textElement>
@@ -78,6 +82,11 @@ where month(planilla_pago_sueldo.`fechaPago`)=month(now()) and year(planilla_pag
 				<reportElement uuid="71cdba4c-7637-4c43-8943-8e3614aebec0" x="70" y="0" width="50" height="60"/>
 				<imageExpression><![CDATA["C:\\Proyecto-II\\src\\imagenes\\logo1.jpg"]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement uuid="79ec6d3f-4916-4836-9631-565c72cecc7e" x="156" y="70" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{Periodo_i}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
