@@ -197,7 +197,7 @@ public class ConsumoResumen extends javax.swing.JFrame {
 
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
         // TODO add your handling code here:
-        int total;
+        int total=0;
         String letras;
         Reserva r=(Reserva) list_codigoReserva.getSelectedItem();
         int codigo=r.getCodigoReserva();
@@ -212,7 +212,7 @@ public class ConsumoResumen extends javax.swing.JFrame {
                    return;
                    
          }*/
-         query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser  "
+        query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser  "
                     + "WHERE codigoReserva="
                     +"'"+codigo+"'"
                     +" AND numFactura is null", ConsumoProSer.class);

@@ -226,7 +226,7 @@ public class ConsumoFactura extends javax.swing.JFrame {
         cedula=r.getCodigoCliente().getCedula();
         ruc=r.getCodigoCliente().getRuc();
         Date fecha=new Date();
-        int total;
+        int total=0;
         DateFormat formato=new SimpleDateFormat("dd-MM-yyyy");
        /* query=entityManager.createNativeQuery("SELECT * FROM factura_cobro  "
                     + "WHERE codigoReserva="
@@ -260,6 +260,7 @@ public class ConsumoFactura extends javax.swing.JFrame {
                    return;
                    
          }
+         
          query=entityManager.createNativeQuery("SELECT SUM(total) FROM consumo_pro_ser  "
                     + "WHERE codigoReserva="
                     +"'"+codigo+"'"

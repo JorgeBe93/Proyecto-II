@@ -29,7 +29,7 @@ FROM
      INNER JOIN `habitacion` habitacion ON reserva.`numHabitacion` = habitacion.`numero`
      INNER JOIN `categ_habitacion` categ_habitacion ON habitacion.`codigoCategoria` = categ_habitacion.`codigoCategoria`
 WHERE
-     reserva.`codigoReserva` = $P{CodigoReserva}  and consumo_pro_ser.`numFactura` is null]]>
+     reserva.`codigoReserva` = $P{CodigoReserva}  and consumo_pro_ser.`numFactura` is null and consumo_pro_ser.`total`!=0]]>
 	</queryString>
 	<field name="consumo_pro_ser_codigoConsumo" class="java.lang.Integer"/>
 	<field name="consumo_pro_ser_cantidad" class="java.lang.Integer"/>
@@ -225,12 +225,12 @@ WHERE
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField pattern="#,##0">
-				<reportElement uuid="b184928b-dc7b-45b9-b9c5-749aabc29435" x="12" y="0" width="100" height="20"/>
+				<reportElement uuid="b184928b-dc7b-45b9-b9c5-749aabc29435" x="12" y="0" width="72" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{consumo_pro_ser_codigoConsumo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="3d252b06-27a1-4cdb-9fb9-7796b410eb4b" x="143" y="0" width="100" height="20"/>
+				<reportElement uuid="3d252b06-27a1-4cdb-9fb9-7796b410eb4b" x="107" y="0" width="147" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{producto_servicio_nombre}]]></textFieldExpression>
 			</textField>

@@ -474,7 +474,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                                 +codigo, ConsumoProSer.class);
                                 List<ConsumoProSer> cps=query.getResultList();
                                 if(!cps.isEmpty()){
-                                    query= ema.createNativeQuery( "SELECT * FROM producto_servicio p "
+                                   query= ema.createNativeQuery( "SELECT * FROM producto_servicio p "
                                     + "WHERE p.nombre LIKE "
                                     +"'%saldo de reserva%'", ProductoServicio.class);
                                     List<ProductoServicio> p=query.getResultList();
@@ -483,15 +483,22 @@ public class ReservaEditar extends javax.swing.JFrame {
                                             + "para guardar el saldo de la reserva", "Error",JOptionPane.ERROR_MESSAGE);
                                             return;
                                     }
-                                    ConsumoProSer cp=new ConsumoProSer();
-                                    cp.setCodigoConsumo(cps.get(0).getCodigoConsumo());
-                                    System.out.print(cps.get(0).getCodigoConsumo());
-                                    cp.setCodigoReserva(reservaLocal);
-                                    cp.setCantidad(dias);
-                                    cp.setTotal(diferencia);
-                                    cp.setCodigoPS(p.get(0));
-                                    ema.merge(cp);
-                                    ema.flush();
+                                    if(diferencia==0){
+                                            ConsumoProSer con=ema.find(ConsumoProSer.class, cps.get(0).getCodigoConsumo() );
+                                             ema.remove(con);
+                                             ema.flush();
+                                    }else{
+                                         ConsumoProSer cp=new ConsumoProSer();
+                                         cp.setCodigoConsumo(cps.get(0).getCodigoConsumo());
+                                         System.out.print(cps.get(0).getCodigoConsumo());
+                                         cp.setCodigoReserva(reservaLocal);
+                                         cp.setCantidad(dias);
+                                         cp.setTotal(diferencia);
+                                         cp.setCodigoPS(p.get(0));
+                                         ema.merge(cp);
+                                         ema.flush(); 
+                                    }
+                                    
 
                                 }else{
                                         query= ema.createNativeQuery( "SELECT * FROM producto_servicio p "
@@ -503,13 +510,15 @@ public class ReservaEditar extends javax.swing.JFrame {
                                                  + "para guardar el saldo de la reserva", "Error",JOptionPane.ERROR_MESSAGE);
                                                  return;
                                          }
-                                        ConsumoProSer cp=new ConsumoProSer();
-                                        cp.setCodigoReserva(reservaLocal);
-                                        cp.setCantidad(dias);
-                                        cp.setTotal(diferencia);
-                                        cp.setCodigoPS(p.get(0));
-                                        ema.persist(cp);
-                                        ema.flush();
+                                         if(diferencia!=0){
+                                              ConsumoProSer cp=new ConsumoProSer();
+                                                cp.setCodigoReserva(reservaLocal);
+                                                cp.setCantidad(dias);
+                                                cp.setTotal(diferencia);
+                                                cp.setCodigoPS(p.get(0));
+                                                ema.persist(cp);
+                                                ema.flush();
+                                         }        
                                 }  
                                 monto_fac=reservaLocal.getMontoAbonado()-reserva.getMontoAbonado();
                                  //generamos la factura

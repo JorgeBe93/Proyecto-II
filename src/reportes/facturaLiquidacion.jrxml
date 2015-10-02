@@ -42,23 +42,32 @@
      cliente.`apellido` AS cliente_apellido,
      cliente.`direccion` AS cliente_direccion,
      cliente.`telefono` AS cliente_telefono,
+     reserva.`codigoReserva` AS reserva_codigoReserva,
+     reserva.`checkIn` AS reserva_checkIn,
+     reserva.`checkOut` AS reserva_checkOut,
+     reserva.`cantPersonas` AS reserva_cantPersonas,
+     reserva.`montoTotal` AS reserva_montoTotal,
+     reserva.`montoAbonado` AS reserva_montoAbonado,
+     reserva.`codigoCliente` AS reserva_codigoCliente,
+     reserva.`numHabitacion` AS reserva_numHabitacion,
+     reserva.`numPresupuesto` AS reserva_numPresupuesto,
+     consumo_pro_ser.`codigoConsumo` AS consumo_pro_ser_codigoConsumo,
+     consumo_pro_ser.`cantidad` AS consumo_pro_ser_cantidad,
+     consumo_pro_ser.`total` AS consumo_pro_ser_total,
+     consumo_pro_ser.`codigoReserva` AS consumo_pro_ser_codigoReserva,
+     consumo_pro_ser.`codigoPS` AS consumo_pro_ser_codigoPS,
+     consumo_pro_ser.`numFactura` AS consumo_pro_ser_numFactura,
      factura_cobro.`numFactura` AS factura_cobro_numFactura,
      factura_cobro.`fechaEmision` AS factura_cobro_fechaEmision,
      factura_cobro.`rucCliente` AS factura_cobro_rucCliente,
      factura_cobro.`concepto` AS factura_cobro_concepto,
      factura_cobro.`total` AS factura_cobro_total,
      factura_cobro.`tipoFactura` AS factura_cobro_tipoFactura,
-     factura_cobro.`codigoReserva` AS factura_cobro_codigoReserva,
-     consumo_pro_ser.`codigoConsumo` AS consumo_pro_ser_codigoConsumo,
-     consumo_pro_ser.`cantidad` AS consumo_pro_ser_cantidad,
-     consumo_pro_ser.`total` AS consumo_pro_ser_total,
-     consumo_pro_ser.`codigoReserva` AS consumo_pro_ser_codigoReserva,
-     consumo_pro_ser.`codigoPS` AS consumo_pro_ser_codigoPS,
-     consumo_pro_ser.`numFactura` AS consumo_pro_ser_numFactura
+     factura_cobro.`codigoReserva` AS factura_cobro_codigoReserva
 FROM
-     `reserva` reserva INNER JOIN `factura_cobro` factura_cobro ON reserva.`codigoReserva` = factura_cobro.`codigoReserva`
-     INNER JOIN `cliente` cliente ON reserva.`codigoCliente` = cliente.`codigoCliente`
+     `cliente` cliente INNER JOIN `reserva` reserva ON cliente.`codigoCliente` = reserva.`codigoCliente`
      INNER JOIN `consumo_pro_ser` consumo_pro_ser ON reserva.`codigoReserva` = consumo_pro_ser.`codigoReserva`
+     INNER JOIN `factura_cobro` factura_cobro ON reserva.`codigoReserva` = factura_cobro.`codigoReserva`
      AND factura_cobro.`numFactura` = consumo_pro_ser.`numFactura`
      INNER JOIN `producto_servicio` producto_servicio ON consumo_pro_ser.`codigoPS` = producto_servicio.`codigoPS`
 WHERE
@@ -70,6 +79,21 @@ WHERE
 	<field name="cliente_apellido" class="java.lang.String"/>
 	<field name="cliente_direccion" class="java.lang.String"/>
 	<field name="cliente_telefono" class="java.lang.Integer"/>
+	<field name="reserva_codigoReserva" class="java.lang.Integer"/>
+	<field name="reserva_checkIn" class="java.sql.Date"/>
+	<field name="reserva_checkOut" class="java.sql.Date"/>
+	<field name="reserva_cantPersonas" class="java.lang.Integer"/>
+	<field name="reserva_montoTotal" class="java.lang.Integer"/>
+	<field name="reserva_montoAbonado" class="java.lang.Integer"/>
+	<field name="reserva_codigoCliente" class="java.lang.Integer"/>
+	<field name="reserva_numHabitacion" class="java.lang.Integer"/>
+	<field name="reserva_numPresupuesto" class="java.lang.Integer"/>
+	<field name="consumo_pro_ser_codigoConsumo" class="java.lang.Integer"/>
+	<field name="consumo_pro_ser_cantidad" class="java.lang.Integer"/>
+	<field name="consumo_pro_ser_total" class="java.lang.Integer"/>
+	<field name="consumo_pro_ser_codigoReserva" class="java.lang.Integer"/>
+	<field name="consumo_pro_ser_codigoPS" class="java.lang.Integer"/>
+	<field name="consumo_pro_ser_numFactura" class="java.lang.Integer"/>
 	<field name="factura_cobro_numFactura" class="java.lang.Integer"/>
 	<field name="factura_cobro_fechaEmision" class="java.lang.String"/>
 	<field name="factura_cobro_rucCliente" class="java.lang.String"/>
@@ -77,12 +101,6 @@ WHERE
 	<field name="factura_cobro_total" class="java.lang.Integer"/>
 	<field name="factura_cobro_tipoFactura" class="java.lang.String"/>
 	<field name="factura_cobro_codigoReserva" class="java.lang.Integer"/>
-	<field name="consumo_pro_ser_codigoConsumo" class="java.lang.Integer"/>
-	<field name="consumo_pro_ser_cantidad" class="java.lang.Integer"/>
-	<field name="consumo_pro_ser_total" class="java.lang.Integer"/>
-	<field name="consumo_pro_ser_codigoReserva" class="java.lang.Integer"/>
-	<field name="consumo_pro_ser_codigoPS" class="java.lang.Integer"/>
-	<field name="consumo_pro_ser_numFactura" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -151,16 +169,16 @@ WHERE
 				<text><![CDATA[Fin de Vigencia: 30/12/2015]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d3863260-ab60-448c-a582-f1b8aa8d465a" x="551" y="79" width="123" height="20"/>
+				<reportElement uuid="d3863260-ab60-448c-a582-f1b8aa8d465a" x="550" y="64" width="123" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RUC: 80051478-5]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5ed38dc8-2d77-4bb4-a57d-ad965b5302b1" x="469" y="106" width="124" height="20"/>
+				<reportElement uuid="5ed38dc8-2d77-4bb4-a57d-ad965b5302b1" x="568" y="88" width="81" height="20"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="13" isBold="false"/>
 				</textElement>
 				<text><![CDATA[FACTURA N°]]></text>
 			</staticText>
@@ -249,13 +267,6 @@ WHERE
 				<textFieldExpression><![CDATA[$F{cliente_telefono}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="ec2b67c7-a563-41a6-b6de-ac1e26561338" x="593" y="106" width="100" height="20"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{factura_cobro_numFactura}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement uuid="9eb753bc-5878-486c-9fc4-7625120138ff" x="583" y="153" width="100" height="20"/>
 				<textElement>
 					<font size="12"/>
@@ -282,6 +293,20 @@ WHERE
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factura_cobro_codigoReserva}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fa2cb264-0e75-45d0-bcd1-ca037712ddbf" x="559" y="116" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[001 - 002 - ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b8ed5fcb-3fa3-40cd-b38e-c592900d184d" x="621" y="116" width="100" height="20"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NumFactura}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

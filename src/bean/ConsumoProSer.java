@@ -6,6 +6,8 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -31,6 +34,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "ConsumoProSer.findByCantidad", query = "SELECT c FROM ConsumoProSer c WHERE c.cantidad = :cantidad"),
     @NamedQuery(name = "ConsumoProSer.findByTotal", query = "SELECT c FROM ConsumoProSer c WHERE c.total = :total")})
 public class ConsumoProSer implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,7 +76,9 @@ public class ConsumoProSer implements Serializable {
     }
 
     public void setCodigoConsumo(Integer codigoConsumo) {
+        Integer oldCodigoConsumo = this.codigoConsumo;
         this.codigoConsumo = codigoConsumo;
+        changeSupport.firePropertyChange("codigoConsumo", oldCodigoConsumo, codigoConsumo);
     }
 
     public int getCantidad() {
@@ -79,7 +86,9 @@ public class ConsumoProSer implements Serializable {
     }
 
     public void setCantidad(int cantidad) {
+        int oldCantidad = this.cantidad;
         this.cantidad = cantidad;
+        changeSupport.firePropertyChange("cantidad", oldCantidad, cantidad);
     }
 
     public int getTotal() {
@@ -87,7 +96,9 @@ public class ConsumoProSer implements Serializable {
     }
 
     public void setTotal(int total) {
+        int oldTotal = this.total;
         this.total = total;
+        changeSupport.firePropertyChange("total", oldTotal, total);
     }
 
     public ProductoServicio getCodigoPS() {
@@ -95,7 +106,9 @@ public class ConsumoProSer implements Serializable {
     }
 
     public void setCodigoPS(ProductoServicio codigoPS) {
+        ProductoServicio oldCodigoPS = this.codigoPS;
         this.codigoPS = codigoPS;
+        changeSupport.firePropertyChange("codigoPS", oldCodigoPS, codigoPS);
     }
 
     public Reserva getCodigoReserva() {
@@ -103,7 +116,9 @@ public class ConsumoProSer implements Serializable {
     }
 
     public void setCodigoReserva(Reserva codigoReserva) {
+        Reserva oldCodigoReserva = this.codigoReserva;
         this.codigoReserva = codigoReserva;
+        changeSupport.firePropertyChange("codigoReserva", oldCodigoReserva, codigoReserva);
     }
 
     public FacturaCobro getNumFactura() {
@@ -111,7 +126,9 @@ public class ConsumoProSer implements Serializable {
     }
 
     public void setNumFactura(FacturaCobro numFactura) {
+        FacturaCobro oldNumFactura = this.numFactura;
         this.numFactura = numFactura;
+        changeSupport.firePropertyChange("numFactura", oldNumFactura, numFactura);
     }
 
     @Override
@@ -141,6 +158,14 @@ public class ConsumoProSer implements Serializable {
     @Override
     public String toString() {
         return "codigoConsumo=" + codigoConsumo + ", cantidad=" + cantidad + ", total=" + total + ", codigoPS=" + codigoPS + ", codigoReserva=" + codigoReserva + ", numFactura=" + numFactura;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
     

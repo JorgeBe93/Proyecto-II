@@ -473,13 +473,16 @@ public class CrearReserva extends javax.swing.JFrame {
                                          + "para guardar el saldo de la reserva", "Error",JOptionPane.ERROR_MESSAGE);
                                  return;
                              }
-                              ConsumoProSer cp=new ConsumoProSer();
-                             cp.setCodigoReserva(reserva);
-                             cp.setCantidad(0);
-                             cp.setTotal(diferencia);
-                             cp.setCodigoPS(p.get(0));
-                             ema.persist(cp);
-                             ema.flush();
+                             //no registrar en consumo de producto servicio
+                             if(diferencia!=0){
+                                ConsumoProSer cp=new ConsumoProSer();
+                                cp.setCodigoReserva(reserva);
+                                cp.setCantidad(0);
+                                cp.setTotal(diferencia);
+                                cp.setCodigoPS(p.get(0));
+                                ema.persist(cp);
+                                ema.flush(); 
+                             }
                               //generamos la factura
                              f.setCodigoReserva(reserva);
                              f.setConcepto("anticipo de reserva");

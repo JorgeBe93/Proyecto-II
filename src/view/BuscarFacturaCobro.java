@@ -6,8 +6,8 @@
 
 package view;
 
+import bean.ConsumoProSer;
 import bean.FacturaCobro;
-import bean.Reserva;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,6 +26,7 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
      */
     public BuscarFacturaCobro() {
         initComponents();
+         DetalleList.clear();
     }
 
     /**
@@ -41,6 +42,8 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT f FROM FacturaCobro f");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
+        DetalleQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM ConsumoProSer c");
+        DetalleList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(DetalleQuery.getResultList());
         panel_BuscarFacturaCobro = new javax.swing.JPanel();
         lbl_BuscarFacturaCobro = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -52,6 +55,8 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         btn_cancelar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -184,6 +189,52 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
             }
         });
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle de Factura"));
+
+        masterTableDet.setEnabled(false);
+
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, DetalleList, masterTableDet);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoConsumo}"));
+        columnBinding.setColumnName("Codigo Consumo");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoPS.nombre}"));
+        columnBinding.setColumnName("Descripción");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cantidad}"));
+        columnBinding.setColumnName("Cantidad");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoPS.costo}"));
+        columnBinding.setColumnName("Unitario");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${total}"));
+        columnBinding.setColumnName("Total");
+        columnBinding.setColumnClass(Integer.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane2.setViewportView(masterTableDet);
+        if (masterTableDet.getColumnModel().getColumnCount() > 0) {
+            masterTableDet.getColumnModel().getColumn(0).setPreferredWidth(30);
+            masterTableDet.getColumnModel().getColumn(1).setPreferredWidth(140);
+            masterTableDet.getColumnModel().getColumn(2).setPreferredWidth(15);
+        }
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -191,17 +242,19 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(338, 338, 338)
-                        .addComponent(btn_cancelar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(68, 68, 68)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(panel_BuscarFacturaCobro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(44, Short.MAX_VALUE))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(373, 373, 373)
+                        .addComponent(btn_cancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,11 +263,13 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
                 .addComponent(panel_BuscarFacturaCobro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addComponent(btn_cancelar)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
 
         bindingGroup.bind();
@@ -246,24 +301,31 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         // TODO add your handling code here:
+        int numFact;
         if (tf_valor.getText().length()==0){
             JOptionPane.showMessageDialog(null,"Ingrese algún valor para efectuar la búsqueda", "Advertencia",JOptionPane.ERROR_MESSAGE);
             return;
         }
         else{
             if (list_filtros.getSelectedItem()=="Número Factura"){
+                numFact=Integer.parseInt(tf_valor.getText());
                 query = entityManager.createNamedQuery("FacturaCobro.findByNumFactura");
-                query.setParameter("numFactura",Integer.parseInt(tf_valor.getText()));
+                query.setParameter("numFactura",numFact);
                 List<FacturaCobro> f = query.getResultList();
                 if (f.isEmpty()){
                     JOptionPane.showMessageDialog(null, "Número de Factura inexistente","Error",JOptionPane.ERROR_MESSAGE );
                     tf_valor.setText(null);
                     return;
                 }
+                DetalleList.clear();
                 list.clear();
                 list.addAll(f);
+                if(!"anticipo de reserva".equals(f.get(0).getConcepto())){
+                    cargarDetalle(numFact);
+                }
             }
             else if (list_filtros.getSelectedItem()=="Condición de Pago"){
+                  DetalleList.clear();
                 query = entityManager.createNativeQuery("SELECT * FROM factura_cobro "
                     + "WHERE tipoFactura LIKE "
                     +"'%"+tf_valor.getText()+"%'", FacturaCobro.class);
@@ -277,6 +339,7 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
                 list.addAll(f);
             }
             else if(list_filtros.getSelectedItem()=="Concepto"){
+                  DetalleList.clear();
                 query=entityManager.createNativeQuery("SELECT * FROM factura_cobro "
                     + "WHERE concepto LIKE "
                     +"'%"+tf_valor.getText()+"%'", FacturaCobro.class);
@@ -291,6 +354,7 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
                 return;
             }
             else if(list_filtros.getSelectedItem()=="Reserva"){
+                  DetalleList.clear();
                 query=entityManager.createNativeQuery("SELECT * FROM factura_cobro "
                     + "WHERE codigoReserva= "
                     +"'"+tf_valor.getText()+"'", FacturaCobro.class);
@@ -305,6 +369,7 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
                 return;
             }
             else if(list_filtros.getSelectedItem()=="Ruc Cliente"){
+                  DetalleList.clear();
                 query = entityManager.createNativeQuery( "SELECT * FROM factura_cobro "
                     + "WHERE rucCliente LIKE "
                     +"'%"+tf_valor.getText()+"%'", FacturaCobro.class);
@@ -319,6 +384,7 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
                 return;
             }
             else if(list_filtros.getSelectedItem()=="Fecha"){
+                  DetalleList.clear();
                 query=entityManager.createNativeQuery("SELECT * FROM factura_cobro "
                     + "WHERE fechaEmision LIKE "
                     +"'%"+tf_valor.getText()+"%'", FacturaCobro.class);
@@ -352,7 +418,18 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
             tf_valor.setText(formato.format(fecha));  
         }
     }//GEN-LAST:event_list_filtrosFocusLost
-
+    private void cargarDetalle(int numFact){
+       String q;
+        q="SELECT * FROM consumo_pro_ser "+ "WHERE numFactura= "+numFact;
+        System.out.println(q);
+        DetalleQuery=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser "
+                    + "WHERE numFactura= "
+                    +numFact, ConsumoProSer.class);
+      List<ConsumoProSer> cps=DetalleQuery.getResultList();
+      System.out.println(cps.get(0));
+      DetalleList.clear();
+      DetalleList.addAll(cps);
+    }
     /**
      * @param args the command line arguments
      */
@@ -388,22 +465,28 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
                frame.setTitle("Buscar Factura de Cobro");
                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                frame.setLocationRelativeTo(null);
+              
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.util.List<bean.ConsumoProSer> DetalleList;
+    private javax.persistence.Query DetalleQuery;
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_BuscarFacturaCobro;
     private javax.swing.JLabel lbl_filtro;
     private javax.swing.JLabel lbl_valor;
     private java.util.List<bean.FacturaCobro> list;
     private javax.swing.JComboBox list_filtros;
     private javax.swing.JTable masterTable;
+    public static final javax.swing.JTable masterTableDet = new javax.swing.JTable();
     private javax.swing.JPanel panel_BuscarFacturaCobro;
     private javax.persistence.Query query;
     private javax.swing.JTextField tf_valor;
