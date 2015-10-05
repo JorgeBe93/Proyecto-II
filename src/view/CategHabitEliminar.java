@@ -12,6 +12,7 @@ import bean.Habitacion;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -21,6 +22,8 @@ import javax.swing.JOptionPane;
  */
 public class CategHabitEliminar extends javax.swing.JFrame {
     private int resp;
+     Date fecha=new Date();
+     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     /**
      * Creates new form CategHabitEliminar
@@ -226,25 +229,30 @@ public class CategHabitEliminar extends javax.swing.JFrame {
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
          String valor;
+         int i;
+          JOptionPane.showMessageDialog(null, "Podrían existir registros de habitaciones para esta categoría"
+                    + " si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
         resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
         if(resp==JOptionPane.YES_OPTION){
             entityManager.getTransaction().begin();
+             //eliminamos las habitaciones que dependen de dicha reserva
+                query=entityManager.createNativeQuery("SELECT * FROM habitacion WHERE "
+                        + "codigoCategoria= "
+                        + "'"+tf_codigo.getText()+"'",Habitacion.class);
+                List<Habitacion> h=query.getResultList();
+                if(h.size()>=1){
+                    for(i=0;i<h.size();i++){
+                        valor=h.get(i).toString();
+                        entityManager.remove(h.get(i));
+                        registrarAuditoria("Habitacion",valor);
+                    }
+                    entityManager.flush();
+                }
+                //
              CategHabitacion c=entityManager.find(CategHabitacion.class,Integer.parseInt(tf_codigo.getText()) );
              valor=c.toString();//guardamos el objeto antes de eliminar
              entityManager.remove(c);
-            
-             //registramos los datos necesarios para la auditoria
-             AuditoriaSistema as=new AuditoriaSistema();
-             as.setAccion("Eliminación");
-             as.setTabla("Categoría de Habitación");
-             as.setAntes(valor);
-             as.setDespues("No hay cambios");
-             //trabajamos con la fecha
-             Date fecha=new Date();
-             DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-             as.setFechaHora((formato.format(fecha)));
-             as.setUsuario(LoginView.nombreUsuario);
-             entityManager.persist(as);
+             registrarAuditoria("Categoria de Habitacion",valor);
              entityManager.getTransaction().commit();
              entityManager.close();
              JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
@@ -252,7 +260,17 @@ public class CategHabitEliminar extends javax.swing.JFrame {
         }
         this.dispose();
     }//GEN-LAST:event_btn_eliminarActionPerformed
-
+  private void registrarAuditoria(String entidad,String valor){
+            AuditoriaSistema as=new AuditoriaSistema();
+            as.setAccion("Eliminación");
+            as.setTabla(entidad);
+            as.setFechaHora(formato.format(fecha));
+            as.setUsuario(LoginView.nombreUsuario);
+            as.setAntes(valor);
+            as.setDespues("No hay modificaciones");
+            entityManager.persist(as);
+            entityManager.flush();
+    }
     /**
      * @param args the command line arguments
      */

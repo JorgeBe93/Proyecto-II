@@ -7,11 +7,13 @@
 package view;
 
 import bean.AuditoriaSistema;
-import bean.CategHabitacion;
 import bean.Cliente;
+import bean.Reserva;
+import bean.SeguimientoActividad;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -400,10 +402,25 @@ public class ClienteEliminar extends javax.swing.JFrame {
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
+        int i;
        String valor;
+       JOptionPane.showMessageDialog(null, "Existen registros de reservas para este cliente"
+                    + "si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
         resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
         if(resp==JOptionPane.YES_OPTION){
             entityManager.getTransaction().begin();
+            //eliminamos las reservas efectuadas por dicho cliente
+                query=entityManager.createNativeQuery("SELECT * FROM reserva WHERE "
+                        + "codigoCliente= "
+                        + "'"+tf_codigo.getText()+"'",Reserva.class);
+                List<Reserva> r=query.getResultList();
+                if(r.size()>=1){
+                    for(i=0;i<r.size();i++){
+                        entityManager.remove(r.get(i));
+                    }
+                    entityManager.flush();
+                }
+                //
              Cliente c=entityManager.find(Cliente.class,Integer.parseInt(tf_codigo.getText()) );
              valor=c.toString();//guardamos el objeto antes de eliminar
              entityManager.remove(c);

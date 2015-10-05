@@ -195,7 +195,7 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
 
         jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, DetalleList, masterTableDet);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoConsumo}"));
-        columnBinding.setColumnName("Codigo Consumo");
+        columnBinding.setColumnName(" Consumo");
         columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoPS.nombre}"));
         columnBinding.setColumnName("Descripción");
@@ -216,6 +216,8 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
             masterTableDet.getColumnModel().getColumn(0).setPreferredWidth(30);
             masterTableDet.getColumnModel().getColumn(1).setPreferredWidth(140);
             masterTableDet.getColumnModel().getColumn(2).setPreferredWidth(15);
+            masterTableDet.getColumnModel().getColumn(3).setPreferredWidth(20);
+            masterTableDet.getColumnModel().getColumn(4).setPreferredWidth(20);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -223,9 +225,9 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

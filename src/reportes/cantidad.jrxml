@@ -110,7 +110,7 @@ group by codigoReserva]]>
 				<textElement/>
 				<text><![CDATA[Días Ocupados:]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="">
 				<reportElement uuid="c2a85f06-874f-48dd-b22c-11306243a87a" x="117" y="22" width="100" height="20"/>
 				<textElement>
 					<font size="11" isBold="true"/>

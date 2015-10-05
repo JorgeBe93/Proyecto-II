@@ -7,8 +7,9 @@
 package view;
 
 import bean.AuditoriaSistema;
+import bean.ConsumoProSer;
+import bean.FacturaCobro;
 import bean.Reserva;
-import bean.Rol;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +20,6 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import static view.RolEliminar.tf_identi;
 
 /**
  *
@@ -28,6 +28,10 @@ import static view.RolEliminar.tf_identi;
 public class ReservaEliminar extends javax.swing.JFrame {
     public static Reserva reserva;
     private int resp;
+     EntityManagerFactory fact=Persistence.createEntityManagerFactory("proyectoPU");
+     EntityManager ema= fact.createEntityManager();
+     Date fecha=new Date();
+      DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     /**
      * Creates new form ReservaEliminar
      */
@@ -390,12 +394,11 @@ public class ReservaEliminar extends javax.swing.JFrame {
 
     private void btn_elimnarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_elimnarActionPerformed
             String valor;
+            int i;
             Date fecha1=new Date();
             String fecha2;
             DateFormat formato1=new SimpleDateFormat("yyyy-MM-dd");
             fecha2=formato1.format(fecha1);
-            EntityManagerFactory fact=Persistence.createEntityManagerFactory("proyectoPU");
-            EntityManager ema= fact.createEntityManager();
             Query query ;
             int codigo=reserva.getCodigoReserva();
          //verificamos si el consumo corresponde a un reserva vigente que aun no ha sido cancelada
@@ -412,30 +415,61 @@ public class ReservaEliminar extends javax.swing.JFrame {
                 this.dispose();
                 return;
             }
+            JOptionPane.showMessageDialog(null, "Podrían existir registros de factura y consumo para esta reserva"
+                    + " si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
         resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
         if(resp==JOptionPane.YES_OPTION){
-
             ema.getTransaction().begin();
+            //eliminamos las facturas que dependen de dicha reserva
+                query=ema.createNativeQuery("SELECT * FROM factura_cobro WHERE "
+                        + "codigoReserva= "
+                        + "'"+tf_codigoReserva.getText()+"'",FacturaCobro.class);
+                List<FacturaCobro> f=query.getResultList();
+                if(f.size()>=1){
+                    for(i=0;i<f.size();i++){
+                        valor=f.get(i).toString();
+                        ema.remove(f.get(i));
+                        registrarAuditoria("FacturaCobro",valor);
+                    }
+                    ema.flush();
+                }
+                //
+                //eliminamos los consumos  que dependen de dicha reserva
+                query=ema.createNativeQuery("SELECT * FROM consumo_pro_ser WHERE "
+                        + "codigoReserva= "
+                        + "'"+tf_codigoReserva.getText()+"'",ConsumoProSer.class);
+                List<ConsumoProSer> c=query.getResultList();
+                if(c.size()>=1){
+                    for(i=0;i<c.size();i++){
+                        valor=c.get(i).toString();
+                        ema.remove(c.get(i));
+                        registrarAuditoria("Consumo P/S",valor);
+                    }
+                    ema.flush();
+                }
+                //
+                //eliminamos la reserva
             Reserva reservaFind=ema.find(Reserva.class, reserva.getCodigoReserva() );
             valor=reservaFind.toString();//guardamos el objeto antes de eliminar
             ema.remove(reservaFind);
-            AuditoriaSistema as=new AuditoriaSistema();
-            as.setAccion("Eliminación");
-            as.setTabla("Reserva");
-            Date fecha=new Date();
-            DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            as.setFechaHora(formato.format(fecha));
-            as.setUsuario(LoginView.nombreUsuario);
-            as.setAntes(valor);
-            as.setDespues("No hay modificaciones");
-            ema.persist(as);
+            registrarAuditoria("Reserva",valor);
             ema.getTransaction().commit();
             ema.close();
             JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
         }
         this.dispose();
     }//GEN-LAST:event_btn_elimnarActionPerformed
-
+    private void registrarAuditoria(String entidad,String valor){
+         AuditoriaSistema as=new AuditoriaSistema();
+            as.setAccion("Eliminación");
+            as.setTabla(entidad);
+            as.setFechaHora(formato.format(fecha));
+            as.setUsuario(LoginView.nombreUsuario);
+            as.setAntes(valor);
+            as.setDespues("No hay modificaciones");
+            ema.persist(as);
+            ema.flush();
+    }
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();

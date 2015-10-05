@@ -174,11 +174,15 @@ public class FacturaCobro implements Serializable {
         return true;
     }
 
+/*    @Override
+    public String toString() {
+    return "bean.FacturaCobro[ numFactura=" + numFactura + " ]";
+    }*/
     @Override
     public String toString() {
-        return "bean.FacturaCobro[ numFactura=" + numFactura + " ]";
+        return  "numFactura=" + numFactura + ", fechaEmision=" + fechaEmision + ", rucCliente=" + rucCliente + ", concepto=" + concepto + ", total=" + total + ", tipoFactura=" + tipoFactura + ", codigoReserva=" + codigoReserva;
     }
-
+    
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.addPropertyChangeListener(listener);
     }

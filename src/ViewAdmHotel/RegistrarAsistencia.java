@@ -594,7 +594,7 @@ public class RegistrarAsistencia extends javax.swing.JFrame {
                                  + "FROM asistencia where codigoEmpleado="+id+" )", Asistencia.class);
                          as=query.getResultList();
                          if(!as.isEmpty()){ //ya marco la entrada 
-                                 if(as.get(0).getHoraSalida()==null){
+                                 if(as.get(0).getHoraSalida()==null || " ".equals(as.get(0).getHoraSalida())){
                                      lbl_empleado.setText(e.get(0).getNombre().toUpperCase()+" "+e.get(0).getApellido().toUpperCase());
                                      horaE=as.get(0).getHoraEntrada();
                                      lbl_entrada2.setText(horaE);
