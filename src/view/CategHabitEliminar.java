@@ -252,6 +252,7 @@ public class CategHabitEliminar extends javax.swing.JFrame {
              CategHabitacion c=entityManager.find(CategHabitacion.class,Integer.parseInt(tf_codigo.getText()) );
              valor=c.toString();//guardamos el objeto antes de eliminar
              entityManager.remove(c);
+             entityManager.flush();
              registrarAuditoria("Categoria de Habitacion",valor);
              entityManager.getTransaction().commit();
              entityManager.close();

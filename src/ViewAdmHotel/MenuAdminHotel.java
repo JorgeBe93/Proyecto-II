@@ -87,6 +87,12 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         mItem_buscarPS = new javax.swing.JMenuItem();
         menu_informePO = new javax.swing.JMenu();
         menu_RRHH = new javax.swing.JMenu();
+        menu_cargo = new javax.swing.JMenu();
+        mItem_crearCargo = new javax.swing.JMenuItem();
+        mItem_editarCargo = new javax.swing.JMenuItem();
+        mItem_eliminarCargo = new javax.swing.JMenuItem();
+        mItem_buscarCargo = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
         menu_empleado = new javax.swing.JMenu();
         mItem_crearEmpleado = new javax.swing.JMenuItem();
         mItem_editarEmpleado = new javax.swing.JMenuItem();
@@ -295,6 +301,43 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
         menu_RRHH.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_RRHH.setText("Recursos Humanos");
+
+        menu_cargo.setText("Cargo");
+
+        mItem_crearCargo.setText("Crear Cargo");
+        mItem_crearCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_crearCargoActionPerformed(evt);
+            }
+        });
+        menu_cargo.add(mItem_crearCargo);
+
+        mItem_editarCargo.setText("EditarCargo");
+        mItem_editarCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_editarCargoActionPerformed(evt);
+            }
+        });
+        menu_cargo.add(mItem_editarCargo);
+
+        mItem_eliminarCargo.setText("Eliminar Cargo");
+        mItem_eliminarCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_eliminarCargoActionPerformed(evt);
+            }
+        });
+        menu_cargo.add(mItem_eliminarCargo);
+
+        mItem_buscarCargo.setText("Buscar Cargo");
+        mItem_buscarCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_buscarCargoActionPerformed(evt);
+            }
+        });
+        menu_cargo.add(mItem_buscarCargo);
+
+        menu_RRHH.add(menu_cargo);
+        menu_RRHH.add(jSeparator5);
 
         menu_empleado.setText("Empleado");
 
@@ -920,6 +963,37 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         GenerarInformeAsist.main(args);
     }//GEN-LAST:event_mItem_informeAsistActionPerformed
 
+    private void mItem_crearCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_crearCargoActionPerformed
+        // TODO add your handling code here:
+        String args[]=new String[1];
+        args[0]="Crear Cargo";
+        CargoCreate.main(args);
+    }//GEN-LAST:event_mItem_crearCargoActionPerformed
+
+    private void mItem_eliminarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarCargoActionPerformed
+        // TODO add your handling code here:
+        opcion=2;
+        String args[]=new String[1];
+        args[0]="Buscar Cargo";
+        CargoBuscar.main(args);
+    }//GEN-LAST:event_mItem_eliminarCargoActionPerformed
+
+    private void mItem_buscarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarCargoActionPerformed
+        // TODO add your handling code here:
+         opcion=3;
+        String args[]=new String[1];
+        args[0]="Buscar Cargo";
+        CargoBuscar.main(args);
+    }//GEN-LAST:event_mItem_buscarCargoActionPerformed
+
+    private void mItem_editarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_editarCargoActionPerformed
+        // TODO add your handling code here:
+         opcion=1;
+        String args[]=new String[1];
+        args[0]="Buscar Cargo";
+        CargoBuscar.main(args);
+    }//GEN-LAST:event_mItem_editarCargoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -965,10 +1039,12 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JMenuItem mIem_buscarSeg;
     private javax.swing.JMenuItem mItem_buscar;
     private javax.swing.JMenuItem mItem_buscarActividad;
     private javax.swing.JMenuItem mItem_buscarAsist;
+    private javax.swing.JMenuItem mItem_buscarCargo;
     private javax.swing.JMenuItem mItem_buscarCategPS;
     private javax.swing.JMenuItem mItem_buscarEmpleado;
     private javax.swing.JMenuItem mItem_buscarEvento;
@@ -976,12 +1052,14 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_buscarLugar;
     private javax.swing.JMenuItem mItem_buscarPS;
     private javax.swing.JMenuItem mItem_crearCH;
+    private javax.swing.JMenuItem mItem_crearCargo;
     private javax.swing.JMenuItem mItem_crearCategPS;
     private javax.swing.JMenuItem mItem_crearEmpleado;
     private javax.swing.JMenuItem mItem_crearHabit;
     private javax.swing.JMenuItem mItem_crearPS;
     private javax.swing.JMenuItem mItem_editarActividad;
     private javax.swing.JMenuItem mItem_editarCH;
+    private javax.swing.JMenuItem mItem_editarCargo;
     private javax.swing.JMenuItem mItem_editarCategPS;
     private javax.swing.JMenuItem mItem_editarEmpleado;
     private javax.swing.JMenuItem mItem_editarEvento;
@@ -991,6 +1069,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_eliminarActividad;
     private javax.swing.JMenuItem mItem_eliminarAsist;
     private javax.swing.JMenuItem mItem_eliminarCH;
+    private javax.swing.JMenuItem mItem_eliminarCargo;
     private javax.swing.JMenuItem mItem_eliminarCategPS;
     private javax.swing.JMenuItem mItem_eliminarEmpleado;
     private javax.swing.JMenuItem mItem_eliminarEvento;
@@ -1013,6 +1092,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenu menu_RRHH;
     private javax.swing.JMenu menu_actividad;
     private javax.swing.JMenu menu_asistencia;
+    private javax.swing.JMenu menu_cargo;
     private javax.swing.JMenu menu_empleado;
     private javax.swing.JMenu menu_eventos;
     private javax.swing.JMenu menu_informePO;

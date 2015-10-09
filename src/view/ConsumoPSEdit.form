@@ -2,16 +2,6 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="renderizar.ReservaRenderizar" name="reservaRenderizar1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="reservaRenderizar1"/>
-      </Properties>
-    </Component>
-    <Component class="renderizar.ProductoServicioRenderizar" name="productoServicioRenderizar1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="productoServicioRenderizar1"/>
-      </Properties>
-    </Component>
     <Component class="javax.persistence.EntityManager" name="entityManager">
       <Properties>
         <Property name="persistenceUnit" type="java.lang.String" value="proyectoPU"/>
@@ -54,6 +44,16 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;bean.ProductoServicio&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="renderizar.ReservaRenderizar" name="reservaRenderizar1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="reservaRenderizar1"/>
+      </Properties>
+    </Component>
+    <Component class="renderizar.ProductoServicioRenderizar" name="productoServicioRenderizar1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="productoServicioRenderizar1"/>
+      </Properties>
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -176,34 +176,29 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="lbl_codigoConsumo" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="tf_codigoConsumo" min="-2" pref="54" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lbl_codigoReserva" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lbl_ps" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lbl_precio" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lbl_cantidad" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lbl_total" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="tf_total" min="-2" pref="146" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                                  <Component id="btn_calcular" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="tf_cantidad" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
-                              <Component id="list_ps" alignment="0" min="-2" pref="190" max="-2" attributes="0"/>
-                              <Component id="list_codigoReserva" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
-                              <Component id="tf_precio" alignment="0" min="-2" pref="146" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="lbl_codigoConsumo" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_codigoReserva" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_ps" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_precio" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_cantidad" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_total" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_factura" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="38" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="tf_total" min="-2" pref="146" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btn_calcular" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="tf_cantidad" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="tf_precio" min="-2" pref="146" max="-2" attributes="0"/>
+                      <Component id="list_ps" min="-2" pref="190" max="-2" attributes="0"/>
+                      <Component id="list_codigoReserva" min="-2" pref="125" max="-2" attributes="0"/>
+                      <Component id="tf_codigoConsumo" min="-2" pref="54" max="-2" attributes="0"/>
+                      <Component id="tf_factura" alignment="0" min="-2" pref="56" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="41" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -215,33 +210,38 @@
                       <Component id="lbl_codigoConsumo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tf_codigoConsumo" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="26" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lbl_codigoReserva" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="list_codigoReserva" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="list_ps" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lbl_ps" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="list_ps" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lbl_precio" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tf_precio" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lbl_cantidad" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tf_cantidad" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace pref="15" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lbl_total" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tf_total" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_calcular" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lbl_factura" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="tf_factura" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -275,9 +275,6 @@
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JComboBox" name="list_ps">
           <Properties>
@@ -291,9 +288,6 @@
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="list_psFocusLost"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="tf_cantidad">
           <Events>
@@ -301,9 +295,6 @@
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tf_cantidadFocusLost"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tf_cantidadKeyTyped"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lbl_cantidad">
           <Properties>
@@ -322,9 +313,6 @@
           <BindingProperties>
             <BindingProperty name="elements" source="List" target="list_codigoReserva" targetPath="elements" updateStrategy="0" immediately="false"/>
           </BindingProperties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lbl_precio">
           <Properties>
@@ -338,9 +326,6 @@
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="btn_calcular">
           <Properties>
@@ -365,9 +350,19 @@
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lbl_factura">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Candara" size="16" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Factura:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="tf_factura">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

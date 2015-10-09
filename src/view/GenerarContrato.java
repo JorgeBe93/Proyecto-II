@@ -249,7 +249,11 @@ public class GenerarContrato extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GenerarContrato().setVisible(true);
+                JFrame frame= new GenerarContrato();
+                frame.setVisible(true);   
+                frame.setTitle("Generar Contrato de Reserva");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setLocationRelativeTo(null);
             }
         });
     }

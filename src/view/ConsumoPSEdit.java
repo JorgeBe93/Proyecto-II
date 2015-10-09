@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
  * @author Jorge
  */
 public class ConsumoPSEdit extends javax.swing.JFrame {
+     public static ConsumoProSer cps;
     private int resp;
     private char ch;
     /**
@@ -29,6 +30,7 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
      */
     public ConsumoPSEdit() {
         initComponents();
+        inicializarConsumo();
     }
 
     /**
@@ -41,13 +43,13 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        reservaRenderizar1 = new renderizar.ReservaRenderizar();
-        productoServicioRenderizar1 = new renderizar.ProductoServicioRenderizar();
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
         Query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT r FROM Reserva r");
         List = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(Query.getResultList());
         productoServicioQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT p FROM ProductoServicio p");
         productoServicioList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(productoServicioQuery.getResultList());
+        reservaRenderizar1 = new renderizar.ReservaRenderizar();
+        productoServicioRenderizar1 = new renderizar.ProductoServicioRenderizar();
         panel_modificarCPS = new javax.swing.JPanel();
         lbl_modificarCPS = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -64,6 +66,8 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
         btn_calcular = new javax.swing.JButton();
         lbl_codigoConsumo = new javax.swing.JLabel();
         tf_codigoConsumo = new javax.swing.JTextField();
+        lbl_factura = new javax.swing.JLabel();
+        tf_factura = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btn_guardar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
@@ -165,6 +169,11 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
 
         tf_codigoConsumo.setEnabled(false);
 
+        lbl_factura.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_factura.setText("Factura:");
+
+        tf_factura.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -172,28 +181,26 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_codigoConsumo)
+                    .addComponent(lbl_codigoReserva)
+                    .addComponent(lbl_ps)
+                    .addComponent(lbl_precio)
+                    .addComponent(lbl_cantidad)
+                    .addComponent(lbl_total)
+                    .addComponent(lbl_factura))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbl_codigoConsumo)
+                        .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(tf_codigoConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_codigoReserva)
-                            .addComponent(lbl_ps)
-                            .addComponent(lbl_precio)
-                            .addComponent(lbl_cantidad)
-                            .addComponent(lbl_total))
-                        .addGap(32, 32, 32)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(22, 22, 22)
-                                .addComponent(btn_calcular))
-                            .addComponent(tf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(list_ps, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(list_codigoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(38, Short.MAX_VALUE))
+                        .addComponent(btn_calcular))
+                    .addComponent(tf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(list_ps, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(list_codigoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_codigoConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_factura, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,28 +209,32 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_codigoConsumo)
                     .addComponent(tf_codigoConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_codigoReserva)
                     .addComponent(list_codigoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(list_ps, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_ps))
-                .addGap(34, 34, 34)
+                    .addComponent(lbl_ps)
+                    .addComponent(list_ps, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_precio)
                     .addComponent(tf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_cantidad)
                     .addComponent(tf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_total)
                     .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_calcular))
-                .addGap(38, 38, 38))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_factura)
+                    .addComponent(tf_factura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -356,7 +367,7 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
         // TODO add your handling code here:
         String antes;
         String despues;
-        resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar una nuevo consumo de producto/servicio?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
+        resp=  JOptionPane.showConfirmDialog(null,"Desea registrar los cambios?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
         if (resp==JOptionPane.YES_OPTION){
             Query=entityManager.createNamedQuery("ConsumoProSer.findByCodigoConsumo");
             Query.setParameter("codigoConsumo", Integer.parseInt(tf_codigoConsumo.getText()));
@@ -401,7 +412,20 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
-
+    private void inicializarConsumo(){
+        if(cps.getNumFactura()==null){
+            tf_codigoConsumo.setText(Integer.toString(cps.getCodigoConsumo()));
+            tf_cantidad.setText(Integer.toString(cps.getCantidad()));
+            list_codigoReserva.setSelectedItem(cps.getCodigoReserva());
+            list_ps.setSelectedItem(cps.getCodigoPS());
+            tf_precio.setText(Integer.toString(cps.getCodigoPS().getCosto()));
+            tf_total.setText(Integer.toString(cps.getTotal()));
+        }else{
+             JOptionPane.showMessageDialog(null,"No puede modificar un consumo facturado ", "Error",JOptionPane.ERROR_MESSAGE);
+             this.dispose();
+        }
+       
+    }
     /**
      * @param args the command line arguments
      */
@@ -453,21 +477,23 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_cantidad;
     private javax.swing.JLabel lbl_codigoConsumo;
     private javax.swing.JLabel lbl_codigoReserva;
+    private javax.swing.JLabel lbl_factura;
     private javax.swing.JLabel lbl_modificarCPS;
     private javax.swing.JLabel lbl_precio;
     private javax.swing.JLabel lbl_ps;
     private javax.swing.JLabel lbl_total;
-    public static javax.swing.JComboBox list_codigoReserva;
-    public static javax.swing.JComboBox list_ps;
+    private javax.swing.JComboBox list_codigoReserva;
+    private javax.swing.JComboBox list_ps;
     private javax.swing.JPanel panel_modificarCPS;
     private java.util.List<bean.ProductoServicio> productoServicioList;
     private javax.persistence.Query productoServicioQuery;
     private renderizar.ProductoServicioRenderizar productoServicioRenderizar1;
     private renderizar.ReservaRenderizar reservaRenderizar1;
-    public static javax.swing.JTextField tf_cantidad;
-    public static javax.swing.JTextField tf_codigoConsumo;
-    public static javax.swing.JTextField tf_precio;
-    public static javax.swing.JTextField tf_total;
+    private javax.swing.JTextField tf_cantidad;
+    private javax.swing.JTextField tf_codigoConsumo;
+    private javax.swing.JTextField tf_factura;
+    private javax.swing.JTextField tf_precio;
+    private javax.swing.JTextField tf_total;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

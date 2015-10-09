@@ -7,6 +7,9 @@
 package view;
 
 import bean.Reserva;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -152,6 +155,11 @@ public class BuscarReserva extends javax.swing.JFrame {
         lbl_filtro.setText("Buscar por:");
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Reserva", "Nombre", "Apellido", "Habitación", "Categoría", "CheckIn", "CheckOut" }));
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusLost(evt);
+            }
+        });
 
         btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
         btn_buscar.setText("Buscar");
@@ -296,7 +304,7 @@ public class BuscarReserva extends javax.swing.JFrame {
             }
             else if(list_filtros.getSelectedItem()=="CheckIn"){
                  query=entityManager.createNativeQuery("SELECT * FROM reserva "
-                         + "WHERE STR_TO_DATE(checkIn, '%d/%m/%Y') >= "
+                         + "WHERE STR_TO_DATE(checkIn, '%Y-%m-%d')>= "
                     +"'"+tf_valor.getText()+"'", Reserva.class);
                  List<Reserva> a=query.getResultList();
                  if(a.size()==0){
@@ -309,8 +317,9 @@ public class BuscarReserva extends javax.swing.JFrame {
                  return;
              }
             else if(list_filtros.getSelectedItem()=="CheckOut"){
-                 query=entityManager.createNativeQuery("SELECT * FROM reserva WHERE checkOut LIKE "
-                    +"'%"+tf_valor.getText()+"%'", Reserva.class);
+                  query=entityManager.createNativeQuery("SELECT * FROM reserva "
+                         + "WHERE STR_TO_DATE(checkOut, '%Y-%m-%d')<= "
+                    +"'"+tf_valor.getText()+"'", Reserva.class);
                  List<Reserva> a=query.getResultList();
                  if(a.size()==0){
                      JOptionPane.showMessageDialog(null,"No se han encontrado registros para la fecha", "Error",JOptionPane.ERROR_MESSAGE);
@@ -412,6 +421,15 @@ public class BuscarReserva extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    private void list_filtrosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusLost
+        // TODO add your handling code here:
+         if(list_filtros.getSelectedItem()=="CheckIn" || list_filtros.getSelectedItem()=="CheckOut"){
+             Date fecha= new Date(); 
+            DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
+            tf_valor.setText(formato.format(fecha));   
+         }
+    }//GEN-LAST:event_list_filtrosFocusLost
 
     /**
      * @param args the command line arguments

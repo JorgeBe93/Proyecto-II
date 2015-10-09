@@ -14,6 +14,7 @@ import bean.Habitacion;
 import bean.NumberToText;
 import bean.ProductoServicio;
 import bean.Reserva;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -31,6 +32,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
@@ -532,6 +534,9 @@ public class CrearReserva extends javax.swing.JFrame {
                                  JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/facturaAnticipo.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
                                  JasperViewer jv = new JasperViewer(jp,false);
                                  jv.setVisible(true);
+                                 jv.setTitle("Factura de Anticipio de Reserva");
+                                 Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                                jv.setIconImage(icon);
                                  jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                              }
                              catch(Exception e)

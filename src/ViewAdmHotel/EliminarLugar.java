@@ -19,6 +19,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import view.LoginView;
 
 /**
  *
@@ -26,6 +27,10 @@ import javax.swing.JOptionPane;
  */
 public class EliminarLugar extends javax.swing.JFrame {
 private int resp;
+ Date fecha=new Date();
+ DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+ EntityManagerFactory fact=Persistence.createEntityManagerFactory("proyectoPU");
+ EntityManager ema= fact.createEntityManager();
     /**
      * Creates new form EliminarLugar
      */
@@ -242,8 +247,6 @@ private int resp;
                     + "si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
             resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
             if (resp==JOptionPane.YES_OPTION){
-                EntityManagerFactory fact=Persistence.createEntityManagerFactory("proyectoPU");
-                EntityManager ema= fact.createEntityManager();
                 ema.getTransaction().begin();
                 //eliminamos los lugares que tienen registros de seguimiento de actividad
                 q=ema.createNativeQuery("SELECT * FROM seguimiento_actividad WHERE "
@@ -252,7 +255,9 @@ private int resp;
                 List<SeguimientoActividad> s=q.getResultList();
                 if(s.size()>=1){
                     for(i=0;i<s.size();i++){
+                        valor=s.get(i).toString();
                         ema.remove(s.get(i));
+                        registrarAuditoria("Seguimiento de Actividad",valor);
                     }
                     ema.flush();
                 }
@@ -260,26 +265,26 @@ private int resp;
                 Lugar l=ema.find(Lugar.class,Integer.parseInt(tf_codigo.getText()) );
                 valor=l.toString();//guardamos el objeto antes de eliminar
                 ema.remove(l);
-                AuditoriaSistema as=new AuditoriaSistema();
-                as.setAccion("Eliminación");
-                as.setTabla("Lugar");
-                Date fecha=new Date();
-                DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                as.setFechaHora(formato.format(fecha));
-                as.setUsuario("nadie");
-                as.setAntes(valor);
-                as.setDespues("No hay modificaciones");
-                ema.persist(as);
+                ema.flush();
+                registrarAuditoria("Lugar",valor);
                 ema.getTransaction().commit();
                 ema.close();
                 JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
-                
-
             }
         
         this.dispose();
     }//GEN-LAST:event_btn_eliminarActionPerformed
-
+ private void registrarAuditoria(String entidad,String valor){
+            AuditoriaSistema as=new AuditoriaSistema();
+            as.setAccion("Eliminación");
+            as.setTabla(entidad);
+            as.setFechaHora(formato.format(fecha));
+            as.setUsuario(LoginView.nombreUsuario);
+            as.setAntes(valor);
+            as.setDespues("No hay modificaciones");
+            ema.persist(as);
+            ema.flush();
+    }
     /**
      * @param args the command line arguments
      */

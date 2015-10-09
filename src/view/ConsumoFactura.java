@@ -33,7 +33,10 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class ConsumoFactura extends javax.swing.JFrame {
     private int resp;
-
+    private List<ConsumoProSer> cps;
+    Date fecha=new Date();
+    DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+     DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
     /**
      * Creates new form ConsumoFactura
      */
@@ -225,9 +228,7 @@ public class ConsumoFactura extends javax.swing.JFrame {
         codigo=r.getCodigoReserva();
         cedula=r.getCodigoCliente().getCedula();
         ruc=r.getCodigoCliente().getRuc();
-        Date fecha=new Date();
         int total=0;
-        DateFormat formato=new SimpleDateFormat("dd-MM-yyyy");
        /* query=entityManager.createNativeQuery("SELECT * FROM factura_cobro  "
                     + "WHERE codigoReserva="
                     +"'"+codigo+"'"
@@ -254,7 +255,7 @@ public class ConsumoFactura extends javax.swing.JFrame {
                     + "WHERE codigoReserva="
                     +"'"+codigo+"'"
                     +" AND numFactura is null", ConsumoProSer.class);
-         List<ConsumoProSer>cps=query.getResultList();
+        cps=query.getResultList();
          if(cps.isEmpty()){
              JOptionPane.showMessageDialog(null,"La reserva no tiene deudas hasta la fecha", "Aviso",JOptionPane.INFORMATION_MESSAGE);
                    return;
@@ -298,22 +299,14 @@ public class ConsumoFactura extends javax.swing.JFrame {
                     }else{
                           f.setRucCliente(ruc);
                     }
-                    f.setFechaEmision(formato.format(fecha));
+                    f.setFechaEmision(form.format(fecha));
                     f.setTotal(total);
                     f.setTipoFactura((String) list_tipo.getSelectedItem());
-                    
                     entityManager.persist(f);
                     entityManager.flush();
-                    //registramos los datos de la auditoria
-                     AuditoriaSistema as=new AuditoriaSistema();
-                    as.setAccion("Inserción");
-                    as.setTabla("Factura Cobro");
-                    as.setAntes(f.toString());
-                    as.setDespues("No hay cambios");
-                    //trabajamos con la fecha
-                    as.setFechaHora(formato.format(fecha));
-                    as.setUsuario("nadie");
-                    entityManager.persist(as);
+                     // aca llamamos al metodo que va a poner el numero de factura a los detalles
+                    actualizarDetalle(f);
+                    registrarAuditoria("Factura de cobro","Inserción",f.toString(),null);
                     entityManager.getTransaction().commit();
                     entityManager.close();
                     this.dispose();
@@ -351,7 +344,42 @@ public class ConsumoFactura extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
-
+    private void actualizarDetalle(FacturaCobro f){
+        String antes;
+        String despues;
+        int i=0;
+        for(i=0;i<cps.size();i++){
+            antes=cps.get(i).toString();
+            ConsumoProSer c=new ConsumoProSer();
+            c.setCodigoConsumo(cps.get(i).getCodigoConsumo());
+            c.setNumFactura(f);
+            c.setTotal(cps.get(i).getTotal());
+            c.setCodigoReserva(cps.get(i).getCodigoReserva());
+            c.setCantidad(cps.get(i).getCantidad());
+            c.setCodigoPS(cps.get(i).getCodigoPS());
+            entityManager.merge(c);
+            entityManager.flush();
+            despues=cps.get(i).toString();
+            registrarAuditoria("Consumo P/S","Modificación",antes,despues);
+        }
+        
+    }
+   private void registrarAuditoria(String entidad,String accion,String antes, String despues){
+          AuditoriaSistema as=new AuditoriaSistema();
+                    as.setAccion(accion);
+                    as.setTabla(entidad);
+                    as.setAntes(antes);
+                    if(despues==null){
+                        as.setDespues("No hay cambios");
+                    } else{
+                        as.setDespues(despues);
+                    }
+                    //trabajamos con la fecha
+                    as.setFechaHora(formato.format(fecha));
+                    as.setUsuario("nadie");
+                    entityManager.persist(as);
+                    entityManager.flush();
+   }
     /**
      * @param args the command line arguments
      */
