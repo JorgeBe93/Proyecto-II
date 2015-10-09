@@ -34,6 +34,9 @@
 	<parameter name="Letras" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="Condicion" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      producto_servicio.`nombre` AS producto_servicio_nombre,
@@ -207,7 +210,7 @@ WHERE
 				<text><![CDATA[Dirección:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c42c8dc0-ee19-4ba7-bb63-fadc990725d4" x="431" y="153" width="152" height="20"/>
+				<reportElement uuid="c42c8dc0-ee19-4ba7-bb63-fadc990725d4" x="431" y="153" width="120" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -266,13 +269,6 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente_telefono}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="9eb753bc-5878-486c-9fc4-7625120138ff" x="583" y="153" width="100" height="20"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{factura_cobro_tipoFactura}]]></textFieldExpression>
-			</textField>
 			<textField pattern="#,##0">
 				<reportElement uuid="4d6ffe78-9716-4549-9d8a-fd772e8638b1" x="492" y="181" width="100" height="20"/>
 				<textElement>
@@ -307,6 +303,13 @@ WHERE
 					<font size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{NumFactura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e65f82ac-9c0e-4596-81c7-d167ffd60bc7" x="551" y="153" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Condicion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

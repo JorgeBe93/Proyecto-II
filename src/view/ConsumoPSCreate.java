@@ -31,6 +31,7 @@ import java.util.List;
 public class ConsumoPSCreate extends javax.swing.JFrame {
 private char ch;
 private int resp;
+private int fila;
 private final  TextAutoCompleter textAutoCompleter;
     /**
      * Creates new form ConsumoPSCreate
@@ -41,6 +42,8 @@ private final  TextAutoCompleter textAutoCompleter;
         //infijo
         this.textAutoCompleter.setMode(0);
         inicializarLista();
+        List.clear();
+        inicializarListaReserva();
     }
 
     /**
@@ -54,11 +57,9 @@ private final  TextAutoCompleter textAutoCompleter;
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
-        query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT p FROM ProductoServicio p");
-        list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : query.getResultList();
-        reservaQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT r FROM Reserva r");
-        reservaList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : reservaQuery.getResultList();
         reservaRenderizar1 = new renderizar.ReservaRenderizar();
+        Query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT r FROM Reserva r");
+        List = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(Query.getResultList());
         panel_registrarCPS = new javax.swing.JPanel();
         lbl_registrarCPS = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -70,13 +71,28 @@ private final  TextAutoCompleter textAutoCompleter;
         lbl_cantidad = new javax.swing.JLabel();
         lbl_precio = new javax.swing.JLabel();
         tf_precio = new javax.swing.JTextField();
-        btn_calcular = new javax.swing.JButton();
         tf_productoServicio = new javax.swing.JTextField();
-        list_codigoReserva = new javax.swing.JComboBox();
         tf_huesped = new javax.swing.JTextField();
+        tf_codigoReserva = new javax.swing.JTextField();
+        lbl_habitacion = new javax.swing.JLabel();
+        tf_habitacion = new javax.swing.JTextField();
+        lbl_categoria = new javax.swing.JLabel();
+        tf_categoria = new javax.swing.JTextField();
+        lbl_huesped = new javax.swing.JLabel();
+        lbl_cedula = new javax.swing.JLabel();
+        tf_cedula = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btn_guardar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
+        btn_nuevo = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        masterTable = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        tf_valor = new javax.swing.JTextField();
+        lbl_valor = new javax.swing.JLabel();
+        lbl_filtro = new javax.swing.JLabel();
+        list_filtros = new javax.swing.JComboBox();
+        btn_buscar = new javax.swing.JButton();
 
         reservaRenderizar1.setText("reservaRenderizar1");
 
@@ -94,17 +110,17 @@ private final  TextAutoCompleter textAutoCompleter;
         panel_registrarCPS.setLayout(panel_registrarCPSLayout);
         panel_registrarCPSLayout.setHorizontalGroup(
             panel_registrarCPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_registrarCPSLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_registrarCPSLayout.createSequentialGroup()
+                .addContainerGap(109, Short.MAX_VALUE)
                 .addComponent(lbl_registrarCPS)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(107, 107, 107))
         );
         panel_registrarCPSLayout.setVerticalGroup(
             panel_registrarCPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_registrarCPSLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_registrarCPSLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_registrarCPS)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -119,8 +135,14 @@ private final  TextAutoCompleter textAutoCompleter;
         lbl_ps.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_ps.setText("Producto/Servicio:");
 
-        tf_total.setEnabled(false);
+        tf_total.setEditable(false);
+        tf_total.setBackground(new java.awt.Color(51, 153, 255));
+        tf_total.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_total.setForeground(new java.awt.Color(255, 255, 255));
 
+        tf_cantidad.setBackground(new java.awt.Color(51, 153, 255));
+        tf_cantidad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_cantidad.setForeground(new java.awt.Color(255, 255, 255));
         tf_cantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_cantidadActionPerformed(evt);
@@ -132,6 +154,9 @@ private final  TextAutoCompleter textAutoCompleter;
             }
         });
         tf_cantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_cantidadKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_cantidadKeyTyped(evt);
             }
@@ -141,92 +166,126 @@ private final  TextAutoCompleter textAutoCompleter;
         lbl_cantidad.setText("Cantidad:");
 
         lbl_precio.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        lbl_precio.setText("Precio:");
+        lbl_precio.setText("Precio (Gs.):");
 
-        tf_precio.setEnabled(false);
+        tf_precio.setEditable(false);
+        tf_precio.setBackground(new java.awt.Color(51, 153, 255));
+        tf_precio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_precio.setForeground(new java.awt.Color(255, 255, 255));
 
-        btn_calcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icon-money.png"))); // NOI18N
-        btn_calcular.setText("Calcular");
-        btn_calcular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_calcularActionPerformed(evt);
-            }
-        });
-
+        tf_productoServicio.setBackground(new java.awt.Color(51, 153, 255));
+        tf_productoServicio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_productoServicio.setForeground(new java.awt.Color(255, 255, 255));
         tf_productoServicio.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 tf_productoServicioFocusLost(evt);
             }
         });
 
-        list_codigoReserva.setRenderer(reservaRenderizar1);
-
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, reservaList, list_codigoReserva);
-        bindingGroup.addBinding(jComboBoxBinding);
-
-        list_codigoReserva.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                list_codigoReservaFocusLost(evt);
-            }
-        });
-
         tf_huesped.setEnabled(false);
+
+        tf_codigoReserva.setEnabled(false);
+
+        lbl_habitacion.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_habitacion.setText("Habitación:");
+
+        tf_habitacion.setEnabled(false);
+
+        lbl_categoria.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_categoria.setText("Categoría:");
+
+        tf_categoria.setEnabled(false);
+
+        lbl_huesped.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_huesped.setText("Nombre/Apellido:");
+
+        lbl_cedula.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_cedula.setText("Cédula:");
+
+        tf_cedula.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_codigoReserva)
-                    .addComponent(lbl_ps)
-                    .addComponent(lbl_precio)
-                    .addComponent(lbl_cantidad)
-                    .addComponent(lbl_total))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lbl_total)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_precio)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addComponent(btn_calcular))
-                    .addComponent(tf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(list_codigoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tf_productoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tf_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(118, 118, 118))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lbl_codigoReserva)
+                                        .addGap(124, 124, 124)
+                                        .addComponent(lbl_habitacion)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(tf_habitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lbl_cedula)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_ps)
+                                    .addComponent(lbl_cantidad))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(tf_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(tf_codigoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(tf_productoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(lbl_huesped))
+                                    .addComponent(tf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(lbl_categoria)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tf_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(tf_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(29, 29, 29)))
+                    .addComponent(tf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_codigoReserva)
-                    .addComponent(list_codigoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
-                .addComponent(tf_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                    .addComponent(tf_codigoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_habitacion)
+                    .addComponent(tf_habitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_categoria)
+                    .addComponent(tf_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tf_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_huesped)
+                    .addComponent(lbl_cedula)
+                    .addComponent(tf_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_ps)
-                    .addComponent(tf_productoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_precio))
-                .addGap(36, 36, 36)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_cantidad)
-                    .addComponent(tf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
+                    .addComponent(tf_productoServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_precio)
+                    .addComponent(tf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_total)
                     .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_calcular))
-                .addGap(38, 38, 38))
+                    .addComponent(lbl_cantidad)
+                    .addComponent(tf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(84, 84, 84))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -250,14 +309,25 @@ private final  TextAutoCompleter textAutoCompleter;
             }
         });
 
+        btn_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/arrow-up.png"))); // NOI18N
+        btn_nuevo.setText("Nuevo");
+        btn_nuevo.setEnabled(false);
+        btn_nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nuevoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(28, 28, 28)
+                .addComponent(btn_nuevo)
+                .addGap(48, 48, 48)
                 .addComponent(btn_guardar)
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(btn_cancelar)
                 .addContainerGap())
         );
@@ -267,9 +337,112 @@ private final  TextAutoCompleter textAutoCompleter;
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btn_cancelar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btn_guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_cancelar)
+                            .addComponent(btn_nuevo))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(btn_guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+        );
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, List, masterTable);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoReserva}"));
+        columnBinding.setColumnName(" Reserva");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${numHabitacion.numero}"));
+        columnBinding.setColumnName(" Habitación");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${numHabitacion.codigoCategoria.nombre}"));
+        columnBinding.setColumnName("Categoría");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${checkIn}"));
+        columnBinding.setColumnName("Check In");
+        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${checkOut}"));
+        columnBinding.setColumnName("Check Out");
+        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCliente.cedula}"));
+        columnBinding.setColumnName("CI Cliente");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCliente.nombre}"));
+        columnBinding.setColumnName("Nombre");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCliente.apellido}"));
+        columnBinding.setColumnName("Apellido");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                masterTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(masterTable);
+
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setForeground(new java.awt.Color(204, 204, 255));
+
+        tf_valor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_valorKeyTyped(evt);
+            }
+        });
+
+        lbl_valor.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_valor.setText("Valor:");
+
+        lbl_filtro.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_filtro.setText("Buscar por:");
+
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cedula", "Nombre", "Apellido", "Habitación", "CheckIn", "CheckOut" }));
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusLost(evt);
+            }
+        });
+
+        btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
+        btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
+        btn_buscar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                btn_buscarFocusLost(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(lbl_filtro)
+                .addGap(18, 18, 18)
+                .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
+                .addComponent(lbl_valor)
+                .addGap(18, 18, 18)
+                .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addComponent(btn_buscar)
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_filtro)
+                    .addComponent(lbl_valor)
+                    .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_buscar))
                 .addContainerGap())
         );
 
@@ -280,25 +453,35 @@ private final  TextAutoCompleter textAutoCompleter;
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
+                        .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panel_registrarCPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                        .addGap(81, 81, 81)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panel_registrarCPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(26, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(181, 181, 181))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(20, 20, 20)
                 .addComponent(panel_registrarCPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -332,12 +515,18 @@ private final  TextAutoCompleter textAutoCompleter;
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         // TODO add your handling code here:
+        int codigo;
+        Reserva r;
           resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar una nuevo consumo de producto/servicio?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
           if (resp==JOptionPane.YES_OPTION){
               ConsumoProSer cp= new ConsumoProSer();
               cp.setCantidad(Integer.parseInt(tf_cantidad.getText()));
               cp.setTotal(Integer.parseInt(tf_total.getText()));
-              Reserva r=(Reserva) list_codigoReserva.getSelectedItem();
+              codigo=Integer.parseInt(tf_codigoReserva.getText());
+              //obejto reserva
+              Query=entityManager.createNamedQuery("Reserva.findByCodigoReserva");
+              Query.setParameter("codigoReserva", codigo);
+              r=(Reserva) Query.getSingleResult();
               cp.setCodigoReserva(r);
               //ProductoServicio ps= (ProductoServicio) list_ps.getSelectedItem();
               ProductoServicio ps = obtenerProductoServicio(tf_productoServicio.getText());
@@ -358,12 +547,17 @@ private final  TextAutoCompleter textAutoCompleter;
               as.setUsuario("nadie");
               entityManager.persist(as);
               entityManager.getTransaction().commit();
-              entityManager.close();
-              JOptionPane.showMessageDialog(null,"Creación exitosa!", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
+             // entityManager.close();
+              JOptionPane.showMessageDialog(null,"Registro exitoso!", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
               tf_cantidad.setText(null);
+              tf_productoServicio.setText(null);
+              tf_precio.setText(null);
+              tf_total.setText(null);
               
+          }else{
+                this.dispose();
           }
-         this.dispose();
+         
      
     }//GEN-LAST:event_btn_guardarActionPerformed
 
@@ -372,24 +566,6 @@ private final  TextAutoCompleter textAutoCompleter;
        
         
     }//GEN-LAST:event_tf_cantidadFocusLost
-
-    private void btn_calcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_calcularActionPerformed
-        // TODO add your handling code here:
-        int total;
-        if(tf_cantidad.getText().length()==0){
-            JOptionPane.showMessageDialog(null,"No se admiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
-            return;
-        }else{
-               
-            ProductoServicio p= obtenerProductoServicio(tf_productoServicio.getText());
-            total=p.getCosto()*(Integer.parseInt(tf_cantidad.getText()));
-            tf_total.setText(Integer.toString(total));
-            btn_guardar.setEnabled(true);
-            btn_cancelar.setEnabled(true);
-            
-        }
-      
-    }//GEN-LAST:event_btn_calcularActionPerformed
 
     private void tf_productoServicioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_productoServicioFocusLost
         // TODO add your handling code here:
@@ -402,20 +578,180 @@ private final  TextAutoCompleter textAutoCompleter;
         
     }//GEN-LAST:event_tf_productoServicioFocusLost
 
-    private void list_codigoReservaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_codigoReservaFocusLost
+    private void tf_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_valorKeyTyped
         // TODO add your handling code here:
-        String datos;
-        Reserva r=(Reserva) list_codigoReserva.getSelectedItem();
-        query=entityManager.createNativeQuery("SELECT * FROM cliente c "
-                    + "INNER JOIN reserva r "
-                    + "on r.codigoCliente = c.codigoCliente "
-                    + "WHERE r.codigoReserva = "
-                    +r.getCodigoReserva(), Cliente.class);
-        List<Cliente> c=query.getResultList();
-        datos=c.get(0).getNombre()+" "+c.get(0).getApellido();
-        tf_huesped.setText(datos);
-    }//GEN-LAST:event_list_codigoReservaFocusLost
+        char ch;
+        if (list_filtros.getSelectedItem()=="Habitación" || list_filtros.getSelectedItem()=="Reserva"){
+            ch=evt.getKeyChar();
+            if(!Character.isDigit(ch)){
+                getToolkit().beep();
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_tf_valorKeyTyped
 
+    private void list_filtrosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusLost
+        // TODO add your handling code here:
+        if(list_filtros.getSelectedItem()=="CheckIn" || list_filtros.getSelectedItem()=="CheckOut"){
+            Date fecha= new Date();
+            DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
+            tf_valor.setText(formato.format(fecha));
+        }
+    }//GEN-LAST:event_list_filtrosFocusLost
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        // TODO add your handling code here:
+        tf_codigoReserva.setText(null);
+        tf_habitacion.setText(null);
+        tf_categoria.setText(null);
+        tf_cedula.setText(null);
+        tf_huesped.setText(null);
+        if (tf_valor.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Ingrese algún valor para efectuar la búsqueda", "Advertencia",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        else{
+            if (list_filtros.getSelectedItem()=="Nombre"){
+                Query = entityManager.createNativeQuery( "SELECT * FROM reserva r "
+                    + "INNER JOIN cliente c "
+                    + "on r.codigoCliente = c.codigoCliente "
+                    + "WHERE r.checkIn<= date_format(now(),'%Y-%m-%d') and r.checkOut>=date_format(now(),'%Y-%m-%d') AND c.nombre LIKE "
+                    +"'%"+tf_valor.getText()+"%'", Reserva.class);
+                List<Reserva> r = Query.getResultList();
+                if (r.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Nombre inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(r);
+            }
+            else if (list_filtros.getSelectedItem()=="Apellido"){
+                Query = entityManager.createNativeQuery( "SELECT * FROM reserva r "
+                    + "INNER JOIN cliente c "
+                    + "on r.codigoCliente = c.codigoCliente "
+                    + "WHERE r.checkIn<= date_format(now(),'%Y-%m-%d') and r.checkOut>=date_format(now(),'%Y-%m-%d') AND c.apellido LIKE "
+                    +"'%"+tf_valor.getText()+"%'", Reserva.class);
+                List<Reserva> r = Query.getResultList();
+                if (r.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Apellido inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(r);
+            }
+            else if(list_filtros.getSelectedItem()=="CheckIn"){
+                Query=entityManager.createNativeQuery("SELECT * FROM reserva "
+                    + "WHERE checkIn<= date_format(now(),'%Y-%m-%d') AND checkOut>=date_format(now(),'%Y-%m-%d') AND STR_TO_DATE(checkIn, '%Y-%m-%d')= "
+                    +"'"+tf_valor.getText()+"'", Reserva.class);
+                List<Reserva> a=Query.getResultList();
+                if(a.size()==0){
+                    JOptionPane.showMessageDialog(null,"No se han encontrado registros para la fecha", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(a);
+                return;
+            }
+            else if(list_filtros.getSelectedItem()=="CheckOut"){
+                Query=entityManager.createNativeQuery("SELECT * FROM reserva "
+                    + "WHERE checkIn<= date_format(now(),'%Y-%m-%d') and checkOut>=date_format(now(),'%Y-%m-%d') AND STR_TO_DATE(checkOut, '%Y-%m-%d')= "
+                    +"'"+tf_valor.getText()+"'", Reserva.class);
+                List<Reserva> a=Query.getResultList();
+                if(a.size()==0){
+                    JOptionPane.showMessageDialog(null,"No se han encontrado registros para la fecha", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(a);
+                return;
+            }
+            else if(list_filtros.getSelectedItem()=="Cedula"){
+                Query=entityManager.createNativeQuery("SELECT * FROM reserva r "
+                    +"INNER JOIN cliente c "
+                    +"ON r.codigoCliente=c.codigoCliente "
+                    + "WHERE r.checkIn<= date_format(now(),'%Y-%m-%d') AND r.checkOut>=date_format(now(),'%Y-%m-%d') AND c.cedula= "
+                    +"'"+tf_valor.getText()+"'", Reserva.class);
+                List<Reserva> a=Query.getResultList();
+                if(a.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Cédula Inexistente", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(a);
+                return;
+            }
+            else if(list_filtros.getSelectedItem()=="Habitación"){
+                Query=entityManager.createNativeQuery("SELECT * FROM reserva r "
+                    + "WHERE r.checkIn<= date_format(now(),'%Y-%m-%d') AND r.checkOut>=date_format(now(),'%Y-%m-%d') AND r.numHabitacion= "
+                    +"'"+tf_valor.getText()+"'", Reserva.class);
+                List<Reserva> a=Query.getResultList();
+                if(a.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"No existen registros para dicha habitación", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(a);
+                return;
+            }
+        }
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void btn_buscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_buscarFocusLost
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_btn_buscarFocusLost
+
+    private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
+        // TODO add your handling code here:
+        int num;
+        int cod;
+        fila=masterTable.getSelectedRow();
+        cod=(Integer)masterTable.getValueAt(fila, 0);
+        num=(Integer)masterTable.getValueAt(fila, 1);
+        tf_codigoReserva.setText(Integer.toString(cod));
+        tf_habitacion.setText(Integer.toString(num));
+        tf_categoria.setText((String) masterTable.getValueAt(fila, 2));
+        tf_cedula.setText((String) masterTable.getValueAt(fila, 5));
+        tf_huesped.setText(masterTable.getValueAt(fila, 6)+" "+masterTable.getValueAt(fila, 7));
+    }//GEN-LAST:event_masterTableMouseClicked
+
+    private void tf_cantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_cantidadKeyPressed
+        // TODO add your handling code here:
+          int total;   
+            ProductoServicio p= obtenerProductoServicio(tf_productoServicio.getText());
+            total=p.getCosto()*(Integer.parseInt(tf_cantidad.getText()));
+            tf_total.setText(Integer.toString(total));
+            btn_guardar.setEnabled(true);
+            btn_cancelar.setEnabled(true);
+            btn_nuevo.setEnabled(true);
+            
+    }//GEN-LAST:event_tf_cantidadKeyPressed
+
+    private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
+        // TODO add your handling code here:
+        tf_codigoReserva.setText(null);
+        tf_habitacion.setText(null);
+        tf_categoria.setText(null);
+        tf_cedula.setText(null);
+        tf_huesped.setText(null);
+        tf_cantidad.setText(null);
+        tf_productoServicio.setText(null);
+        tf_precio.setText(null);
+        tf_total.setText(null);
+    }//GEN-LAST:event_btn_nuevoActionPerformed
+  private void inicializarListaReserva(){
+    Query=entityManager.createNativeQuery("select * from reserva  "
+            + "where checkIn<= date_format(now(),'%Y-%m-%d') and checkOut>=date_format(now(),'%Y-%m-%d')",Reserva.class);
+    List<Reserva> r=Query.getResultList();
+    List.addAll(r);
+    
+}
     /**
      * @param args the command line arguments
      */
@@ -457,30 +793,43 @@ private final  TextAutoCompleter textAutoCompleter;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_calcular;
+    private java.util.List<bean.Reserva> List;
+    private javax.persistence.Query Query;
+    private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_guardar;
+    private javax.swing.JButton btn_nuevo;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_cantidad;
+    private javax.swing.JLabel lbl_categoria;
+    private javax.swing.JLabel lbl_cedula;
     private javax.swing.JLabel lbl_codigoReserva;
+    private javax.swing.JLabel lbl_filtro;
+    private javax.swing.JLabel lbl_habitacion;
+    private javax.swing.JLabel lbl_huesped;
     private javax.swing.JLabel lbl_precio;
     private javax.swing.JLabel lbl_ps;
     private javax.swing.JLabel lbl_registrarCPS;
     private javax.swing.JLabel lbl_total;
-    private java.util.List<bean.ProductoServicio> list;
-    private javax.swing.JComboBox list_codigoReserva;
+    private javax.swing.JLabel lbl_valor;
+    private javax.swing.JComboBox list_filtros;
+    private javax.swing.JTable masterTable;
     private javax.swing.JPanel panel_registrarCPS;
-    private javax.persistence.Query query;
-    private java.util.List<bean.Reserva> reservaList;
-    private javax.persistence.Query reservaQuery;
     private renderizar.ReservaRenderizar reservaRenderizar1;
     private javax.swing.JTextField tf_cantidad;
+    private javax.swing.JTextField tf_categoria;
+    private javax.swing.JTextField tf_cedula;
+    private javax.swing.JTextField tf_codigoReserva;
+    private javax.swing.JTextField tf_habitacion;
     private javax.swing.JTextField tf_huesped;
     private javax.swing.JTextField tf_precio;
     private javax.swing.JTextField tf_productoServicio;
     private javax.swing.JTextField tf_total;
+    private javax.swing.JTextField tf_valor;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     private ProductoServicio obtenerProductoServicio(String nombre){
