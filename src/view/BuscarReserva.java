@@ -7,23 +7,33 @@
 package view;
 
 import bean.Reserva;
+import java.awt.Image;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
  * @author Vladimir
  */
 public class BuscarReserva extends javax.swing.JFrame {
-    public int fila;
+    private int fila;
+    private int codigo;
     
 
     /**
@@ -413,6 +423,30 @@ public class BuscarReserva extends javax.swing.JFrame {
 
           case 3:
               break;
+          case 4:
+                fila = masterTable.getSelectedRow();
+                codigo=(Integer)masterTable.getValueAt(fila, 0);
+                this.dispose();
+                try
+                 {
+                    Class.forName("com.mysql.jdbc.Driver");
+                    Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
+                    HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
+                    Map parametros=new HashMap();
+                    par.put("CodigoReserva",codigo);
+                    JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/contrato.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
+                    JasperViewer jv = new JasperViewer(jp,false);
+                    jv.setVisible(true);
+                    jv.setTitle("Contrato de Reserva");
+                    Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                    jv.setIconImage(icon);
+                    jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                }
+                    catch(Exception e)
+                {
+                     e.printStackTrace();
+                 }
+                break;
       }
         
     }//GEN-LAST:event_masterTableMouseClicked

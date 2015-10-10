@@ -90,7 +90,7 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel1.setText("Buscar por:");
 
-        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Consumo", "Reserva", "Producto/Servicio", "Total", "Número Factura" }));
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Consumo", "Reserva", "Producto/Servicio", "Total", "Número Factura", "Habitación" }));
         list_filtros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 list_filtrosActionPerformed(evt);
@@ -257,7 +257,8 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
     private void tf_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_valorKeyTyped
         // TODO add your handling code here:
         if (list_filtros.getSelectedItem()=="Código Consumo" || list_filtros.getSelectedItem()=="Reserva" ||
-               list_filtros.getSelectedItem()=="Total" || list_filtros.getSelectedItem()=="Número Factura" ){
+               list_filtros.getSelectedItem()=="Total" || list_filtros.getSelectedItem()=="Número Factura" 
+                || list_filtros.getSelectedItem()=="Habitación" ){
             ch=evt.getKeyChar();
             if(!Character.isDigit(ch)){
                 getToolkit().beep();
@@ -343,6 +344,21 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
                 List<ConsumoProSer> c = Query.getResultList();
                 if (c.isEmpty()){
                     JOptionPane.showMessageDialog(null, "Número de Factura Inexistente","Error",JOptionPane.INFORMATION_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(c);
+            }
+             else if(list_filtros.getSelectedItem()=="Habitación"){
+                Query = EntityManager.createNativeQuery( "SELECT * FROM consumo_pro_ser c "
+                    +"INNER JOIN reserva r"
+                    + " ON r.codigoReserva=c.codigoReserva"
+                     +" WHERE r.numHabitacion= "
+                    +"'"+tf_valor.getText()+"' ", ConsumoProSer.class);
+                List<ConsumoProSer> c = Query.getResultList();
+                if (c.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Número de Habitación Inexistente","Error",JOptionPane.INFORMATION_MESSAGE );
                     tf_valor.setText(null);
                     return;
                 }

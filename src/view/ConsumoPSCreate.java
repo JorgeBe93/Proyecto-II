@@ -21,6 +21,7 @@ import javax.persistence.Query;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import com.mxrck.autocompleter.TextAutoCompleter;
+import java.awt.event.KeyEvent;
 import java.util.Iterator;
 import java.util.List;
 
@@ -57,7 +58,6 @@ private final  TextAutoCompleter textAutoCompleter;
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
-        reservaRenderizar1 = new renderizar.ReservaRenderizar();
         Query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT r FROM Reserva r");
         List = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(Query.getResultList());
         panel_registrarCPS = new javax.swing.JPanel();
@@ -93,8 +93,6 @@ private final  TextAutoCompleter textAutoCompleter;
         lbl_filtro = new javax.swing.JLabel();
         list_filtros = new javax.swing.JComboBox();
         btn_buscar = new javax.swing.JButton();
-
-        reservaRenderizar1.setText("reservaRenderizar1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -149,6 +147,9 @@ private final  TextAutoCompleter textAutoCompleter;
             }
         });
         tf_cantidad.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tf_cantidadFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 tf_cantidadFocusLost(evt);
             }
@@ -293,7 +294,6 @@ private final  TextAutoCompleter textAutoCompleter;
 
         btn_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
         btn_guardar.setText("Guardar");
-        btn_guardar.setEnabled(false);
         btn_guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_guardarActionPerformed(evt);
@@ -302,7 +302,6 @@ private final  TextAutoCompleter textAutoCompleter;
 
         btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete.png"))); // NOI18N
         btn_cancelar.setText("Cancelar");
-        btn_cancelar.setEnabled(false);
         btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_cancelarActionPerformed(evt);
@@ -311,7 +310,6 @@ private final  TextAutoCompleter textAutoCompleter;
 
         btn_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/arrow-up.png"))); // NOI18N
         btn_nuevo.setText("Nuevo");
-        btn_nuevo.setEnabled(false);
         btn_nuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_nuevoActionPerformed(evt);
@@ -496,6 +494,7 @@ private final  TextAutoCompleter textAutoCompleter;
 
     private void tf_cantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_cantidadKeyTyped
         // TODO add your handling code here:
+         int total; 
          int limite=5;
         if(tf_cantidad.getText().length()==limite){
             getToolkit().beep();
@@ -517,6 +516,11 @@ private final  TextAutoCompleter textAutoCompleter;
         // TODO add your handling code here:
         int codigo;
         Reserva r;
+        if(tf_codigoReserva.getText().length()==0 || tf_productoServicio.getText().length()==0 
+                || tf_cantidad.getText().length()==0 || tf_total.getText().length()==0){
+                JOptionPane.showMessageDialog(null,"Algún campo con valor nulo", "Error",JOptionPane.ERROR_MESSAGE);
+                return;
+        }
           resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar una nuevo consumo de producto/servicio?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
           if (resp==JOptionPane.YES_OPTION){
               ConsumoProSer cp= new ConsumoProSer();
@@ -575,6 +579,8 @@ private final  TextAutoCompleter textAutoCompleter;
         }catch(NullPointerException e){
             System.out.println("Continua. Excepción lanzada por problemas del jar");
         }
+        tf_total.setText(null);
+       
         
     }//GEN-LAST:event_tf_productoServicioFocusLost
 
@@ -723,13 +729,16 @@ private final  TextAutoCompleter textAutoCompleter;
 
     private void tf_cantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_cantidadKeyPressed
         // TODO add your handling code here:
-          int total;   
-            ProductoServicio p= obtenerProductoServicio(tf_productoServicio.getText());
-            total=p.getCosto()*(Integer.parseInt(tf_cantidad.getText()));
-            tf_total.setText(Integer.toString(total));
-            btn_guardar.setEnabled(true);
-            btn_cancelar.setEnabled(true);
-            btn_nuevo.setEnabled(true);
+         int total;  
+          if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+                ProductoServicio p= obtenerProductoServicio(tf_productoServicio.getText());
+                total=p.getCosto()*(Integer.parseInt(tf_cantidad.getText()));
+                tf_total.setText(Integer.toString(total));      
+          }
+          if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE){
+              tf_total.setText(null);
+          }
+            
             
     }//GEN-LAST:event_tf_cantidadKeyPressed
 
@@ -745,6 +754,11 @@ private final  TextAutoCompleter textAutoCompleter;
         tf_precio.setText(null);
         tf_total.setText(null);
     }//GEN-LAST:event_btn_nuevoActionPerformed
+
+    private void tf_cantidadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_cantidadFocusGained
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_tf_cantidadFocusGained
   private void inicializarListaReserva(){
     Query=entityManager.createNativeQuery("select * from reserva  "
             + "where checkIn<= date_format(now(),'%Y-%m-%d') and checkOut>=date_format(now(),'%Y-%m-%d')",Reserva.class);
@@ -819,7 +833,6 @@ private final  TextAutoCompleter textAutoCompleter;
     private javax.swing.JComboBox list_filtros;
     private javax.swing.JTable masterTable;
     private javax.swing.JPanel panel_registrarCPS;
-    private renderizar.ReservaRenderizar reservaRenderizar1;
     private javax.swing.JTextField tf_cantidad;
     private javax.swing.JTextField tf_categoria;
     private javax.swing.JTextField tf_cedula;

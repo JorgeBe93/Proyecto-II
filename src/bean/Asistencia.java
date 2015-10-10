@@ -6,6 +6,8 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -21,6 +23,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -36,6 +39,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Asistencia.findByFechaAsistencia", query = "SELECT a FROM Asistencia a WHERE a.fechaAsistencia = :fechaAsistencia"),
     @NamedQuery(name = "Asistencia.findByHorasTrabajadas", query = "SELECT a FROM Asistencia a WHERE a.horasTrabajadas = :horasTrabajadas")})
 public class Asistencia implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,7 +80,9 @@ public class Asistencia implements Serializable {
     }
 
     public void setCodigoAsistencia(Integer codigoAsistencia) {
+        Integer oldCodigoAsistencia = this.codigoAsistencia;
         this.codigoAsistencia = codigoAsistencia;
+        changeSupport.firePropertyChange("codigoAsistencia", oldCodigoAsistencia, codigoAsistencia);
     }
 
     public String getHoraEntrada() {
@@ -83,7 +90,9 @@ public class Asistencia implements Serializable {
     }
 
     public void setHoraEntrada(String horaEntrada) {
+        String oldHoraEntrada = this.horaEntrada;
         this.horaEntrada = horaEntrada;
+        changeSupport.firePropertyChange("horaEntrada", oldHoraEntrada, horaEntrada);
     }
 
     public String getHoraSalida() {
@@ -91,7 +100,9 @@ public class Asistencia implements Serializable {
     }
 
     public void setHoraSalida(String horaSalida) {
+        String oldHoraSalida = this.horaSalida;
         this.horaSalida = horaSalida;
+        changeSupport.firePropertyChange("horaSalida", oldHoraSalida, horaSalida);
     }
 
     public Date getFechaAsistencia() {
@@ -99,7 +110,9 @@ public class Asistencia implements Serializable {
     }
 
     public void setFechaAsistencia(Date fechaAsistencia) {
+        Date oldFechaAsistencia = this.fechaAsistencia;
         this.fechaAsistencia = fechaAsistencia;
+        changeSupport.firePropertyChange("fechaAsistencia", oldFechaAsistencia, fechaAsistencia);
     }
 
     public float getHorasTrabajadas() {
@@ -107,7 +120,9 @@ public class Asistencia implements Serializable {
     }
 
     public void setHorasTrabajadas(float horasTrabajadas) {
+        float oldHorasTrabajadas = this.horasTrabajadas;
         this.horasTrabajadas = horasTrabajadas;
+        changeSupport.firePropertyChange("horasTrabajadas", oldHorasTrabajadas, horasTrabajadas);
     }
 
     public Empleado getCodigoEmpleado() {
@@ -115,7 +130,9 @@ public class Asistencia implements Serializable {
     }
 
     public void setCodigoEmpleado(Empleado codigoEmpleado) {
+        Empleado oldCodigoEmpleado = this.codigoEmpleado;
         this.codigoEmpleado = codigoEmpleado;
+        changeSupport.firePropertyChange("codigoEmpleado", oldCodigoEmpleado, codigoEmpleado);
     }
 
     @Override
@@ -147,5 +164,13 @@ public class Asistencia implements Serializable {
     @Override
     public String toString() {
         return "codigoAsistencia=" + codigoAsistencia + ", horaEntrada=" + horaEntrada + ", horaSalida=" + horaSalida + ", fechaAsistencia=" + fechaAsistencia + ", horasTrabajadas=" + horasTrabajadas + ", codigoEmpleado=" + codigoEmpleado;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
 }

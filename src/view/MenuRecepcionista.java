@@ -395,7 +395,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         // TODO add your handling code here:
         opcion = 1;
         String args[] = new String[1];
-        args[0] = "Editar Reserva";
+        args[0] = "Buscar Reserva";
         BuscarReserva.main(args);
     }//GEN-LAST:event_mItem_editarReservaActionPerformed
 
@@ -403,7 +403,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         // TODO add your handling code here:
         opcion = 2;
         String args[] = new String[1];
-        args[0] = "Eliminar Reserva";
+        args[0] = "Buscar Reserva";
         BuscarReserva.main(args);
     }//GEN-LAST:event_mItem_eliminarReservaActionPerformed
 
@@ -486,9 +486,10 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
     private void mItem_contratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_contratoActionPerformed
         // TODO add your handling code here:
-        String args[]=new String[1];
-        args[0]="Generar Contrato";
-        GenerarContrato.main(args);
+        opcion = 4;
+        String args[] = new String[1];
+        args[0] = "Buscar Reserva";
+        BuscarReserva.main(args);
     }//GEN-LAST:event_mItem_contratoActionPerformed
 
     private void mItem_generarPreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_generarPreActionPerformed

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="46c102f5-953b-4cd8-b70c-04d33943b26b">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="35"/>
 	<parameter name="CodigoReserva" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -21,15 +21,13 @@
      cliente.`apellido` AS cliente_apellido,
      cliente.`direccion` AS cliente_direccion,
      cliente.`telefono` AS cliente_telefono,
-     categ_habitacion.`nombre` AS categ_habitacion_nombre,
-     consumo_pro_ser.`total` AS consumo_pro_ser_total
+     categ_habitacion.`nombre` AS categ_habitacion_nombre
 FROM
      `habitacion` habitacion INNER JOIN `reserva` reserva ON habitacion.`numero` = reserva.`numHabitacion`
      INNER JOIN `cliente` cliente ON reserva.`codigoCliente` = cliente.`codigoCliente`
-     INNER JOIN `consumo_pro_ser` consumo_pro_ser ON reserva.`codigoReserva` = consumo_pro_ser.`codigoReserva`
      INNER JOIN `categ_habitacion` categ_habitacion ON habitacion.`codigoCategoria` = categ_habitacion.`codigoCategoria`
 WHERE
-	reserva.`codigoReserva`=$P{CodigoReserva}]]>
+     reserva.`codigoReserva` = $P{CodigoReserva}]]>
 	</queryString>
 	<field name="reserva_codigoReserva" class="java.lang.Integer"/>
 	<field name="reserva_checkIn" class="java.sql.Date"/>
@@ -45,7 +43,6 @@ WHERE
 	<field name="cliente_direccion" class="java.lang.String"/>
 	<field name="cliente_telefono" class="java.lang.Integer"/>
 	<field name="categ_habitacion_nombre" class="java.lang.String"/>
-	<field name="consumo_pro_ser_total" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

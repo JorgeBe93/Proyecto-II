@@ -35,6 +35,7 @@ public class RegistrarEvento extends javax.swing.JFrame {
     private int limite;
     private final  TextAutoCompleter textAutoCompleter;
     private int resp;
+    private int fila;
     Date fecha=new Date();
     DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
     DateFormat form=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -60,10 +61,11 @@ public class RegistrarEvento extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
-        query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT e FROM Eventos e");
-        list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
+        EntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
+        Query = java.beans.Beans.isDesignTime() ? null : EntityManager.createQuery("SELECT a FROM Asistencia a");
+        List = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(Query.getResultList());
         panel_regActividad = new javax.swing.JPanel();
         lbl_registrarActividad = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -75,22 +77,27 @@ public class RegistrarEvento extends javax.swing.JFrame {
         lbl_fechaInicio = new javax.swing.JLabel();
         lbl_tipoEvento = new javax.swing.JLabel();
         tf_descripcionE = new javax.swing.JTextField();
+        lbl_codEmpleado = new javax.swing.JLabel();
+        tf_codEmpleado = new javax.swing.JTextField();
+        tf_datosEmp = new javax.swing.JTextField();
+        lbl_fechaAsist = new javax.swing.JLabel();
+        tf_fechaAsist = new javax.swing.JTextField();
+        lbl_horaEntrada = new javax.swing.JLabel();
+        tf_horaEntrada = new javax.swing.JTextField();
+        lbl_horaSalida = new javax.swing.JLabel();
+        tf_horaSalida = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btn_cancelar = new javax.swing.JButton();
         btn_guardar = new javax.swing.JButton();
+        btn_nuevo = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        lbl_horaSalida = new javax.swing.JLabel();
-        tf_codEmpleado = new javax.swing.JTextField();
-        tf_horaSalida = new javax.swing.JTextField();
-        lbl_fechaAsist = new javax.swing.JLabel();
-        tf_datosEmp = new javax.swing.JTextField();
-        lbl_horaEntrada = new javax.swing.JLabel();
-        lbl_codEmpleado = new javax.swing.JLabel();
-        tf_horasT = new javax.swing.JTextField();
-        tf_horaEntrada = new javax.swing.JTextField();
-        lbl_horasT = new javax.swing.JLabel();
-        dc_fechaAsistencia = new com.toedter.calendar.JDateChooser();
+        tf_valor = new javax.swing.JTextField();
+        lbl_valor = new javax.swing.JLabel();
+        lbl_filtro = new javax.swing.JLabel();
+        list_filtros = new javax.swing.JComboBox();
         btn_buscar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        masterTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,7 +113,7 @@ public class RegistrarEvento extends javax.swing.JFrame {
         panel_regActividadLayout.setHorizontalGroup(
             panel_regActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_regActividadLayout.createSequentialGroup()
-                .addGap(223, 223, 223)
+                .addGap(185, 185, 185)
                 .addComponent(lbl_registrarActividad)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -121,7 +128,6 @@ public class RegistrarEvento extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        dc_fechaInicio.setEnabled(false);
         dc_fechaInicio.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 dc_fechaInicioFocusLost(evt);
@@ -129,12 +135,11 @@ public class RegistrarEvento extends javax.swing.JFrame {
         });
 
         list_tipoEvento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Suspensión", "Permiso Justificado", "Vacaciones", "Horas Extras" }));
-        list_tipoEvento.setEnabled(false);
 
         lbl_fechaFin.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         lbl_fechaFin.setText("Fecha Fin:");
 
-        dc_fechaFin.setEnabled(false);
+        dc_fechaFin.setDoubleBuffered(false);
         dc_fechaFin.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 dc_fechaFinFocusLost(evt);
@@ -150,7 +155,6 @@ public class RegistrarEvento extends javax.swing.JFrame {
         lbl_tipoEvento.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         lbl_tipoEvento.setText("Tipo de Evento:");
 
-        tf_descripcionE.setEnabled(false);
         tf_descripcionE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_descripcionEActionPerformed(evt);
@@ -162,97 +166,10 @@ public class RegistrarEvento extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbl_tipoEvento)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(list_tipoEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbl_fechaInicio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dc_fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_descripcionE)
-                    .addComponent(lbl_fechaFin))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dc_fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tf_descripcionE, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 55, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_tipoEvento)
-                    .addComponent(list_tipoEvento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_descripcionE)
-                    .addComponent(tf_descripcionE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_fechaInicio)
-                    .addComponent(dc_fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_fechaFin)
-                    .addComponent(dc_fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
+        lbl_codEmpleado.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
+        lbl_codEmpleado.setText("Empleado:");
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete.png"))); // NOI18N
-        btn_cancelar.setText("Cancelar");
-        btn_cancelar.setEnabled(false);
-        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_cancelarActionPerformed(evt);
-            }
-        });
-
-        btn_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
-        btn_guardar.setText("Guardar");
-        btn_guardar.setEnabled(false);
-        btn_guardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_guardarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn_guardar)
-                .addGap(37, 37, 37)
-                .addComponent(btn_cancelar)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_cancelar))
-                .addContainerGap())
-        );
-
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Asistencia", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Candara", 0, 12))); // NOI18N
-
-        lbl_horaSalida.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
-        lbl_horaSalida.setText("Hora Salida:");
-
+        tf_codEmpleado.setEditable(false);
         tf_codEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tf_codEmpleadoKeyPressed(evt);
@@ -262,38 +179,191 @@ public class RegistrarEvento extends javax.swing.JFrame {
             }
         });
 
-        tf_horaSalida.setEnabled(false);
+        tf_datosEmp.setEnabled(false);
 
         lbl_fechaAsist.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         lbl_fechaAsist.setText("Fecha Asistencia:");
 
-        tf_datosEmp.setEnabled(false);
+        tf_fechaAsist.setEditable(false);
 
         lbl_horaEntrada.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         lbl_horaEntrada.setText("Hora Entrada:");
 
-        lbl_codEmpleado.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
-        lbl_codEmpleado.setText("Empleado:");
+        tf_horaEntrada.setEditable(false);
 
-        tf_horasT.setEnabled(false);
+        lbl_horaSalida.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
+        lbl_horaSalida.setText("Hora Salida:");
 
-        tf_horaEntrada.setEnabled(false);
+        tf_horaSalida.setEditable(false);
 
-        lbl_horasT.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
-        lbl_horasT.setText("Horas Trabajadas:");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbl_fechaAsist)
+                                .addGap(18, 18, 18)
+                                .addComponent(tf_fechaAsist, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(lbl_horaEntrada)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tf_horaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lbl_horaSalida))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbl_codEmpleado)
+                                .addGap(53, 53, 53)
+                                .addComponent(tf_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(tf_datosEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(10, 10, 10)
+                        .addComponent(tf_horaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbl_tipoEvento)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(list_tipoEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lbl_descripcionE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(lbl_fechaInicio)
+                                .addGap(18, 18, 18)
+                                .addComponent(dc_fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbl_fechaFin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dc_fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tf_descripcionE, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 53, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_codEmpleado)
+                    .addComponent(tf_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_datosEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_fechaAsist)
+                    .addComponent(tf_fechaAsist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_horaEntrada)
+                    .addComponent(tf_horaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_horaSalida)
+                    .addComponent(tf_horaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_tipoEvento)
+                    .addComponent(list_tipoEvento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_descripcionE)
+                    .addComponent(tf_descripcionE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dc_fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_fechaInicio))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(dc_fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(1, 1, 1)))
+                    .addComponent(lbl_fechaFin))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
 
-        dc_fechaAsistencia.setEnabled(false);
-        dc_fechaAsistencia.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                dc_fechaAsistenciaKeyPressed(evt);
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete.png"))); // NOI18N
+        btn_cancelar.setText("Cancelar");
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarActionPerformed(evt);
             }
         });
 
+        btn_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
+        btn_guardar.setText("Guardar");
+        btn_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_guardarActionPerformed(evt);
+            }
+        });
+
+        btn_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/arrow-up.png"))); // NOI18N
+        btn_nuevo.setText("Nuevo");
+        btn_nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nuevoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_nuevo)
+                .addGap(28, 28, 28)
+                .addComponent(btn_guardar)
+                .addGap(18, 18, 18)
+                .addComponent(btn_cancelar)
+                .addGap(19, 19, 19))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_cancelar)
+                    .addComponent(btn_nuevo))
+                .addContainerGap())
+        );
+
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setForeground(new java.awt.Color(204, 204, 255));
+
+        tf_valor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_valorKeyTyped(evt);
+            }
+        });
+
+        lbl_valor.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_valor.setText("Valor:");
+
+        lbl_filtro.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_filtro.setText("Buscar por:");
+
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Empleado", "Nombre", "Apellido", "Fecha", "Horas Trabajadas" }));
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusLost(evt);
+            }
+        });
+
+        btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
         btn_buscar.setText("Buscar");
-        btn_buscar.setEnabled(false);
         btn_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_buscarActionPerformed(evt);
+            }
+        });
+        btn_buscar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                btn_buscarFocusLost(evt);
             }
         });
 
@@ -302,58 +372,64 @@ public class RegistrarEvento extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(lbl_codEmpleado)
-                        .addGap(18, 18, 18)
-                        .addComponent(tf_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(tf_datosEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(lbl_horaEntrada)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(tf_horaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(50, 50, 50)
-                            .addComponent(lbl_horaSalida)
-                            .addGap(18, 18, 18)
-                            .addComponent(tf_horaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(61, 61, 61)
-                            .addComponent(lbl_horasT)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(tf_horasT, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                            .addComponent(lbl_fechaAsist)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(dc_fechaAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(btn_buscar))))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(lbl_filtro)
+                .addGap(18, 18, 18)
+                .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(lbl_valor)
+                .addGap(18, 18, 18)
+                .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_buscar)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tf_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_codEmpleado)
-                    .addComponent(tf_datosEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dc_fechaAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_fechaAsist)
+                    .addComponent(lbl_filtro)
+                    .addComponent(lbl_valor)
+                    .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_buscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_horasT)
-                    .addComponent(tf_horasT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_horaEntrada)
-                    .addComponent(tf_horaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_horaSalida)
-                    .addComponent(tf_horaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, List, masterTable);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoAsistencia}"));
+        columnBinding.setColumnName(" Asistencia");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoEmpleado.codigoEmpleado}"));
+        columnBinding.setColumnName("Empleado");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoEmpleado.nombre}"));
+        columnBinding.setColumnName("Nombre");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoEmpleado.apellido}"));
+        columnBinding.setColumnName("Apellido");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaAsistencia}"));
+        columnBinding.setColumnName("Fecha Asistencia");
+        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${horaSalida}"));
+        columnBinding.setColumnName("Hora Salida");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${horaEntrada}"));
+        columnBinding.setColumnName("Hora Entrada");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${horasTrabajadas}"));
+        columnBinding.setColumnName("Horas Trabajadas");
+        columnBinding.setColumnClass(Float.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                masterTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(masterTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -362,16 +438,21 @@ public class RegistrarEvento extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(227, 227, 227)
+                        .addGap(110, 110, 110)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panel_regActividad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(249, 249, 249)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(panel_regActividad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                        .addGap(35, 35, 35)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(30, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,13 +460,17 @@ public class RegistrarEvento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(panel_regActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(27, 27, 27)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -410,11 +495,11 @@ public class RegistrarEvento extends javax.swing.JFrame {
         //verificar si se ha marcado para confirmar la hora extra
         if(list_tipoEvento.getSelectedItem()=="Horas Extras"){
             fecha2=formato.format(dc_fechaInicio.getDate());
-            query=entityManager.createNativeQuery("SELECT * FROM asistencia WHERE codigoEmpleado="
+            Query=EntityManager.createNativeQuery("SELECT * FROM asistencia WHERE codigoEmpleado="
                         +id
                         + " AND fechaAsistencia= "
                         +"'"+fecha2+"'", Asistencia.class);
-            List<Asistencia> a=query.getResultList();
+            List<Asistencia> a=Query.getResultList();
             if(a.isEmpty()){
                 JOptionPane.showMessageDialog(null,"No hay asistencia marcada en la fecha, no puede"
                         + " ser computado como hora extra", "Error",JOptionPane.ERROR_MESSAGE);
@@ -436,9 +521,9 @@ public class RegistrarEvento extends javax.swing.JFrame {
                 }
                 e.setTipoEvento((String) list_tipoEvento.getSelectedItem());
                 e.setDuracion(calcularDias());
-                entityManager.getTransaction().begin();
-                entityManager.persist(e);
-                entityManager.flush();
+                EntityManager.getTransaction().begin();
+                EntityManager.persist(e);
+                EntityManager.flush();
                 //auditoria de sistema
                  AuditoriaSistema as=new AuditoriaSistema();
                  as.setAccion("Inserción");
@@ -447,21 +532,18 @@ public class RegistrarEvento extends javax.swing.JFrame {
                  as.setAntes(e.toString());
                  as.setDespues("No hay cambios");
                  as.setUsuario("nadie");  
-                 entityManager.persist(as);
-                 entityManager.getTransaction().commit();
+                 EntityManager.persist(as);
+                 EntityManager.getTransaction().commit();
                  JOptionPane.showMessageDialog(null,"Registro Exitoso", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
         }else{
                  this.dispose();
         } 
-        tf_codEmpleado.setText(null);
+       
         tf_descripcionE.setText(null);
         dc_fechaInicio.setDate(null);
         dc_fechaFin.setDate(null);
         tf_datosEmp.setText(null);
-        dc_fechaAsistencia.setDate(null);
-        tf_horaEntrada.setText(null);
-        tf_horaSalida.setText(null);
-        tf_horasT.setText(null);
+       
     }//GEN-LAST:event_btn_guardarActionPerformed
 
     private void tf_descripcionEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_descripcionEKeyTyped
@@ -505,65 +587,160 @@ public class RegistrarEvento extends javax.swing.JFrame {
 
     private void tf_codEmpleadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_codEmpleadoKeyPressed
         // TODO add your handling code here:
-        int cod;
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            cod=Integer.parseInt(tf_codEmpleado.getText());
-            query=entityManager.createNamedQuery("Empleado.findByCodigoEmpleado");
-            query.setParameter("codigoEmpleado", cod);
-            List<Empleado> e=query.getResultList();
-            if(e.isEmpty()){
-                JOptionPane.showMessageDialog(null,"Código de Empleado Inexistente", "Error",JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            tf_datosEmp.setText(e.get(0).getNombre().toUpperCase()+" "+e.get(0).getApellido().toUpperCase());
-            dc_fechaAsistencia.setEnabled(true);
-            btn_buscar.setEnabled(true);
-       
-        }
+  
+        
 
     }//GEN-LAST:event_tf_codEmpleadoKeyPressed
 
-    private void dc_fechaAsistenciaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dc_fechaAsistenciaKeyPressed
+    private void tf_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_valorKeyTyped
         // TODO add your handling code here:
-       
-    }//GEN-LAST:event_dc_fechaAsistenciaKeyPressed
+        char ch;
+        if (list_filtros.getSelectedItem()=="Empleado" || list_filtros.getSelectedItem()=="Horas Trabajadas"){
+            ch=evt.getKeyChar();
+            if(!Character.isDigit(ch)){
+                getToolkit().beep();
+                evt.consume();
+            }
+        }else{
+            if (list_filtros.getSelectedItem()=="Nombre" || list_filtros.getSelectedItem()=="Apellido"){
+                ch=evt.getKeyChar();
+                if(Character.isDigit(ch)){
+                    getToolkit().beep();
+                    evt.consume();
+                }
+            }
+        }
+    }//GEN-LAST:event_tf_valorKeyTyped
+
+    private void list_filtrosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusLost
+        // TODO add your handling code here:
+        if(list_filtros.getSelectedItem()=="Fecha"){
+            tf_valor.setText(formato.format(fecha));
+        }
+    }//GEN-LAST:event_list_filtrosFocusLost
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         // TODO add your handling code here:
-         int cod;
-        String fechaAsis;
-        if(tf_codEmpleado.getText().length()==0){
-            JOptionPane.showMessageDialog(null,"Ingrese código de Empleado", "Error",JOptionPane.ERROR_MESSAGE);
-                 return;
-        }
-        cod=Integer.parseInt(tf_codEmpleado.getText());
-        if(dc_fechaAsistencia.getDate()==null){
-                JOptionPane.showMessageDialog(null,"Ingrese fecha de asistencia", "Error",JOptionPane.ERROR_MESSAGE);
-                 return;
+        if (tf_valor.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Ingrese algún valor para efectuar la búsqueda", "Advertencia",JOptionPane.ERROR_MESSAGE);
+            return;
         }
         else{
-                fechaAsis=formato.format(dc_fechaAsistencia.getDate());
-                query=entityManager.createNativeQuery("SELECT * FROM asistencia WHERE codigoEmpleado= "
-                +cod+" AND fechaAsistencia= "+"'"+fechaAsis+"'", Asistencia.class);
-                List<Asistencia> a=query.getResultList();
+
+            if(list_filtros.getSelectedItem()=="Nombre"){
+                Query = EntityManager.createNativeQuery( "SELECT * FROM asistencia a "
+                    + "INNER JOIN empleado e "
+                    + "on a.codigoEmpleado = e.codigoEmpleado "
+                    + "WHERE e.nombre like '%"
+                    +tf_valor.getText() + "%'", Asistencia.class);
+                List<Asistencia> a=Query.getResultList();
                 if(a.isEmpty()){
-                    JOptionPane.showMessageDialog(null,"No se encontraron registros, verifique los datos", "Error",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Nombre Inexistente", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
                     return;
                 }
-                tf_horaEntrada.setText(a.get(0).getHoraEntrada());
-                tf_horaSalida.setText(a.get(0).getHoraSalida());
-                tf_horasT.setText(Float.toString(a.get(0).getHorasTrabajadas()));
-                //habiltar los demas labels
-                tf_descripcionE.setEnabled(true);
-                list_tipoEvento.setEnabled(true);
-                dc_fechaInicio.setEnabled(true);
-                dc_fechaFin.setEnabled(true);
-                btn_guardar.setEnabled(true);
-                btn_cancelar.setEnabled(true);
+                List.clear();
+                List.addAll(a);
+                return;
+            }
+            else if(list_filtros.getSelectedItem()=="Apellido"){
+                Query = EntityManager.createNativeQuery( "SELECT * FROM asistencia a "
+                    + "INNER JOIN empleado e "
+                    + "on a.codigoEmpleado = e.codigoEmpleado "
+                    + "WHERE e.apellido like '%"
+                    +tf_valor.getText() + "%'", Asistencia.class);
+                List<Asistencia> a=Query.getResultList();
+                if(a.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Apellido Inexistente", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(a);
+                return;
+            }
+            else if(list_filtros.getSelectedItem()=="Código Empleado"){
+                Query = EntityManager.createNativeQuery( "SELECT * FROM asistencia a "
+                    + "INNER JOIN empleado e "
+                    + "on a.codigoEmpleado = e.codigoEmpleado "
+                    + "WHERE a.codigoEmpleado = "
+                    +tf_valor.getText() , Asistencia.class);
+                List<Asistencia> a=Query.getResultList();
+                if(a.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Empleado Inexistente", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(a);
+                return;
+            }
+            else if(list_filtros.getSelectedItem()=="Fecha"){
+                String q="SELECT * FROM asistencia  "
+                + "WHERE fechaAsistencia= '"
+                +tf_valor.getText() + "'";
+                System.out.println(q);
+                Query = EntityManager.createNativeQuery( "SELECT * FROM asistencia  "
+                    + "WHERE fechaAsistencia= '"
+                    +tf_valor.getText() + "'", Asistencia.class);
+                List<Asistencia> a=Query.getResultList();
+                if(a.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"No hay registros para la fecha indicada", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(a);
+                return;
+            }
+            else if(list_filtros.getSelectedItem()=="Horas Trabajadas"){
+                Query = EntityManager.createNativeQuery( "SELECT * FROM asistencia  "
+                    + "WHERE HorasTrabajadas>= '"
+                    +tf_valor.getText() + "'", Asistencia.class);
+                List<Asistencia> a=Query.getResultList();
+                if(a.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"No existen registros para la hora indicada", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(a);
+                return;
+            }
         }
-           
-        
     }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void btn_buscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_buscarFocusLost
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_btn_buscarFocusLost
+
+    private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
+        // TODO add your handling code here:
+         int codEm;
+         String fec;
+        fila=masterTable.getSelectedRow();
+        codEm=(Integer)masterTable.getValueAt(fila, 1);
+        tf_codEmpleado.setText(Integer.toString(codEm));
+        tf_datosEmp.setText(masterTable.getValueAt(fila, 2)+" "+masterTable.getValueAt(fila, 3));
+        fec=formato.format( masterTable.getValueAt(fila, 4));
+        tf_fechaAsist.setText(fec);
+        tf_horaEntrada.setText((String) masterTable.getValueAt(fila, 5));
+        tf_horaSalida.setText((String) masterTable.getValueAt(fila, 6));
+      
+    }//GEN-LAST:event_masterTableMouseClicked
+
+    private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
+        // TODO add your handling code here:
+         tf_codEmpleado.setText(null);
+        tf_descripcionE.setText(null);
+        dc_fechaInicio.setDate(null);
+        dc_fechaFin.setDate(null);
+        tf_datosEmp.setText(null);
+        tf_fechaAsist.setText(null);
+        tf_horaEntrada.setText(null);
+        tf_horaSalida.setText(null);
+    }//GEN-LAST:event_btn_nuevoActionPerformed
     public int calcularDias(){
             float decimal;
             String d;
@@ -637,8 +814,8 @@ public class RegistrarEvento extends javax.swing.JFrame {
         });
     }
         private void inicializarLista(){
-        query = entityManager.createNamedQuery("Empleado.findAll");
-        List<Empleado> e = query.getResultList();
+        Query = EntityManager.createNamedQuery("Empleado.findAll");
+        List<Empleado> e = Query.getResultList();
         Iterator <Empleado> it = e.iterator();
         while (it.hasNext()){
            textAutoCompleter.addItem(it.next().getCodigoEmpleado());
@@ -646,9 +823,9 @@ public class RegistrarEvento extends javax.swing.JFrame {
        // entityManager.close();
     }
        private Empleado obtenerEmpleado(){
-        query = entityManager.createNamedQuery("Empleado.findByCodigoEmpleado");
-        query.setParameter("codigoEmpleado", Integer.parseInt(tf_codEmpleado.getText()));
-        List<Empleado> em = query.getResultList();
+        Query = EntityManager.createNamedQuery("Empleado.findByCodigoEmpleado");
+        Query.setParameter("codigoEmpleado", Integer.parseInt(tf_codEmpleado.getText()));
+        List<Empleado> em = Query.getResultList();
         Empleado emple = null;
         try{
             emple = em.get(0);
@@ -664,35 +841,41 @@ public class RegistrarEvento extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.persistence.EntityManager EntityManager;
+    private java.util.List<bean.Asistencia> List;
+    private javax.persistence.Query Query;
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_guardar;
-    private com.toedter.calendar.JDateChooser dc_fechaAsistencia;
+    private javax.swing.JButton btn_nuevo;
     private com.toedter.calendar.JDateChooser dc_fechaFin;
     private com.toedter.calendar.JDateChooser dc_fechaInicio;
-    private javax.persistence.EntityManager entityManager;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_codEmpleado;
     private javax.swing.JLabel lbl_descripcionE;
     private javax.swing.JLabel lbl_fechaAsist;
     private javax.swing.JLabel lbl_fechaFin;
     private javax.swing.JLabel lbl_fechaInicio;
+    private javax.swing.JLabel lbl_filtro;
     private javax.swing.JLabel lbl_horaEntrada;
     private javax.swing.JLabel lbl_horaSalida;
-    private javax.swing.JLabel lbl_horasT;
     private javax.swing.JLabel lbl_registrarActividad;
     private javax.swing.JLabel lbl_tipoEvento;
-    private java.util.List<bean.Asistencia> list;
+    private javax.swing.JLabel lbl_valor;
+    private javax.swing.JComboBox list_filtros;
     private javax.swing.JComboBox list_tipoEvento;
+    private javax.swing.JTable masterTable;
     private javax.swing.JPanel panel_regActividad;
-    private javax.persistence.Query query;
     private javax.swing.JTextField tf_codEmpleado;
     private javax.swing.JTextField tf_datosEmp;
     private javax.swing.JTextField tf_descripcionE;
+    private javax.swing.JTextField tf_fechaAsist;
     private javax.swing.JTextField tf_horaEntrada;
     private javax.swing.JTextField tf_horaSalida;
-    private javax.swing.JTextField tf_horasT;
+    private javax.swing.JTextField tf_valor;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,11 +7,6 @@
         <Property name="persistenceUnit" type="java.lang.String" value="proyectoPU"/>
       </Properties>
     </Component>
-    <Component class="renderizar.ReservaRenderizar" name="reservaRenderizar1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="reservaRenderizar1"/>
-      </Properties>
-    </Component>
     <Component class="javax.persistence.Query" name="Query">
       <Properties>
         <Property name="query" type="java.lang.String" value="SELECT r FROM Reserva r"/>
@@ -319,6 +314,7 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tf_cantidadActionPerformed"/>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tf_cantidadFocusGained"/>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tf_cantidadFocusLost"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tf_cantidadKeyPressed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tf_cantidadKeyTyped"/>
@@ -483,7 +479,6 @@
               <Image iconType="3" name="/imagenes/guardar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Guardar"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_guardarActionPerformed"/>
@@ -495,7 +490,6 @@
               <Image iconType="3" name="/imagenes/delete.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cancelarActionPerformed"/>
@@ -507,7 +501,6 @@
               <Image iconType="3" name="/imagenes/arrow-up.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Nuevo"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_nuevoActionPerformed"/>
