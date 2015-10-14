@@ -8,10 +8,13 @@ package view;
 
 import bean.AuditoriaSistema;
 import bean.Cliente;
+import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -494,31 +497,22 @@ public class ClienteCreate extends javax.swing.JFrame {
                     as.setUsuario(LoginView.nombreUsuario);  
                     entityManager.persist(as);
                     entityManager.getTransaction().commit();
+                    //si registramos un cliente desde la reserva lo agregamos a masterTable
+                    if(CrearReserva.opcionReserva==1){
+                         query=entityManager.createNamedQuery( "Cliente.findByCodigoCliente");
+                         query.setParameter("codigoCliente",c.getCodigoCliente());
+                         List<Cliente> clie=query.getResultList();
+                         CrearReserva.clienteList.clear();
+                         CrearReserva.clienteList.addAll(clie);
+                    }
                     JOptionPane.showMessageDialog(null,"Creación exitosa", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
                }
-        }if (!llamadaCrearReserva.equals("")){
-                JFrame frame=new CrearReserva();
-                CrearReserva.tf_cedulaCliente.setText(tf_cedula.getText());
-                frame.setVisible(true);
-                frame.setTitle("Registar Reserva");
-                frame.setLocationRelativeTo(null);
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                
         }
         if (!llamadaGenerarPresupuesto.equals("")){
                 JFrame frame=new Presupuestar();
                 Presupuestar.tf_cedulaCliente.setText(tf_cedula.getText());
                 frame.setVisible(true);
                 frame.setTitle("Generar Presupuesto");
-                frame.setLocationRelativeTo(null);
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                
-        }
-        if (!llamadaEditarReserva.equals("")){
-                JFrame frame=new ReservaEditar();
-                CrearReserva.tf_cedulaCliente.setText(tf_cedula.getText());
-                frame.setVisible(true);
-                frame.setTitle("Editar Reserva");
                 frame.setLocationRelativeTo(null);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 
@@ -562,6 +556,8 @@ public class ClienteCreate extends javax.swing.JFrame {
             public void run() {
                 JFrame frame=new ClienteCreate();
                 frame.setTitle("Registrar Cliente");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

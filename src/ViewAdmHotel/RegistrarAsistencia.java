@@ -22,6 +22,8 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.applet.AudioClip;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -754,6 +756,8 @@ private void emitirSonidoIncorrecto(){
             public void run() {
                 JFrame frame=new RegistrarAsistencia();
                 frame.setVisible(true);
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setTitle("Registrar Asistencia");
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);

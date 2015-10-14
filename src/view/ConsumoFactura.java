@@ -127,11 +127,11 @@ public class ConsumoFactura extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_generar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2))
-                    .addComponent(btn_cancelar))
+                        .addComponent(btn_cancelar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btn_generar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -147,43 +147,51 @@ public class ConsumoFactura extends javax.swing.JFrame {
         panel_generarFactLayout.setHorizontalGroup(
             panel_generarFactLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_generarFactLayout.createSequentialGroup()
-                .addGap(182, 182, 182)
+                .addGap(223, 223, 223)
                 .addComponent(lbl_generarFact)
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_generarFactLayout.setVerticalGroup(
             panel_generarFactLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generarFactLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panel_generarFactLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lbl_generarFact)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        tf_categoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_categoria.setEnabled(false);
+        tf_categoria.setEditable(false);
+        tf_categoria.setBackground(new java.awt.Color(0, 153, 255));
+        tf_categoria.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_categoria.setForeground(new java.awt.Color(255, 255, 255));
 
-        tf_codigo.setBackground(new java.awt.Color(240, 240, 240));
-        tf_codigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tf_codigo.setEditable(false);
+        tf_codigo.setBackground(new java.awt.Color(0, 153, 255));
+        tf_codigo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_codigo.setForeground(new java.awt.Color(255, 255, 255));
-        tf_codigo.setEnabled(false);
 
-        tf_nomApe.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_nomApe.setEnabled(false);
+        tf_nomApe.setEditable(false);
+        tf_nomApe.setBackground(new java.awt.Color(0, 153, 255));
+        tf_nomApe.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_nomApe.setForeground(new java.awt.Color(255, 255, 255));
 
         lbl_cedula.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_cedula.setText("Cédula:");
 
-        tf_cedula.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_cedula.setEnabled(false);
+        tf_cedula.setEditable(false);
+        tf_cedula.setBackground(new java.awt.Color(0, 153, 255));
+        tf_cedula.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_cedula.setForeground(new java.awt.Color(255, 255, 255));
 
         lbl_codigo.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_codigo.setText("Código Reserva:");
 
-        tf_habitacion.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_habitacion.setEnabled(false);
+        tf_habitacion.setEditable(false);
+        tf_habitacion.setBackground(new java.awt.Color(0, 153, 255));
+        tf_habitacion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_habitacion.setForeground(new java.awt.Color(255, 255, 255));
 
         lbl_habitación.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_habitación.setText("Habitación:");
@@ -368,19 +376,18 @@ public class ConsumoFactura extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(panel_generarFact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(233, 233, 233)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(panel_generarFact, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -396,7 +403,7 @@ public class ConsumoFactura extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -744,6 +751,8 @@ public class ConsumoFactura extends javax.swing.JFrame {
             public void run() {
                 JFrame frame=new ConsumoFactura();
                 frame.setVisible(true);
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setTitle("Generar Factura de Cliente");
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);

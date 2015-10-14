@@ -131,16 +131,16 @@ public class ConsumoResumen extends javax.swing.JFrame {
 
         lbl_verConsumo.setFont(new java.awt.Font("Corbel", 1, 25)); // NOI18N
         lbl_verConsumo.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_verConsumo.setText("Ver Resumen de Consumos");
+        lbl_verConsumo.setText("Ver Resumen Consumos");
 
         javax.swing.GroupLayout panel_verConsumoLayout = new javax.swing.GroupLayout(panel_verConsumo);
         panel_verConsumo.setLayout(panel_verConsumoLayout);
         panel_verConsumoLayout.setHorizontalGroup(
             panel_verConsumoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_verConsumoLayout.createSequentialGroup()
-                .addGap(92, 92, 92)
+                .addGap(196, 196, 196)
                 .addComponent(lbl_verConsumo)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_verConsumoLayout.setVerticalGroup(
             panel_verConsumoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,28 +194,36 @@ public class ConsumoResumen extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        tf_categoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_categoria.setEnabled(false);
+        tf_categoria.setEditable(false);
+        tf_categoria.setBackground(new java.awt.Color(0, 153, 255));
+        tf_categoria.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_categoria.setForeground(new java.awt.Color(255, 255, 255));
 
-        tf_codigo.setBackground(new java.awt.Color(240, 240, 240));
-        tf_codigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tf_codigo.setEditable(false);
+        tf_codigo.setBackground(new java.awt.Color(0, 153, 255));
+        tf_codigo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_codigo.setForeground(new java.awt.Color(255, 255, 255));
-        tf_codigo.setEnabled(false);
 
-        tf_nomApe.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_nomApe.setEnabled(false);
+        tf_nomApe.setEditable(false);
+        tf_nomApe.setBackground(new java.awt.Color(0, 153, 255));
+        tf_nomApe.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_nomApe.setForeground(new java.awt.Color(255, 255, 255));
 
         lbl_cedula.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_cedula.setText("Cédula:");
 
-        tf_cedula.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_cedula.setEnabled(false);
+        tf_cedula.setEditable(false);
+        tf_cedula.setBackground(new java.awt.Color(0, 153, 255));
+        tf_cedula.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_cedula.setForeground(new java.awt.Color(255, 255, 255));
 
         lbl_codigo.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_codigo.setText("Código Reserva:");
 
-        tf_habitacion.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_habitacion.setEnabled(false);
+        tf_habitacion.setEditable(false);
+        tf_habitacion.setBackground(new java.awt.Color(0, 153, 255));
+        tf_habitacion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_habitacion.setForeground(new java.awt.Color(255, 255, 255));
 
         lbl_habitación.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_habitación.setText("Habitación:");
@@ -347,15 +355,6 @@ public class ConsumoResumen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(152, 152, 152)
-                        .addComponent(panel_verConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -367,6 +366,12 @@ public class ConsumoResumen extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(264, 264, 264))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_verConsumo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,7 +386,7 @@ public class ConsumoResumen extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -394,17 +399,6 @@ public class ConsumoResumen extends javax.swing.JFrame {
         int total=0;
         String letras;
         int codigo=Integer.parseInt(tf_codigo.getText());
-       /*  query=entityManager.createNativeQuery("SELECT * FROM factura_cobro  "
-                    + "WHERE codigoReserva="
-                    +"'"+codigo+"'"
-                    +" AND concepto like '%liquidación de reserva%'", FacturaCobro.class);
-         List<FacturaCobro>fact=query.getResultList();
-      
-         if(!fact.isEmpty()){
-             JOptionPane.showMessageDialog(null,"Esta reserva ya ha cancelado su deuda", "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                   return;
-                   
-         }*/
         query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser  "
                     + "WHERE codigoReserva="
                     +"'"+codigo+"'"
@@ -645,6 +639,8 @@ private void inicializarLista(){
             public void run() {
                 JFrame frame=new ConsumoResumen();
                 frame.setVisible(true);
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setTitle("Generar resumen de consumo");
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);

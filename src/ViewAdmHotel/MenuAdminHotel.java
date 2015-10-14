@@ -1027,6 +1027,8 @@ public class MenuAdminHotel extends javax.swing.JFrame {
                 JFrame frame=new MenuAdminHotel();
                 frame.setTitle("Menu Administrador del Hotel");
                 frame.setVisible(true);
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setLocationRelativeTo(null);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }

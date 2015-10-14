@@ -21,9 +21,11 @@ import javax.persistence.Query;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import com.mxrck.autocompleter.TextAutoCompleter;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -134,13 +136,10 @@ private final  TextAutoCompleter textAutoCompleter;
         lbl_ps.setText("Producto/Servicio:");
 
         tf_total.setEditable(false);
-        tf_total.setBackground(new java.awt.Color(51, 153, 255));
+        tf_total.setBackground(new java.awt.Color(255, 255, 255));
         tf_total.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        tf_total.setForeground(new java.awt.Color(255, 255, 255));
 
-        tf_cantidad.setBackground(new java.awt.Color(51, 153, 255));
         tf_cantidad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        tf_cantidad.setForeground(new java.awt.Color(255, 255, 255));
         tf_cantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_cantidadActionPerformed(evt);
@@ -170,32 +169,41 @@ private final  TextAutoCompleter textAutoCompleter;
         lbl_precio.setText("Precio (Gs.):");
 
         tf_precio.setEditable(false);
-        tf_precio.setBackground(new java.awt.Color(51, 153, 255));
+        tf_precio.setBackground(new java.awt.Color(255, 255, 255));
         tf_precio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        tf_precio.setForeground(new java.awt.Color(255, 255, 255));
 
-        tf_productoServicio.setBackground(new java.awt.Color(51, 153, 255));
         tf_productoServicio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        tf_productoServicio.setForeground(new java.awt.Color(255, 255, 255));
         tf_productoServicio.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 tf_productoServicioFocusLost(evt);
             }
         });
 
-        tf_huesped.setEnabled(false);
+        tf_huesped.setEditable(false);
+        tf_huesped.setBackground(new java.awt.Color(0, 153, 255));
+        tf_huesped.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_huesped.setForeground(new java.awt.Color(255, 255, 255));
 
-        tf_codigoReserva.setEnabled(false);
+        tf_codigoReserva.setEditable(false);
+        tf_codigoReserva.setBackground(new java.awt.Color(0, 153, 255));
+        tf_codigoReserva.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_codigoReserva.setForeground(new java.awt.Color(255, 255, 255));
 
         lbl_habitacion.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_habitacion.setText("Habitación:");
 
-        tf_habitacion.setEnabled(false);
+        tf_habitacion.setEditable(false);
+        tf_habitacion.setBackground(new java.awt.Color(0, 153, 255));
+        tf_habitacion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_habitacion.setForeground(new java.awt.Color(255, 255, 255));
 
         lbl_categoria.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_categoria.setText("Categoría:");
 
-        tf_categoria.setEnabled(false);
+        tf_categoria.setEditable(false);
+        tf_categoria.setBackground(new java.awt.Color(0, 153, 255));
+        tf_categoria.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_categoria.setForeground(new java.awt.Color(255, 255, 255));
 
         lbl_huesped.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_huesped.setText("Nombre/Apellido:");
@@ -203,7 +211,10 @@ private final  TextAutoCompleter textAutoCompleter;
         lbl_cedula.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_cedula.setText("Cédula:");
 
-        tf_cedula.setEnabled(false);
+        tf_cedula.setEditable(false);
+        tf_cedula.setBackground(new java.awt.Color(0, 153, 255));
+        tf_cedula.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_cedula.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -798,6 +809,8 @@ private final  TextAutoCompleter textAutoCompleter;
             public void run() {
                JFrame frame=new ConsumoPSCreate();
                frame.setVisible(true);
+               Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                frame.setTitle("Registrar Consumo de Producto/Serivicio");
                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                frame.setLocationRelativeTo(null);

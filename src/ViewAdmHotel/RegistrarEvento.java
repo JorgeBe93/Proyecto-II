@@ -11,9 +11,8 @@ import bean.AuditoriaSistema;
 import bean.Empleado;
 import bean.Eventos;
 import com.mxrck.autocompleter.TextAutoCompleter;
-import java.awt.event.KeyEvent;
+import java.awt.Image;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -170,6 +170,9 @@ public class RegistrarEvento extends javax.swing.JFrame {
         lbl_codEmpleado.setText("Empleado:");
 
         tf_codEmpleado.setEditable(false);
+        tf_codEmpleado.setBackground(new java.awt.Color(0, 153, 255));
+        tf_codEmpleado.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_codEmpleado.setForeground(new java.awt.Color(255, 255, 255));
         tf_codEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tf_codEmpleadoKeyPressed(evt);
@@ -179,22 +182,34 @@ public class RegistrarEvento extends javax.swing.JFrame {
             }
         });
 
-        tf_datosEmp.setEnabled(false);
+        tf_datosEmp.setEditable(false);
+        tf_datosEmp.setBackground(new java.awt.Color(0, 153, 255));
+        tf_datosEmp.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_datosEmp.setForeground(new java.awt.Color(255, 255, 255));
 
         lbl_fechaAsist.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         lbl_fechaAsist.setText("Fecha Asistencia:");
 
         tf_fechaAsist.setEditable(false);
+        tf_fechaAsist.setBackground(new java.awt.Color(0, 153, 255));
+        tf_fechaAsist.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_fechaAsist.setForeground(new java.awt.Color(255, 255, 255));
 
         lbl_horaEntrada.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         lbl_horaEntrada.setText("Hora Entrada:");
 
         tf_horaEntrada.setEditable(false);
+        tf_horaEntrada.setBackground(new java.awt.Color(0, 153, 255));
+        tf_horaEntrada.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_horaEntrada.setForeground(new java.awt.Color(255, 255, 255));
 
         lbl_horaSalida.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         lbl_horaSalida.setText("Hora Salida:");
 
         tf_horaSalida.setEditable(false);
+        tf_horaSalida.setBackground(new java.awt.Color(0, 153, 255));
+        tf_horaSalida.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_horaSalida.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -202,48 +217,52 @@ public class RegistrarEvento extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(lbl_fechaAsist)
-                                .addGap(18, 18, 18)
-                                .addComponent(tf_fechaAsist, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(lbl_horaEntrada)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tf_horaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbl_horaSalida))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(lbl_codEmpleado)
-                                .addGap(53, 53, 53)
-                                .addComponent(tf_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(tf_datosEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(10, 10, 10)
-                        .addComponent(tf_horaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lbl_tipoEvento)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(list_tipoEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbl_descripcionE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addComponent(lbl_fechaInicio)
-                                .addGap(18, 18, 18)
-                                .addComponent(dc_fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lbl_fechaFin)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(dc_fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tf_descripcionE, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 53, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(39, 39, 39)
+                                        .addComponent(lbl_fechaInicio)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(dc_fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lbl_tipoEvento)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(list_tipoEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbl_descripcionE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lbl_fechaFin)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(dc_fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tf_descripcionE, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbl_fechaAsist)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(tf_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(48, 48, 48)
+                                        .addComponent(tf_datosEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(tf_fechaAsist, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(37, 37, 37)
+                                        .addComponent(lbl_horaEntrada)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(tf_horaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lbl_horaSalida)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(tf_horaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 73, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lbl_codEmpleado)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,17 +286,17 @@ public class RegistrarEvento extends javax.swing.JFrame {
                     .addComponent(list_tipoEvento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_descripcionE)
                     .addComponent(tf_descripcionE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dc_fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbl_fechaInicio))
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(dc_fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_fechaFin)
                             .addGap(1, 1, 1)))
-                    .addComponent(lbl_fechaFin))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addComponent(dc_fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -430,6 +449,10 @@ public class RegistrarEvento extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(masterTable);
+        if (masterTable.getColumnModel().getColumnCount() > 0) {
+            masterTable.getColumnModel().getColumn(0).setPreferredWidth(40);
+            masterTable.getColumnModel().getColumn(1).setPreferredWidth(40);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -447,12 +470,11 @@ public class RegistrarEvento extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(30, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,7 +487,7 @@ public class RegistrarEvento extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -491,10 +513,25 @@ public class RegistrarEvento extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null,"Fechas incorrectas", "Error",JOptionPane.ERROR_MESSAGE);
              return;
         }
+        fecha2=formato.format(dc_fechaInicio.getDate());
         id=Integer.parseInt(tf_codEmpleado.getText());
+        //verificamos si ya hay algun evento en esas fechas
+        Query=EntityManager.createNativeQuery("SELECT * FROM eventos WHERE codigoEmpleado="
+                        +id
+                        + " AND (fecha_inicio<= "
+                        +"'"+formato.format(dc_fechaInicio.getDate())+"'"
+                        +"AND fecha_fin>= "
+                        +"'"+formato.format(dc_fechaInicio.getDate())+"' )"
+                        +"OR (fecha_inicio<= "+"'"+formato.format(dc_fechaFin.getDate())+"' AND "
+                        +"fecha_fin>= "+"'"+formato.format(dc_fechaFin.getDate())+"' )", Eventos.class);
+            List<Eventos> ev=Query.getResultList();
+            if(!ev.isEmpty()){
+                JOptionPane.showMessageDialog(null,"Evento:"+" "+ev.get(0).getTipoEvento()+" "+
+                         " registrado en dichas fechas, No puede registrar otro evento!", "Error",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         //verificar si se ha marcado para confirmar la hora extra
         if(list_tipoEvento.getSelectedItem()=="Horas Extras"){
-            fecha2=formato.format(dc_fechaInicio.getDate());
             Query=EntityManager.createNativeQuery("SELECT * FROM asistencia WHERE codigoEmpleado="
                         +id
                         + " AND fechaAsistencia= "
@@ -807,6 +844,8 @@ public class RegistrarEvento extends javax.swing.JFrame {
             public void run() {
                 JFrame frame=new RegistrarEvento();
                 frame.setVisible(true);
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setTitle("Registrar Evento");
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);

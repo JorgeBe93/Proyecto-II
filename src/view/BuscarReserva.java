@@ -314,7 +314,7 @@ public class BuscarReserva extends javax.swing.JFrame {
             }
             else if(list_filtros.getSelectedItem()=="CheckIn"){
                  query=entityManager.createNativeQuery("SELECT * FROM reserva "
-                         + "WHERE STR_TO_DATE(checkIn, '%Y-%m-%d')>= "
+                         + "WHERE STR_TO_DATE(checkIn, '%Y-%m-%d')= "
                     +"'"+tf_valor.getText()+"'", Reserva.class);
                  List<Reserva> a=query.getResultList();
                  if(a.size()==0){
@@ -328,7 +328,7 @@ public class BuscarReserva extends javax.swing.JFrame {
              }
             else if(list_filtros.getSelectedItem()=="CheckOut"){
                   query=entityManager.createNativeQuery("SELECT * FROM reserva "
-                         + "WHERE STR_TO_DATE(checkOut, '%Y-%m-%d')<= "
+                         + "WHERE STR_TO_DATE(checkOut, '%Y-%m-%d')= "
                     +"'"+tf_valor.getText()+"'", Reserva.class);
                  List<Reserva> a=query.getResultList();
                  if(a.size()==0){

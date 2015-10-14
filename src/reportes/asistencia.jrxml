@@ -202,104 +202,7 @@ WHERE
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch">
-			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="0d7254e6-5ca2-4962-ad6f-3e84d9a3d78f" x="65" y="25" width="65" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_fechaPago}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="c2a8ba42-a5be-460f-89a0-a63298c30ef8" x="156" y="25" width="31" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0">
-				<reportElement uuid="373bf530-f2b2-494a-8860-bf34cb5c05e6" x="227" y="25" width="59" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_salarioBase}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0">
-				<reportElement uuid="ea1304a2-d45e-411c-80d6-5fb002d0bd32" x="306" y="25" width="32" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_descuentoIPS}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0">
-				<reportElement uuid="0ac04c40-b29a-4984-a0a2-af1dd9382337" x="362" y="25" width="44" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_multas}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0">
-				<reportElement uuid="4e359b10-df79-459e-9387-d9fba15743fd" x="435" y="25" width="41" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_extras}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0">
-				<reportElement uuid="17fef3dc-3e01-4d1f-bc9c-a824eedc8100" x="503" y="25" width="52" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_liquidoCobrado}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="d64301a5-a27e-42cf-b006-32d999a5a218" x="0" y="25" width="53" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_idPago}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement uuid="2b216b2a-bc19-42ed-a349-a0bba14f32f0" x="0" y="5" width="53" height="20" forecolor="#FF0000"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Id pago]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="f6359991-1cee-4fc5-a928-e062b4010a9a" x="65" y="5" width="65" height="20" forecolor="#FF0000"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Fecha Pago]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="be4708e0-7c23-4ab6-92bc-5d3baeeb744d" x="139" y="5" width="77" height="20" forecolor="#FF0000"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Hs Trabajadas]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="3c734c2f-38eb-4aa6-a93e-432d340abb71" x="227" y="5" width="65" height="20" forecolor="#FF0000"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Salario Base]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="f771aa87-79f7-496e-8f82-252846799fc4" x="306" y="5" width="32" height="20" forecolor="#FF0000"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[IPS]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="6a095eee-267b-46cb-951a-cf9b8cb2171e" x="362" y="5" width="44" height="20" forecolor="#FF0000"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Multas]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="05232ba8-d817-452d-baae-7ffe3e9dbcd1" x="435" y="5" width="41" height="20" forecolor="#FF0000"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Extras]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="ef6fdf2d-9d5a-4ce5-9a3e-791169d86113" x="503" y="5" width="51" height="20" forecolor="#FF0000"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Líquido]]></text>
-			</staticText>
-		</band>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
@@ -326,9 +229,9 @@ WHERE
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch">
+		<band height="170" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="efb92e2e-163c-4066-a40c-d2725e3fa6cc" x="-12" y="0" width="28" height="24"/>
+				<reportElement uuid="efb92e2e-163c-4066-a40c-d2725e3fa6cc" x="-20" y="0" width="28" height="24"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -343,6 +246,23 @@ WHERE
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "eventos.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="8e2a9463-07dd-4b0a-bfff-bdf0496b5da6" x="-20" y="147" width="28" height="23"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA[$P{mes}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="codigoEmpleado">
+					<subreportParameterExpression><![CDATA[$P{codigoEmpleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="año">
+					<subreportParameterExpression><![CDATA[$P{año}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "asistenciaSueldo.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>
