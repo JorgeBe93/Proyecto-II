@@ -7,9 +7,8 @@
 package view;
 
 import bean.AuditoriaSistema;
-import bean.Cargo;
 import bean.Empleado;
-import bean.ProductoServicio;
+import bean.Usuario;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,6 +30,10 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
     private char ch;
     public static Empleado empleado;
     private final  TextAutoCompleter textAutoCompleter;
+     Date fecha=new Date();
+     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+      EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
+      EntityManager ema = fact.createEntityManager();
     /**
      * Creates new form EmpleadoRegistrar
      */
@@ -388,28 +391,32 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
+            Query q;
+            String valor;
+            int i;
             int respuesta = JOptionPane.showConfirmDialog(null, "¿Confirma el registro?");
             if(respuesta == JOptionPane.YES_OPTION){
-                String valor = empleado.toString();
-                EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
-                EntityManager ema = fact.createEntityManager();
+               
                 ema.getTransaction().begin();
+                //eliminamos el perfil de usuario del empleado
+                q=ema.createNativeQuery("SELECT * FROM usuario  WHERE "
+                        + "codigoEmpleado= "
+                        + "'"+empleado.getCodigoEmpleado()+"'",Usuario.class);
+                List<Usuario> u=q.getResultList();
+                if(u.size()>=1){
+                    for(i=0;i<u.size();i++){
+                        valor=u.get(i).toString();
+                        ema.remove(u.get(i));
+                         registrarAuditoria("Usuario",valor);
+                    }
+                    ema.flush();
+                }
+                //
+                valor=empleado.toString();
                 Empleado empleadoFind = ema.find(Empleado.class, empleado.getCodigoEmpleado());
                 ema.remove(empleadoFind);
                 ema.flush();
-
-                //auditoria
-                AuditoriaSistema as=new AuditoriaSistema();
-                as.setAccion("Eliminación");
-                as.setTabla("Empleado");
-                as.setAntes(valor);
-                as.setDespues("Sin Modificaciones");
-                //trabajamos con la fecha
-                Date fecha=new Date();
-                DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                as.setFechaHora(formato.format(fecha));
-                as.setUsuario(LoginView.nombreUsuario);  
-                //as.setUsuario("Vladimir");
+                registrarAuditoria("Empleado",valor);
                 ema.getTransaction().commit();
                 ema.close();
                 JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
@@ -542,7 +549,17 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
             lbl_apeJefe.setVisible(false);
         }
     }//GEN-LAST:event_tf_jefeFocusGained
-
+   private void registrarAuditoria(String entidad,String valor){
+         AuditoriaSistema as=new AuditoriaSistema();
+            as.setAccion("Eliminación");
+            as.setTabla(entidad);
+            as.setFechaHora(formato.format(fecha));
+            as.setUsuario(LoginView.nombreUsuario);
+            as.setAntes(valor);
+            as.setDespues("No hay modificaciones");
+            ema.persist(as);
+            ema.flush();
+    }
     /**
      * @param args the command line arguments
      */
@@ -619,9 +636,6 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private Empleado obtenerEmpleado(String cedula){
         Empleado empleado ;
-        EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
-        EntityManager ema = fact.createEntityManager();
-        ema.getTransaction().begin();
         Query query = ema.createNamedQuery("Empleado.findByCedula");
         query.setParameter("cedula", cedula);
         List<Empleado> emple = query.getResultList();
@@ -630,13 +644,10 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
         }catch(ArrayIndexOutOfBoundsException e){
             empleado = null;
         }
-        
-        ema.close();
+ 
         return empleado;
     }
     private void inicializarLista(){
-        EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
-        EntityManager ema = fact.createEntityManager();
         Query query = ema.createNamedQuery("Empleado.findAll");
         List<Empleado> pro = query.getResultList();
         Iterator <Empleado> it = pro.iterator();
@@ -646,7 +657,6 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
         }
         lbl_jefeNom.setVisible(false);
         lbl_apeJefe.setVisible(false);
-        ema.close();
     }
 
     private void inicializarEmpleado() {

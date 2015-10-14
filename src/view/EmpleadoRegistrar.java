@@ -8,8 +8,8 @@ package view;
 
 import bean.AuditoriaSistema;
 import bean.Cargo;
+import bean.Correo;
 import bean.Empleado;
-import bean.ProductoServicio;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,6 +30,8 @@ import java.util.Iterator;
 public class EmpleadoRegistrar extends javax.swing.JFrame {
     private char ch;
     private final  TextAutoCompleter textAutoCompleter;
+     private String datos[]=new String[3];
+       Empleado empleado = new Empleado();
     /**
      * Creates new form EmpleadoRegistrar
      */
@@ -385,7 +387,6 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                 EntityManager ema = fact.createEntityManager();
                 ema.getTransaction().begin();
                 Cargo cargo = (Cargo)cb_cargo.getSelectedItem();
-                Empleado empleado = new Empleado();
                 empleado.setNombre(tf_nombre.getText());
                 empleado.setApellido(tf_apellido.getText());
                 empleado.setCedula(tf_cedula.getText());
@@ -420,7 +421,9 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                 ema.close();
                 JOptionPane.showMessageDialog(null, "Creación Exitosa");
                 this.dispose();
-            }else if(respuesta == JOptionPane.YES_NO_OPTION){
+                //enviar al correo del empleado su codigo de empleado
+                enviarDatos();
+            }else {
                 this.dispose();
             }
         }
@@ -549,7 +552,20 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
             lbl_apeJefe.setVisible(false);
         }
     }//GEN-LAST:event_tf_jefeFocusGained
-
+private void enviarDatos(){
+    boolean resultado;
+    datos[0]=empleado.getEmail();
+   datos[1]="Código de  Empleado";
+   datos[2]=" BIENVENIDO AL HOTEL SANTA MARÍA"+"\n "
+           +"Usted es el empleado n°: "+empleado.getCodigoEmpleado()+"\n " 
+           +"Ocupa el Cargo de: "+" "+empleado.getCodigoCargo().getNombre()+"\n"
+           +"Su jefe es : "+" "+empleado.getCodigoJefe().getNombre()+" "+empleado.getCodigoJefe().getApellido()+"\n"
+           +"Este código es confidencial y deberá utilizarlo para marcar su asistencia al trabajo";
+    Correo c=new Correo();
+   resultado=c.enviarCorreo(datos);
+    System.out.println(resultado);
+}
+    
     /**
      * @param args the command line arguments
      */

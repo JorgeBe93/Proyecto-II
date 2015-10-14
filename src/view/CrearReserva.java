@@ -9,6 +9,7 @@ package view;
 import bean.AuditoriaSistema;
 import bean.Cliente;
 import bean.ConsumoProSer;
+import bean.Correo;
 import bean.FacturaCobro;
 import bean.Habitacion;
 import bean.NumberToText;
@@ -43,18 +44,20 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class CrearReserva extends javax.swing.JFrame {
     private Connection connection;
-     private int diferencia;
-     private String condicion;
-     FacturaCobro f=new FacturaCobro();
+    private int diferencia;
+    private String condicion;
+    FacturaCobro f=new FacturaCobro();
     private Date auxIn = null;
     private Date auxOut = null;
     private char ch;
     private int fila;
     public static int opcionReserva=0;
+    private String datos[]=new String[3];
+     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+     DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
+    java.util.Date fecha = new Date();
+    Reserva reserva = new Reserva();
 
-    //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    //public static int codigoCategoria = 0;
-    //public static int numHabitacion = 0;
     /**
      * Creates new form CrearReserva
      */
@@ -104,9 +107,9 @@ public class CrearReserva extends javax.swing.JFrame {
         tf_anticipar = new javax.swing.JTextField();
         btn_registrarCliente = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        btn_registrar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
         btn_nuevo = new javax.swing.JButton();
+        btn_registrar = new javax.swing.JButton();
         panel_CrearReserva = new javax.swing.JPanel();
         lbl_BuscarRol = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -374,14 +377,6 @@ public class CrearReserva extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btn_registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
-        btn_registrar.setText("Registrar");
-        btn_registrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_registrarActionPerformed(evt);
-            }
-        });
-
         btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete.png"))); // NOI18N
         btn_cancelar.setText("Cancelar");
         btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -395,6 +390,14 @@ public class CrearReserva extends javax.swing.JFrame {
         btn_nuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_nuevoActionPerformed(evt);
+            }
+        });
+
+        btn_registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
+        btn_registrar.setText("Registrar");
+        btn_registrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrarActionPerformed(evt);
             }
         });
 
@@ -413,12 +416,12 @@ public class CrearReserva extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cancelar)
                     .addComponent(btn_nuevo)
-                    .addComponent(btn_registrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -543,23 +546,22 @@ public class CrearReserva extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(256, 256, 256))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 840, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(34, 34, 34)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 840, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(151, 151, 151)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panel_CrearReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(panel_CrearReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(266, 266, 266)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -572,7 +574,7 @@ public class CrearReserva extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -590,9 +592,6 @@ public class CrearReserva extends javax.swing.JFrame {
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
         // TODO add your handling code here:
          String letras;
-         DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-         DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
-        java.util.Date fecha = new Date();
         //JOptionPane.showConfirmDialog(null, fecha);
         if ((jc_checkin.getDate() != null) 
                 && (jc_checkout.getDate() != null) 
@@ -627,7 +626,6 @@ public class CrearReserva extends javax.swing.JFrame {
                      if (respuesta == JOptionPane.YES_OPTION){
                          EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
                          EntityManager ema = fact.createEntityManager();
-                         Reserva reserva = new Reserva();
                          ema.getTransaction().begin();
                          reserva.setCantPersonas(Integer.parseInt(tf_cantidadPersonas.getText()));
                          reserva.setCheckIn(dateIn);
@@ -739,6 +737,7 @@ public class CrearReserva extends javax.swing.JFrame {
                                
                           }
                           nuevoRegistro();
+                          enviarDatosEmail();
 
                      }
                      else{
@@ -1034,6 +1033,20 @@ public class CrearReserva extends javax.swing.JFrame {
         tf_anticipar.setText(null);
         tf_montoAbonado.setText("0");
     }
+    private void enviarDatosEmail(){
+        boolean resultado;
+    datos[0]=reserva.getCodigoCliente().getEmail();
+   datos[1]="Detalles de  Reserva ";
+   datos[2]=" BIENVENIDO AL HOTEL SANTA MARÍA"+"\n "
+           +"Su reserva es la n°: "+reserva.getCodigoReserva()+"\n " 
+           +"Check In: "+" "+form.format(reserva.getCheckIn())+"\n"+"Check In: "+" "+form.format(reserva.getCheckOut())+"\n "
+           +"Habitación: "+" "+reserva.getNumHabitacion().getNumero()+"\n"+"Categoría: "+" "+reserva.getNumHabitacion().getCodigoCategoria().getNombre()+"\n"
+           +"Monto Habitación: "+" "+reserva.getNumHabitacion().getCodigoCategoria().getCostoxnoche()+"\n"+"Monto Total: "+" "+reserva.getMontoTotal()+"\n"+"Monto Abonado: "+" "+reserva.getMontoAbonado()+"\n"
+           +"Debe abonar el 30% del monto total de la reserva, de lo contrario perderá la misma";
+    Correo c=new Correo();
+     resultado=c.enviarCorreo(datos);
+     System.out.println(resultado);
+}
     /**
      * @param args the command line arguments
      */

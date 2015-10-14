@@ -45,6 +45,7 @@ public class ReservaEditar extends javax.swing.JFrame {
     private int diferencia;
     private String condicion;
     private int dias;
+    private int monto_fac;
     public Date auxIn = reserva.getCheckIn();
     public Date auxOut = reserva.getCheckOut();
     FacturaCobro f=new FacturaCobro();
@@ -423,7 +424,6 @@ public class ReservaEditar extends javax.swing.JFrame {
         String antes;
         String despues;
         String letras;
-        int monto_fac;
           DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
         java.util.Date fecha = new Date();
         //JOptionPane.showConfirmDialog(null, fecha);
@@ -546,25 +546,28 @@ public class ReservaEditar extends javax.swing.JFrame {
                                          }        
                                 }  
                                 monto_fac=reservaLocal.getMontoAbonado()-reserva.getMontoAbonado();
-                                 //generamos la factura
-                                 f.setCodigoReserva(reserva);
-                                 f.setConcepto("anticipo de reserva");
-                                if("".equals(reserva.getCodigoCliente().getRuc())){
-                                      f.setRucCliente(reserva.getCodigoCliente().getCedula());
-                                }else{
-                                      f.setRucCliente(reserva.getCodigoCliente().getRuc());
-                                }
-                                f.setFechaEmision(form.format(fecha));
-                                f.setTotal(monto_fac);
-                                f.setTipoFactura((String) list_pago.getSelectedItem());
-                                ema.persist(f);
-                                ema.flush();
-                                 if("Crédito/Cheque".equals(f.getTipoFactura()) || "Crédito/Tarjeta".equals(f.getTipoFactura()) ){
-                                    condicion="Crédito";
+                                 //generamos la factura en caso de que haya aportado algo
+                                if(monto_fac!=0){
+                                        f.setCodigoReserva(reserva);
+                                        f.setConcepto("anticipo de reserva");
+                                       if("".equals(reserva.getCodigoCliente().getRuc())){
+                                             f.setRucCliente(reserva.getCodigoCliente().getCedula());
+                                       }else{
+                                             f.setRucCliente(reserva.getCodigoCliente().getRuc());
+                                       }
+                                       f.setFechaEmision(form.format(fecha));
+                                       f.setTotal(monto_fac);
+                                       f.setTipoFactura((String) list_pago.getSelectedItem());
+                                       ema.persist(f);
+                                       ema.flush();
+                                        if("Crédito/Cheque".equals(f.getTipoFactura()) || "Crédito/Tarjeta".equals(f.getTipoFactura()) ){
+                                           condicion="Crédito";
 
-                                }else{
-                                    condicion="Contado";
+                                       }else{
+                                           condicion="Contado";
+                                       }
                                 }
+                               
 
                             }
                             //creacion de auditoria de sistema
@@ -584,7 +587,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Modificación Exitosa");
                             this.dispose();
                             //mostramos la factura
-                            if(!"0".equals(tf_montoAbonado.getText())){
+                            if(!"0".equals(tf_montoAbonado.getText()) && monto_fac!=0){
                                  try
                                 {
                                      //convertimos el numero en letras
