@@ -279,8 +279,8 @@ public class ProdSerCreate extends javax.swing.JFrame {
                    ProductoServicio p=new ProductoServicio();
                    p.setNombre(tf_nombrePS.getText().toLowerCase());
                    p.setCosto(Integer.parseInt(tf_costo.getText()));
-                   CategoriaProdSer c=(CategoriaProdSer) list_categoriaPS.getSelectedItem();
-                   p.setCodigoCategoria(c);
+                 /*  CategoriaProdSer c=(CategoriaProdSer) list_categoriaPS.getSelectedItem();
+                   p.setCodigoCategoria(c);*/
                    entityManager.getTransaction().begin();
                    entityManager.persist(p);
                    entityManager.flush();

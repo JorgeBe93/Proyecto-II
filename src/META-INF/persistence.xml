@@ -27,6 +27,9 @@
     <class>bean.Actividad</class>
     <class>bean.Eventos</class>
     <class>bean.PlanillaPagoSueldo</class>
+    <class>bean.Proveedor</class>
+    <class>bean.Articulo</class>
+    <class>bean.MovimientoStock</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hotel db?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value="user"/>

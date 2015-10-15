@@ -6,9 +6,10 @@
 
 package view;
 
+import bean.Articulo;
 import bean.AuditoriaSistema;
-import bean.Cliente;
 import bean.ConsumoProSer;
+import bean.MovimientoStock;
 import bean.ProductoServicio;
 import bean.Reserva;
 import java.text.DateFormat;
@@ -35,7 +36,11 @@ public class ConsumoPSCreate extends javax.swing.JFrame {
 private char ch;
 private int resp;
 private int fila;
+private boolean esArticulo=false;
 private final  TextAutoCompleter textAutoCompleter;
+ private  List<Articulo> ar;
+ Date fecha=new Date();
+  DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     /**
      * Creates new form ConsumoPSCreate
      */
@@ -173,9 +178,24 @@ private final  TextAutoCompleter textAutoCompleter;
         tf_precio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         tf_productoServicio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_productoServicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tf_productoServicioMouseClicked(evt);
+            }
+        });
+        tf_productoServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_productoServicioActionPerformed(evt);
+            }
+        });
         tf_productoServicio.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 tf_productoServicioFocusLost(evt);
+            }
+        });
+        tf_productoServicio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_productoServicioKeyPressed(evt);
             }
         });
 
@@ -543,24 +563,17 @@ private final  TextAutoCompleter textAutoCompleter;
               Query.setParameter("codigoReserva", codigo);
               r=(Reserva) Query.getSingleResult();
               cp.setCodigoReserva(r);
-              //ProductoServicio ps= (ProductoServicio) list_ps.getSelectedItem();
+              //obtenemos el codigo del Producto o servicio
               ProductoServicio ps = obtenerProductoServicio(tf_productoServicio.getText());
+              //verificar producto
               cp.setCodigoPS(ps);
               entityManager.getTransaction().begin();
               entityManager.persist(cp);
               entityManager.flush();
-              //registramos los datos de la auditoria
-              AuditoriaSistema as=new AuditoriaSistema();
-              as.setAccion("Creación");
-              as.setTabla(" Consumo de Producto/Servicio");
-              as.setAntes(cp.toString());
-              as.setDespues("No hay cambios");
-              //trabajamos con la fecha
-              Date fecha=new Date();
-              DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-              as.setFechaHora((formato.format(fecha)));
-              as.setUsuario("nadie");
-              entityManager.persist(as);
+              if(esArticulo){
+                   actualizarStock(cp.getCodigoPS().getCodigoPS(),cp.getCantidad());
+              }   
+               registrarAuditoria("Consumo P/S",cp.toString());
               entityManager.getTransaction().commit();
              // entityManager.close();
               JOptionPane.showMessageDialog(null,"Registro exitoso!", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
@@ -584,14 +597,7 @@ private final  TextAutoCompleter textAutoCompleter;
 
     private void tf_productoServicioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_productoServicioFocusLost
         // TODO add your handling code here:
-        ProductoServicio pro = obtenerProductoServicio(tf_productoServicio.getText());
-        try{
-            tf_precio.setText(Integer.toString(pro.getCosto()));
-        }catch(NullPointerException e){
-            System.out.println("Continua. Excepción lanzada por problemas del jar");
-        }
-        tf_total.setText(null);
-       
+    
         
     }//GEN-LAST:event_tf_productoServicioFocusLost
 
@@ -742,9 +748,21 @@ private final  TextAutoCompleter textAutoCompleter;
         // TODO add your handling code here:
          int total;  
           if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-                ProductoServicio p= obtenerProductoServicio(tf_productoServicio.getText());
-                total=p.getCosto()*(Integer.parseInt(tf_cantidad.getText()));
-                tf_total.setText(Integer.toString(total));      
+              if(ar.size()>=1){//es un producto
+                   if(Integer.parseInt(tf_cantidad.getText())>ar.get(0).getCantidadStock()){
+                        JOptionPane.showMessageDialog(null,"Cantidad supera el stock del producto", "Error",JOptionPane.ERROR_MESSAGE);
+                        tf_cantidad.setText(null);
+                        return;
+                    }
+                   ProductoServicio p= obtenerProductoServicio(tf_productoServicio.getText());
+                   total=p.getCosto()*(Integer.parseInt(tf_cantidad.getText()));
+                    tf_total.setText(Integer.toString(total)); 
+             }else{//es un servicio
+                     ProductoServicio p= obtenerProductoServicio(tf_productoServicio.getText());
+                     total=p.getCosto()*(Integer.parseInt(tf_cantidad.getText()));
+                     tf_total.setText(Integer.toString(total));  
+              }
+                    
           }
           if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE){
               tf_total.setText(null);
@@ -770,13 +788,99 @@ private final  TextAutoCompleter textAutoCompleter;
         // TODO add your handling code here:
         
     }//GEN-LAST:event_tf_cantidadFocusGained
-  private void inicializarListaReserva(){
-    Query=entityManager.createNativeQuery("select * from reserva  "
-            + "where checkIn<= date_format(now(),'%Y-%m-%d') and checkOut>=date_format(now(),'%Y-%m-%d')",Reserva.class);
-    List<Reserva> r=Query.getResultList();
-    List.addAll(r);
+
+    private void tf_productoServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_productoServicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_productoServicioActionPerformed
+
+    private void tf_productoServicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tf_productoServicioMouseClicked
+        // TODO add your handling code here:
+ 
+    }//GEN-LAST:event_tf_productoServicioMouseClicked
+
+    private void tf_productoServicioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_productoServicioKeyPressed
+        // TODO add your handling code here:
+        esArticulo=false;
+        int cod=0;
+      
+         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+              ProductoServicio pro = obtenerProductoServicio(tf_productoServicio.getText()); 
+              try{
+                  System.out.println("Objeto "+pro.toString());
+                  cod=pro.getCodigoPS();
+                  System.out.println("codigo "+cod);
+                  tf_precio.setText(Integer.toString(pro.getCosto()));
+              }catch(NullPointerException e){
+                  System.out.println("Continua. Excepción lanzada por problemas del jar");
+              }
+              tf_total.setText(null);
+            // verificamos si es un producto y si hay en stock
+            ar=buscarArticulo(cod);
+             if(!ar.isEmpty()){//es un producto
+                 System.out.println(ar.get(0).getCantidadStock());
+                 if(ar.get(0).getCantidadStock()==0){
+                      JOptionPane.showMessageDialog(null,"Stock de Articulo Insuficiente", "Aviso",JOptionPane.ERROR_MESSAGE);
+                      tf_productoServicio.setText(null);
+                      tf_precio.setText(null);
+
+
+                 }else{
+                        esArticulo=true;
+                 }
+             }
+         }
+         if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE){
+             tf_productoServicio.setText(null);
+             tf_precio.setText(null);
+         }
+       
+    }//GEN-LAST:event_tf_productoServicioKeyPressed
+ private List<Articulo> buscarArticulo(int cod){
+     ar=null;
+      Query=entityManager.createNativeQuery("SELECT * FROM articulo WHERE codigoArticulo= "
+            +cod,Articulo.class);
+            List<Articulo> a= Query.getResultList();
+          
+            return a;
+ }
+    private void actualizarStock(int cod,int cantidad){
+        //registramos el movimiento
+        MovimientoStock ma=new MovimientoStock();
+        ma.setCantidadExtraida(cantidad);
+        ma.setCodigoArticulo(ar.get(0));
+        ma.setFechaHora(formato.format(fecha));
+        entityManager.persist(ma);
+        entityManager.flush();
+        registrarAuditoria("Movimiento Stock",ma.toString());
+        //descontamos del articulo
+        Articulo art=new Articulo();
+        art.setCodigoArticulo(cod);
+        art.setNombre(ar.get(0).getNombre());
+        art.setCantidadMinima(ar.get(0).getCantidadMinima());
+        art.setCodigoProveedor(ar.get(0).getCodigoProveedor());
+        art.setCantidadStock(ar.get(0).getCantidadStock()-cantidad);
+        entityManager.merge(art);
+        entityManager.flush();
+      registrarAuditoria("articulo",ar.toString());
+ }
+        private void inicializarListaReserva(){
+        Query=entityManager.createNativeQuery("select * from reserva  "
+                + "where checkIn<= date_format(now(),'%Y-%m-%d') and checkOut>=date_format(now(),'%Y-%m-%d')",Reserva.class);
+        List<Reserva> r=Query.getResultList();
+        List.addAll(r);
     
-}
+    }
+       private void registrarAuditoria(String entidad,String valor){
+         AuditoriaSistema as=new AuditoriaSistema();
+            as.setAccion("Inserción");
+            as.setTabla(entidad);
+            as.setFechaHora(formato.format(fecha));
+            as.setUsuario(LoginView.nombreUsuario);
+            as.setAntes(valor);
+            as.setDespues("No hay modificaciones");
+            entityManager.persist(as);
+            entityManager.flush();
+    }
     /**
      * @param args the command line arguments
      */

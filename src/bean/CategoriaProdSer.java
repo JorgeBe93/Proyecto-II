@@ -7,7 +7,6 @@
 package bean;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -39,8 +37,6 @@ public class CategoriaProdSer implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
-    @OneToMany(mappedBy = "codigoCategoria")
-    private Collection<ProductoServicio> productoServicioCollection;
 
     public CategoriaProdSer() {
     }
@@ -68,14 +64,6 @@ public class CategoriaProdSer implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Collection<ProductoServicio> getProductoServicioCollection() {
-        return productoServicioCollection;
-    }
-
-    public void setProductoServicioCollection(Collection<ProductoServicio> productoServicioCollection) {
-        this.productoServicioCollection = productoServicioCollection;
     }
 
     @Override

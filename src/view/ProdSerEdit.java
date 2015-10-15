@@ -7,7 +7,6 @@
 package view;
 
 import bean.AuditoriaSistema;
-import bean.CategoriaProdSer;
 import bean.ProductoServicio;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -266,12 +265,12 @@ public class ProdSerEdit extends javax.swing.JFrame {
                      pser.setCodigoPS(Integer.parseInt(tf_codigoPS.getText()));
                      pser.setNombre(tf_nombrePS.getText());
                      pser.setCosto(Integer.parseInt(tf_costoPS.getText()));
-                     CategoriaProdSer cps=(CategoriaProdSer) list_categoriaPS.getSelectedItem();
-                     pser.setCodigoCategoria(cps);
+               /*      CategoriaProdSer cps=(CategoriaProdSer) list_categoriaPS.getSelectedItem();
+                     pser.setCodigoCategoria(cps);*/
                      entityManager.getTransaction().begin();
                      entityManager.merge(pser);
                      entityManager.flush();
-                     despues=cps.toString();
+                     despues=pser.toString();
                      //registramos los datos necesarios para la auditoria
                      AuditoriaSistema as=new AuditoriaSistema();
                      as.setAccion("Modificación");

@@ -518,12 +518,12 @@ public class RegistrarEvento extends javax.swing.JFrame {
         //verificamos si ya hay algun evento en esas fechas
         Query=EntityManager.createNativeQuery("SELECT * FROM eventos WHERE codigoEmpleado="
                         +id
-                        + " AND (fecha_inicio<= "
+                        + " AND ((fecha_inicio<= "
                         +"'"+formato.format(dc_fechaInicio.getDate())+"'"
                         +"AND fecha_fin>= "
                         +"'"+formato.format(dc_fechaInicio.getDate())+"' )"
                         +"OR (fecha_inicio<= "+"'"+formato.format(dc_fechaFin.getDate())+"' AND "
-                        +"fecha_fin>= "+"'"+formato.format(dc_fechaFin.getDate())+"' )", Eventos.class);
+                        +"fecha_fin>= "+"'"+formato.format(dc_fechaFin.getDate())+"' ))", Eventos.class);
             List<Eventos> ev=Query.getResultList();
             if(!ev.isEmpty()){
                 JOptionPane.showMessageDialog(null,"Evento:"+" "+ev.get(0).getTipoEvento()+" "+

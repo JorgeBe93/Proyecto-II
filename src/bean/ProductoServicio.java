@@ -6,23 +6,16 @@
 
 package bean;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  *
@@ -36,8 +29,6 @@ import javax.persistence.Transient;
     @NamedQuery(name = "ProductoServicio.findByNombre", query = "SELECT p FROM ProductoServicio p WHERE p.nombre = :nombre"),
     @NamedQuery(name = "ProductoServicio.findByCosto", query = "SELECT p FROM ProductoServicio p WHERE p.costo = :costo")})
 public class ProductoServicio implements Serializable {
-    @Transient
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,11 +41,6 @@ public class ProductoServicio implements Serializable {
     @Basic(optional = false)
     @Column(name = "costo")
     private int costo;
-    @JoinColumn(name = "codigoCategoria", referencedColumnName = "codigoCategoria")
-    @ManyToOne
-    private CategoriaProdSer codigoCategoria;
-    @OneToMany(mappedBy = "codigoPS")
-    private Collection<ConsumoProSer> consumoProSerCollection;
 
     public ProductoServicio() {
     }
@@ -74,9 +60,7 @@ public class ProductoServicio implements Serializable {
     }
 
     public void setCodigoPS(Integer codigoPS) {
-        Integer oldCodigoPS = this.codigoPS;
         this.codigoPS = codigoPS;
-        changeSupport.firePropertyChange("codigoPS", oldCodigoPS, codigoPS);
     }
 
     public String getNombre() {
@@ -84,9 +68,7 @@ public class ProductoServicio implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        String oldNombre = this.nombre;
         this.nombre = nombre;
-        changeSupport.firePropertyChange("nombre", oldNombre, nombre);
     }
 
     public int getCosto() {
@@ -94,27 +76,7 @@ public class ProductoServicio implements Serializable {
     }
 
     public void setCosto(int costo) {
-        int oldCosto = this.costo;
         this.costo = costo;
-        changeSupport.firePropertyChange("costo", oldCosto, costo);
-    }
-
-    public CategoriaProdSer getCodigoCategoria() {
-        return codigoCategoria;
-    }
-
-    public void setCodigoCategoria(CategoriaProdSer codigoCategoria) {
-        CategoriaProdSer oldCodigoCategoria = this.codigoCategoria;
-        this.codigoCategoria = codigoCategoria;
-        changeSupport.firePropertyChange("codigoCategoria", oldCodigoCategoria, codigoCategoria);
-    }
-
-    public Collection<ConsumoProSer> getConsumoProSerCollection() {
-        return consumoProSerCollection;
-    }
-
-    public void setConsumoProSerCollection(Collection<ConsumoProSer> consumoProSerCollection) {
-        this.consumoProSerCollection = consumoProSerCollection;
     }
 
     @Override
@@ -140,14 +102,6 @@ public class ProductoServicio implements Serializable {
     @Override
     public String toString() {
         return "bean.ProductoServicio[ codigoPS=" + codigoPS + " ]";
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

@@ -22,11 +22,12 @@
      planilla_pago_sueldo.`codigoEmpleado` AS planilla_pago_sueldo_codigoEmpleado,
      planilla_pago_sueldo.`fechaPago` AS planilla_pago_sueldo_fechaPago,
      planilla_pago_sueldo.`salarioBase` AS planilla_pago_sueldo_salarioBase,
-     planilla_pago_sueldo.`periodo` AS planilla_pago_sueldo_periodo
+     planilla_pago_sueldo.`periodo` AS planilla_pago_sueldo_periodo,
+     planilla_pago_sueldo.`nocturno` AS planilla_pago_sueldo_nocturno
 FROM
      `empleado` empleado INNER JOIN `planilla_pago_sueldo` planilla_pago_sueldo ON empleado.`codigoEmpleado` = planilla_pago_sueldo.`codigoEmpleado`
 WHERE
-  planilla_pago_sueldo.`periodo`=$P{Periodo_q}]]>
+     planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 	</queryString>
 	<field name="empleado_nombre" class="java.lang.String"/>
 	<field name="empleado_apellido" class="java.lang.String"/>
@@ -40,6 +41,7 @@ WHERE
 	<field name="planilla_pago_sueldo_fechaPago" class="java.sql.Date"/>
 	<field name="planilla_pago_sueldo_salarioBase" class="java.lang.Integer"/>
 	<field name="planilla_pago_sueldo_periodo" class="java.lang.String"/>
+	<field name="planilla_pago_sueldo_nocturno" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -98,46 +100,39 @@ WHERE
 				<reportElement uuid="373af9fc-8b95-467d-83f1-f49a70b89cb5" x="0" y="0" width="555" height="20" backcolor="#CCCCCC"/>
 			</rectangle>
 			<staticText>
-				<reportElement uuid="38161ec5-9bd3-49b8-a2e7-7f0ca74a0da9" x="0" y="0" width="43" height="18"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Id Pago]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="676fd690-c001-4cdd-addc-f7075e171cd0" x="97" y="0" width="59" height="20"/>
+				<reportElement uuid="676fd690-c001-4cdd-addc-f7075e171cd0" x="61" y="0" width="59" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1ad79383-3e3a-4590-9519-69027f8d72a7" x="43" y="0" width="50" height="20"/>
+				<reportElement uuid="1ad79383-3e3a-4590-9519-69027f8d72a7" x="0" y="0" width="50" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Empleado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d1f4f15b-32a8-4b46-b245-f26e8108d081" x="324" y="0" width="25" height="20"/>
+				<reportElement uuid="d1f4f15b-32a8-4b46-b245-f26e8108d081" x="256" y="0" width="25" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[IPS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="a8d981ae-3525-4ddf-87f3-6aae5a812a46" x="359" y="0" width="73" height="20"/>
+				<reportElement uuid="a8d981ae-3525-4ddf-87f3-6aae5a812a46" x="297" y="0" width="73" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Monto Extras]]></text>
+				<text><![CDATA[Extras]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="eb927711-0dc2-4f35-9f15-d85dadea004e" x="433" y="0" width="70" height="20"/>
+				<reportElement uuid="eb927711-0dc2-4f35-9f15-d85dadea004e" x="360" y="0" width="70" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Monto Multas]]></text>
+				<text><![CDATA[ Multas]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="904c45f7-bad9-4dc2-9158-1ca34b7a5bb9" x="507" y="0" width="48" height="20"/>
@@ -147,50 +142,52 @@ WHERE
 				<text><![CDATA[Liquido]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="3a26fac1-cb5c-4351-832a-3366ea5a563c" x="187" y="0" width="55" height="20"/>
+				<reportElement uuid="3a26fac1-cb5c-4351-832a-3366ea5a563c" x="135" y="0" width="55" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Apellido]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c2de9eba-61c7-44ce-bba1-d4bde7cd29a9" x="252" y="0" width="66" height="20"/>
+				<reportElement uuid="c2de9eba-61c7-44ce-bba1-d4bde7cd29a9" x="190" y="0" width="66" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Salario Base]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="12b33e62-3419-437b-a305-964554f5d9f5" x="430" y="0" width="61" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nocturno]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="25" splitType="Stretch">
-			<textField>
-				<reportElement uuid="aa8052c3-87a6-4b0c-b318-6ececf6ff808" x="7" y="0" width="36" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_idPago}]]></textFieldExpression>
-			</textField>
 			<textField pattern="#,##0">
-				<reportElement uuid="b24cf247-54a2-442e-9afc-74be54406275" x="50" y="0" width="30" height="20"/>
+				<reportElement uuid="b24cf247-54a2-442e-9afc-74be54406275" x="0" y="0" width="30" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_codigoEmpleado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="85f7452c-da4e-47af-80d0-606a717478e6" x="97" y="0" width="74" height="20"/>
+				<reportElement uuid="85f7452c-da4e-47af-80d0-606a717478e6" x="61" y="0" width="74" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{empleado_nombre}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement uuid="0f208b1d-b11c-4f78-9a13-ffada618539c" x="318" y="0" width="41" height="20"/>
+				<reportElement uuid="0f208b1d-b11c-4f78-9a13-ffada618539c" x="245" y="0" width="41" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_descuentoIPS}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement uuid="59450631-18ca-4fba-b3f4-77bb49115800" x="369" y="0" width="63" height="20"/>
+				<reportElement uuid="59450631-18ca-4fba-b3f4-77bb49115800" x="297" y="0" width="63" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_extras}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement uuid="07c1b40d-c6f4-4af3-b392-2623f8bf9023" x="433" y="0" width="70" height="20"/>
+				<reportElement uuid="07c1b40d-c6f4-4af3-b392-2623f8bf9023" x="360" y="0" width="70" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_multas}]]></textFieldExpression>
 			</textField>
@@ -200,14 +197,19 @@ WHERE
 				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_liquidoCobrado}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement uuid="f5d206be-d270-41c6-94dc-4b0a8cfa826d" x="258" y="0" width="55" height="20"/>
+				<reportElement uuid="f5d206be-d270-41c6-94dc-4b0a8cfa826d" x="190" y="0" width="55" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_salarioBase}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="509a02ad-b341-4c62-803e-de4f1c694970" x="171" y="0" width="87" height="20"/>
+				<reportElement uuid="509a02ad-b341-4c62-803e-de4f1c694970" x="135" y="0" width="55" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{empleado_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3b4730f1-6aac-46c9-8246-34a3e562f101" x="430" y="0" width="72" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_nocturno}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
