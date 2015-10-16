@@ -138,9 +138,14 @@ public class Articulo implements Serializable {
         return true;
     }
 
+    /* @Override
+    public String toString() {
+    return "bean.Articulo[ codigoArticulo=" + codigoArticulo + " ]";
+    }*/
     @Override
     public String toString() {
-        return "bean.Articulo[ codigoArticulo=" + codigoArticulo + " ]";
+        return "codigoArticulo=" + codigoArticulo + ", nombre=" + nombre + ", cantidadStock=" + cantidadStock + ", cantidadMinima=" + cantidadMinima;
     }
+    
     
 }

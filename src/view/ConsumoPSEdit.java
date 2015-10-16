@@ -6,6 +6,7 @@
 
 package view;
 
+import bean.Articulo;
 import bean.AuditoriaSistema;
 import bean.ConsumoProSer;
 import bean.ProductoServicio;
@@ -26,9 +27,12 @@ import javax.swing.JOptionPane;
  */
 public class ConsumoPSEdit extends javax.swing.JFrame {
     public static ConsumoProSer cps;
+    private boolean esArticulo=false;
     private int resp;
     private char ch;
     private final  TextAutoCompleter textAutoCompleter;
+    Date fecha=new Date();
+    DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     /**
      * Creates new form ConsumoPSEdit
      */
@@ -109,14 +113,12 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
         lbl_ps.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_ps.setText("Producto/Servicio:");
 
+        tf_total.setEditable(false);
         tf_total.setBackground(new java.awt.Color(51, 153, 255));
         tf_total.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_total.setForeground(new java.awt.Color(255, 255, 255));
-        tf_total.setEnabled(false);
 
-        tf_cantidad.setBackground(new java.awt.Color(51, 153, 255));
         tf_cantidad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        tf_cantidad.setForeground(new java.awt.Color(255, 255, 255));
         tf_cantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_cantidadActionPerformed(evt);
@@ -150,20 +152,25 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
         lbl_codigoConsumo.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_codigoConsumo.setText("Código de Consumo:");
 
-        tf_codigoConsumo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        tf_codigoConsumo.setEnabled(false);
+        tf_codigoConsumo.setEditable(false);
+        tf_codigoConsumo.setBackground(new java.awt.Color(51, 153, 255));
+        tf_codigoConsumo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_codigoConsumo.setForeground(new java.awt.Color(255, 255, 255));
 
         lbl_factura.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_factura.setText("Factura:");
 
-        tf_factura.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        tf_factura.setEnabled(false);
+        tf_factura.setEditable(false);
+        tf_factura.setBackground(new java.awt.Color(51, 153, 255));
+        tf_factura.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_factura.setForeground(new java.awt.Color(255, 255, 255));
         tf_factura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_facturaActionPerformed(evt);
             }
         });
 
+        tf_productoServicio.setEditable(false);
         tf_productoServicio.setBackground(new java.awt.Color(51, 153, 255));
         tf_productoServicio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_productoServicio.setForeground(new java.awt.Color(255, 255, 255));
@@ -176,8 +183,10 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
         lbl_codigoReserva.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
         lbl_codigoReserva.setText("Código Reserva:");
 
-        tf_codigoReserva.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        tf_codigoReserva.setEnabled(false);
+        tf_codigoReserva.setEditable(false);
+        tf_codigoReserva.setBackground(new java.awt.Color(51, 153, 255));
+        tf_codigoReserva.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_codigoReserva.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -349,6 +358,11 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
         String despues;
         int cod;
         Reserva r;
+        List<ConsumoProSer> p; //antes
+        ConsumoProSer cp=new ConsumoProSer(); //despues
+        int cantidadVieja;
+        int cantidadNueva;
+   
          if(tf_codigoReserva.getText().length()==0 || tf_productoServicio.getText().length()==0 
                 || tf_cantidad.getText().length()==0 || tf_total.getText().length()==0){
                 JOptionPane.showMessageDialog(null,"Algún campo con valor nulo", "Error",JOptionPane.ERROR_MESSAGE);
@@ -359,10 +373,12 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
             cod=Integer.parseInt(tf_codigoReserva.getText());
             Query=entityManager.createNamedQuery("ConsumoProSer.findByCodigoConsumo");
             Query.setParameter("codigoConsumo", Integer.parseInt(tf_codigoConsumo.getText()));
-            List<ConsumoProSer> p=Query.getResultList();
+            p=Query.getResultList();
             //antes de los cambios
             antes=p.get(0).toString();
-            ConsumoProSer cp=new ConsumoProSer();
+            cantidadVieja=p.get(0).getCantidad();
+            System.out.println("Cantidad Vieja "+cantidadVieja);
+            //
             cp.setCodigoConsumo(Integer.parseInt(tf_codigoConsumo.getText()));
             cp.setCantidad(Integer.parseInt(tf_cantidad.getText()));
             cp.setTotal(Integer.parseInt(tf_total.getText()));
@@ -376,22 +392,14 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
             cp.setCodigoPS(ps);
             entityManager.getTransaction().begin();
             entityManager.merge(cp);
+            cantidadNueva=cp.getCantidad();
             entityManager.flush();
             //despues de los cambios
             despues=cp.toString();
-            AuditoriaSistema as=new AuditoriaSistema();
-            as.setAccion("Modificación");
-            as.setTabla(" Consumo de Producto/Servicio");
-            //trabajamos con la fecha
-            Date fecha=new Date();
-            DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            as.setFechaHora(formato.format(fecha));    
-            as.setUsuario("nadie");
-            as.setAntes(antes);
-            as.setDespues(despues);
-            entityManager.persist(as);
+            registrarAuditoria("Consumo P/S",antes,despues);
+           actualizarStock(cantidadVieja, cantidadNueva,cp.getCodigoPS().getCodigoPS());
             entityManager.getTransaction().commit();
-            entityManager.close();
+            //entityManager.close();
             JOptionPane.showMessageDialog(null, "Modificación Exitosa");
         }
         this.dispose();
@@ -418,14 +426,16 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
 
     private void tf_cantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_cantidadKeyPressed
         // TODO add your handling code here:
-          int total;  
+         int total;
+         ProductoServicio p= obtenerProductoServicio(tf_productoServicio.getText());
           if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-                ProductoServicio p= obtenerProductoServicio(tf_productoServicio.getText());
                 total=p.getCosto()*(Integer.parseInt(tf_cantidad.getText()));
-                tf_total.setText(Integer.toString(total));      
+                tf_total.setText(Integer.toString(total));  
+                     
           }
           if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE){
               tf_total.setText(null);
+              tf_cantidad.setText(null);
           }
     }//GEN-LAST:event_tf_cantidadKeyPressed
 
@@ -440,11 +450,63 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
             tf_productoServicio.setText(cps.getCodigoPS().getNombre());
             tf_precio.setText(Integer.toString(cps.getCodigoPS().getCosto()));
             tf_total.setText(Integer.toString(cps.getTotal()));
-        }else{
-             JOptionPane.showMessageDialog(null,"No puede modificar un consumo facturado ", "Error",JOptionPane.ERROR_MESSAGE);
-             this.dispose();
         }
        
+    }
+    private void actualizarStock(int cantidadVieja,int cantidadNueva,int codProd){
+        List<Articulo> prod;
+        int dif;
+        String antes;
+        prod=buscarArticulo(codProd);       
+        if(prod.isEmpty()){
+            return;
+        }
+        System.out.println(prod.get(0));
+        Articulo art=new Articulo();
+        System.out.println("Viejo "+cantidadVieja);
+        System.out.println("Nuevo "+cantidadNueva);
+        if(cantidadVieja>cantidadNueva){ //registro viejo mayor al nuevo
+            dif=cantidadVieja-cantidadNueva;
+            System.out.println("Diferencia1: "+dif);
+            art.setCantidadStock(prod.get(0).getCantidadStock()+dif);
+           
+        }else if(cantidadVieja<cantidadNueva){
+            dif=cantidadNueva-cantidadVieja;
+             System.out.println("Diferencia2: "+dif);
+            art.setCantidadStock(prod.get(0).getCantidadStock()-dif);
+        
+        } else{
+                return;
+        } 
+        art.setCodigoArticulo(prod.get(0).getCodigoArticulo());
+        art.setNombre(prod.get(0).getNombre());
+        art.setCantidadMinima(prod.get(0).getCantidadMinima());
+        art.setCodigoProveedor(prod.get(0).getCodigoProveedor());
+        antes=prod.get(0).toString();
+        entityManager.merge(art);
+        entityManager.flush();
+        System.out.println("Actualizado "+art.getCantidadStock());
+        System.out.println("Envia "+antes);
+        registrarAuditoria("articulo",antes,art.toString());
+         
+    }
+     private List<Articulo> buscarArticulo(int cod){
+      Query=entityManager.createNativeQuery("SELECT * FROM articulo WHERE codigoArticulo= "
+            +cod,Articulo.class);
+            List<Articulo> a= Query.getResultList();
+            return a;
+ }
+     private void registrarAuditoria(String entidad,String antes,String despues){
+         AuditoriaSistema as=new AuditoriaSistema();
+            System.out.println("Recibe "+antes);
+            as.setAccion("Modificacion");
+            as.setTabla(entidad);
+            as.setFechaHora(formato.format(fecha));
+            as.setUsuario(LoginView.nombreUsuario);
+            as.setAntes(antes);
+            as.setDespues(despues);
+            entityManager.persist(as);
+            entityManager.flush();
     }
     /**
      * @param args the command line arguments

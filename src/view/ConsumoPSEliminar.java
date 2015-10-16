@@ -6,16 +6,14 @@
 
 package view;
 
+import bean.Articulo;
 import bean.AuditoriaSistema;
 import bean.ConsumoProSer;
-import bean.ProductoServicio;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
-import static view.ConsumoPSEdit.cps;
-import static view.ProdSerEliminar.tf_codigoPS;
 
 /**
  *
@@ -24,6 +22,8 @@ import static view.ProdSerEliminar.tf_codigoPS;
 public class ConsumoPSEliminar extends javax.swing.JFrame {
     private int resp;
     public static ConsumoProSer cps;
+    Date fecha=new Date();
+    DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     /**
      * Creates new form ConsumoProdSerEliminar
@@ -332,19 +332,10 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
                         valor=ps.toString();
                         entityManager.remove(ps);
                         //registramos los datos necesarios para la auditoria
-                        AuditoriaSistema as=new AuditoriaSistema();
-                        as.setAccion("Eliminación");
-                        as.setTabla("Consumo de Producto/Servicio");
-                        as.setAntes(valor);
-                        as.setDespues("No hay cambios");
-                        //trabajamos con la fecha
-                        Date fecha=new Date();
-                        DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                        as.setFechaHora((formato.format(fecha)));
-                        as.setUsuario("nadie");
-                        entityManager.persist(as);
+                        registrarAuditoria("Consumo P/S","Eliminacion",valor,"No hay modificaciones");
+                        actualizarStock(ps.getCodigoPS().getCodigoPS(),ps.getCantidad());
                         entityManager.getTransaction().commit();
-                        entityManager.close();
+                        //entityManager.close();
                         JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
                   }
             
@@ -359,10 +350,46 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
             tf_total.setText(Integer.toString(cps.getTotal()));
             if(cps.getNumFactura()!=null){
                   tf_factura.setText(Integer.toString(cps.getNumFactura().getNumFactura()));
-            }
-          
-      
-       
+            }      
+    }
+   private void actualizarStock(int codProd,int cantidad){
+        List<Articulo> artic;
+        String antes;
+        int dif;
+        artic=buscarArticulo(codProd);       
+        if(artic.isEmpty()){ //es un servicio
+            return;
+        }
+        System.out.println(artic.get(0));
+        Articulo art=new Articulo();
+        System.out.println("Cantidad "+cantidad);
+        art.setCantidadStock(artic.get(0).getCantidadStock()+cantidad);
+        art.setCodigoArticulo(artic.get(0).getCodigoArticulo());
+        art.setNombre(artic.get(0).getNombre());
+        art.setCantidadMinima(artic.get(0).getCantidadMinima());
+        art.setCodigoProveedor(artic.get(0).getCodigoProveedor());
+        antes=artic.get(0).toString();
+        entityManager.merge(art);
+        entityManager.flush();
+        System.out.println("Actualizado "+art.getCantidadStock());
+       registrarAuditoria("articulo","Modificacion",antes,art.toString());
+    }
+     private List<Articulo> buscarArticulo(int cod){
+      query=entityManager.createNativeQuery("SELECT * FROM articulo WHERE codigoArticulo= "
+            +cod,Articulo.class);
+            List<Articulo> a= query.getResultList();
+            return a;
+    }
+      private void registrarAuditoria(String entidad,String accion,String antes,String despues){
+         AuditoriaSistema as=new AuditoriaSistema();
+            as.setAccion(accion);
+            as.setTabla(entidad);
+            as.setFechaHora(formato.format(fecha));
+            as.setUsuario(LoginView.nombreUsuario);
+            as.setAntes(antes);
+            as.setDespues(despues);
+            entityManager.persist(as);
+            entityManager.flush();
     }
     /**
      * @param args the command line arguments

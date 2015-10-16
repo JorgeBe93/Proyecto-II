@@ -384,6 +384,11 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
             case 1:
                     fila=masterTable.getSelectedRow();
                     ConsumoPSEdit.cps=obtenerConsumo(fila);
+                    if(ConsumoPSEdit.cps.getNumFactura()!=null){
+                        JOptionPane.showMessageDialog(null,"No puede modificar un consumo facturado ", "Error",JOptionPane.ERROR_MESSAGE);
+                        return;
+                        
+                    }
                     JFrame frame=new ConsumoPSEdit();
                     frame.setVisible(true);
                     frame.setTitle("Editar Consumo P/S");
@@ -394,6 +399,11 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
             case 2:
                     fila=masterTable.getSelectedRow();
                     ConsumoPSEliminar.cps=obtenerConsumo(fila);
+                    if(ConsumoPSEliminar.cps.getNumFactura()!=null){
+                        JOptionPane.showMessageDialog(null,"No puede modificar un consumo facturado ", "Error",JOptionPane.ERROR_MESSAGE);
+                        return;
+                        
+                    }
                     JFrame f=new ConsumoPSEliminar();
                     f.setVisible(true);
                     f.setTitle("Eliminar Consumo P/S");
