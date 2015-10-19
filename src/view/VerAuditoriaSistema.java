@@ -12,12 +12,21 @@
 package view;
 
 import bean.AuditoriaSistema;
+import bean.NumberToText;
+import java.awt.Image;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -51,11 +60,13 @@ public class VerAuditoriaSistema extends javax.swing.JFrame {
         btn_buscar = new javax.swing.JButton();
         tf_valor = new javax.swing.JTextField();
         lbl_valor = new javax.swing.JLabel();
-        btn_cerrar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         panel_auditoria = new javax.swing.JPanel();
         lbl_auditoria = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        btn_cerrar = new javax.swing.JButton();
+        btn_informe = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ver Auditoría de Sistema");
@@ -65,6 +76,9 @@ public class VerAuditoriaSistema extends javax.swing.JFrame {
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Entidad", "Acción", "Usuario", "Fecha" }));
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusLost(evt);
             }
@@ -125,14 +139,6 @@ public class VerAuditoriaSistema extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btn_cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete.png"))); // NOI18N
-        btn_cerrar.setText("Cancelar");
-        btn_cerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_cerrarActionPerformed(evt);
-            }
-        });
-
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, jTable2);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoAuditoria}"));
         columnBinding.setColumnName("Codigo Auditoria");
@@ -190,6 +196,47 @@ public class VerAuditoriaSistema extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        btn_cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete.png"))); // NOI18N
+        btn_cerrar.setText("Cancelar");
+        btn_cerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cerrarActionPerformed(evt);
+            }
+        });
+
+        btn_informe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pdf.png"))); // NOI18N
+        btn_informe.setText("Generar Informe");
+        btn_informe.setEnabled(false);
+        btn_informe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_informeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_informe)
+                .addGap(26, 26, 26)
+                .addComponent(btn_cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_cerrar)
+                    .addComponent(btn_informe))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -201,12 +248,12 @@ public class VerAuditoriaSistema extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE))
                 .addGap(34, 34, 34))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(133, Short.MAX_VALUE)
+                .addContainerGap(131, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(126, 126, 126))
+                .addGap(128, 128, 128))
             .addGroup(layout.createSequentialGroup()
-                .addGap(372, 372, 372)
-                .addComponent(btn_cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(263, 263, 263)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -214,13 +261,13 @@ public class VerAuditoriaSistema extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panel_auditoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btn_cerrar)
-                .addGap(21, 21, 21))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                .addGap(53, 53, 53)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         bindingGroup.bind();
@@ -251,6 +298,7 @@ public class VerAuditoriaSistema extends javax.swing.JFrame {
                  }
                  list.clear();
                  list.addAll(a);
+                 btn_informe.setEnabled(true);
                  return;
              }
              if(opcion.equals("Acción")){
@@ -323,8 +371,39 @@ public class VerAuditoriaSistema extends javax.swing.JFrame {
 
     private void btn_buscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_buscarFocusLost
         // TODO add your handling code here:
-        tf_valor.setText(null);
+      
     }//GEN-LAST:event_btn_buscarFocusLost
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+          tf_valor.setText(null);
+          btn_informe.setEnabled(false);
+    }//GEN-LAST:event_list_filtrosFocusGained
+
+    private void btn_informeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_informeActionPerformed
+        // TODO add your handling code here:
+         try
+        {
+            //convertimos el numero en letras
+            
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
+            HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
+           // Map parametros=new HashMap();
+            par.put("Fecha",tf_valor.getText() );
+            JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/auditoriaFecha.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
+            JasperViewer jv = new JasperViewer(jp,false);
+            jv.setVisible(true);
+            jv.setTitle("Informe de Auditoria de Sistema");
+             Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+             jv.setIconImage(icon);
+            jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btn_informeActionPerformed
 
     /**
     * @param args the command line arguments
@@ -344,8 +423,10 @@ public class VerAuditoriaSistema extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cerrar;
+    private javax.swing.JButton btn_informe;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
     private javax.swing.JLabel lbl_auditoria;

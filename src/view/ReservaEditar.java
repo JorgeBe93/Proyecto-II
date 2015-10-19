@@ -9,12 +9,14 @@ package view;
 import bean.AuditoriaSistema;
 import bean.Cliente;
 import bean.ConsumoProSer;
+import bean.Correo;
 import bean.FacturaCobro;
 import bean.Habitacion;
 import bean.NumberToText;
 import bean.ProductoServicio;
 import bean.Reserva;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.text.DateFormat;
@@ -41,20 +43,24 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author Vladimir
  */
 public class ReservaEditar extends javax.swing.JFrame {
-    public static Reserva reserva;
+    private Reserva reserva;
     private int diferencia;
     private String condicion;
     private int dias;
     private int monto_fac;
-    public Date auxIn = reserva.getCheckIn();
-    public Date auxOut = reserva.getCheckOut();
+    private int fila;
+    public Date auxIn ;
+    public Date auxOut;
+    private String datos[]=new String[3];
     FacturaCobro f=new FacturaCobro();
+    Reserva reservaLocal = new Reserva();
+     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     /**
      * Creates new form ReservaEditar
      */
     public ReservaEditar() {
         initComponents();
-        inicializarReserva();
+       
     }
 
     /**
@@ -65,290 +71,57 @@ public class ReservaEditar extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
+        query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT r FROM Reserva r");
+        list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
+        panel_CrearReserva = new javax.swing.JPanel();
+        lbl_BuscarRol = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        btn_cancelar = new javax.swing.JButton();
+        btn_modificar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        tf_cantidadPersonas = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        tf_montoAbonado = new javax.swing.JTextField();
+        tf_cedulaCliente = new javax.swing.JTextField();
+        tf_cliente = new javax.swing.JTextField();
+        lbl_codReserva = new javax.swing.JLabel();
+        tf_codReserva = new javax.swing.JTextField();
+        lbl_presupuesto = new javax.swing.JLabel();
+        tf_presupuesto = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jc_checkin = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         jc_checkout = new com.toedter.calendar.JDateChooser();
+        btn_buscar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        tf_montoTotal = new javax.swing.JTextField();
+        tf_categoriaHabitacion = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         tf_precioCategoria = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         tf_numeroHabitacion = new javax.swing.JTextField();
-        btn_calcularMonto = new javax.swing.JButton();
-        btn_buscar = new javax.swing.JButton();
-        tf_categoriaHabitacion = new javax.swing.JTextField();
-        tf_cedulaCliente = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        tf_cantidadPersonas = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        tf_montoTotal = new javax.swing.JTextField();
+        lbl_anticipar = new javax.swing.JLabel();
+        tf_anticipar = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        tf_montoAbonado = new javax.swing.JTextField();
         lbl_pago = new javax.swing.JLabel();
         list_pago = new javax.swing.JComboBox();
-        lbl_codReserva = new javax.swing.JLabel();
-        tf_codReserva = new javax.swing.JTextField();
-        tf_cliente = new javax.swing.JTextField();
-        lbl_presupuesto = new javax.swing.JLabel();
-        tf_presupuesto = new javax.swing.JTextField();
-        panel_CrearReserva = new javax.swing.JPanel();
-        lbl_BuscarRol = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        btn_modificar = new javax.swing.JButton();
-        btn_cancelar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        tf_valor = new javax.swing.JTextField();
+        lbl_valor = new javax.swing.JLabel();
+        lbl_filtro = new javax.swing.JLabel();
+        list_filtros = new javax.swing.JComboBox();
+        btn_buscar1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        masterTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(722, 600));
+        setPreferredSize(new java.awt.Dimension(913, 686));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.setPreferredSize(new java.awt.Dimension(636, 450));
-
-        jLabel2.setText("Cédula Cliente:");
-
-        jLabel3.setText("Cant Personas:");
-
-        tf_cantidadPersonas.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tf_cantidadPersonasKeyTyped(evt);
-            }
-        });
-
-        jLabel4.setText("Monto Abonado:");
-
-        tf_montoAbonado.setText("0");
-        tf_montoAbonado.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tf_montoAbonadoFocusLost(evt);
-            }
-        });
-        tf_montoAbonado.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tf_montoAbonadoKeyTyped(evt);
-            }
-        });
-
-        jLabel1.setText("Check In:");
-
-        jLabel5.setText("Check Out:");
-
-        jc_checkout.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jc_checkoutFocusLost(evt);
-            }
-        });
-
-        jLabel6.setText("Categoría Habitación:");
-
-        jLabel7.setText("N° Habitación:");
-
-        jLabel8.setText("Monto Total:");
-
-        tf_montoTotal.setEnabled(false);
-        tf_montoTotal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_montoTotalActionPerformed(evt);
-            }
-        });
-
-        jLabel11.setText("Precio de Categoría:");
-
-        tf_precioCategoria.setEnabled(false);
-
-        tf_numeroHabitacion.setEnabled(false);
-        tf_numeroHabitacion.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tf_numeroHabitacionFocusLost(evt);
-            }
-        });
-
-        btn_calcularMonto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icon-money.png"))); // NOI18N
-        btn_calcularMonto.setText("Calcular Monto Total");
-        btn_calcularMonto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_calcularMontoActionPerformed(evt);
-            }
-        });
-
-        btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
-        btn_buscar.setText("Buscar Habitación");
-        btn_buscar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_buscarMouseClicked(evt);
-            }
-        });
-        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_buscarActionPerformed(evt);
-            }
-        });
-
-        tf_categoriaHabitacion.setEnabled(false);
-
-        tf_cedulaCliente.setEnabled(false);
-        tf_cedulaCliente.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tf_cedulaClienteFocusLost(evt);
-            }
-        });
-
-        lbl_pago.setText("Forma Pago:");
-
-        list_pago.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Contado", "Crédito/Cheque", "Crédito/Tarjeta" }));
-
-        lbl_codReserva.setText("Código Reserva:");
-
-        tf_codReserva.setEnabled(false);
-
-        tf_cliente.setEnabled(false);
-
-        lbl_presupuesto.setText("Según Presupuesto n°:");
-
-        tf_presupuesto.setEnabled(false);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(lbl_codReserva)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel11)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(tf_cedulaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(tf_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(tf_codReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(28, 28, 28)
-                                        .addComponent(lbl_presupuesto)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(tf_presupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btn_calcularMonto)
-                                .addGap(78, 78, 78))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jc_checkin, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jc_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tf_numeroHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tf_precioCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(81, 81, 81)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lbl_pago)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel8))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tf_montoAbonado, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tf_cantidadPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tf_montoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(list_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(tf_categoriaHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(55, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(btn_buscar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_codReserva)
-                    .addComponent(tf_codReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_presupuesto)
-                    .addComponent(tf_presupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tf_cedulaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tf_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jc_checkin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(tf_cantidadPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jc_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(18, 18, 18))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(tf_montoAbonado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tf_categoriaHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(list_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbl_pago)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel11)))
-                        .addGap(6, 6, 6))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tf_precioCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(tf_montoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(15, 15, 15)
-                        .addComponent(btn_calcularMonto))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(tf_numeroHabitacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_buscar)))
-                .addGap(86, 86, 86))
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 660, 350));
 
         panel_CrearReserva.setBackground(new java.awt.Color(0, 153, 255));
         panel_CrearReserva.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -374,22 +147,24 @@ public class ReservaEditar extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(panel_CrearReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 11, 636, -1));
+        getContentPane().add(panel_CrearReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 636, -1));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btn_modificar.setText("Modificar");
-        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_modificarActionPerformed(evt);
-            }
-        });
-
+        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete.png"))); // NOI18N
         btn_cancelar.setText("Cancelar");
         btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_cancelarActionPerformed(evt);
+            }
+        });
+
+        btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
+        btn_modificar.setText("Guardar");
+        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificarActionPerformed(evt);
             }
         });
 
@@ -398,23 +173,417 @@ public class ReservaEditar extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(34, 34, 34)
                 .addComponent(btn_modificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(btn_cancelar)
-                .addGap(26, 26, 26))
+                .addGap(32, 32, 32))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_cancelar)
-                    .addComponent(btn_modificar))
+                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 460, -1, -1));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 630, 310, -1));
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel2.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel2.setText(" Cliente:");
+
+        tf_cedulaCliente.setEditable(false);
+        tf_cedulaCliente.setBackground(new java.awt.Color(0, 153, 255));
+        tf_cedulaCliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_cedulaCliente.setForeground(new java.awt.Color(255, 255, 255));
+        tf_cedulaCliente.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tf_cedulaClienteFocusLost(evt);
+            }
+        });
+
+        tf_cliente.setEditable(false);
+        tf_cliente.setBackground(new java.awt.Color(0, 153, 255));
+        tf_cliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_cliente.setForeground(new java.awt.Color(255, 255, 255));
+
+        lbl_codReserva.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        lbl_codReserva.setText("Código Reserva:");
+
+        tf_codReserva.setEditable(false);
+        tf_codReserva.setBackground(new java.awt.Color(0, 153, 255));
+        tf_codReserva.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_codReserva.setForeground(new java.awt.Color(255, 255, 255));
+
+        lbl_presupuesto.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        lbl_presupuesto.setText("Según Presupuesto n°:");
+
+        tf_presupuesto.setEditable(false);
+        tf_presupuesto.setBackground(new java.awt.Color(0, 153, 255));
+        tf_presupuesto.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_presupuesto.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel1.setText("Check In:");
+
+        jLabel5.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel5.setText("Check Out:");
+
+        jc_checkout.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jc_checkoutFocusLost(evt);
+            }
+        });
+
+        btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
+        btn_buscar.setText("Buscar Habitación");
+        btn_buscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_buscarMouseClicked(evt);
+            }
+        });
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel6.setText("Categoría Habitación:");
+
+        tf_categoriaHabitacion.setEditable(false);
+        tf_categoriaHabitacion.setBackground(new java.awt.Color(0, 153, 255));
+        tf_categoriaHabitacion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_categoriaHabitacion.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel11.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel11.setText("Precio de Categoría:");
+
+        tf_precioCategoria.setEditable(false);
+        tf_precioCategoria.setBackground(new java.awt.Color(0, 153, 255));
+        tf_precioCategoria.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_precioCategoria.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel7.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel7.setText("N° Habitación:");
+
+        tf_numeroHabitacion.setEditable(false);
+        tf_numeroHabitacion.setBackground(new java.awt.Color(0, 153, 255));
+        tf_numeroHabitacion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_numeroHabitacion.setForeground(new java.awt.Color(255, 255, 255));
+        tf_numeroHabitacion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tf_numeroHabitacionFocusLost(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel3.setText("Cantidad  Personas:");
+
+        tf_cantidadPersonas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_cantidadPersonasActionPerformed(evt);
+            }
+        });
+        tf_cantidadPersonas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_cantidadPersonasKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_cantidadPersonasKeyTyped(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel8.setText("Monto Total (Gs.):");
+
+        tf_montoTotal.setEditable(false);
+        tf_montoTotal.setBackground(new java.awt.Color(0, 153, 255));
+        tf_montoTotal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_montoTotal.setForeground(new java.awt.Color(255, 255, 255));
+        tf_montoTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_montoTotalActionPerformed(evt);
+            }
+        });
+
+        lbl_anticipar.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        lbl_anticipar.setText("Anticipar (Gs):");
+
+        tf_anticipar.setEditable(false);
+        tf_anticipar.setBackground(new java.awt.Color(0, 153, 255));
+        tf_anticipar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_anticipar.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel4.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        jLabel4.setText("Monto Abonado:");
+
+        tf_montoAbonado.setText("0");
+        tf_montoAbonado.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tf_montoAbonadoFocusLost(evt);
+            }
+        });
+        tf_montoAbonado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_montoAbonadoKeyTyped(evt);
+            }
+        });
+
+        lbl_pago.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        lbl_pago.setText("Forma Pago:");
+
+        list_pago.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Contado", "Crédito/Cheque", "Crédito/Tarjeta" }));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jc_checkin, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jc_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_buscar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lbl_codReserva)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tf_codReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(lbl_presupuesto)
+                        .addGap(18, 18, 18)
+                        .addComponent(tf_presupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(tf_cedulaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(tf_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tf_categoriaHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tf_montoAbonado, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tf_cantidadPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel8)
+                            .addComponent(lbl_pago))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(list_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(tf_precioCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tf_numeroHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(tf_montoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lbl_anticipar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tf_anticipar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tf_montoAbonado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(tf_cedulaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(tf_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel2))
+                                .addGap(32, 32, 32)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lbl_codReserva)
+                                    .addComponent(tf_codReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_presupuesto)
+                                    .addComponent(tf_presupuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(26, 26, 26)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel5)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jc_checkin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel1)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jc_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(2, 2, 2))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btn_buscar)
+                                .addGap(2, 2, 2)))
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(tf_categoriaHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11)
+                            .addComponent(tf_precioCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(tf_numeroHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tf_cantidadPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel8)
+                            .addComponent(tf_montoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_anticipar)
+                            .addComponent(tf_anticipar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(list_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_pago))))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 810, 310));
+
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setForeground(new java.awt.Color(204, 204, 255));
+
+        tf_valor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_valorKeyTyped(evt);
+            }
+        });
+
+        lbl_valor.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_valor.setText("Valor:");
+
+        lbl_filtro.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_filtro.setText("Buscar por:");
+
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Reserva", "Nombre", "Apellido", "Habitación", "Categoría", "CheckIn", "CheckOut", "Cedula" }));
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusLost(evt);
+            }
+        });
+
+        btn_buscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
+        btn_buscar1.setText("Buscar");
+        btn_buscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscar1ActionPerformed(evt);
+            }
+        });
+        btn_buscar1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                btn_buscar1FocusLost(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(lbl_filtro)
+                .addGap(18, 18, 18)
+                .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(78, 78, 78)
+                .addComponent(lbl_valor)
+                .addGap(18, 18, 18)
+                .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(btn_buscar1)
+                .addGap(53, 53, 53))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_filtro)
+                    .addComponent(lbl_valor)
+                    .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_buscar1))
+                .addContainerGap())
+        );
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 640, -1));
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoReserva}"));
+        columnBinding.setColumnName(" Reserva");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCliente.cedula}"));
+        columnBinding.setColumnName(" Cliente");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCliente.nombre}"));
+        columnBinding.setColumnName("Nombre");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCliente.apellido}"));
+        columnBinding.setColumnName("Apellido");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${checkIn}"));
+        columnBinding.setColumnName("Check In");
+        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${checkOut}"));
+        columnBinding.setColumnName("Check Out");
+        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${numHabitacion.numero}"));
+        columnBinding.setColumnName("Habitacion");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${numHabitacion.codigoCategoria.nombre}"));
+        columnBinding.setColumnName("Categoría");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cantPersonas}"));
+        columnBinding.setColumnName(" Personas");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${montoAbonado}"));
+        columnBinding.setColumnName("Monto Abonado");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${montoTotal}"));
+        columnBinding.setColumnName("Monto Total");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${numPresupuesto}"));
+        columnBinding.setColumnName("Presupuesto");
+        columnBinding.setColumnClass(bean.Presupuesto.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                masterTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(masterTable);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 1080, 140));
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -424,7 +593,7 @@ public class ReservaEditar extends javax.swing.JFrame {
         String antes;
         String despues;
         String letras;
-          DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
+         DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
         java.util.Date fecha = new Date();
         //JOptionPane.showConfirmDialog(null, fecha);
         if ( auxIn.equals(jc_checkin.getDate())
@@ -436,14 +605,13 @@ public class ReservaEditar extends javax.swing.JFrame {
                     && !tf_cantidadPersonas.getText().equals("")
                     && !tf_numeroHabitacion.getText().equals("")
                     && !tf_numeroHabitacion.getText().equals("")
-                    && !tf_cedulaCliente.getText().equals(""))
+                    && !tf_cedulaCliente.getText().equals("") && !tf_codReserva.getText().equals(""))
                 {
                     if(jc_checkin.getDate().before(jc_checkout.getDate())
                         && Integer.parseInt(tf_montoAbonado.getText()) <= Integer.parseInt(tf_montoTotal.getText())
                         //      &&jc_checkin.getDate().after(fecha)
                         //      &&jc_checkin.getDate().after(fecha)
                     ){
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                         String dIN = format.format(jc_checkin.getDate());
                         String dOUT = format.format(jc_checkout.getDate());
                         Date dateIn = null;
@@ -459,10 +627,8 @@ public class ReservaEditar extends javax.swing.JFrame {
                         Cliente cliente  = obtenerCliente();
                         int respuesta = JOptionPane.showConfirmDialog(null, "¿Confirma el registro?");
                         if (respuesta == JOptionPane.YES_OPTION){
-
                             EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
                             EntityManager ema = fact.createEntityManager();
-                            Reserva reservaLocal = new Reserva();
                             //antes de los cambios
                             antes = reserva.toString();
                             ema.getTransaction().begin();
@@ -485,6 +651,8 @@ public class ReservaEditar extends javax.swing.JFrame {
                                 reservaLocal.setNumHabitacion(habitacion);
                                 ema.merge(reservaLocal);
                                 ema.flush();
+                                list.clear();
+                                list.add(reservaLocal);
                                 //despues de los cambios
                                 despues = reservaLocal.toString();
                                 //guardamos el consumo
@@ -582,10 +750,11 @@ public class ReservaEditar extends javax.swing.JFrame {
                             as.setUsuario(LoginView.nombreUsuario);
                             ema.persist(as);
                             ema.flush();
+                            
                             ema.getTransaction().commit();
-                            ema.close();
+                           // ema.close();
+                           
                             JOptionPane.showMessageDialog(null, "Modificación Exitosa");
-                            this.dispose();
                             //mostramos la factura
                             if(!"0".equals(tf_montoAbonado.getText()) && monto_fac!=0){
                                  try
@@ -616,6 +785,8 @@ public class ReservaEditar extends javax.swing.JFrame {
                                     e.printStackTrace();
                                 }
                             }
+                             resetear();
+                             enviarDatosEmail();
                         }
                         else{
                             this.dispose();
@@ -649,7 +820,7 @@ public class ReservaEditar extends javax.swing.JFrame {
         if (cliente == null){
             if (!tf_cedulaCliente.getText().equals("")){
                 respuesta = JOptionPane.showConfirmDialog(null, "Cliente Inexistente ¿Desea "
-                        + "registrarlo en el sistema?");
+                    + "registrarlo en el sistema?");
                 if (respuesta == JOptionPane.YES_OPTION){
                     JFrame frame=new ClienteCreate();
                     frame.setVisible(true);
@@ -671,6 +842,7 @@ public class ReservaEditar extends javax.swing.JFrame {
         //tf_categoriaHabitacion.setText("");
         //tf_precioCategoria.setText("");
         tf_montoTotal.setText("");
+        tf_anticipar.setText(null);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         java.util.Date fecha = new Date();
@@ -680,71 +852,47 @@ public class ReservaEditar extends javax.swing.JFrame {
         } catch (ParseException ex) {
             System.out.println("Problemas con fechas");
         }
-        if ((jc_checkin.getDate() != null) 
-                && (jc_checkout.getDate() != null)){ 
+        if ((jc_checkin.getDate() != null)
+            && (jc_checkout.getDate() != null)){
             if( (jc_checkin.getDate().before(jc_checkout.getDate()))
                 //&& (fecha.before(jc_checkin.getDate()))
                 //&& (fecha.before(jc_checkout.getDate()))
-                    ){
-                    String LocalIn = format.format(jc_checkin.getDate());
-                    String localOut = format.format(jc_checkout.getDate());
-                    if(!LocalIn.equals(localOut)){
-                        auxIn = jc_checkin.getDate();
-                        auxOut = jc_checkout.getDate();
-                        VerEstadodeHabitaciones.llamadaEditarReserva = "Invocado";
-                        
-                        verEstadosHabitaciones();
-                    }
-                    //creación de ventana
-                    else{
-                        JOptionPane.showMessageDialog(null, "Fechas Iguales");
-                    }
+            ){
+                String LocalIn = format.format(jc_checkin.getDate());
+                String localOut = format.format(jc_checkout.getDate());
+                if(!LocalIn.equals(localOut)){
+                    auxIn = jc_checkin.getDate();
+                    auxOut = jc_checkout.getDate();
+                    VerEstadodeHabitaciones.llamadaEditarReserva = "Invocado";
+
+                    verEstadosHabitaciones();
+                }
+                //creación de ventana
+                else{
+                    JOptionPane.showMessageDialog(null, "Fechas Iguales");
+                }
             }
             else{
                 JOptionPane.showMessageDialog(null, "Fechas Invalidas");
             }
         }
         else{
-                JOptionPane.showMessageDialog(null, "Fechas Invalidas");  
+            JOptionPane.showMessageDialog(null, "Fechas Invalidas");
         }
-        
+
     }//GEN-LAST:event_btn_buscarActionPerformed
 
-    private void btn_calcularMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_calcularMontoActionPerformed
+    private void btn_buscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_buscarMouseClicked
         // TODO add your handling code here:
-        DecimalFormat deci= new DecimalFormat("0");
-        String d;
-        java.util.Date fecha = new Date();
-        if(jc_checkin.getDate() != null 
-                && jc_checkout.getDate() != null 
-                && !tf_cantidadPersonas.getText().equals("")
-                && !tf_precioCategoria.getText().equals("")){
-            if (jc_checkin.getDate().before(jc_checkout.getDate())
-                   // &&jc_checkin.getDate().after(fecha)
-                   //&&jc_checkout.getDate().after(fecha)
-                    ){
-                final float MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
-                long cantidadPersonas = Integer.parseInt(tf_cantidadPersonas.getText());
-                long precioxnoche = Integer.parseInt(tf_precioCategoria.getText());
-                float cantidadDias = (jc_checkout.getDate().getTime() - jc_checkin.getDate().getTime())/MILLSECS_PER_DAY;
-                System.out.println("Cantidad de dias devuelto"+" "+cantidadDias);
-                d=deci.format(cantidadDias);
-                d=d.replaceAll(",",".");
-                cantidadDias=Float.parseFloat(d);
-                System.out.println("Cantidad de dias calculado"+" "+cantidadDias);
-                long precioTotal = (long) (cantidadPersonas * precioxnoche * cantidadDias);
-                tf_montoTotal.setText(Long.toString(precioTotal));
-            }else{
-                JOptionPane.showMessageDialog(null, "Fecha de checkin posterior a checkout");
-            }
-        }else{
-            JOptionPane.showMessageDialog(null, "Datos sin especificar");
-        }
-    }//GEN-LAST:event_btn_calcularMontoActionPerformed
+    }//GEN-LAST:event_btn_buscarMouseClicked
 
     private void tf_numeroHabitacionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_numeroHabitacionFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_numeroHabitacionFocusLost
+
+    private void tf_montoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_montoTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_montoTotalActionPerformed
 
     private void jc_checkoutFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jc_checkoutFocusLost
         // TODO add your handling code here:
@@ -768,7 +916,7 @@ public class ReservaEditar extends javax.swing.JFrame {
         if(tf_montoAbonado.getText().length()==0){
             tf_montoAbonado.setText("0");
         }
-        
+
     }//GEN-LAST:event_tf_montoAbonadoFocusLost
 
     private void tf_cantidadPersonasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_cantidadPersonasKeyTyped
@@ -780,14 +928,240 @@ public class ReservaEditar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tf_cantidadPersonasKeyTyped
 
-    private void btn_buscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_buscarMouseClicked
+    private void tf_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_valorKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_btn_buscarMouseClicked
+        char ch;
+        if (list_filtros.getSelectedItem()=="Habitación" || list_filtros.getSelectedItem()=="Reserva"){
+            ch=evt.getKeyChar();
+            if(!Character.isDigit(ch)){
+                getToolkit().beep();
+                evt.consume();
+            }
+        }
 
-    private void tf_montoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_montoTotalActionPerformed
+    }//GEN-LAST:event_tf_valorKeyTyped
+
+    private void list_filtrosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_tf_montoTotalActionPerformed
+        if(list_filtros.getSelectedItem()=="CheckIn" || list_filtros.getSelectedItem()=="CheckOut"){
+            Date fecha= new Date();
+            DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
+            tf_valor.setText(formato.format(fecha));
+        }
+    }//GEN-LAST:event_list_filtrosFocusLost
 
+    private void btn_buscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar1ActionPerformed
+        // TODO add your handling code here:
+        if (tf_valor.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Ingrese algún valor para efectuar la búsqueda", "Advertencia",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        else{
+            if (list_filtros.getSelectedItem()=="Nombre"){
+                query = entityManager.createNativeQuery( "SELECT * FROM reserva r "
+                    + "INNER JOIN cliente c "
+                    + "on r.codigoCliente = c.codigoCliente "
+                    + "WHERE c.nombre LIKE "
+                    +"'%"+tf_valor.getText()+"%'", Reserva.class);
+                List<Reserva> r = query.getResultList();
+                if (r.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Nombre inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(r);
+            }
+            else if (list_filtros.getSelectedItem()=="Apellido"){
+                query = entityManager.createNativeQuery( "SELECT * FROM reserva r "
+                    + "INNER JOIN cliente c "
+                    + "on r.codigoCliente = c.codigoCliente "
+                    + "WHERE c.apellido LIKE "
+                    +"'%"+tf_valor.getText()+"%'", Reserva.class);
+                List<Reserva> r = query.getResultList();
+                if (r.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Apellido inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(r);
+            }
+            else if(list_filtros.getSelectedItem()=="CheckIn"){
+                query=entityManager.createNativeQuery("SELECT * FROM reserva "
+                    + "WHERE STR_TO_DATE(checkIn, '%Y-%m-%d')= "
+                    +"'"+tf_valor.getText()+"'", Reserva.class);
+                List<Reserva> a=query.getResultList();
+                if(a.size()==0){
+                    JOptionPane.showMessageDialog(null,"No se han encontrado registros para la fecha", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(a);
+                return;
+            }
+            else if(list_filtros.getSelectedItem()=="CheckOut"){
+                query=entityManager.createNativeQuery("SELECT * FROM reserva "
+                    + "WHERE STR_TO_DATE(checkOut, '%Y-%m-%d')= "
+                    +"'"+tf_valor.getText()+"'", Reserva.class);
+                List<Reserva> a=query.getResultList();
+                if(a.size()==0){
+                    JOptionPane.showMessageDialog(null,"No se han encontrado registros para la fecha", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(a);
+                return;
+            }
+            else if(list_filtros.getSelectedItem()=="Habitación"){
+                query = entityManager.createNativeQuery( "SELECT * FROM reserva r "
+                    + "INNER JOIN habitacion h "
+                    + "on r.numHabitacion = h.numero "
+                    + "WHERE r.numHabitacion = "
+                    +tf_valor.getText(), Reserva.class);
+                List<Reserva> a=query.getResultList();
+                if(a.size()==0){
+                    JOptionPane.showMessageDialog(null,"No se han encontrado registros para la fecha", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(a);
+                return;
+            }
+            else if(list_filtros.getSelectedItem()=="Reserva"){
+                query=entityManager.createNamedQuery("Reserva.findByCodigoReserva");
+                query.setParameter("codigoReserva", Integer.parseInt(tf_valor.getText()));
+                List<Reserva> r =query.getResultList();
+                if(r.size()==0){
+                    JOptionPane.showMessageDialog(null,"Codigo de Reserva inexistente", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(r);
+            }
+            else if(list_filtros.getSelectedItem()=="Categoría"){
+                query=entityManager.createNativeQuery("SELECT * FROM reserva r "
+                    +"INNER JOIN habitacion h "
+                    +"ON r.numHabitacion=h.numero "
+                    +"INNER JOIN categ_habitacion c "
+                    +"ON h.codigoCategoria=c.codigoCategoria "
+                    + "WHERE c.nombre LIKE "
+                    +"'%"+tf_valor.getText()+"%'", Reserva.class);
+                List<Reserva> a=query.getResultList();
+                if(a.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"No se han encontrado registros para la categoría de habitación", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(a);
+                return;
+            }
+               else if (list_filtros.getSelectedItem()=="Cedula"){
+                query = entityManager.createNativeQuery( "SELECT * FROM reserva r "
+                    + "INNER JOIN cliente c "
+                    + "on r.codigoCliente = c.codigoCliente "
+                    + "WHERE c.cedula LIKE "
+                    +"'%"+tf_valor.getText()+"%'", Reserva.class);
+                List<Reserva> r = query.getResultList();
+                if (r.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Cedula de cliente inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(r);
+            }
+        }
+    }//GEN-LAST:event_btn_buscar1ActionPerformed
+
+    private void btn_buscar1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_buscar1FocusLost
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_btn_buscar1FocusLost
+
+    private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
+        // TODO add your handling code here:
+         fila = masterTable.getSelectedRow();
+         reserva = obtenerReserva(fila);
+         inicializarReserva();
+         auxIn=reserva.getCheckIn();
+         auxOut=reserva.getCheckOut();
+    }//GEN-LAST:event_masterTableMouseClicked
+
+    private void tf_cantidadPersonasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_cantidadPersonasKeyPressed
+        // TODO add your handling code here:
+        DecimalFormat deci= new DecimalFormat("0");
+        String d;
+        int anticipo;
+        java.util.Date fecha = new Date();
+         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+                 if(jc_checkin.getDate() != null
+                    && jc_checkout.getDate() != null
+                    && !tf_cantidadPersonas.getText().equals("")
+                    && !tf_precioCategoria.getText().equals("")){
+                    if (jc_checkin.getDate().before(jc_checkout.getDate())){
+                        final float MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
+                        long cantidadPersonas = Integer.parseInt(tf_cantidadPersonas.getText());
+                        long precioxnoche = Integer.parseInt(tf_precioCategoria.getText());
+                        float cantidadDias = (jc_checkout.getDate().getTime() - jc_checkin.getDate().getTime())/MILLSECS_PER_DAY;
+                        System.out.println("Cantidad de dias devuelto"+" "+cantidadDias);
+                        d=deci.format(cantidadDias);
+                        d=d.replaceAll(",",".");
+                        cantidadDias=Float.parseFloat(d);
+                        System.out.println("Cantidad de dias calculado"+" "+cantidadDias);
+                        long precioTotal = (long) (cantidadPersonas * precioxnoche * cantidadDias);
+                        tf_montoTotal.setText(Long.toString(precioTotal));
+                        anticipo=(int) (precioTotal*0.5);
+                        tf_anticipar.setText(Integer.toString(anticipo));
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Fecha de checkin posterior a checkout");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Datos sin especificar");
+                }
+         }
+          if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE){
+              tf_montoTotal.setText(null);
+              tf_anticipar.setText(null);
+          }
+    }//GEN-LAST:event_tf_cantidadPersonasKeyPressed
+
+    private void tf_cantidadPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_cantidadPersonasActionPerformed
+        // TODO add your handling code here:
+        
+       
+    }//GEN-LAST:event_tf_cantidadPersonasActionPerformed
+        private Reserva obtenerReserva(int fila) {
+            query = entityManager.createNamedQuery("Reserva.findByCodigoReserva");
+            query.setParameter("codigoReserva", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );
+            Reserva r = null;
+            try{
+               r = (Reserva)query.getSingleResult();
+               System.out.println(reserva);
+            }catch(javax.persistence.NoResultException e){
+                System.out.println(reserva);
+            }
+            return r;
+        }
+        private void enviarDatosEmail(){
+        boolean resultado;
+            datos[0]=reserva.getCodigoCliente().getEmail();
+            datos[1]="Detalles de  Reserva ";
+            datos[2]=" BIENVENIDO AL HOTEL SANTA MARÍA"+"\n "
+           +"Su reserva es la n°: "+reservaLocal.getCodigoReserva()+"\n " 
+           +"Check In: "+" "+format.format(reservaLocal.getCheckIn())+"\n"+"Check Out: "+" "+format.format(reserva.getCheckOut())+"\n "
+           +"Habitación: "+" "+reservaLocal.getNumHabitacion().getNumero()+"\n"+"Categoría: "+" "+reservaLocal.getNumHabitacion().getCodigoCategoria().getNombre()+"\n"
+           +"Monto Habitación: "+" "+reservaLocal.getNumHabitacion().getCodigoCategoria().getCostoxnoche()+"\n"+"Monto Total: "+" "+reservaLocal.getMontoTotal()+"\n"+"Monto Abonado: "+" "+reserva.getMontoAbonado()+"\n"
+           +"Debe abonar el 30% del monto total de la reserva, de lo contrario perderá la misma";
+            Correo c=new Correo();
+            resultado=c.enviarCorreo(datos);
+            System.out.println(resultado);
+}
     /**
      * @param args the command line arguments
      */
@@ -820,7 +1194,9 @@ public class ReservaEditar extends javax.swing.JFrame {
             public void run() {
                 JFrame frame=new ReservaEditar();
                 frame.setVisible(true);
-                frame.setTitle("Editar Reserva");
+                frame.setTitle("Modificar Reserva");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
                 
@@ -830,9 +1206,10 @@ public class ReservaEditar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
-    private javax.swing.JButton btn_calcularMonto;
+    private javax.swing.JButton btn_buscar1;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_modificar;
+    private javax.persistence.EntityManager entityManager;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -844,14 +1221,24 @@ public class ReservaEditar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     public static com.toedter.calendar.JDateChooser jc_checkin;
     public static com.toedter.calendar.JDateChooser jc_checkout;
     private javax.swing.JLabel lbl_BuscarRol;
+    private javax.swing.JLabel lbl_anticipar;
     private javax.swing.JLabel lbl_codReserva;
+    private javax.swing.JLabel lbl_filtro;
     private javax.swing.JLabel lbl_pago;
     private javax.swing.JLabel lbl_presupuesto;
+    private javax.swing.JLabel lbl_valor;
+    private java.util.List<bean.Reserva> list;
+    private javax.swing.JComboBox list_filtros;
     private javax.swing.JComboBox list_pago;
+    private javax.swing.JTable masterTable;
     private javax.swing.JPanel panel_CrearReserva;
+    private javax.persistence.Query query;
+    private javax.swing.JTextField tf_anticipar;
     public static javax.swing.JTextField tf_cantidadPersonas;
     public static javax.swing.JTextField tf_categoriaHabitacion;
     public static javax.swing.JTextField tf_cedulaCliente;
@@ -862,6 +1249,8 @@ public class ReservaEditar extends javax.swing.JFrame {
     public static javax.swing.JTextField tf_numeroHabitacion;
     public static javax.swing.JTextField tf_precioCategoria;
     private javax.swing.JTextField tf_presupuesto;
+    private javax.swing.JTextField tf_valor;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
      private Date obtenerFechaDia() throws ParseException{
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -899,6 +1288,8 @@ public class ReservaEditar extends javax.swing.JFrame {
      }
     
     private void inicializarReserva(){
+        int anticipo;
+        Long total;
         tf_codReserva.setText(Integer.toString(reserva.getCodigoReserva()));
         if(reserva.getNumPresupuesto()==null){
             tf_presupuesto.setText("Sin presupuesto");
@@ -918,5 +1309,25 @@ public class ReservaEditar extends javax.swing.JFrame {
         tf_categoriaHabitacion.setText(reserva.getNumHabitacion().getCodigoCategoria().getNombre());
         jc_checkin.setDate(reserva.getCheckIn());
         jc_checkout.setDate(reserva.getCheckOut());
+        total=Long.parseLong(tf_montoTotal.getText());
+        anticipo= (int)(total*0.5);
+        tf_anticipar.setText(Integer.toString(anticipo));
+        
+    }
+    private void resetear(){
+        tf_codReserva.setText(null);
+        tf_presupuesto.setText(null);
+        tf_cedulaCliente.setText(null);
+        tf_cliente.setText(null);
+        tf_cantidadPersonas.setText(null);
+        tf_montoAbonado.setText(null);
+        tf_montoTotal.setText(null);
+        tf_numeroHabitacion.setText(null);
+        tf_precioCategoria.setText(null);
+        tf_categoriaHabitacion.setText(null);
+        jc_checkin.setDate(null);
+        jc_checkout.setDate(null);
+        tf_anticipar.setText(null);
+        
     }
 }

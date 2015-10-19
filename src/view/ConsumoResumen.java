@@ -398,6 +398,10 @@ public class ConsumoResumen extends javax.swing.JFrame {
         // TODO add your handling code here:
         int total=0;
         String letras;
+        if(tf_codigo.getText().length()==0){
+              JOptionPane.showMessageDialog(null,"Seleccione una Reserva", "Error",JOptionPane.INFORMATION_MESSAGE);
+              return;
+        }
         int codigo=Integer.parseInt(tf_codigo.getText());
         query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser  "
                     + "WHERE codigoReserva="

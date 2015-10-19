@@ -8,7 +8,9 @@ package view;
 
 import bean.Cliente;
 import bean.Reserva;
+import java.awt.Image;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -269,29 +271,29 @@ public class ClienteBuscar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(339, 339, 339)
-                        .addComponent(btn_cancelar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
+                        .addGap(104, 104, 104)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(119, Short.MAX_VALUE))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(363, 363, 363)
+                        .addComponent(btn_cancelar)))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(20, 20, 20)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addGap(18, 18, 18)
                 .addComponent(btn_cancelar)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -399,60 +401,7 @@ public class ClienteBuscar extends javax.swing.JFrame {
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
         // TODO add your handling code here:
-        switch (MenuRecepcionista.opcion){
-          case 1:
-                fila=masterTable.getSelectedRow();
-                codigo=(Integer) masterTable.getValueAt(fila, 0);
-                cedula=(String)masterTable.getValueAt(fila, 1);
-                ruc=(String)masterTable.getValueAt(fila, 2);
-                nombre=(String)masterTable.getValueAt(fila, 3);
-                apellido=(String)masterTable.getValueAt(fila, 4);
-                telef=(Integer)masterTable.getValueAt(fila, 5);
-                dire=(String)masterTable.getValueAt(fila, 6);
-                email=(String)masterTable.getValueAt(fila, 7);
-                 JFrame frame=new ClienteEdit();
-                 ClienteEdit.tf_codigo.setText(Integer.toString(codigo));
-                 ClienteEdit.tf_cedula.setText(cedula);
-                 ClienteEdit.tf_ruc.setText(ruc);
-                 ClienteEdit.tf_nombre.setText(nombre);
-                 ClienteEdit.tf_apellido.setText(apellido);
-                 ClienteEdit.tf_telef.setText(Integer.toString(telef));
-                 ClienteEdit.tf_direccion.setText(dire);
-                 ClienteEdit.tf_email.setText(email);   
-                 frame.setVisible(true);
-                 frame.setTitle("Modificar Cliente");
-                 frame.setLocationRelativeTo(null);
-                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                 this.setVisible(false);
-                 break;
-           case 2:
-                 fila=masterTable.getSelectedRow();
-                 codigo=(Integer) masterTable.getValueAt(fila, 0);
-                 cedula=(String)masterTable.getValueAt(fila, 1);
-                 ruc=(String)masterTable.getValueAt(fila, 2);
-                 nombre=(String)masterTable.getValueAt(fila, 3);
-                 apellido=(String)masterTable.getValueAt(fila, 4);
-                 telef=(Integer)masterTable.getValueAt(fila, 5);
-                 dire=(String)masterTable.getValueAt(fila, 6);
-                 email=(String)masterTable.getValueAt(fila, 7);
-                 JFrame fr=new ClienteEliminar();
-                 ClienteEliminar.tf_codigo.setText(Integer.toString(codigo));
-                 ClienteEliminar.tf_cedula.setText(cedula);
-                 ClienteEliminar.tf_ruc.setText(ruc);
-                 ClienteEliminar.tf_nombre.setText(nombre);
-                 ClienteEliminar.tf_apellido.setText(apellido);
-                 ClienteEliminar.tf_telef.setText(Integer.toString(telef));
-                 ClienteEliminar.tf_direccion.setText(dire);
-                 ClienteEliminar.tf_email.setText(email);   
-                 fr.setVisible(true);
-                 fr.setTitle("Eliminar Cliente");
-                 fr.setLocationRelativeTo(null);
-                 fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                 this.setVisible(false);
-                 break;
-              case 3:
-                  break;
-              }
+   
             
     }//GEN-LAST:event_masterTableMouseClicked
 
@@ -501,6 +450,8 @@ public class ClienteBuscar extends javax.swing.JFrame {
                 JFrame frame=new ClienteBuscar();
                 frame.setVisible(true);
                 frame.setTitle("Buscar Cliente");
+                 Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setLocationRelativeTo(null);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }

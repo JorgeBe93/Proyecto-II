@@ -418,6 +418,10 @@ public class ConsumoFactura extends javax.swing.JFrame {
         String cedula;
         String ruc;
         Reserva r;
+        if(tf_codigo.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Seleccione una Reserva", "Error",JOptionPane.INFORMATION_MESSAGE);
+              return;
+        }
         codigo=Integer.parseInt(tf_codigo.getText());
        // ruc=r.getCodigoCliente().getRuc();
         int total=0;

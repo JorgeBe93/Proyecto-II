@@ -10,6 +10,7 @@ import bean.Articulo;
 import bean.AuditoriaSistema;
 import bean.ConsumoProSer;
 import bean.MovimientoStock;
+import bean.NumberToText;
 import bean.ProductoServicio;
 import bean.Reserva;
 import java.text.DateFormat;
@@ -24,9 +25,15 @@ import javax.swing.JOptionPane;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.ImageIcon;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -92,6 +99,8 @@ private final  TextAutoCompleter textAutoCompleter;
         btn_guardar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
         btn_nuevo = new javax.swing.JButton();
+        btn_factura = new javax.swing.JButton();
+        btn_consumos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
@@ -347,32 +356,49 @@ private final  TextAutoCompleter textAutoCompleter;
             }
         });
 
+        btn_factura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icon-money.png"))); // NOI18N
+        btn_factura.setText("Factura");
+
+        btn_consumos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icono-listado.gif"))); // NOI18N
+        btn_consumos.setText("Consumos");
+        btn_consumos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_consumosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap(40, Short.MAX_VALUE)
                 .addComponent(btn_nuevo)
-                .addGap(48, 48, 48)
+                .addGap(30, 30, 30)
                 .addComponent(btn_guardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_consumos)
+                .addGap(27, 27, 27)
+                .addComponent(btn_factura, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btn_cancelar)
-                .addContainerGap())
+                .addGap(41, 41, 41))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_cancelar)
-                            .addComponent(btn_nuevo))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(btn_guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGap(12, 12, 12)
+                        .addComponent(btn_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_consumos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_factura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, List, masterTable);
@@ -495,7 +521,7 @@ private final  TextAutoCompleter textAutoCompleter;
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(181, 181, 181))
+                .addGap(66, 66, 66))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -510,7 +536,7 @@ private final  TextAutoCompleter textAutoCompleter;
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -829,6 +855,63 @@ private final  TextAutoCompleter textAutoCompleter;
           }
         
     }//GEN-LAST:event_tf_productoServicioKeyPressed
+
+    private void btn_consumosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consumosActionPerformed
+        // TODO add your handling code here:
+         int total=0;
+        String letras;
+         if(tf_codigoReserva.getText().length()==0){
+              JOptionPane.showMessageDialog(null,"Seleccione una Reserva", "Error",JOptionPane.INFORMATION_MESSAGE);
+              return;
+        }
+        int codigo=Integer.parseInt(tf_codigoReserva.getText());
+        Query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser  "
+                    + "WHERE codigoReserva="
+                    +"'"+codigo+"'"
+                    +" AND numFactura is null", ConsumoProSer.class);
+         List<ConsumoProSer>cps=Query.getResultList();
+         if(cps.isEmpty()){
+             JOptionPane.showMessageDialog(null,"La reserva no tiene deudas hasta la fecha", "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                   return;
+                   
+         }
+         Query=entityManager.createNativeQuery("SELECT SUM(total) FROM consumo_pro_ser  "
+                    + "WHERE codigoReserva="
+                    +"'"+codigo+"'"
+                    +" AND numFactura is null GROUP BY(codigoReserva)");
+                    Object resultado=Query.getSingleResult();
+                    total=Integer.parseInt(resultado.toString());
+                    System.out.print(total);
+                    //insertamos en la tabla factura
+          if(total==0){
+               JOptionPane.showMessageDialog(null,"La reserva no tiene deudas hasta la fecha", "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                 return;
+          }    
+        try
+        {
+            //convertimos el numero en letras
+            NumberToText nt=new NumberToText();
+            letras=nt.convertirLetras(total);
+            System.out.print(letras);
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
+            HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
+           // Map parametros=new HashMap();
+            par.put("CodigoReserva",codigo );
+            par.put("Letras", letras);
+            JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/consumo.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
+            JasperViewer jv = new JasperViewer(jp,false);
+            jv.setVisible(true);
+            jv.setTitle("Resumen de Consumos de  P/S");
+             Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+             jv.setIconImage(icon);
+            jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btn_consumosActionPerformed
  private List<Articulo> buscarArticulo(int cod){
      ar=null;
       Query=entityManager.createNativeQuery("SELECT * FROM articulo WHERE codigoArticulo= "
@@ -913,6 +996,8 @@ private final  TextAutoCompleter textAutoCompleter;
     private javax.persistence.Query Query;
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar;
+    private javax.swing.JButton btn_consumos;
+    private javax.swing.JButton btn_factura;
     private javax.swing.JButton btn_guardar;
     private javax.swing.JButton btn_nuevo;
     private javax.persistence.EntityManager entityManager;

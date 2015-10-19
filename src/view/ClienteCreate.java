@@ -92,7 +92,7 @@ public class ClienteCreate extends javax.swing.JFrame {
             }
         });
 
-        lbl_apellido.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_apellido.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_apellido.setText("Apellido:");
 
         tf_email.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -101,13 +101,13 @@ public class ClienteCreate extends javax.swing.JFrame {
             }
         });
 
-        lbl_direccion.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_direccion.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_direccion.setText("Dirección:");
 
-        lbl_cedula.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_cedula.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_cedula.setText("Cedula:");
 
-        lbl_ruc.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_ruc.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_ruc.setText("RUC:");
 
         tf_ruc.addActionListener(new java.awt.event.ActionListener() {
@@ -142,7 +142,7 @@ public class ClienteCreate extends javax.swing.JFrame {
             }
         });
 
-        lbl_email.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_email.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_email.setText("Email:");
 
         tf_direccion.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -151,10 +151,10 @@ public class ClienteCreate extends javax.swing.JFrame {
             }
         });
 
-        lbl_nombre.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_nombre.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_nombre.setText("Nombre:");
 
-        lbl_telef.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_telef.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_telef.setText("Teléfono:");
 
         tf_nombre.addActionListener(new java.awt.event.ActionListener() {
@@ -305,15 +305,16 @@ public class ClienteCreate extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(150, 150, 150))
             .addGroup(layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -323,9 +324,9 @@ public class ClienteCreate extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();

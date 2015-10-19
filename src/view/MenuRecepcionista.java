@@ -7,12 +7,14 @@
 package view;
 
 import bean.AuditoriaSistema;
+import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -328,23 +330,20 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
     private void mItem_eliminarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarCActionPerformed
         // TODO add your handling code here:
-         opcion=2;
         String args[]=new String[1];
-        args[0]="Buscar Cliente";
-        ClienteBuscar.main(args);
+        args[0]="Eliminar Cliente";
+        ClienteEliminar.main(args);
     }//GEN-LAST:event_mItem_eliminarCActionPerformed
 
     private void mItem_editarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_editarCActionPerformed
         // TODO add your handling code here:
-        opcion=1;
         String args[]=new String[1];
-        args[0]="Buscar Cliente";
-        ClienteBuscar.main(args);
+        args[0]="Editar Cliente";
+        ClienteEdit.main(args);
     }//GEN-LAST:event_mItem_editarCActionPerformed
 
     private void mItem_buscarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarCActionPerformed
         // TODO add your handling code here:
-         opcion=3;
         String args[]=new String[1];
         args[0]="Buscar Cliente";
         ClienteBuscar.main(args);
@@ -393,18 +392,17 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
     private void mItem_editarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_editarReservaActionPerformed
         // TODO add your handling code here:
-        opcion = 1;
+       
         String args[] = new String[1];
-        args[0] = "Buscar Reserva";
-        BuscarReserva.main(args);
+        args[0] = "Modificar Reserva";
+        ReservaEditar.main(args);
     }//GEN-LAST:event_mItem_editarReservaActionPerformed
 
     private void mItem_eliminarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarReservaActionPerformed
         // TODO add your handling code here:
-        opcion = 2;
         String args[] = new String[1];
-        args[0] = "Buscar Reserva";
-        BuscarReserva.main(args);
+        args[0] = "Eliminar Reserva";
+        ReservaEliminar.main(args);
     }//GEN-LAST:event_mItem_eliminarReservaActionPerformed
 
     private void mItem_buscarReserva2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarReserva2ActionPerformed
@@ -486,7 +484,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
     private void mItem_contratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_contratoActionPerformed
         // TODO add your handling code here:
-        opcion = 4;
+        opcion = 1;
         String args[] = new String[1];
         args[0] = "Buscar Reserva";
         BuscarReserva.main(args);
@@ -555,6 +553,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             public void run() {
                 JFrame frame=new MenuRecepcionista();
                 frame.setTitle("Menu Recepcionista");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setVisible(true);
                 frame.setLocationRelativeTo(null);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

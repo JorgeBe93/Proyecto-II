@@ -400,30 +400,6 @@ public class BuscarReserva extends javax.swing.JFrame {
       
       switch (MenuRecepcionista.opcion){
           case 1:
-                 fila = masterTable.getSelectedRow();
-                 ReservaEditar.reserva = obtenerReserva(fila);
-                 JFrame frame1=new ReservaEditar();
-                 frame1.setVisible(true);
-                 frame1.setTitle("Modificar Reserva");
-                 frame1.setLocationRelativeTo(null);
-                 frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                 this.dispose();
-                 break;
-          case 2:
-
-                 fila = masterTable.getSelectedRow();
-                 ReservaEliminar.reserva = obtenerReserva(fila);
-                 JFrame frame2=new ReservaEliminar();
-                 frame2.setVisible(true);
-                 frame2.setTitle("Eliminar Reserva");
-                 frame2.setLocationRelativeTo(null);
-                 frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                 this.dispose();    
-                 break;
-
-          case 3:
-              break;
-          case 4:
                 fila = masterTable.getSelectedRow();
                 codigo=(Integer)masterTable.getValueAt(fila, 0);
                 this.dispose();
@@ -521,21 +497,6 @@ public class BuscarReserva extends javax.swing.JFrame {
     private javax.swing.JTextField tf_valor;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-        private Reserva obtenerReserva(int fila) {
-            EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
-            EntityManager ema = fact.createEntityManager(); 
-            Query clienteQuery;
-            clienteQuery = ema.createNamedQuery("Reserva.findByCodigoReserva");
-            clienteQuery.setParameter("codigoReserva", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );
-            Reserva reserva = null;
-            try{
-               reserva = (Reserva)clienteQuery.getSingleResult();
-               System.out.println(reserva);
-            }catch(javax.persistence.NoResultException e){
-                System.out.println(reserva);
-            }
-            ema.close();
-            return reserva;
-        }
+   
 
 }

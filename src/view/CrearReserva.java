@@ -439,7 +439,7 @@ public class CrearReserva extends javax.swing.JFrame {
             .addGroup(panel_CrearReservaLayout.createSequentialGroup()
                 .addGap(190, 190, 190)
                 .addComponent(lbl_BuscarRol)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
         panel_CrearReservaLayout.setVerticalGroup(
             panel_CrearReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -554,13 +554,13 @@ public class CrearReserva extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 840, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panel_CrearReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(266, 266, 266)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(162, 162, 162)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(panel_CrearReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -1039,7 +1039,7 @@ public class CrearReserva extends javax.swing.JFrame {
    datos[1]="Detalles de  Reserva ";
    datos[2]=" BIENVENIDO AL HOTEL SANTA MARÍA"+"\n "
            +"Su reserva es la n°: "+reserva.getCodigoReserva()+"\n " 
-           +"Check In: "+" "+form.format(reserva.getCheckIn())+"\n"+"Check In: "+" "+form.format(reserva.getCheckOut())+"\n "
+           +"Check In: "+" "+form.format(reserva.getCheckIn())+"\n"+"Check Out: "+" "+form.format(reserva.getCheckOut())+"\n "
            +"Habitación: "+" "+reserva.getNumHabitacion().getNumero()+"\n"+"Categoría: "+" "+reserva.getNumHabitacion().getCodigoCategoria().getNombre()+"\n"
            +"Monto Habitación: "+" "+reserva.getNumHabitacion().getCodigoCategoria().getCostoxnoche()+"\n"+"Monto Total: "+" "+reserva.getMontoTotal()+"\n"+"Monto Abonado: "+" "+reserva.getMontoAbonado()+"\n"
            +"Debe abonar el 30% del monto total de la reserva, de lo contrario perderá la misma";
