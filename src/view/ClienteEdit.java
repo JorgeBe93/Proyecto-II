@@ -510,6 +510,20 @@ public class ClienteEdit extends javax.swing.JFrame {
 
     private void tf_rucFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_rucFocusLost
         // TODO add your handling code here:
+        int codigo;
+          if(tf_ruc.getText().length()!=0){//si el ruc no es nulo
+                    query=entityManager.createNamedQuery("Cliente.findByRuc");
+                    query.setParameter("ruc", tf_ruc.getText().toLowerCase());
+                    List<Cliente> clie=query.getResultList();
+                    if(clie.size()!=0){
+                        codigo=clie.get(0).getCodigoCliente();
+                        if(Integer.parseInt(tf_codigo.getText())!=codigo){//pregunta si esta intentando cambiar por un numero de cedula ya existente
+                            JOptionPane.showMessageDialog(null,"El numero de RUC ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
+                            tf_ruc.setText(null);
+                            return;
+                        }  
+                     }  
+                } 
           
     }//GEN-LAST:event_tf_rucFocusLost
 
@@ -528,6 +542,18 @@ public class ClienteEdit extends javax.swing.JFrame {
 
     private void tf_cedulaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_cedulaFocusLost
         // TODO add your handling code here:
+        int codigo;
+         query=entityManager.createNamedQuery("Cliente.findByCedula");
+              query.setParameter("cedula", tf_cedula.getText());
+              List<Cliente> c=query.getResultList();
+              if(c.size()!=0){
+                    codigo=c.get(0).getCodigoCliente();
+                    if(Integer.parseInt(tf_codigo.getText())!=codigo){//pregunta si esta intentando cambiar por un numero de cedula ya existente
+                            JOptionPane.showMessageDialog(null,"El numero de cedula ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
+                            tf_cedula.setText(null);
+                            return;
+                     }
+                }
         
     }//GEN-LAST:event_tf_cedulaFocusLost
 
@@ -579,37 +605,12 @@ public class ClienteEdit extends javax.swing.JFrame {
         // TODO add your handling code here:
         String antes;
         String despues;
-        int codigo;
           if(tf_cedula.getText().length()==0 || tf_nombre.getText().length()==0
              || tf_apellido.getText().length()==0 || tf_email.getText().length()==0
               || tf_direccion.getText().length()==0 || tf_telef.getText().length()==0  ){
              JOptionPane.showMessageDialog(null,"No se permiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
              return;    
         }else{
-              query=entityManager.createNamedQuery("Cliente.findByCedula");
-              query.setParameter("cedula", tf_cedula.getText());
-              List<Cliente> c=query.getResultList();
-              if(c.size()!=0){
-                    codigo=c.get(0).getCodigoCliente();
-                    if(Integer.parseInt(tf_codigo.getText())!=codigo){//pregunta si esta intentando cambiar por un numero de cedula ya existente
-                            JOptionPane.showMessageDialog(null,"El numero de cedula ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
-                            tf_cedula.setText(null);
-                            return;
-                     }
-                }
-               if(tf_ruc.getText().length()!=0){//si el ruc no es nulo
-                    query=entityManager.createNamedQuery("Cliente.findByRuc");
-                    query.setParameter("ruc", tf_ruc.getText().toLowerCase());
-                    List<Cliente> clie=query.getResultList();
-                    if(clie.size()!=0){
-                        codigo=clie.get(0).getCodigoCliente();
-                        if(Integer.parseInt(tf_codigo.getText())!=codigo){//pregunta si esta intentando cambiar por un numero de cedula ya existente
-                            JOptionPane.showMessageDialog(null,"El numero de RUC ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
-                            tf_ruc.setText(null);
-                            return;
-                        }  
-                     }  
-                } 
               resp=  JOptionPane.showConfirmDialog(null,"Desea guardar los cambios?", "Confirmar Modificación",JOptionPane.YES_NO_OPTION );
               if (resp==JOptionPane.YES_OPTION){
                    query=entityManager.createNamedQuery("Cliente.findByCodigoCliente");
@@ -629,8 +630,6 @@ public class ClienteEdit extends javax.swing.JFrame {
                     entityManager.getTransaction().begin();
                     entityManager.merge(cli);
                     entityManager.flush();
-                    list.clear();
-                    list.add(cli);
                     //despues de los cambios
                     despues=cli.toString();
                     //registramos los datos necesarios para la auditoria
@@ -648,7 +647,10 @@ public class ClienteEdit extends javax.swing.JFrame {
                      entityManager.getTransaction().commit();
                     // entityManager.close();
                      JOptionPane.showMessageDialog(null, "Modificación Exitosa");
+                     //actualizamos la tabla
                      resetear();
+                    list.clear();
+                    list.add(cli);
                      
               }else{
                     this.dispose();

@@ -166,6 +166,9 @@ public class BuscarReserva extends javax.swing.JFrame {
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Reserva", "Nombre", "Apellido", "Habitación", "Categoría", "CheckIn", "CheckOut" }));
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusLost(evt);
             }
@@ -392,7 +395,7 @@ public class BuscarReserva extends javax.swing.JFrame {
 
     private void btn_buscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_buscarFocusLost
         // TODO add your handling code here:
-        tf_valor.setText(null);
+     
     }//GEN-LAST:event_btn_buscarFocusLost
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
@@ -441,6 +444,11 @@ public class BuscarReserva extends javax.swing.JFrame {
          }
     }//GEN-LAST:event_list_filtrosFocusLost
 
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+           tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -474,6 +482,8 @@ public class BuscarReserva extends javax.swing.JFrame {
                 JFrame frame=new BuscarReserva();
                 frame.setVisible(true);
                 frame.setTitle("Buscar Reserva");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
             }

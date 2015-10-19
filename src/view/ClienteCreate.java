@@ -437,12 +437,29 @@ public class ClienteCreate extends javax.swing.JFrame {
 
     private void tf_cedulaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_cedulaFocusLost
         // TODO add your handling code here:
-      
+      query=entityManager.createNamedQuery("Cliente.findByCedula");
+                query.setParameter("cedula", tf_cedula.getText());
+                List<Cliente> cli=query.getResultList();
+                if(cli.size()>=1){
+                    JOptionPane.showMessageDialog(null,"El número de cedula ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_cedula.setText(null);
+                    return;
+                 }
       
     }//GEN-LAST:event_tf_cedulaFocusLost
 
     private void tf_rucFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_rucFocusLost
         // TODO add your handling code here:
+         if(tf_ruc.getText().length()!=0){
+                    query=entityManager.createNamedQuery("Cliente.findByRuc");
+                    query.setParameter("ruc", tf_ruc.getText().toLowerCase());
+                    List<Cliente> cl=query.getResultList();
+                    if(cl.size()>=1){
+                         JOptionPane.showMessageDialog(null,"El número de RUC ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
+                         tf_ruc.setText(null);
+                         return;
+                     }  
+                 } 
       
     }//GEN-LAST:event_tf_rucFocusLost
 
@@ -455,23 +472,6 @@ public class ClienteCreate extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null,"No se permiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
              return;    
         }else{
-                query=entityManager.createNamedQuery("Cliente.findByCedula");
-                query.setParameter("cedula", tf_cedula.getText());
-                List<Cliente> cli=query.getResultList();
-                if(cli.size()>=1){
-                    JOptionPane.showMessageDialog(null,"El número de cedula ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
-                    tf_cedula.setText(null);
-                    return;
-                 }
-                 if(tf_ruc.getText().length()!=0){
-                    query=entityManager.createNamedQuery("Cliente.findByRuc");
-                    query.setParameter("ruc", tf_ruc.getText().toLowerCase());
-                    List<Cliente> cl=query.getResultList();
-                    if(cl.size()>=1){
-                         JOptionPane.showMessageDialog(null,"El número de RUC ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
-                         return;
-                     }  
-                 } 
                resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar un nuevo Cliente?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
                if (resp==JOptionPane.YES_OPTION){
                    entityManager.getTransaction().begin();
@@ -507,6 +507,9 @@ public class ClienteCreate extends javax.swing.JFrame {
                          CrearReserva.clienteList.addAll(clie);
                     }
                     JOptionPane.showMessageDialog(null,"Creación exitosa", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
+                    resetear();
+               }else{
+                     this.dispose();
                }
         }
         if (!llamadaGenerarPresupuesto.equals("")){
@@ -518,13 +521,22 @@ public class ClienteCreate extends javax.swing.JFrame {
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 
         }
-        this.dispose();
+       
     }//GEN-LAST:event_btn_guardarActionPerformed
 
     private void tf_telefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_telefActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_telefActionPerformed
-
+      private void resetear(){
+        
+        tf_nombre.setText(null);
+        tf_apellido.setText(null);
+        tf_cedula.setText(null);
+        tf_ruc.setText(null);
+        tf_direccion.setText(null);
+        tf_telef.setText(null);
+        tf_email.setText(null);
+    }
     /**
      * @param args the command line arguments
      */

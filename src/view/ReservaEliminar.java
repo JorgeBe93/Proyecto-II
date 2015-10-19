@@ -15,18 +15,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import static view.ReservaEditar.jc_checkin;
-import static view.ReservaEditar.jc_checkout;
-import static view.ReservaEditar.tf_categoriaHabitacion;
-import static view.ReservaEditar.tf_numeroHabitacion;
-import static view.ReservaEditar.tf_precioCategoria;
 
 /**
  *
@@ -36,10 +27,8 @@ public class ReservaEliminar extends javax.swing.JFrame {
     private Reserva reserva;
     private int resp;
     private int fila;
-     EntityManagerFactory fact=Persistence.createEntityManagerFactory("proyectoPU");
-     EntityManager ema= fact.createEntityManager();
-     Date fecha=new Date();
-      DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    Date fecha=new Date();
+    DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     /**
      * Creates new form ReservaEliminar
      */
@@ -593,11 +582,10 @@ public class ReservaEliminar extends javax.swing.JFrame {
             String fecha2;
             DateFormat formato1=new SimpleDateFormat("yyyy-MM-dd");
             fecha2=formato1.format(fecha1);
-            Query query ;
             int codigo=reserva.getCodigoReserva();
-            ema.getTransaction().begin();
+            entityManager.getTransaction().begin();
          //verificamos si el consumo corresponde a un reserva vigente que aun no ha sido cancelada
-            query=ema.createNativeQuery("SELECT * FROM  reserva r "
+            query=entityManager.createNativeQuery("SELECT * FROM  reserva r "
                     + "WHERE (r.checkIn<="
                     +"'"+fecha2+"' "
                     +"AND r.checkOut>="
@@ -615,43 +603,44 @@ public class ReservaEliminar extends javax.swing.JFrame {
         resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
         if(resp==JOptionPane.YES_OPTION){            
             //eliminamos las facturas que dependen de dicha reserva
-                query=ema.createNativeQuery("SELECT * FROM factura_cobro WHERE "
+                query=entityManager.createNativeQuery("SELECT * FROM factura_cobro WHERE "
                         + "codigoReserva= "
                         + "'"+tf_codigoReserva.getText()+"'",FacturaCobro.class);
                 List<FacturaCobro> f=query.getResultList();
                 if(f.size()>=1){
                     for(i=0;i<f.size();i++){
                         valor=f.get(i).toString();
-                        ema.remove(f.get(i));
+                        entityManager.remove(f.get(i));
                         registrarAuditoria("FacturaCobro",valor);
                     }
-                    ema.flush();
+                    entityManager.flush();
                 }
                 //
                 //eliminamos los consumos  que dependen de dicha reserva
-                query=ema.createNativeQuery("SELECT * FROM consumo_pro_ser WHERE "
+                query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser WHERE "
                         + "codigoReserva= "
                         + "'"+tf_codigoReserva.getText()+"'",ConsumoProSer.class);
                 List<ConsumoProSer> c=query.getResultList();
                 if(c.size()>=1){
                     for(i=0;i<c.size();i++){
                         valor=c.get(i).toString();
-                        ema.remove(c.get(i));
+                        entityManager.remove(c.get(i));
                         registrarAuditoria("Consumo P/S",valor);
                     }
-                    ema.flush();
+                    entityManager.flush();
                 }
                 //
                 //eliminamos la reserva
-            Reserva reservaFind=ema.find(Reserva.class, reserva.getCodigoReserva() );
+            Reserva reservaFind=entityManager.find(Reserva.class, reserva.getCodigoReserva() );
             valor=reservaFind.toString();//guardamos el objeto antes de eliminar
-            list.remove(reservaFind);
-            ema.remove(reservaFind);
-            ema.flush();
+            entityManager.remove(reservaFind);
+            entityManager.flush();
             registrarAuditoria("Reserva",valor);
-            ema.getTransaction().commit();
+            entityManager.getTransaction().commit();
            // ema.close();
             JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
+            list.clear();
+            list.remove(reservaFind);
             resetear();
           
         }else{
@@ -667,8 +656,8 @@ public class ReservaEliminar extends javax.swing.JFrame {
             as.setUsuario(LoginView.nombreUsuario);
             as.setAntes(valor);
             as.setDespues("No hay modificaciones");
-            ema.persist(as);
-            ema.flush();
+            entityManager.persist(as);
+            entityManager.flush();
     }
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // TODO add your handling code here:

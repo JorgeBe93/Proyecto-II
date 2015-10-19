@@ -10,7 +10,9 @@ import ViewAdmHotel.MenuAdminHotel;
 import bean.CategHabitacion;
 import bean.Habitacion;
 import bean.Reserva;
+import java.awt.Image;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -222,7 +224,7 @@ public class CategHabitBuscar extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(43, 43, 43)
                 .addComponent(btn_cancelar)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -317,40 +319,7 @@ public class CategHabitBuscar extends javax.swing.JFrame {
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
         // TODO add your handling code here:
-         switch (MenuAdminHotel.opcion){
-             case 1:
-                    fila=masterTable.getSelectedRow();
-                    codigo=(Integer) masterTable.getValueAt(fila, 0);
-                    nombre=(String)masterTable.getValueAt(fila, 1);
-                    costo=(Integer)masterTable.getValueAt(fila, 2);
-                    JFrame frame=new CategHabitEdit();
-                    CategHabitEdit.tf_codigo.setText(Integer.toString(codigo));
-                    CategHabitEdit.tf_nombre.setText(nombre);
-                    CategHabitEdit.tf_costo.setText(Integer.toString(costo));
-                    frame.setVisible(true);
-                    frame.setTitle("Editar Categoría de Habitación");
-                    frame.setLocationRelativeTo(null);
-                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    this.dispose();
-                    break;
-             case 2:
-                    fila=masterTable.getSelectedRow();
-                    codigo=(Integer) masterTable.getValueAt(fila, 0);
-                    nombre=(String)masterTable.getValueAt(fila, 1);
-                    costo=(Integer)masterTable.getValueAt(fila, 2);
-                    JFrame fram=new CategHabitEliminar();
-                    CategHabitEliminar.tf_codigo.setText(Integer.toString(codigo));
-                    CategHabitEliminar.tf_nombre.setText(nombre);
-                    CategHabitEliminar.tf_costo.setText(Integer.toString(costo));
-                    fram.setVisible(true);
-                    fram.setTitle("Eliminar Categoría de Habitación");
-                    fram.setLocationRelativeTo(null);
-                    fram.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    this.setVisible(false);
-                    break;
-             case 3:
-                     break;
-         }
+         
     }//GEN-LAST:event_masterTableMouseClicked
       private void cargarHabitacion(int codCateg){
          habitacionQuery=EntityManager.createNativeQuery("SELECT * FROM habitacion "
@@ -393,6 +362,8 @@ public class CategHabitBuscar extends javax.swing.JFrame {
                 JFrame frame=new CategHabitBuscar();
                 frame.setVisible(true);
                 frame.setTitle("Buscar Categoría de Habitación");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setLocationRelativeTo(null);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }

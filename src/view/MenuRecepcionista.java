@@ -422,23 +422,20 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
     private void mItem_modificarConsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_modificarConsumoActionPerformed
         // TODO add your handling code here:
-        opcion=1;
         String args[]=new String[1];
-        args[0]="Buscar Consumo de Producto/Servicio";
-        BuscarConsumoPS.main(args);
+        args[0]="Modificar Consumo de Producto/Servicio";
+        ConsumoPSEdit.main(args);
     }//GEN-LAST:event_mItem_modificarConsumoActionPerformed
 
     private void mItem_eliminarConsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarConsumoActionPerformed
         // TODO add your handling code here:
-        opcion=2;
         String args[]=new String[1];
-        args[0]="Buscar Consumo de Producto/Servicio";
-        BuscarConsumoPS.main(args);
+        args[0]="Elimiar Consumo de Producto/Servicio";
+        ConsumoPSEliminar.main(args);
     }//GEN-LAST:event_mItem_eliminarConsumoActionPerformed
 
     private void mItem_buscarConsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarConsumoActionPerformed
         // TODO add your handling code here:
-        opcion=3;
         String args[]=new String[1];
         args[0]="Buscar Consumo de Producto/Servicio";
         BuscarConsumoPS.main(args);

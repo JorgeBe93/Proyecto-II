@@ -55,20 +55,19 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="panel_registrarPS" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jPanel1" max="32767" attributes="0"/>
+                          <Component id="panel_registrarPS" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace pref="24" max="32767" attributes="0"/>
+              <EmptySpace pref="79" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -77,11 +76,11 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="panel_registrarPS" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="19" max="32767" attributes="0"/>
+              <EmptySpace pref="25" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -103,7 +102,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="48" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="lbl_registrarPS" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               </Group>
@@ -128,7 +127,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Registrar Producto/Servicio"/>
+            <Property name="text" type="java.lang.String" value="Registrar Servicio"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -151,22 +150,13 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="lbl_categoriaPS" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                          <Component id="list_categoriaPS" min="-2" pref="170" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lbl_nombrePS" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lbl_costo" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="tf_costo" min="-2" pref="129" max="-2" attributes="0"/>
-                              <Component id="tf_nombrePS" min="-2" pref="180" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="lbl_nombrePS" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_costo" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="tf_costo" min="-2" pref="129" max="-2" attributes="0"/>
+                      <Component id="tf_nombrePS" min="-2" pref="180" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="65" max="32767" attributes="0"/>
               </Group>
@@ -185,12 +175,7 @@
                       <Component id="lbl_costo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tf_costo" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lbl_categoriaPS" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="list_categoriaPS" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="47" max="32767" attributes="0"/>
+                  <EmptySpace pref="40" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -199,7 +184,7 @@
         <Component class="javax.swing.JLabel" name="lbl_nombrePS">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Candara" size="16" style="0"/>
+              <Font name="Candara" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Nombre:"/>
           </Properties>
@@ -209,24 +194,6 @@
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tf_costoKeyTyped"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lbl_categoriaPS">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Candara" size="16" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Categor&#xed;a:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="list_categoriaPS">
-          <Properties>
-            <Property name="renderer" type="javax.swing.ListCellRenderer" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="categProdSerRenderizar1"/>
-            </Property>
-          </Properties>
-          <BindingProperties>
-            <BindingProperty name="elements" source="list" target="list_categoriaPS" targetPath="elements" updateStrategy="0" immediately="false"/>
-          </BindingProperties>
-        </Component>
         <Component class="javax.swing.JTextField" name="tf_nombrePS">
           <Events>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tf_nombrePSKeyTyped"/>
@@ -235,7 +202,7 @@
         <Component class="javax.swing.JLabel" name="lbl_costo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Candara" size="16" style="0"/>
+              <Font name="Candara" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Costo:"/>
           </Properties>

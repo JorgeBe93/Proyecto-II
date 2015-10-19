@@ -9,10 +9,12 @@ package view;
 import bean.AuditoriaSistema;
 import bean.CategoriaProdSer;
 import bean.ProductoServicio;
+import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -39,7 +41,6 @@ public class ProdSerCreate extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         categProdSerRenderizar1 = new renderizar.CategProdSerRenderizar();
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
@@ -50,8 +51,6 @@ public class ProdSerCreate extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lbl_nombrePS = new javax.swing.JLabel();
         tf_costo = new javax.swing.JTextField();
-        lbl_categoriaPS = new javax.swing.JLabel();
-        list_categoriaPS = new javax.swing.JComboBox();
         tf_nombrePS = new javax.swing.JTextField();
         lbl_costo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -67,14 +66,14 @@ public class ProdSerCreate extends javax.swing.JFrame {
 
         lbl_registrarPS.setFont(new java.awt.Font("Corbel", 1, 30)); // NOI18N
         lbl_registrarPS.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_registrarPS.setText("Registrar Producto/Servicio");
+        lbl_registrarPS.setText("Registrar Servicio");
 
         javax.swing.GroupLayout panel_registrarPSLayout = new javax.swing.GroupLayout(panel_registrarPS);
         panel_registrarPS.setLayout(panel_registrarPSLayout);
         panel_registrarPSLayout.setHorizontalGroup(
             panel_registrarPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_registrarPSLayout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_registrarPS)
                 .addGap(43, 43, 43))
         );
@@ -89,7 +88,7 @@ public class ProdSerCreate extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lbl_nombrePS.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_nombrePS.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_nombrePS.setText("Nombre:");
 
         tf_costo.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -98,21 +97,13 @@ public class ProdSerCreate extends javax.swing.JFrame {
             }
         });
 
-        lbl_categoriaPS.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        lbl_categoriaPS.setText("Categoría:");
-
-        list_categoriaPS.setRenderer(categProdSerRenderizar1);
-
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, list_categoriaPS);
-        bindingGroup.addBinding(jComboBoxBinding);
-
         tf_nombrePS.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_nombrePSKeyTyped(evt);
             }
         });
 
-        lbl_costo.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_costo.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_costo.setText("Costo:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -122,18 +113,12 @@ public class ProdSerCreate extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbl_categoriaPS)
-                        .addGap(28, 28, 28)
-                        .addComponent(list_categoriaPS, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_nombrePS)
-                            .addComponent(lbl_costo))
-                        .addGap(38, 38, 38)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tf_costo, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_nombrePS, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(lbl_nombrePS)
+                    .addComponent(lbl_costo))
+                .addGap(38, 38, 38)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tf_costo, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_nombrePS, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -147,11 +132,7 @@ public class ProdSerCreate extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_costo)
                     .addComponent(tf_costo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_categoriaPS)
-                    .addComponent(list_categoriaPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -201,29 +182,26 @@ public class ProdSerCreate extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(panel_registrarPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(109, 109, 109)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                        .addGap(62, 62, 62)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panel_registrarPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panel_registrarPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(35, 35, 35)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(37, 37, 37)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
-
-        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -297,13 +275,19 @@ public class ProdSerCreate extends javax.swing.JFrame {
                     as.setUsuario("nadie");
                     entityManager.persist(as);
                     entityManager.getTransaction().commit();
-                    entityManager.close();
+                    //entityManager.close();
                     JOptionPane.showMessageDialog(null,"Creación exitosa", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
+                    resetear();
+               }else{
+                     this.dispose();
                }
         }
-        this.dispose();
+       
     }//GEN-LAST:event_btn_guardarActionPerformed
-
+    private void resetear(){
+        tf_nombrePS.setText(null);
+        tf_costo.setText(null);
+    }
     /**
      * @param args the command line arguments
      */
@@ -336,7 +320,9 @@ public class ProdSerCreate extends javax.swing.JFrame {
             public void run() {
                 JFrame frame=new ProdSerCreate();
                 frame.setVisible(true);
-                frame.setTitle("Registrar Producto/Servicio");
+                frame.setTitle("Registrar Servicio");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
             }
@@ -350,16 +336,13 @@ public class ProdSerCreate extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lbl_categoriaPS;
     private javax.swing.JLabel lbl_costo;
     private javax.swing.JLabel lbl_nombrePS;
     private javax.swing.JLabel lbl_registrarPS;
     private java.util.List<bean.CategoriaProdSer> list;
-    private javax.swing.JComboBox list_categoriaPS;
     private javax.swing.JPanel panel_registrarPS;
     private javax.persistence.Query query;
     private javax.swing.JTextField tf_costo;
     private javax.swing.JTextField tf_nombrePS;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

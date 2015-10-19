@@ -627,11 +627,8 @@ public class ReservaEditar extends javax.swing.JFrame {
                         Cliente cliente  = obtenerCliente();
                         int respuesta = JOptionPane.showConfirmDialog(null, "¿Confirma el registro?");
                         if (respuesta == JOptionPane.YES_OPTION){
-                            EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
-                            EntityManager ema = fact.createEntityManager();
-                            //antes de los cambios
                             antes = reserva.toString();
-                            ema.getTransaction().begin();
+                            entityManager.getTransaction().begin();
                             reservaLocal.setCodigoReserva(reserva.getCodigoReserva());
                             reservaLocal.setCantPersonas(Integer.parseInt(tf_cantidadPersonas.getText()));
                             reservaLocal.setCheckIn(dateIn);
@@ -645,14 +642,12 @@ public class ReservaEditar extends javax.swing.JFrame {
                                 reservaLocal.setMontoAbonado(Integer.parseInt(tf_montoAbonado.getText()));
                                 reservaLocal.setMontoTotal(Integer.parseInt(tf_montoTotal.getText()));
                                 //consulta para obtener habitacion
-                                Query query = ema.createNamedQuery("Habitacion.findByNumero");
+                                 query = entityManager.createNamedQuery("Habitacion.findByNumero");
                                 query.setParameter("numero", Integer.parseInt(tf_numeroHabitacion.getText()));
                                 habitacion = (Habitacion)query.getSingleResult();
                                 reservaLocal.setNumHabitacion(habitacion);
-                                ema.merge(reservaLocal);
-                                ema.flush();
-                                list.clear();
-                                list.add(reservaLocal);
+                                entityManager.merge(reservaLocal);
+                                entityManager.flush();
                                 //despues de los cambios
                                 despues = reservaLocal.toString();
                                 //guardamos el consumo
@@ -660,14 +655,14 @@ public class ReservaEditar extends javax.swing.JFrame {
                                 int codigo=reservaLocal.getCodigoReserva();
                                 //saldo de la reserva
                                 diferencia=Integer.parseInt(tf_montoTotal.getText())-Integer.parseInt(tf_montoAbonado.getText());
-                                query=ema.createNativeQuery("SELECT * FROM consumo_pro_ser c "
+                                query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser c "
                                  + "INNER JOIN reserva r "
                                 + "on r.codigoReserva = c.codigoReserva "
                                 + "WHERE c.codigoReserva="
                                 +codigo, ConsumoProSer.class);
                                 List<ConsumoProSer> cps=query.getResultList();
                                 if(!cps.isEmpty()){
-                                   query= ema.createNativeQuery( "SELECT * FROM producto_servicio p "
+                                   query= entityManager.createNativeQuery( "SELECT * FROM producto_servicio p "
                                     + "WHERE p.nombre LIKE "
                                     +"'%saldo de reserva%'", ProductoServicio.class);
                                     List<ProductoServicio> p=query.getResultList();
@@ -677,9 +672,9 @@ public class ReservaEditar extends javax.swing.JFrame {
                                             return;
                                     }
                                     if(diferencia==0){
-                                            ConsumoProSer con=ema.find(ConsumoProSer.class, cps.get(0).getCodigoConsumo() );
-                                             ema.remove(con);
-                                             ema.flush();
+                                            ConsumoProSer con=entityManager.find(ConsumoProSer.class, cps.get(0).getCodigoConsumo() );
+                                             entityManager.remove(con);
+                                             entityManager.flush();
                                     }else{
                                          ConsumoProSer cp=new ConsumoProSer();
                                          cp.setCodigoConsumo(cps.get(0).getCodigoConsumo());
@@ -688,13 +683,13 @@ public class ReservaEditar extends javax.swing.JFrame {
                                          cp.setCantidad(dias);
                                          cp.setTotal(diferencia);
                                          cp.setCodigoPS(p.get(0));
-                                         ema.merge(cp);
-                                         ema.flush(); 
+                                         entityManager.merge(cp);
+                                         entityManager.flush(); 
                                     }
                                     
 
                                 }else{
-                                        query= ema.createNativeQuery( "SELECT * FROM producto_servicio p "
+                                        query= entityManager.createNativeQuery( "SELECT * FROM producto_servicio p "
                                          + "WHERE p.nombre LIKE "
                                          +"'%saldo de reserva%'", ProductoServicio.class);
                                          List<ProductoServicio> p=query.getResultList();
@@ -709,8 +704,8 @@ public class ReservaEditar extends javax.swing.JFrame {
                                                 cp.setCantidad(dias);
                                                 cp.setTotal(diferencia);
                                                 cp.setCodigoPS(p.get(0));
-                                                ema.persist(cp);
-                                                ema.flush();
+                                                entityManager.persist(cp);
+                                                entityManager.flush();
                                          }        
                                 }  
                                 monto_fac=reservaLocal.getMontoAbonado()-reserva.getMontoAbonado();
@@ -726,8 +721,8 @@ public class ReservaEditar extends javax.swing.JFrame {
                                        f.setFechaEmision(form.format(fecha));
                                        f.setTotal(monto_fac);
                                        f.setTipoFactura((String) list_pago.getSelectedItem());
-                                       ema.persist(f);
-                                       ema.flush();
+                                       entityManager.persist(f);
+                                       entityManager.flush();
                                         if("Crédito/Cheque".equals(f.getTipoFactura()) || "Crédito/Tarjeta".equals(f.getTipoFactura()) ){
                                            condicion="Crédito";
 
@@ -748,13 +743,15 @@ public class ReservaEditar extends javax.swing.JFrame {
                             DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                             as.setFechaHora(formato.format(fecha));
                             as.setUsuario(LoginView.nombreUsuario);
-                            ema.persist(as);
-                            ema.flush();
-                            
-                            ema.getTransaction().commit();
+                            entityManager.persist(as);
+                            entityManager.flush();
+                            entityManager.getTransaction().commit();
                            // ema.close();
-                           
                             JOptionPane.showMessageDialog(null, "Modificación Exitosa");
+                              //actualizamos la tabla
+                                resetear();
+                                list.clear();
+                                list.add(reservaLocal);
                             //mostramos la factura
                             if(!"0".equals(tf_montoAbonado.getText()) && monto_fac!=0){
                                  try
@@ -785,7 +782,6 @@ public class ReservaEditar extends javax.swing.JFrame {
                                     e.printStackTrace();
                                 }
                             }
-                             resetear();
                              enviarDatosEmail();
                         }
                         else{

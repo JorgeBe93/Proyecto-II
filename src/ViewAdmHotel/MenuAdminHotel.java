@@ -29,16 +29,22 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 import view.CategHabitBuscar;
 import view.CategHabitCreate;
+import view.CategHabitEdit;
+import view.CategHabitEliminar;
 import view.CategPSBuscar;
 import view.CategPSCreate;
 import view.EmpleadoBuscar;
 import view.EmpleadoRegistrar;
 import view.HabitacionBuscar;
 import view.HabitacionCreate;
+import view.HabitacionEdit;
+import view.HabitacionEliminar;
 import view.LoginView;
 import view.PerdidaOportunidades;
 import view.ProdSerBuscar;
 import view.ProdSerCreate;
+import view.ProdSerEdit;
+import view.ProdSerEliminar;
 
 /**
  *
@@ -609,23 +615,20 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
     private void mItem_editarCHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_editarCHActionPerformed
         // TODO add your handling code here:
-        opcion=1;
         String args[]=new String[1];
-        args[0]="Buscar Categoría de Habitación";
-        CategHabitBuscar.main(args); 
+        args[0]="Modificar Categoría de Habitación";
+        CategHabitEdit.main(args); 
     }//GEN-LAST:event_mItem_editarCHActionPerformed
 
     private void mItem_eliminarCHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarCHActionPerformed
         // TODO add your handling code here:
-        opcion=2;
         String args[]=new String[1];
-        args[0]="Buscar Categoría de Habitación";
-        CategHabitBuscar.main(args);
+        args[0]="Eliminar Categoría de Habitación";
+        CategHabitEliminar.main(args);
     }//GEN-LAST:event_mItem_eliminarCHActionPerformed
 
     private void mItem_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarActionPerformed
         // TODO add your handling code here:
-        opcion=3;
         String args[]=new String[1];
         args[0]="Buscar Categoría de Habitación";
         CategHabitBuscar.main(args);
@@ -637,7 +640,6 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
     private void mItem_buscarHabitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarHabitActionPerformed
         // TODO add your handling code here:
-        opcion=3;
         String args[]=new String[1];
         args[0]="Buscar Habitación";
         HabitacionBuscar.main(args);
@@ -645,7 +647,6 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
     private void mItem_crearHabitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_crearHabitActionPerformed
         // TODO add your handling code here:
-       
         String args[]=new String[1];
         args[0]="Crear Habitación";
         HabitacionCreate.main(args);
@@ -653,18 +654,16 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
     private void mItem_editarHabitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_editarHabitActionPerformed
         // TODO add your handling code here:
-        opcion=1;
         String args[]=new String[1];
-        args[0]="Buscar Habitación";
-        HabitacionBuscar.main(args);
+        args[0]="Modificar Habitación";
+        HabitacionEdit.main(args);
     }//GEN-LAST:event_mItem_editarHabitActionPerformed
 
     private void mItem_eliminarHabitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarHabitActionPerformed
         // TODO add your handling code here:
-         opcion=2;
         String args[]=new String[1];
-        args[0]="Buscar Habitación";
-        HabitacionBuscar.main(args);
+        args[0]="Eliminar Habitación";
+        HabitacionEliminar.main(args);
                                      
     }//GEN-LAST:event_mItem_eliminarHabitActionPerformed
 
@@ -715,23 +714,22 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
     private void mItem_editarPSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_editarPSActionPerformed
         // TODO add your handling code here:
-        opcion=1;
+       
         String args[]=new String[1];
-        args[0]="Buscar Producto/Servicio";
-        ProdSerBuscar.main(args);
+        args[0]="Modificar Servicio";
+        ProdSerEdit.main(args);
     }//GEN-LAST:event_mItem_editarPSActionPerformed
 
     private void mItem_eliminarPSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarPSActionPerformed
         // TODO add your handling code here:
-        opcion=2;
+       
         String args[]=new String[1];
-        args[0]="Buscar Producto/Servicio";
-        ProdSerBuscar.main(args);
+        args[0]="Eliminar Servicio";
+        ProdSerEliminar.main(args);
     }//GEN-LAST:event_mItem_eliminarPSActionPerformed
 
     private void mItem_buscarPSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarPSActionPerformed
         // TODO add your handling code here:
-        opcion=3;
         String args[]=new String[1];
         args[0]="Buscar Producto/Servicio";
         ProdSerBuscar.main(args);

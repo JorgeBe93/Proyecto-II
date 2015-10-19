@@ -6,6 +6,8 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -18,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -31,6 +34,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "CategHabitacion.findByNombre", query = "SELECT c FROM CategHabitacion c WHERE c.nombre = :nombre"),
     @NamedQuery(name = "CategHabitacion.findByCostoxnoche", query = "SELECT c FROM CategHabitacion c WHERE c.costoxnoche = :costoxnoche")})
 public class CategHabitacion implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,7 +69,9 @@ public class CategHabitacion implements Serializable {
     }
 
     public void setCodigoCategoria(Integer codigoCategoria) {
+        Integer oldCodigoCategoria = this.codigoCategoria;
         this.codigoCategoria = codigoCategoria;
+        changeSupport.firePropertyChange("codigoCategoria", oldCodigoCategoria, codigoCategoria);
     }
 
     public String getNombre() {
@@ -72,7 +79,9 @@ public class CategHabitacion implements Serializable {
     }
 
     public void setNombre(String nombre) {
+        String oldNombre = this.nombre;
         this.nombre = nombre;
+        changeSupport.firePropertyChange("nombre", oldNombre, nombre);
     }
 
     public int getCostoxnoche() {
@@ -80,7 +89,9 @@ public class CategHabitacion implements Serializable {
     }
 
     public void setCostoxnoche(int costoxnoche) {
+        int oldCostoxnoche = this.costoxnoche;
         this.costoxnoche = costoxnoche;
+        changeSupport.firePropertyChange("costoxnoche", oldCostoxnoche, costoxnoche);
     }
 
     public Collection<Habitacion> getHabitacionCollection() {
@@ -118,6 +129,14 @@ public class CategHabitacion implements Serializable {
     @Override
     public String toString() {
         return  "codigoCategoria=" + codigoCategoria + ", nombre=" + nombre + ", costoxnoche=" + costoxnoche;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
     

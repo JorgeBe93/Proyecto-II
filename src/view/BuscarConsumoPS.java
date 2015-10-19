@@ -7,7 +7,9 @@
 package view;
 
 import bean.ConsumoProSer;
+import java.awt.Image;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -71,9 +73,9 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
         panel_BuscarCPSLayout.setHorizontalGroup(
             panel_BuscarCPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_BuscarCPSLayout.createSequentialGroup()
-                .addGap(87, 87, 87)
+                .addGap(115, 115, 115)
                 .addComponent(lbl_BuscarCPS)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_BuscarCPSLayout.setVerticalGroup(
             panel_BuscarCPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,7 +92,7 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel1.setText("Buscar por:");
 
-        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Consumo", "Reserva", "Producto/Servicio", "Total", "Número Factura", "Habitación" }));
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Consumo", "Reserva", "Producto/Servicio", "Total", "Número Factura", "Habitación", "Cedula" }));
         list_filtros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 list_filtrosActionPerformed(evt);
@@ -167,7 +169,7 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, List, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoConsumo}"));
-        columnBinding.setColumnName("Codigo Consumo");
+        columnBinding.setColumnName(" Consumo");
         columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoReserva.codigoReserva}"));
         columnBinding.setColumnName(" Reserva");
@@ -175,6 +177,15 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoReserva.numHabitacion.numero}"));
         columnBinding.setColumnName("Habitación");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoReserva.codigoCliente.cedula}"));
+        columnBinding.setColumnName("CI Cliente");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoReserva.codigoCliente.nombre}"));
+        columnBinding.setColumnName("Nombre");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoReserva.codigoCliente.apellido}"));
+        columnBinding.setColumnName("Apellido");
+        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoPS.nombre}"));
         columnBinding.setColumnName("Producto/Servicio");
         columnBinding.setColumnClass(String.class);
@@ -202,46 +213,45 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
             masterTable.getColumnModel().getColumn(0).setPreferredWidth(20);
             masterTable.getColumnModel().getColumn(1).setPreferredWidth(20);
             masterTable.getColumnModel().getColumn(2).setPreferredWidth(25);
-            masterTable.getColumnModel().getColumn(3).setPreferredWidth(100);
-            masterTable.getColumnModel().getColumn(4).setPreferredWidth(15);
-            masterTable.getColumnModel().getColumn(5).setResizable(false);
-            masterTable.getColumnModel().getColumn(5).setPreferredWidth(20);
-            masterTable.getColumnModel().getColumn(6).setPreferredWidth(25);
-            masterTable.getColumnModel().getColumn(7).setPreferredWidth(30);
+            masterTable.getColumnModel().getColumn(6).setPreferredWidth(100);
+            masterTable.getColumnModel().getColumn(7).setPreferredWidth(15);
+            masterTable.getColumnModel().getColumn(8).setResizable(false);
+            masterTable.getColumnModel().getColumn(8).setPreferredWidth(20);
+            masterTable.getColumnModel().getColumn(9).setPreferredWidth(25);
+            masterTable.getColumnModel().getColumn(10).setPreferredWidth(30);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_BuscarCPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(219, 219, 219))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(375, 375, 375)
-                        .addComponent(btn_cancelar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(panel_BuscarCPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(498, 498, 498)
+                .addComponent(btn_cancelar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1050, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
                 .addComponent(panel_BuscarCPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btn_cancelar)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -266,11 +276,13 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
             }
         }
         else{
-            ch=evt.getKeyChar();
-            if(Character.isDigit(ch)){
-                getToolkit().beep();
-                evt.consume();
-            }
+                if(list_filtros.getSelectedItem()=="Producto/Servicio"){
+                   ch=evt.getKeyChar();
+                    if(Character.isDigit(ch)){
+                        getToolkit().beep();
+                        evt.consume();
+                    } 
+                }   
         }
     }//GEN-LAST:event_tf_valorKeyTyped
 
@@ -365,6 +377,23 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
                 List.clear();
                 List.addAll(c);
             }
+            else if(list_filtros.getSelectedItem()=="Cedula"){
+                Query = EntityManager.createNativeQuery( "SELECT * FROM consumo_pro_ser c "
+                    +"INNER JOIN reserva r "
+                    + " ON r.codigoReserva=c.codigoReserva "
+                    +"INNER JOIN cliente cl "
+                    +"ON r.codigoCliente=cl.codigoCliente "
+                    +" WHERE cl.cedula= "
+                    +"'"+tf_valor.getText()+"' ", ConsumoProSer.class);
+                List<ConsumoProSer> c = Query.getResultList();
+                if (c.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Cedula Inexistente","Error",JOptionPane.INFORMATION_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(c);
+            }
         }
     }//GEN-LAST:event_btn_buscarActionPerformed
 
@@ -380,47 +409,12 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
         // TODO add your handling code here:
-        switch(MenuRecepcionista.opcion){
-            case 1:
-                    fila=masterTable.getSelectedRow();
-                    ConsumoPSEdit.cps=obtenerConsumo(fila);
-                    if(ConsumoPSEdit.cps.getNumFactura()!=null){
-                        JOptionPane.showMessageDialog(null,"No puede modificar un consumo facturado ", "Error",JOptionPane.ERROR_MESSAGE);
-                        return;
-                        
-                    }
-                    JFrame frame=new ConsumoPSEdit();
-                    frame.setVisible(true);
-                    frame.setTitle("Editar Consumo P/S");
-                    frame.setLocationRelativeTo(null);
-                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    this.dispose();
-                    break;
-            case 2:
-                    fila=masterTable.getSelectedRow();
-                    ConsumoPSEliminar.cps=obtenerConsumo(fila);
-                    if(ConsumoPSEliminar.cps.getNumFactura()!=null){
-                        JOptionPane.showMessageDialog(null,"No puede modificar un consumo facturado ", "Error",JOptionPane.ERROR_MESSAGE);
-                        return;
-                        
-                    }
-                    JFrame f=new ConsumoPSEliminar();
-                    f.setVisible(true);
-                    f.setTitle("Eliminar Consumo P/S");
-                    f.setLocationRelativeTo(null);
-                    f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    this.dispose();
-                     break;
-                
-            case 3:
-                        break;
         
-     }
     }//GEN-LAST:event_masterTableMouseClicked
 
     private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
         // TODO add your handling code here:
-       
+       tf_valor.setText(null);
     }//GEN-LAST:event_list_filtrosFocusGained
 
     private void list_filtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_list_filtrosActionPerformed
@@ -465,6 +459,8 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
                 JFrame frame=new BuscarConsumoPS();
                 frame.setVisible(true);
                 frame.setTitle("Buscar Consumo de P/S");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
             }

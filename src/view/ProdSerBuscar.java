@@ -9,7 +9,9 @@ package view;
 import ViewAdmHotel.MenuAdminHotel;
 import bean.Articulo;
 import bean.ProductoServicio;
+import java.awt.Image;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -320,56 +322,7 @@ public class ProdSerBuscar extends javax.swing.JFrame {
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
         // TODO add your handling code here:
-        switch(MenuAdminHotel.opcion){
-            case 1:
-                    fila=masterTable.getSelectedRow();
-                    codigo=(Integer) masterTable.getValueAt(fila, 0);
-                    //verificar si es un producto
-                     Query=EntityManager.createNamedQuery("Articulo.findByCodigoArticulo");
-                    Query.setParameter("codigoArticulo", codigo);
-                    List<Articulo> a=Query.getResultList();
-                    if(a.size()>=1){
-                        JOptionPane.showMessageDialog(null, "No puede modificar datos de los productos","Error",JOptionPane.ERROR_MESSAGE );
-                        return;
-                    }
-                    nombre=(String)masterTable.getValueAt(fila, 1);
-                    costo=(Integer)masterTable.getValueAt(fila, 2);
-                    JFrame frame=new ProdSerEdit();
-                    ProdSerEdit.tf_codigoPS.setText(Integer.toString(codigo));
-                    ProdSerEdit.tf_nombrePS.setText(nombre);
-                    ProdSerEdit.tf_costoPS.setText(Integer.toString(costo));
-                    frame.setVisible(true);
-                    frame.setTitle("Editar Producto/Servicio");
-                    frame.setLocationRelativeTo(null);
-                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    this.dispose();
-                    break;
-            case 2:
-                    fila=masterTable.getSelectedRow();
-                    codigo=(Integer) masterTable.getValueAt(fila, 0);
-                     //verificar si es un producto
-                     Query=EntityManager.createNamedQuery("Articulo.findByCodigoArticulo");
-                    Query.setParameter("codigoArticulo", codigo);
-                    List<Articulo> ar=Query.getResultList();
-                    if(ar.size()>=1){
-                        JOptionPane.showMessageDialog(null, "No puede eliminar datos de los productos","Error",JOptionPane.ERROR_MESSAGE );
-                        return;
-                    }
-                    nombre=(String)masterTable.getValueAt(fila, 1);
-                    costo=(Integer)masterTable.getValueAt(fila, 2);
-                    JFrame frame2=new ProdSerEliminar();
-                    ProdSerEliminar.tf_codigoPS.setText(Integer.toString(codigo));
-                    ProdSerEliminar.tf_nombrePS.setText(nombre);
-                    ProdSerEliminar.tf_costoPS.setText(Integer.toString(costo));
-                    frame2.setVisible(true);
-                    frame2.setTitle("Eliminar Producto/Servicio");
-                    frame2.setLocationRelativeTo(null);
-                    frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    this.dispose();
-                    break;
-            case 3:
-                    break;
-        }
+        
     }//GEN-LAST:event_masterTableMouseClicked
 
     /**
@@ -405,6 +358,8 @@ public class ProdSerBuscar extends javax.swing.JFrame {
                 JFrame frame=new ProdSerBuscar();
                 frame.setVisible(true);
                 frame.setTitle("Buscar Producto/Servicio");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
             }

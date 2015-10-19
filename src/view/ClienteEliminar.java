@@ -582,7 +582,6 @@ public class ClienteEliminar extends javax.swing.JFrame {
                 //
              Cliente c=entityManager.find(Cliente.class,Integer.parseInt(tf_codigo.getText()) );
              valor=c.toString();//guardamos el objeto antes de eliminar
-             list.remove(c);
              entityManager.remove(c);
              //registramos los datos necesarios para la auditoria
              AuditoriaSistema as=new AuditoriaSistema();
@@ -599,6 +598,8 @@ public class ClienteEliminar extends javax.swing.JFrame {
              entityManager.getTransaction().commit();
             // entityManager.close();
              JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
+             list.clear();
+             list.remove(c);
              resetear();
              
         }else{
