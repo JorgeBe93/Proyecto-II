@@ -28,6 +28,8 @@ public class ClienteEliminar extends javax.swing.JFrame {
     private char ch;
     private Cliente cliente;
     private int fila;
+     Date fecha=new Date();
+     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     /**
      * Creates new form ClienteEliminar
      */
@@ -575,7 +577,9 @@ public class ClienteEliminar extends javax.swing.JFrame {
                 List<Reserva> r=query.getResultList();
                 if(r.size()>=1){
                     for(i=0;i<r.size();i++){
+                        valor=r.get(i).toString();
                         entityManager.remove(r.get(i));
+                        registrarAuditoria("Reserva",valor);
                     }
                     entityManager.flush();
                 }
@@ -584,17 +588,7 @@ public class ClienteEliminar extends javax.swing.JFrame {
              valor=c.toString();//guardamos el objeto antes de eliminar
              entityManager.remove(c);
              //registramos los datos necesarios para la auditoria
-             AuditoriaSistema as=new AuditoriaSistema();
-             as.setAccion("Eliminación");
-             as.setTabla("Cliente");
-             as.setAntes(valor);
-             as.setDespues("No hay cambios");
-             //trabajamos con la fecha
-             Date fecha=new Date();
-             DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-             as.setFechaHora((formato.format(fecha)));
-             as.setUsuario("nadie");
-             entityManager.persist(as);
+             registrarAuditoria("Cliente",valor);
              entityManager.getTransaction().commit();
             // entityManager.close();
              JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
@@ -607,7 +601,17 @@ public class ClienteEliminar extends javax.swing.JFrame {
         }
       
     }//GEN-LAST:event_btn_eliminarActionPerformed
-
+    private void registrarAuditoria(String entidad,String valor){
+            AuditoriaSistema as=new AuditoriaSistema();
+            as.setAccion("Eliminación");
+            as.setTabla(entidad);
+            as.setFechaHora(formato.format(fecha));
+            as.setUsuario(LoginView.nombreUsuario);
+            as.setAntes(valor);
+            as.setDespues("No hay modificaciones");
+            entityManager.persist(as);
+            entityManager.flush();
+    }
     private void tf_valorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_valorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_valorActionPerformed

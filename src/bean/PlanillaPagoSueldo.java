@@ -31,11 +31,14 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "PlanillaPagoSueldo.findAll", query = "SELECT p FROM PlanillaPagoSueldo p"),
     @NamedQuery(name = "PlanillaPagoSueldo.findByIdPago", query = "SELECT p FROM PlanillaPagoSueldo p WHERE p.idPago = :idPago"),
+    @NamedQuery(name = "PlanillaPagoSueldo.findByPeriodo", query = "SELECT p FROM PlanillaPagoSueldo p WHERE p.periodo = :periodo"),
     @NamedQuery(name = "PlanillaPagoSueldo.findByFechaPago", query = "SELECT p FROM PlanillaPagoSueldo p WHERE p.fechaPago = :fechaPago"),
+    @NamedQuery(name = "PlanillaPagoSueldo.findByTotalHoras", query = "SELECT p FROM PlanillaPagoSueldo p WHERE p.totalHoras = :totalHoras"),
     @NamedQuery(name = "PlanillaPagoSueldo.findBySalarioBase", query = "SELECT p FROM PlanillaPagoSueldo p WHERE p.salarioBase = :salarioBase"),
-    @NamedQuery(name = "PlanillaPagoSueldo.findByDescuentoIPS", query = "SELECT p FROM PlanillaPagoSueldo p WHERE p.descuentoIPS = :descuentoIPS"),
-    @NamedQuery(name = "PlanillaPagoSueldo.findByMultas", query = "SELECT p FROM PlanillaPagoSueldo p WHERE p.multas = :multas"),
+    @NamedQuery(name = "PlanillaPagoSueldo.findBySueldoHorasT", query = "SELECT p FROM PlanillaPagoSueldo p WHERE p.sueldoHorasT = :sueldoHorasT"),
     @NamedQuery(name = "PlanillaPagoSueldo.findByExtras", query = "SELECT p FROM PlanillaPagoSueldo p WHERE p.extras = :extras"),
+    @NamedQuery(name = "PlanillaPagoSueldo.findByNocturno", query = "SELECT p FROM PlanillaPagoSueldo p WHERE p.nocturno = :nocturno"),
+    @NamedQuery(name = "PlanillaPagoSueldo.findByDescuentoIPS", query = "SELECT p FROM PlanillaPagoSueldo p WHERE p.descuentoIPS = :descuentoIPS"),
     @NamedQuery(name = "PlanillaPagoSueldo.findByLiquidoCobrado", query = "SELECT p FROM PlanillaPagoSueldo p WHERE p.liquidoCobrado = :liquidoCobrado")})
 public class PlanillaPagoSueldo implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -45,19 +48,28 @@ public class PlanillaPagoSueldo implements Serializable {
     @Column(name = "idPago")
     private Integer idPago;
     @Basic(optional = false)
+    @Column(name = "periodo")
+    private String periodo;
+    @Basic(optional = false)
     @Column(name = "fechaPago")
     @Temporal(TemporalType.DATE)
     private Date fechaPago;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "total_horas")
+    private Float totalHoras;
     @Basic(optional = false)
     @Column(name = "salarioBase")
     private int salarioBase;
+    @Column(name = "sueldoHorasT")
+    private Integer sueldoHorasT;
+    @Column(name = "extras")
+    private Integer extras;
+    @Basic(optional = false)
+    @Column(name = "nocturno")
+    private int nocturno;
     @Basic(optional = false)
     @Column(name = "descuentoIPS")
     private int descuentoIPS;
-    @Column(name = "multas")
-    private Integer multas;
-    @Column(name = "extras")
-    private Integer extras;
     @Basic(optional = false)
     @Column(name = "liquidoCobrado")
     private int liquidoCobrado;
@@ -72,10 +84,12 @@ public class PlanillaPagoSueldo implements Serializable {
         this.idPago = idPago;
     }
 
-    public PlanillaPagoSueldo(Integer idPago, Date fechaPago, int salarioBase, int descuentoIPS, int liquidoCobrado) {
+    public PlanillaPagoSueldo(Integer idPago, String periodo, Date fechaPago, int salarioBase, int nocturno, int descuentoIPS, int liquidoCobrado) {
         this.idPago = idPago;
+        this.periodo = periodo;
         this.fechaPago = fechaPago;
         this.salarioBase = salarioBase;
+        this.nocturno = nocturno;
         this.descuentoIPS = descuentoIPS;
         this.liquidoCobrado = liquidoCobrado;
     }
@@ -88,12 +102,28 @@ public class PlanillaPagoSueldo implements Serializable {
         this.idPago = idPago;
     }
 
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
+
     public Date getFechaPago() {
         return fechaPago;
     }
 
     public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
+    }
+
+    public Float getTotalHoras() {
+        return totalHoras;
+    }
+
+    public void setTotalHoras(Float totalHoras) {
+        this.totalHoras = totalHoras;
     }
 
     public int getSalarioBase() {
@@ -104,20 +134,12 @@ public class PlanillaPagoSueldo implements Serializable {
         this.salarioBase = salarioBase;
     }
 
-    public int getDescuentoIPS() {
-        return descuentoIPS;
+    public Integer getSueldoHorasT() {
+        return sueldoHorasT;
     }
 
-    public void setDescuentoIPS(int descuentoIPS) {
-        this.descuentoIPS = descuentoIPS;
-    }
-
-    public Integer getMultas() {
-        return multas;
-    }
-
-    public void setMultas(Integer multas) {
-        this.multas = multas;
+    public void setSueldoHorasT(Integer sueldoHorasT) {
+        this.sueldoHorasT = sueldoHorasT;
     }
 
     public Integer getExtras() {
@@ -126,6 +148,22 @@ public class PlanillaPagoSueldo implements Serializable {
 
     public void setExtras(Integer extras) {
         this.extras = extras;
+    }
+
+    public int getNocturno() {
+        return nocturno;
+    }
+
+    public void setNocturno(int nocturno) {
+        this.nocturno = nocturno;
+    }
+
+    public int getDescuentoIPS() {
+        return descuentoIPS;
+    }
+
+    public void setDescuentoIPS(int descuentoIPS) {
+        this.descuentoIPS = descuentoIPS;
     }
 
     public int getLiquidoCobrado() {
@@ -164,14 +202,9 @@ public class PlanillaPagoSueldo implements Serializable {
         return true;
     }
 
-    /*   @Override
-    public String toString() {
-    return "bean.PlanillaPagoSueldo[ idPago=" + idPago + " ]";
-    }
-     */
     @Override
     public String toString() {
-        return  "idPago=" + idPago + ", fechaPago=" + fechaPago + ", salarioBase=" + salarioBase + ", descuentoIPS=" + descuentoIPS + ", multas=" + multas + ", extras=" + extras + ", liquidoCobrado=" + liquidoCobrado + ", codigoEmpleado=" + codigoEmpleado;
+        return "bean.PlanillaPagoSueldo[ idPago=" + idPago + " ]";
     }
     
 }

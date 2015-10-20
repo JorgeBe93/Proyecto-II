@@ -4,16 +4,11 @@ package ViewAdmHotel;
 
 import bean.Cargo;
 import bean.Empleado;
-import bean.Reserva;
-import java.text.ParseException;
+import java.awt.Image;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -28,6 +23,7 @@ public class CargoBuscar extends javax.swing.JFrame {
      private int nombre;
      private char ch;
     private int fila;
+    Date fecha=new Date();
     SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
     /**
      * Creates new form UsuarioBuscar
@@ -80,6 +76,14 @@ public class CargoBuscar extends javax.swing.JFrame {
         jLabel1.setText("Buscar por:");
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código", "Nombre", "Sueldo", "Fecha Creación" }));
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusLost(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel2.setText("Valor:");
@@ -250,29 +254,29 @@ public class CargoBuscar extends javax.swing.JFrame {
                             .addComponent(panel_BuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(308, 308, 308)
-                        .addComponent(btn_cancelar))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(309, 309, 309)
+                        .addComponent(btn_cancelar)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addContainerGap()
                 .addComponent(panel_BuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_cancelar)
-                .addGap(20, 20, 20))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -366,32 +370,7 @@ public class CargoBuscar extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_valorKeyPressed
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
-        switch (MenuAdminHotel.opcion){
-          case 1:
-                 fila = masterTable.getSelectedRow();
-                 CargoEditar.cargo = obtenerCargo(fila);
-                 JFrame frame1=new CargoEditar();
-                 frame1.setVisible(true);
-                 frame1.setTitle("Modificar Cargo");
-                 frame1.setLocationRelativeTo(null);
-                 frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                 this.dispose();
-                 break;
-          case 2:
-
-                 fila = masterTable.getSelectedRow();
-                 CargoEliminar.cargo = obtenerCargo(fila);
-                 JFrame frame2=new CargoEliminar();
-                 frame2.setVisible(true);
-                 frame2.setTitle("Eliminar Cargo");
-                 frame2.setLocationRelativeTo(null);
-                 frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                 this.dispose();    
-                 break;
-
-          case 3:
-              break;
-      }
+        
 
     }//GEN-LAST:event_masterTableMouseClicked
 
@@ -418,6 +397,18 @@ public class CargoBuscar extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    private void list_filtrosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusLost
+        // TODO add your handling code here:
+        if(list_filtros.getSelectedItem()=="Fecha Creación"){
+            tf_valor.setText(formato.format(fecha));   
+         }
+    }//GEN-LAST:event_list_filtrosFocusLost
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
       private void cargarEmpleado(int codCargo){
          empleadoQuery=entityManager.createNativeQuery("SELECT * FROM empleado "
                      + "WHERE codigoCargo= "
@@ -461,6 +452,8 @@ public class CargoBuscar extends javax.swing.JFrame {
                 frame.setVisible(true);
                 frame.setLocationRelativeTo(null);
                 frame.setTitle("Buscar Cargo");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);   
             }
             /* setTitle(args[0]);*/
@@ -490,20 +483,5 @@ public class CargoBuscar extends javax.swing.JFrame {
     private renderizar.UsuarioListRenderizar usuarioListRenderizar1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-        private Cargo obtenerCargo(int fila) {
-            EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
-            EntityManager ema = fact.createEntityManager(); 
-            Query clienteQuery;
-            clienteQuery = ema.createNamedQuery("Cargo.findByCodigoCargo");
-            clienteQuery.setParameter("codigoCargo", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );
-            Cargo cargo = null;
-            try{
-               cargo = (Cargo)clienteQuery.getSingleResult();
-               System.out.println(cargo);
-            }catch(javax.persistence.NoResultException e){
-                System.out.println(cargo);
-            }
-            ema.close();
-            return cargo;
-        }
+   
 }

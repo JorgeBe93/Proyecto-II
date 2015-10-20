@@ -366,7 +366,9 @@ public class HabitacionEliminar extends javax.swing.JFrame {
                     +n, Habitacion.class);
             List<Habitacion> ha=query.getResultList();
             if(!ha.isEmpty()){
-                JOptionPane.showMessageDialog(null, "Esta habitación tiene reservas asignadas, si elimima perderá dichas reservas","Aviso",JOptionPane.INFORMATION_MESSAGE );
+                 JOptionPane.showMessageDialog(null, "Esta habitación tiene reservas asignadas, si elimima perderá dichas reservas","Aviso",JOptionPane.INFORMATION_MESSAGE );
+            }
+               
                 resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
                   if(resp==JOptionPane.YES_OPTION){
                     entityManager.getTransaction().begin();
@@ -396,29 +398,7 @@ public class HabitacionEliminar extends javax.swing.JFrame {
                     list.remove(h);
                 }else{
                       this.dispose();
-                  }
-                
-            }
-            else{
-                  resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
-                  if(resp==JOptionPane.YES_OPTION){
-                    entityManager.getTransaction().begin();
-                    Habitacion h=entityManager.find(Habitacion.class,Integer.parseInt(tf_numeroHabit.getText()) );
-                    valor=h.toString();//guardamos el objeto antes de eliminar
-                    entityManager.remove(h);
-                    registrarAuditoria("Habitacion",valor);
-                    entityManager.getTransaction().commit();
-                    //entityManager.close();
-                    JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
-                     resetear();
-                    list.clear();
-                    list.remove(h);
-                }else{
-                      this.dispose();
-                  }
-                
-            }
-               
+                 }             
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     private void tf_valorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_valorKeyPressed

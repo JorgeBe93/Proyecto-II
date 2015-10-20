@@ -101,10 +101,10 @@ public class ProdSerEdit extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        tf_codigoPS.setEditable(false);
         tf_codigoPS.setBackground(new java.awt.Color(0, 153, 255));
         tf_codigoPS.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_codigoPS.setForeground(new java.awt.Color(255, 255, 255));
-        tf_codigoPS.setEnabled(false);
 
         lbl_codigoPS.setBackground(new java.awt.Color(0, 153, 255));
         lbl_codigoPS.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
@@ -271,13 +271,15 @@ public class ProdSerEdit extends javax.swing.JFrame {
         columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-
         masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 masterTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(masterTable);
+        if (masterTable.getColumnModel().getColumnCount() > 0) {
+            masterTable.getColumnModel().getColumn(2).setPreferredWidth(180);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -493,10 +495,10 @@ public class ProdSerEdit extends javax.swing.JFrame {
                      JOptionPane.showMessageDialog(null, "No puede modificar datos de los productos","Error",JOptionPane.ERROR_MESSAGE );
                         return;
            }
-         obtenerHabitacion(fila);
-         inicializarHabitacion();
+         obtenerProdSer(fila);
+         inicializarProdSer();
     }//GEN-LAST:event_masterTableMouseClicked
-    private void obtenerHabitacion(int fila) {
+    private void obtenerProdSer(int fila) {
             query = entityManager.createNamedQuery("ProductoServicio.findByCodigoPS");
             query.setParameter("codigoPS", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );
            
@@ -507,7 +509,7 @@ public class ProdSerEdit extends javax.swing.JFrame {
                 System.out.println(prodser);
             }
       }
-    private void inicializarHabitacion(){
+    private void inicializarProdSer(){
       tf_codigoPS.setText(Integer.toString(prodser.getCodigoPS()));
       tf_nombrePS.setText(prodser.getNombre());
       tf_costoPS.setText(Integer.toString(prodser.getCosto()));

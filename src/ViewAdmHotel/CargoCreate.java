@@ -9,11 +9,13 @@ package ViewAdmHotel;
 import bean.AuditoriaSistema;
 import bean.Cargo;
 import bean.Cliente;
+import java.awt.Image;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import view.LoginView;
@@ -85,23 +87,26 @@ public class CargoCreate extends javax.swing.JFrame {
             }
         });
 
-        lbl_apellido.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_apellido.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_apellido.setText("Actividad:");
 
-        lbl_direccion.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_direccion.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_direccion.setText("Fecha Creación:");
 
-        tf_fechaCreacion.setEnabled(false);
+        tf_fechaCreacion.setEditable(false);
+        tf_fechaCreacion.setBackground(new java.awt.Color(0, 153, 255));
+        tf_fechaCreacion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_fechaCreacion.setForeground(new java.awt.Color(255, 255, 255));
         tf_fechaCreacion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_fechaCreacionKeyTyped(evt);
             }
         });
 
-        lbl_nombre.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_nombre.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_nombre.setText("Nombre:");
 
-        lbl_telef.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_telef.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_telef.setText("Sueldo:");
 
         tf_nombre.addActionListener(new java.awt.event.ActionListener() {
@@ -135,8 +140,8 @@ public class CargoCreate extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tf_sueldo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tf_actividad, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tf_fechaCreacion, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_fechaCreacion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 41, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -249,7 +254,7 @@ public class CargoCreate extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -364,21 +369,28 @@ public class CargoCreate extends javax.swing.JFrame {
                     Date fecha=new Date();
                     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     as.setFechaHora(formato.format(fecha));
-                    //para pruebas unitarias
-                    //as.setUsuario("Vladimir");
                     as.setUsuario(LoginView.nombreUsuario);  
                     entityManager.persist(as);
                     entityManager.getTransaction().commit();
                     JOptionPane.showMessageDialog(null,"Creación exitosa", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
+                    resetear();
+               }else{
+                     this.dispose();
                }
         }
-        this.dispose();
+       
     }//GEN-LAST:event_btn_guardarActionPerformed
 
     private void tf_sueldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_sueldoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_sueldoActionPerformed
-
+    private void resetear(){
+        tf_nombre.setText(null);
+        tf_sueldo.setText(null);
+        tf_actividad.setText(null);
+        tf_fechaCreacion.setText(null);
+        asignarFechaHoy();
+    }
     /**
      * @param args the command line arguments
      */
@@ -411,6 +423,8 @@ public class CargoCreate extends javax.swing.JFrame {
             public void run() {
                 JFrame frame=new CargoCreate();
                 frame.setTitle("Crear Cargo");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -432,10 +446,10 @@ public class CargoCreate extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_telef;
     private java.util.List<bean.Cliente> list;
     private javax.persistence.Query query;
-    public static javax.swing.JTextField tf_actividad;
-    public static javax.swing.JTextField tf_fechaCreacion;
-    public static javax.swing.JTextField tf_nombre;
-    public static javax.swing.JTextField tf_sueldo;
+    private javax.swing.JTextField tf_actividad;
+    private javax.swing.JTextField tf_fechaCreacion;
+    private javax.swing.JTextField tf_nombre;
+    private javax.swing.JTextField tf_sueldo;
     // End of variables declaration//GEN-END:variables
     private void asignarFechaHoy(){
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");

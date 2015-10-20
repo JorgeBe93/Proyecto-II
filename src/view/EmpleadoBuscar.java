@@ -8,11 +8,13 @@ package view;
 
 import ViewAdmHotel.MenuAdminHotel;
 import bean.Empleado;
+import java.awt.Image;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -146,6 +148,11 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
         lbl_filtro.setText("Buscar por:");
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Empleado", "Cedula", "Nombre", "Apellido", "Cargo", "Jefe" }));
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
+        });
 
         btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
         btn_buscar.setText("Buscar");
@@ -335,37 +342,18 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
 
     private void btn_buscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_buscarFocusLost
         // TODO add your handling code here:
-        tf_valor.setText(null);
     }//GEN-LAST:event_btn_buscarFocusLost
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
         // TODO add your handling code here:
-        switch(MenuAdminHotel.opcion){
-            case 1:
-                fila = masterTable.getSelectedRow();
-                EmpleadoEditar.empleado = obtenerEmpleado(fila);
-                JFrame frame1=new EmpleadoEditar();
-                frame1.setVisible(true);
-                frame1.setTitle("Modificar Empleado");
-                frame1.setLocationRelativeTo(null);
-                frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                this.dispose();
-                break;
-            case 2:
-                fila = masterTable.getSelectedRow();
-                EmpleadoEliminar.empleado = obtenerEmpleado(fila);
-                JFrame frame2=new EmpleadoEliminar();
-                frame2.setVisible(true);
-                frame2.setTitle("Eliminar Empleado");
-                frame2.setLocationRelativeTo(null);
-                frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                this.dispose();
-                break;
-            case 3:
-                break;
-        }
-        
+  
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+                tf_valor.setText(null);
+
+    }//GEN-LAST:event_list_filtrosFocusGained
 
     /**
      * @param args the command line arguments
@@ -399,6 +387,8 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
             public void run() {
                 JFrame frame=new EmpleadoBuscar();
                 frame.setTitle("Buscar Empleado");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

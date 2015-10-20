@@ -330,6 +330,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="list_filtrosFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_buscar">
           <Properties>

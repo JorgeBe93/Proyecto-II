@@ -34,6 +34,8 @@ import view.CategHabitEliminar;
 import view.CategPSBuscar;
 import view.CategPSCreate;
 import view.EmpleadoBuscar;
+import view.EmpleadoEditar;
+import view.EmpleadoEliminar;
 import view.EmpleadoRegistrar;
 import view.HabitacionBuscar;
 import view.HabitacionCreate;
@@ -774,23 +776,20 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
     private void mItem_editarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_editarEmpleadoActionPerformed
         // TODO add your handling code here:
-        opcion=1;
         String args[]=new String[1];
-        args[0]="Buscar Empleado";
-        EmpleadoBuscar.main(args);
+        args[0]="Editar Empleado";
+        EmpleadoEditar.main(args);
     }//GEN-LAST:event_mItem_editarEmpleadoActionPerformed
 
     private void mItem_eliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarEmpleadoActionPerformed
         // TODO add your handling code here:
-        opcion=2;
         String args[]=new String[1];
         args[0]="Buscar Empleado";
-        EmpleadoBuscar.main(args);
+        EmpleadoEliminar.main(args);
     }//GEN-LAST:event_mItem_eliminarEmpleadoActionPerformed
 
     private void mItem_buscarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarEmpleadoActionPerformed
         // TODO add your handling code here:
-        opcion=3;
         String args[]=new String[1];
         args[0]="Buscar Empleado";
         EmpleadoBuscar.main(args);
@@ -859,23 +858,20 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
     private void mItem_editarLugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_editarLugarActionPerformed
         // TODO add your handling code here:
-         opcion=1;
         String args[]=new String[1];
-        args[0]="Buscar Lugar";
-        BuscarLugar.main(args);
+        args[0]="Editar Lugar";
+        EditarLugar.main(args);
     }//GEN-LAST:event_mItem_editarLugarActionPerformed
 
     private void mItem_eliminarLugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarLugarActionPerformed
         // TODO add your handling code here:
-         opcion=2;
         String args[]=new String[1];
-        args[0]="Buscar Lugar";
-        BuscarLugar.main(args);
+        args[0]="Eliminar Lugar";
+        EliminarLugar.main(args);
     }//GEN-LAST:event_mItem_eliminarLugarActionPerformed
 
     private void mItem_buscarLugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarLugarActionPerformed
         // TODO add your handling code here:
-         opcion=3;
         String args[]=new String[1];
         args[0]="Buscar Lugar";
         BuscarLugar.main(args);
@@ -969,16 +965,14 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     }//GEN-LAST:event_mItem_crearCargoActionPerformed
 
     private void mItem_eliminarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarCargoActionPerformed
-        // TODO add your handling code here:
-        opcion=2;
+
         String args[]=new String[1];
-        args[0]="Buscar Cargo";
-        CargoBuscar.main(args);
+        args[0]="Eliminar Cargo";
+        CargoEliminar.main(args);
     }//GEN-LAST:event_mItem_eliminarCargoActionPerformed
 
     private void mItem_buscarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarCargoActionPerformed
         // TODO add your handling code here:
-         opcion=3;
         String args[]=new String[1];
         args[0]="Buscar Cargo";
         CargoBuscar.main(args);
@@ -986,10 +980,9 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
     private void mItem_editarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_editarCargoActionPerformed
         // TODO add your handling code here:
-         opcion=1;
         String args[]=new String[1];
-        args[0]="Buscar Cargo";
-        CargoBuscar.main(args);
+        args[0]="Editar Cargo";
+        CargoEditar.main(args);
     }//GEN-LAST:event_mItem_editarCargoActionPerformed
 
     /**
