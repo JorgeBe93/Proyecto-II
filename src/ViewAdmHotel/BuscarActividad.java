@@ -8,8 +8,10 @@ package ViewAdmHotel;
 
 import bean.Actividad;
 import bean.Rol;
+import java.awt.Image;
 import static java.util.Collections.list;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -284,36 +286,7 @@ public class BuscarActividad extends javax.swing.JFrame {
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
         // TODO add your handling code here:
-        switch(MenuAdminHotel.opcion){
-            case 1:
-                 fila=masterTable.getSelectedRow();
-                 codigo=(Integer) masterTable.getValueAt(fila, 0);
-                 nombre=(String) masterTable.getValueAt(fila, 1);
-                 JFrame frame=new EditarActividad();
-                 EditarActividad.tf_codigo.setText(Integer.toString(codigo));
-                 EditarActividad.tf_nombre.setText(nombre);
-                 frame.setVisible(true);
-                 frame.setTitle("Edtar Actividad");
-                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                 frame.setLocationRelativeTo(null);
-                 this.dispose();
-                break;
-            case 2:
-                 fila=masterTable.getSelectedRow();
-                 codigo=(Integer) masterTable.getValueAt(fila, 0);
-                 nombre=(String) masterTable.getValueAt(fila, 1);
-                 JFrame fram=new EliminarActividad();
-                 EliminarActividad.tf_codigo.setText(Integer.toString(codigo));
-                 EliminarActividad.tf_nombre.setText(nombre);
-                 fram.setVisible(true);
-                 fram.setTitle("Eliminar Actividad");
-                 fram.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                 fram.setLocationRelativeTo(null);
-                 this.dispose();
-                break;
-            case 3:
-                break;
-        }
+   
     }//GEN-LAST:event_masterTableMouseClicked
 
     /**
@@ -349,6 +322,8 @@ public class BuscarActividad extends javax.swing.JFrame {
                 JFrame frame=new BuscarActividad();
                 frame.setVisible(true);
                 frame.setTitle("Buscar Actividad");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
             }

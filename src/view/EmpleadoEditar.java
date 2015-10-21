@@ -266,8 +266,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(tf_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(tf_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel6)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -544,7 +543,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                 && !tf_direccion.getText().equals("")
                 && !tf_telefono.getText().equals("")
                 && !jc_fechaNacimiento.getDate().toString().equals("")
-                ){
+                 && !cb_cargo.getSelectedItem().equals(null)){
             int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea Confirmar los cambios?");
             if(respuesta == JOptionPane.YES_OPTION){
                 entityManager.getTransaction().begin();
@@ -564,7 +563,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                 if (!tf_jefe.getText().equals("")){
                     empleadoLocal.setCodigoJefe(obtenerEmpleado(tf_jefe.getText()));
                 }else{
-                    empleadoLocal.setCodigoEmpleado(null);
+                    empleadoLocal.setCodigoJefe(null);
                 }
                 entityManager.merge(empleadoLocal);
                 entityManager.flush();
@@ -913,7 +912,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    public static com.toedter.calendar.JDateChooser jc_fechaNacimiento;
+    private com.toedter.calendar.JDateChooser jc_fechaNacimiento;
     private javax.swing.JLabel lbl_codigo;
     private javax.swing.JLabel lbl_filtro;
     private javax.swing.JLabel lbl_jefeNom;

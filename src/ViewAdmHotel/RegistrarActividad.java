@@ -8,6 +8,7 @@ package ViewAdmHotel;
 
 import bean.Actividad;
 import bean.AuditoriaSistema;
+import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import view.LoginView;
@@ -82,7 +84,7 @@ public class RegistrarActividad extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lbl_nombre.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_nombre.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_nombre.setText("Descripción:");
 
         tf_nombre.addActionListener(new java.awt.event.ActionListener() {
@@ -189,7 +191,7 @@ public class RegistrarActividad extends javax.swing.JFrame {
                 .addComponent(panel_regActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -307,6 +309,8 @@ public class RegistrarActividad extends javax.swing.JFrame {
                 JFrame frame=new RegistrarActividad();
                 frame.setVisible(true);
                 frame.setTitle("Registrar Actividad");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
                 

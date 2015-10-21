@@ -556,13 +556,13 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
         // TODO add your handling code here:
             String valor;
             int i;
-            int respuesta = JOptionPane.showConfirmDialog(null, "¿Confirma el registro?");
+            int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar?");
             if(respuesta == JOptionPane.YES_OPTION){
                 entityManager.getTransaction().begin();
                 //eliminamos el perfil de usuario del empleado
                 query=entityManager.createNativeQuery("SELECT * FROM usuario  WHERE "
                         + "codigoEmpleado= "
-                        + "'"+empleado.getCodigoEmpleado()+"'",Usuario.class);
+                        + "'"+tf_codigo.getText()+"'",Usuario.class);
                 List<Usuario> u=query.getResultList();
                 if(u.size()>=1){
                     for(i=0;i<u.size();i++){
@@ -571,6 +571,29 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
                         registrarAuditoria("Usuario",valor);
                     }
                     entityManager.flush();
+                }
+                //actualizamos los subordinados en caso de que sea un jefe
+                 query=entityManager.createNativeQuery("SELECT * FROM empleado  WHERE "
+                        + "codigoJefe= "
+                        + "'"+tf_codigo.getText()+"'",Empleado.class);
+                List<Empleado> listemp=query.getResultList();
+                if(listemp.size()>=1){
+                    for(i=0;i<listemp.size();i++){
+                        Empleado e=new Empleado();
+                        e.setCodigoEmpleado(listemp.get(i).getCodigoEmpleado());
+                        e.setCedula(listemp.get(i).getCedula());
+                        e.setNombre(listemp.get(i).getNombre());
+                        e.setApellido(listemp.get(i).getApellido());
+                        e.setFechaNacimiento(listemp.get(i).getFechaNacimiento());
+                        e.setTelefono(listemp.get(i).getTelefono());
+                        e.setDireccion(listemp.get(i).getDireccion());
+                        e.setEmail(listemp.get(i).getEmail());
+                        e.setCodigoCargo(listemp.get(i).getCodigoCargo());
+                        e.setCodigoJefe(null);
+                        entityManager.merge(e);
+                        entityManager.flush();
+                    }
+                    
                 }
                 //
                 valor=empleado.toString();

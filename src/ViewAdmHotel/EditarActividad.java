@@ -8,6 +8,7 @@ package ViewAdmHotel;
 
 import bean.Actividad;
 import bean.AuditoriaSistema;
+import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import view.LoginView;
@@ -27,6 +29,9 @@ import view.LoginView;
 public class EditarActividad extends javax.swing.JFrame {
     private int limite=50;
     private int resp;
+    private char ch;
+    private Actividad actividad;
+    private int fila;
 
     /**
      * Creates new form EditarActividad
@@ -43,7 +48,11 @@ public class EditarActividad extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        EntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
+        Query = java.beans.Beans.isDesignTime() ? null : EntityManager.createQuery("SELECT a FROM Actividad a");
+        List = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(Query.getResultList());
         panel_EditarAct = new javax.swing.JPanel();
         lbl_EditarAct = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -54,6 +63,14 @@ public class EditarActividad extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btn_cancelar = new javax.swing.JButton();
         btn_guardar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        tf_valor = new javax.swing.JTextField();
+        lbl_valor = new javax.swing.JLabel();
+        lbl_filtro = new javax.swing.JLabel();
+        list_filtros = new javax.swing.JComboBox();
+        btn_buscar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        masterTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,23 +85,23 @@ public class EditarActividad extends javax.swing.JFrame {
         panel_EditarAct.setLayout(panel_EditarActLayout);
         panel_EditarActLayout.setHorizontalGroup(
             panel_EditarActLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_EditarActLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panel_EditarActLayout.createSequentialGroup()
+                .addGap(153, 153, 153)
                 .addComponent(lbl_EditarAct)
-                .addGap(119, 119, 119))
+                .addContainerGap(157, Short.MAX_VALUE))
         );
         panel_EditarActLayout.setVerticalGroup(
             panel_EditarActLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_EditarActLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_EditarActLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_EditarAct)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lbl_nombre.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_nombre.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_nombre.setText("Descripción:");
 
         tf_nombre.addActionListener(new java.awt.event.ActionListener() {
@@ -103,26 +120,32 @@ public class EditarActividad extends javax.swing.JFrame {
             }
         });
 
-        lbl_codigo.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_codigo.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_codigo.setText("Código:");
 
         tf_codigo.setEditable(false);
-        tf_codigo.setEnabled(false);
+        tf_codigo.setBackground(new java.awt.Color(0, 153, 255));
+        tf_codigo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_codigo.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_codigo)
-                    .addComponent(lbl_nombre))
-                .addGap(21, 21, 21)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(lbl_codigo)
+                        .addGap(47, 47, 47))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbl_nombre)
+                        .addGap(18, 18, 18)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tf_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(66, Short.MAX_VALUE))
+                    .addComponent(tf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,11 +154,11 @@ public class EditarActividad extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_codigo)
                     .addComponent(tf_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_nombre)
                     .addComponent(tf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(21, 21, 21))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -180,37 +203,128 @@ public class EditarActividad extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setForeground(new java.awt.Color(204, 204, 255));
+
+        tf_valor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_valorKeyTyped(evt);
+            }
+        });
+
+        lbl_valor.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_valor.setText("Valor:");
+
+        lbl_filtro.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_filtro.setText("Buscar por:");
+
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código", "Descripción" }));
+        list_filtros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                list_filtrosActionPerformed(evt);
+            }
+        });
+
+        btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
+        btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
+        btn_buscar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                btn_buscarFocusLost(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_filtro)
+                .addGap(18, 18, 18)
+                .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(lbl_valor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_buscar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_filtro)
+                    .addComponent(lbl_valor)
+                    .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_buscar))
+                .addContainerGap())
+        );
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, List, masterTable);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codActividad}"));
+        columnBinding.setColumnName(" Actividad");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
+        columnBinding.setColumnName("Nombre");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                masterTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(masterTable);
+        if (masterTable.getColumnModel().getColumnCount() > 0) {
+            masterTable.getColumnModel().getColumn(0).setPreferredWidth(15);
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel_EditarAct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panel_EditarAct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(93, 93, 93)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 25, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(46, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(158, 158, 158))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addComponent(panel_EditarAct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addContainerGap())
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -239,7 +353,6 @@ public class EditarActividad extends javax.swing.JFrame {
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         // TODO add your handling code here:
-        Query q;
         String antes;
         String despues;
          if (tf_nombre.getText().length()==0){
@@ -247,11 +360,9 @@ public class EditarActividad extends javax.swing.JFrame {
             return;
              
          }else{
-                 EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
-                 EntityManager ema = fact.createEntityManager();
-                 q=ema.createNamedQuery("Actividad.findByNombre");
-                 q.setParameter("nombre", tf_nombre.getText());
-                 List <Actividad> a=q.getResultList();
+                 Query=EntityManager.createNamedQuery("Actividad.findByNombre");
+                 Query.setParameter("nombre", tf_nombre.getText());
+                 List <Actividad> a=Query.getResultList();
                  if(a.size()>=1){
                      JOptionPane.showMessageDialog(null,"Ya existe una actividad con el mismo nombre", "Aviso",JOptionPane.ERROR_MESSAGE);
                      tf_nombre.setText(null);
@@ -259,16 +370,16 @@ public class EditarActividad extends javax.swing.JFrame {
                  }
                  resp=  JOptionPane.showConfirmDialog(null,"Desea guardar los cambios?", "Confirmar Modificación",JOptionPane.YES_NO_OPTION );
                  if (resp==JOptionPane.YES_OPTION){
-                       ema.getTransaction().begin();
-                       q=ema.createNamedQuery("Actividad.findByCodActividad");
-                       q.setParameter("codActividad", Integer.parseInt(tf_codigo.getText()));
-                       List<Actividad> ac=q.getResultList();
+                       EntityManager.getTransaction().begin();
+                       Query=EntityManager.createNamedQuery("Actividad.findByCodActividad");
+                       Query.setParameter("codActividad", Integer.parseInt(tf_codigo.getText()));
+                       List<Actividad> ac=Query.getResultList();
                        antes=ac.get(0).toString();
                        Actividad act=new Actividad();
                        act.setCodActividad(Integer.parseInt(tf_codigo.getText()));
                        act.setNombre(tf_nombre.getText().toLowerCase());
-                       ema.merge(act);
-                       ema.flush();
+                       EntityManager.merge(act);
+                       EntityManager.flush();
                        despues=act.toString();
                        //registramos los datos necesarios para la auditoria
                        AuditoriaSistema as=new AuditoriaSistema();
@@ -281,16 +392,109 @@ public class EditarActividad extends javax.swing.JFrame {
                         DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                         as.setFechaHora(formato.format(fecha));    
                         as.setUsuario("nadie");
-                        ema.persist(as);
-                        ema.getTransaction().commit();
-                        ema.close();
-                        JOptionPane.showMessageDialog(null, "Modificación Exitosa");   
+                        EntityManager.persist(as);
+                        EntityManager.getTransaction().commit();
+                        JOptionPane.showMessageDialog(null, "Modificación Exitosa");
+                        List.clear();
+                        List.add(act);
+                        resetear();
                        
-                  }
+                  }else{
+                        this.dispose();
+                 }
          }
-         this.dispose();
+         
     }//GEN-LAST:event_btn_guardarActionPerformed
 
+    private void tf_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_valorKeyTyped
+        // TODO add your handling code here:
+        if (list_filtros.getSelectedItem()=="Código"){
+            ch=evt.getKeyChar();
+            if(!Character.isDigit(ch)){
+                getToolkit().beep();
+                evt.consume();
+            }
+        }
+        else{
+            ch=evt.getKeyChar();
+            if(Character.isDigit(ch)){
+                getToolkit().beep();
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_tf_valorKeyTyped
+
+    private void list_filtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_list_filtrosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_list_filtrosActionPerformed
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        // TODO add your handling code here:
+        int id;
+        if (tf_valor.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Ingrese algún valor para efectuar la búsqueda", "Advertencia",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        else{
+            if (list_filtros.getSelectedItem()=="Código"){
+                id=Integer.parseInt(tf_valor.getText());
+                Query = EntityManager.createNamedQuery("Actividad.findByCodActividad");
+                Query.setParameter("codActividad",id);
+                List<Actividad> a = Query.getResultList();
+                if (a.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Código de Actividad inexistente", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(a);
+            }
+            else{
+                Query = EntityManager.createNativeQuery( "SELECT * FROM actividad WHERE nombre LIKE "
+                    +"'%"+tf_valor.getText()+"%'", Actividad.class);
+                List<Actividad> a = Query.getResultList();
+                if (a.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Descripción de actividad inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(a);
+
+            }
+        }
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void btn_buscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_buscarFocusLost
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_btn_buscarFocusLost
+
+    private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
+        // TODO add your handling code here:
+         fila=masterTable.getSelectedRow();
+          obtenerActividad(fila);
+         inicializarActividad();
+    }//GEN-LAST:event_masterTableMouseClicked
+    private void obtenerActividad(int fila) {
+            Query=EntityManager.createNamedQuery("Actividad.findByCodActividad");
+            Query.setParameter("codActividad", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );
+           
+            try{
+               actividad = (Actividad)Query.getSingleResult();
+               System.out.println(actividad);
+            }catch(javax.persistence.NoResultException e){
+                System.out.println(actividad);
+            }
+      }
+      private void inicializarActividad(){
+            tf_codigo.setText(Integer.toString(actividad.getCodActividad()));
+            tf_nombre.setText(actividad.getNombre());
+    }
+    private void resetear(){
+        tf_codigo.setText(null);
+        tf_nombre.setText(null);
+    }
     /**
      * @param args the command line arguments
      */
@@ -321,9 +525,11 @@ public class EditarActividad extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame frame=new BuscarActividad();
+                JFrame frame=new EditarActividad();
                 frame.setVisible(true);
-                frame.setTitle("Buscar Actividad");
+                frame.setTitle("Modificar Actividad");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
             }
@@ -331,15 +537,27 @@ public class EditarActividad extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.persistence.EntityManager EntityManager;
+    private java.util.List<bean.Actividad> List;
+    private javax.persistence.Query Query;
+    private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_guardar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_EditarAct;
     private javax.swing.JLabel lbl_codigo;
+    private javax.swing.JLabel lbl_filtro;
     private javax.swing.JLabel lbl_nombre;
+    private javax.swing.JLabel lbl_valor;
+    private javax.swing.JComboBox list_filtros;
+    private javax.swing.JTable masterTable;
     private javax.swing.JPanel panel_EditarAct;
-    public static javax.swing.JTextField tf_codigo;
-    public static javax.swing.JTextField tf_nombre;
+    private javax.swing.JTextField tf_codigo;
+    private javax.swing.JTextField tf_nombre;
+    private javax.swing.JTextField tf_valor;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

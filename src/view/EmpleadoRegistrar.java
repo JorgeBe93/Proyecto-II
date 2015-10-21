@@ -517,7 +517,7 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                 && !tf_direccion.getText().equals("")
                 && !tf_telefono.getText().equals("")
                 && !jc_fechaNacimiento.getDate().toString().equals("")
-                ){
+                && !cb_cargo.getSelectedItem().equals(null)){
             int respuesta = JOptionPane.showConfirmDialog(null, "¿Confirma el registro?");
             if(respuesta == JOptionPane.YES_OPTION){
                 entityManager.getTransaction().begin();
