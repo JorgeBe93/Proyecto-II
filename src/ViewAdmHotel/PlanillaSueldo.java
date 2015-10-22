@@ -273,11 +273,14 @@ public class PlanillaSueldo extends javax.swing.JFrame {
             connection = DriverManager.getConnection(BaseDeDatos);
             if(connection != null){
                 System.out.println("Conexion Exitosa!");
-               CallableStatement st=connection.prepareCall("{call planilla_pago (?,?)}");
+               CallableStatement st=connection.prepareCall("{call planilla_pago (?,?,?)}");
                //  CallableStatement st=connection.prepareCall("{call planilla_pago }");
                  st.setInt(1, mes);
                  st.setInt(2, anho);
-                st.execute();
+                 st.registerOutParameter(3, java.sql.Types.INTEGER);
+                 st.execute();
+                 int deposito=st.getInt(3);
+                 System.out.println("Deposito: "+deposito);
                 connection.close();
             }else{
                 System.out.println("Conexion Fallida!");                

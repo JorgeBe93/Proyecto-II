@@ -109,7 +109,7 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 				<reportElement uuid="373af9fc-8b95-467d-83f1-f49a70b89cb5" x="0" y="0" width="802" height="20" backcolor="#CCCCCC"/>
 			</rectangle>
 			<staticText>
-				<reportElement uuid="676fd690-c001-4cdd-addc-f7075e171cd0" x="85" y="0" width="59" height="20"/>
+				<reportElement uuid="676fd690-c001-4cdd-addc-f7075e171cd0" x="58" y="0" width="59" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -137,14 +137,14 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 				<text><![CDATA[Liquido]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="3a26fac1-cb5c-4351-832a-3366ea5a563c" x="191" y="0" width="55" height="20"/>
+				<reportElement uuid="3a26fac1-cb5c-4351-832a-3366ea5a563c" x="129" y="0" width="55" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Apellido]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c2de9eba-61c7-44ce-bba1-d4bde7cd29a9" x="274" y="0" width="66" height="20"/>
+				<reportElement uuid="c2de9eba-61c7-44ce-bba1-d4bde7cd29a9" x="208" y="0" width="66" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -165,7 +165,7 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 				<text><![CDATA[CI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1b6a2e47-6f16-47a7-ab8f-ff83231d7cc9" x="352" y="0" width="74" height="20"/>
+				<reportElement uuid="1b6a2e47-6f16-47a7-ab8f-ff83231d7cc9" x="286" y="0" width="74" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -178,12 +178,19 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 				</textElement>
 				<text><![CDATA[Sueldo HsT]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="192ea1dc-7451-4e0a-8aab-a67af08b2526" x="373" y="0" width="57" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Excedente]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="26" splitType="Stretch">
 			<textField>
-				<reportElement uuid="85f7452c-da4e-47af-80d0-606a717478e6" x="85" y="0" width="59" height="20"/>
+				<reportElement uuid="85f7452c-da4e-47af-80d0-606a717478e6" x="58" y="0" width="59" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{empleado_nombre}]]></textFieldExpression>
 			</textField>
@@ -203,12 +210,12 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_liquidoCobrado}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement uuid="f5d206be-d270-41c6-94dc-4b0a8cfa826d" x="274" y="0" width="66" height="20"/>
+				<reportElement uuid="f5d206be-d270-41c6-94dc-4b0a8cfa826d" x="208" y="0" width="66" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_salarioBase}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="509a02ad-b341-4c62-803e-de4f1c694970" x="178" y="0" width="78" height="20"/>
+				<reportElement uuid="509a02ad-b341-4c62-803e-de4f1c694970" x="129" y="0" width="78" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{empleado_apellido}]]></textFieldExpression>
 			</textField>
@@ -223,7 +230,7 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 				<textFieldExpression><![CDATA[$F{empleado_cedula}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="66f766ae-0474-4e92-b8e8-65e7bf5bbd38" x="372" y="0" width="41" height="20"/>
+				<reportElement uuid="66f766ae-0474-4e92-b8e8-65e7bf5bbd38" x="286" y="0" width="41" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}]]></textFieldExpression>
 			</textField>
@@ -231,6 +238,13 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 				<reportElement uuid="3ea7c656-ab5f-44a1-9845-dad4166f1ca0" x="444" y="0" width="66" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_sueldoHorasT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0">
+				<reportElement uuid="038a44d6-011d-4999-a077-a28f821f2950" x="373" y="0" width="60" height="20">
+					<printWhenExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}>136]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}-136]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

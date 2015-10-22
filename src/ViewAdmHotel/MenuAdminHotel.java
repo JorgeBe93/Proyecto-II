@@ -120,6 +120,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         mItem_eliminarLugar = new javax.swing.JMenuItem();
         mItem_buscarLugar = new javax.swing.JMenuItem();
         mItem_peridaOportunidades = new javax.swing.JMenuItem();
+        menu_estilos = new javax.swing.JMenu();
         menu_salir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -130,7 +131,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_RRHH.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_RRHH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/aluno.png"))); // NOI18N
         menu_RRHH.setText("Recursos Humanos");
-        menu_RRHH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        menu_RRHH.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         menu_empleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cliente1.png"))); // NOI18N
         menu_empleado.setText("Empleado");
@@ -334,7 +335,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_hotel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_hotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/home.png"))); // NOI18N
         menu_hotel.setText("Hotel");
-        menu_hotel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        menu_hotel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         menu_CategHabitacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_CategHabitacion.setText("Categoría de Habitación");
@@ -536,10 +537,16 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
         jMenuBar1.add(menu_hotel);
 
+        menu_estilos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_estilos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ventana2.png"))); // NOI18N
+        menu_estilos.setText("Estilos");
+        menu_estilos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jMenuBar1.add(menu_estilos);
+
         menu_salir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/login.png"))); // NOI18N
         menu_salir.setText("Cerrar Sesión");
-        menu_salir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        menu_salir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_salir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menu_salirMouseClicked(evt);
@@ -553,11 +560,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 676, Short.MAX_VALUE)
+            .addGap(0, 614, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 357, Short.MAX_VALUE)
+            .addGap(0, 356, Short.MAX_VALUE)
         );
 
         pack();
@@ -994,6 +1001,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenu menu_asistencia;
     private javax.swing.JMenu menu_cargo;
     private javax.swing.JMenu menu_empleado;
+    private javax.swing.JMenu menu_estilos;
     private javax.swing.JMenu menu_eventos;
     private javax.swing.JMenu menu_hotel;
     private javax.swing.JMenu menu_lugar;

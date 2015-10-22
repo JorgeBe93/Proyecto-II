@@ -67,6 +67,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_factura = new javax.swing.JMenu();
         mItem_generarFactura = new javax.swing.JMenuItem();
         mItem_buscarFactura = new javax.swing.JMenuItem();
+        menu_estilos = new javax.swing.JMenu();
         menu_salir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -295,6 +296,12 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
         jMenuBar1.add(menu_factura);
 
+        menu_estilos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_estilos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ventana2.png"))); // NOI18N
+        menu_estilos.setText("Estilos");
+        menu_estilos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jMenuBar1.add(menu_estilos);
+
         menu_salir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/login.png"))); // NOI18N
         menu_salir.setText("Cerrar Sesión");
@@ -312,11 +319,11 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 810, Short.MAX_VALUE)
+            .addGap(0, 908, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+            .addGap(0, 297, Short.MAX_VALUE)
         );
 
         pack();
@@ -581,6 +588,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_resumenConsumo;
     private javax.swing.JMenu menu_cliente;
     private javax.swing.JMenu menu_consumo;
+    private javax.swing.JMenu menu_estilos;
     private javax.swing.JMenu menu_factura;
     private javax.swing.JMenu menu_presupuesto;
     private javax.swing.JMenu menu_reserva;
