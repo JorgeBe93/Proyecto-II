@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1d1dbccb-57f1-4420-acf9-cd198f8d838f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="76"/>
+	<property name="ireport.y" value="240"/>
 	<subDataset name="dataset1" uuid="d7bc73e8-4ec7-40db-bc9e-bcb28b50302f"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Proyecto-II\\src\\reportes\\"]]></defaultValueExpression>
@@ -10,13 +10,8 @@
 	<parameter name="Presupuesto" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="Dias" class="java.lang.Long">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     presupuesto.`numPresupuesto` AS presupuesto_numPresupuesto,
-     presupuesto.`estado` AS presupuesto_estado,
      reserva.`codigoReserva` AS reserva_codigoReserva,
      reserva.`checkIn` AS reserva_checkIn,
      reserva.`checkOut` AS reserva_checkOut,
@@ -27,18 +22,20 @@
      cliente.`nombre` AS cliente_nombre,
      cliente.`apellido` AS cliente_apellido,
      categ_habitacion.`nombre` AS categ_habitacion_nombre,
-     categ_habitacion.`costoxnoche` AS categ_habitacion_costoxnoche
+     categ_habitacion.`costoxnoche` AS categ_habitacion_costoxnoche,
+     presupuesto.`numPresupuesto` AS presupuesto_numPresupuesto,
+     presupuesto.`estado` AS presupuesto_estado,
+     presupuesto.`fechaEmision` AS presupuesto_fechaEmision,
+     presupuesto.`codigoCliente` AS presupuesto_codigoCliente
 FROM
-     `presupuesto` presupuesto INNER JOIN `reserva` reserva ON presupuesto.`numPresupuesto` = reserva.`numPresupuesto`
-     INNER JOIN `cliente` cliente ON reserva.`codigoCliente` = cliente.`codigoCliente`
+     `reserva` reserva INNER JOIN `cliente` cliente ON reserva.`codigoCliente` = cliente.`codigoCliente`
      INNER JOIN `habitacion` habitacion ON reserva.`numHabitacion` = habitacion.`numero`
+     INNER JOIN `presupuesto` presupuesto ON reserva.`numPresupuesto` = presupuesto.`numPresupuesto`
+     AND cliente.`codigoCliente` = presupuesto.`codigoCliente`
      INNER JOIN `categ_habitacion` categ_habitacion ON habitacion.`codigoCategoria` = categ_habitacion.`codigoCategoria`
 WHERE
-presupuesto.`numPresupuesto`=$P{Presupuesto}
-]]>
+     presupuesto.`numPresupuesto` = $P{Presupuesto}]]>
 	</queryString>
-	<field name="presupuesto_numPresupuesto" class="java.lang.Integer"/>
-	<field name="presupuesto_estado" class="java.lang.String"/>
 	<field name="reserva_codigoReserva" class="java.lang.Integer"/>
 	<field name="reserva_checkIn" class="java.sql.Date"/>
 	<field name="reserva_checkOut" class="java.sql.Date"/>
@@ -50,6 +47,10 @@ presupuesto.`numPresupuesto`=$P{Presupuesto}
 	<field name="cliente_apellido" class="java.lang.String"/>
 	<field name="categ_habitacion_nombre" class="java.lang.String"/>
 	<field name="categ_habitacion_costoxnoche" class="java.lang.Integer"/>
+	<field name="presupuesto_numPresupuesto" class="java.lang.Integer"/>
+	<field name="presupuesto_estado" class="java.lang.String"/>
+	<field name="presupuesto_fechaEmision" class="java.lang.String"/>
+	<field name="presupuesto_codigoCliente" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -99,15 +100,8 @@ presupuesto.`numPresupuesto`=$P{Presupuesto}
 	<pageHeader>
 		<band height="170" splitType="Stretch">
 			<rectangle>
-				<reportElement uuid="da5fa0fc-40ea-4d2e-8617-bee2a5df027c" x="1" y="1" width="555" height="169"/>
+				<reportElement uuid="da5fa0fc-40ea-4d2e-8617-bee2a5df027c" x="1" y="0" width="555" height="169"/>
 			</rectangle>
-			<textField>
-				<reportElement uuid="69492f84-d616-44a4-9d13-135291b8b690" x="107" y="16" width="100" height="20"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{Presupuesto}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement uuid="5484debf-9dcb-4bc5-9f3e-dc23ed2f2b1b" x="8" y="16" width="99" height="20"/>
 				<textElement>
@@ -115,159 +109,173 @@ presupuesto.`numPresupuesto`=$P{Presupuesto}
 				</textElement>
 				<text><![CDATA[Presupuesto N°:]]></text>
 			</staticText>
-			<textField>
-				<reportElement uuid="6a0ada3f-261a-46a4-a2c9-a504f36cba64" x="266" y="16" width="100" height="20"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_cedula}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="2d569a2b-0e15-4b7b-80eb-ff433d94f184" x="366" y="16" width="100" height="20"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_nombre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="c4d20d4f-06ce-4949-982a-79c80cac198a" x="455" y="16" width="100" height="20"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_apellido}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="aa29ec01-e42a-443d-9b20-8e3148763266" x="107" y="46" width="54" height="20"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{reserva_codigoReserva}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="07d9297a-f2da-46c3-9edc-42ac105b1ce1" x="248" y="46" width="100" height="20"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{reserva_checkIn}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="8129ffb2-9082-4bcb-b351-3ce1b022638b" x="436" y="46" width="107" height="20"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{reserva_checkOut}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="f45d7df7-11af-4d9b-813f-1235b72f703d" x="124" y="113" width="37" height="20"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{reserva_cantPersonas}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0">
-				<reportElement uuid="8d955147-08c5-4023-9874-01a5e54e3e1a" x="285" y="145" width="100" height="25"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{reserva_montoTotal}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="3f0ca566-47fc-43fc-8e2f-22c10251bfce" x="187" y="83" width="43" height="20"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{reserva_numHabitacion}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="9d3c87f0-6a0c-460a-a12e-b0da3687f7e4" x="378" y="83" width="109" height="20"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{categ_habitacion_nombre}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0">
-				<reportElement uuid="452ced12-e19c-49f8-a243-e51bfbe5843c" x="317" y="113" width="66" height="20"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{categ_habitacion_costoxnoche}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement uuid="7b0fd7da-2763-499f-888a-01e6ff473be0" x="207" y="16" width="59" height="20"/>
+				<reportElement uuid="7b0fd7da-2763-499f-888a-01e6ff473be0" x="8" y="46" width="59" height="20"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cliente:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="81c584a9-91ce-4fcc-a76c-344db418bf9a" x="8" y="46" width="99" height="20"/>
+				<reportElement uuid="81c584a9-91ce-4fcc-a76c-344db418bf9a" x="289" y="46" width="99" height="20"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código Reserva:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2a4e3cf8-04a1-42f4-b812-d25221e4941d" x="189" y="46" width="59" height="20"/>
+				<reportElement uuid="2a4e3cf8-04a1-42f4-b812-d25221e4941d" x="12" y="83" width="59" height="20"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Check In:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f443a06e-de09-4191-9cfe-4e30f5565b2a" x="366" y="46" width="70" height="20"/>
+				<reportElement uuid="f443a06e-de09-4191-9cfe-4e30f5565b2a" x="175" y="83" width="70" height="20"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Check Out:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="aff19ae5-fdca-481f-86fa-82b731e2fce1" x="77" y="83" width="110" height="20"/>
+				<reportElement uuid="aff19ae5-fdca-481f-86fa-82b731e2fce1" x="179" y="115" width="110" height="20"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Habitación Número:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="db902fd7-260c-4e16-b29f-65817e1e47e4" x="317" y="83" width="66" height="20"/>
+				<reportElement uuid="db902fd7-260c-4e16-b29f-65817e1e47e4" x="341" y="83" width="66" height="20"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Categoría:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="61f9593d-861a-4b31-8695-a1dbd0d6268c" x="12" y="113" width="112" height="20"/>
+				<reportElement uuid="61f9593d-861a-4b31-8695-a1dbd0d6268c" x="12" y="115" width="112" height="20"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cantidad Personas:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="57d2995e-a072-4894-9aba-d6474a9f9a9f" x="200" y="113" width="117" height="20"/>
+				<reportElement uuid="57d2995e-a072-4894-9aba-d6474a9f9a9f" x="355" y="115" width="117" height="20"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Costo por noche Gs.:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="e771a5c3-1658-4787-856d-3aacb2bd15cf" x="161" y="145" width="128" height="25"/>
+				<reportElement uuid="e771a5c3-1658-4787-856d-3aacb2bd15cf" x="189" y="145" width="128" height="25"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[MONTO TOTAL Gs.:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement uuid="a0f30bcb-97bc-4d17-9b38-c598c735373e" x="414" y="113" width="34" height="20"/>
-				<textElement>
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Días:]]></text>
-			</staticText>
 			<textField>
-				<reportElement uuid="9e6cb349-24a9-4e7c-85ff-342655131e74" x="448" y="113" width="65" height="20"/>
+				<reportElement uuid="4b090092-7cd1-4264-8b45-4a4a4707ce50" x="107" y="16" width="34" height="20"/>
+				<textElement>
+					<font size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{presupuesto_numPresupuesto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7e5fd8e4-b0fa-4885-a74f-d203818e1312" x="67" y="46" width="100" height="20"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{Dias}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cliente_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fd3bcc31-a274-405c-8396-2555cde9a96c" x="167" y="46" width="100" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_apellido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="67e7a581-64c5-4c9e-ab88-3c5d88689bc5" x="154" y="16" width="100" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Emisión:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8aa71bd7-6951-413d-9bcd-01437c56475a" x="241" y="16" width="100" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{presupuesto_fechaEmision}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3596a6ee-6604-4bb0-bad2-8a5465ad73cd" x="355" y="16" width="53" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="16ec9824-ad5a-483a-b8aa-630a4a69da0e" x="408" y="16" width="100" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{presupuesto_estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4766a011-ec98-435c-a694-f7217200c0bd" x="388" y="46" width="100" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reserva_codigoReserva}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="04d87c6c-6bda-47e8-80e7-812441085d59" x="67" y="83" width="100" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reserva_checkIn}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="4b6bee9e-7d20-4f48-a5bc-5090d0cc1b93" x="241" y="83" width="100" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reserva_checkOut}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b3489104-d86c-44f8-ab18-c6169cb0d392" x="407" y="83" width="100" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{categ_habitacion_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="201df8fa-6928-4c6a-bafb-3e92ea594658" x="124" y="115" width="39" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reserva_cantPersonas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3083e480-54c3-4fc5-8277-d7382fbcb8fa" x="288" y="115" width="53" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reserva_numHabitacion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="2df937fc-51c2-4c4c-8ddd-7e02dda06ff2" x="472" y="115" width="80" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{categ_habitacion_costoxnoche}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="a86cec4b-8d56-4cf0-b1cb-a90a4101c32f" x="317" y="145" width="100" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reserva_montoTotal}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -348,7 +356,7 @@ presupuesto.`numPresupuesto`=$P{Presupuesto}
 	<summary>
 		<band height="250" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="e7cc234f-110d-4a81-990f-c94c7696a4c9" x="-7" y="0" width="41" height="36"/>
+				<reportElement uuid="b235ba6b-cd03-4cd5-ae0a-bc35a585d9b7" x="-18" y="0" width="33" height="27"/>
 				<subreportParameter name="SUBREPORT_DIR"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "presupuestoPS.jasper"]]></subreportExpression>

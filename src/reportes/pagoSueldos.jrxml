@@ -96,7 +96,7 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 				<textElement textAlignment="Justified">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Horas Trabajadas en el mes:  112]]></text>
+				<text><![CDATA[Horas Trabajadas en el mes:  128]]></text>
 			</staticText>
 		</band>
 	</title>

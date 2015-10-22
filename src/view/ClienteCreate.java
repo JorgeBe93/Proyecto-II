@@ -502,9 +502,15 @@ public class ClienteCreate extends javax.swing.JFrame {
                     if(CrearReserva.opcionReserva==1){
                          query=entityManager.createNamedQuery( "Cliente.findByCodigoCliente");
                          query.setParameter("codigoCliente",c.getCodigoCliente());
-                         List<Cliente> clie=query.getResultList();
+                         Cliente clie=(Cliente)query.getSingleResult();
                          CrearReserva.clienteList.clear();
-                         CrearReserva.clienteList.addAll(clie);
+                         CrearReserva.clienteList.add(clie);
+                    }else if(Presupuestar.opcionReserva==1){
+                             query=entityManager.createNamedQuery( "Cliente.findByCodigoCliente");
+                         query.setParameter("codigoCliente",c.getCodigoCliente());
+                         Cliente cli=(Cliente)query.getSingleResult();
+                         Presupuestar.list.clear();
+                         Presupuestar.list.add(cli);
                     }
                     JOptionPane.showMessageDialog(null,"Creación exitosa", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
                     resetear();
@@ -512,15 +518,7 @@ public class ClienteCreate extends javax.swing.JFrame {
                      this.dispose();
                }
         }
-        if (!llamadaGenerarPresupuesto.equals("")){
-                JFrame frame=new Presupuestar();
-                Presupuestar.tf_cedulaCliente.setText(tf_cedula.getText());
-                frame.setVisible(true);
-                frame.setTitle("Generar Presupuesto");
-                frame.setLocationRelativeTo(null);
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                
-        }
+     
        
     }//GEN-LAST:event_btn_guardarActionPerformed
 

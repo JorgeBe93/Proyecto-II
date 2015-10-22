@@ -7,32 +7,19 @@
 package ViewAdmHotel;
 
 import bean.AuditoriaSistema;
-import bean.PlanillaPagoSueldo;
 import java.awt.Image;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
 import view.CategHabitBuscar;
 import view.CategHabitCreate;
 import view.CategHabitEdit;
 import view.CategHabitEliminar;
-import view.CategPSBuscar;
-import view.CategPSCreate;
 import view.EmpleadoBuscar;
 import view.EmpleadoEditar;
 import view.EmpleadoEliminar;
@@ -73,34 +60,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
-        menu_CategHabitacion = new javax.swing.JMenu();
-        mItem_crearCH = new javax.swing.JMenuItem();
-        mItem_editarCH = new javax.swing.JMenuItem();
-        mItem_eliminarCH = new javax.swing.JMenuItem();
-        mItem_buscar = new javax.swing.JMenuItem();
-        menu_Habitacion = new javax.swing.JMenu();
-        mItem_crearHabit = new javax.swing.JMenuItem();
-        mItem_editarHabit = new javax.swing.JMenuItem();
-        mItem_eliminarHabit = new javax.swing.JMenuItem();
-        mItem_buscarHabit = new javax.swing.JMenuItem();
-        menu_CategPS = new javax.swing.JMenu();
-        mItem_crearCategPS = new javax.swing.JMenuItem();
-        mItem_editarCategPS = new javax.swing.JMenuItem();
-        mItem_eliminarCategPS = new javax.swing.JMenuItem();
-        mItem_buscarCategPS = new javax.swing.JMenuItem();
-        menu_PS = new javax.swing.JMenu();
-        mItem_crearPS = new javax.swing.JMenuItem();
-        mItem_editarPS = new javax.swing.JMenuItem();
-        mItem_eliminarPS = new javax.swing.JMenuItem();
-        mItem_buscarPS = new javax.swing.JMenuItem();
-        menu_informePO = new javax.swing.JMenu();
         menu_RRHH = new javax.swing.JMenu();
-        menu_cargo = new javax.swing.JMenu();
-        mItem_crearCargo = new javax.swing.JMenuItem();
-        mItem_editarCargo = new javax.swing.JMenuItem();
-        mItem_eliminarCargo = new javax.swing.JMenuItem();
-        mItem_buscarCargo = new javax.swing.JMenuItem();
-        jSeparator5 = new javax.swing.JPopupMenu.Separator();
         menu_empleado = new javax.swing.JMenu();
         mItem_crearEmpleado = new javax.swing.JMenuItem();
         mItem_editarEmpleado = new javax.swing.JMenuItem();
@@ -117,10 +77,38 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         mItem_editarEvento = new javax.swing.JMenuItem();
         mItem_eliminarEvento = new javax.swing.JMenuItem();
         mItem_buscarEvento = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        mItem_planillaPagos = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        mItem_planillaPagos = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
         mItem_informeAsist = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        menu_cargo = new javax.swing.JMenu();
+        mItem_crearCargo = new javax.swing.JMenuItem();
+        mItem_editarCargo = new javax.swing.JMenuItem();
+        mItem_eliminarCargo = new javax.swing.JMenuItem();
+        mItem_buscarCargo = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        menu_seguimientoA = new javax.swing.JMenu();
+        mItem_registrarSeg = new javax.swing.JMenuItem();
+        mItem_modificarSeg = new javax.swing.JMenuItem();
+        mItem_eliminarSeg = new javax.swing.JMenuItem();
+        mIem_buscarSeg = new javax.swing.JMenuItem();
+        menu_hotel = new javax.swing.JMenu();
+        menu_CategHabitacion = new javax.swing.JMenu();
+        mItem_crearCH = new javax.swing.JMenuItem();
+        mItem_editarCH = new javax.swing.JMenuItem();
+        mItem_eliminarCH = new javax.swing.JMenuItem();
+        mItem_buscar = new javax.swing.JMenuItem();
+        menu_Habitacion = new javax.swing.JMenu();
+        mItem_crearHabit = new javax.swing.JMenuItem();
+        mItem_editarHabit = new javax.swing.JMenuItem();
+        mItem_eliminarHabit = new javax.swing.JMenuItem();
+        mItem_buscarHabit = new javax.swing.JMenuItem();
+        menu_PS = new javax.swing.JMenu();
+        mItem_crearPS = new javax.swing.JMenuItem();
+        mItem_editarPS = new javax.swing.JMenuItem();
+        mItem_eliminarPS = new javax.swing.JMenuItem();
+        mItem_buscarPS = new javax.swing.JMenuItem();
         menu_actividad = new javax.swing.JMenu();
         mItem_registrarActividad = new javax.swing.JMenuItem();
         mItem_editarActividad = new javax.swing.JMenuItem();
@@ -131,223 +119,22 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         mItem_editarLugar = new javax.swing.JMenuItem();
         mItem_eliminarLugar = new javax.swing.JMenuItem();
         mItem_buscarLugar = new javax.swing.JMenuItem();
-        menu_seguimientoA = new javax.swing.JMenu();
-        mItem_registrarSeg = new javax.swing.JMenuItem();
-        mItem_modificarSeg = new javax.swing.JMenuItem();
-        mItem_eliminarSeg = new javax.swing.JMenuItem();
-        mIem_buscarSeg = new javax.swing.JMenuItem();
+        mItem_peridaOportunidades = new javax.swing.JMenuItem();
         menu_salir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        menu_CategHabitacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_CategHabitacion.setText("Categoría de Habitación");
+        jMenuBar1.setBackground(new java.awt.Color(51, 153, 255));
+        jMenuBar1.setForeground(new java.awt.Color(255, 255, 255));
 
-        mItem_crearCH.setText("Crear Categoría");
-        mItem_crearCH.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_crearCHActionPerformed(evt);
-            }
-        });
-        menu_CategHabitacion.add(mItem_crearCH);
-
-        mItem_editarCH.setText("Editar Categoría");
-        mItem_editarCH.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_editarCHActionPerformed(evt);
-            }
-        });
-        menu_CategHabitacion.add(mItem_editarCH);
-
-        mItem_eliminarCH.setText("Eliminar Categoría");
-        mItem_eliminarCH.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_eliminarCHActionPerformed(evt);
-            }
-        });
-        menu_CategHabitacion.add(mItem_eliminarCH);
-
-        mItem_buscar.setText("Buscar Categoría");
-        mItem_buscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_buscarActionPerformed(evt);
-            }
-        });
-        menu_CategHabitacion.add(mItem_buscar);
-
-        jMenuBar1.add(menu_CategHabitacion);
-
-        menu_Habitacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_Habitacion.setText("Habitación");
-        menu_Habitacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_HabitacionActionPerformed(evt);
-            }
-        });
-
-        mItem_crearHabit.setText("Crear Habitación");
-        mItem_crearHabit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_crearHabitActionPerformed(evt);
-            }
-        });
-        menu_Habitacion.add(mItem_crearHabit);
-
-        mItem_editarHabit.setText("Editar Habitación");
-        mItem_editarHabit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_editarHabitActionPerformed(evt);
-            }
-        });
-        menu_Habitacion.add(mItem_editarHabit);
-
-        mItem_eliminarHabit.setText("Eliminar Habitación");
-        mItem_eliminarHabit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_eliminarHabitActionPerformed(evt);
-            }
-        });
-        menu_Habitacion.add(mItem_eliminarHabit);
-
-        mItem_buscarHabit.setText("Buscar Habitación");
-        mItem_buscarHabit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_buscarHabitActionPerformed(evt);
-            }
-        });
-        menu_Habitacion.add(mItem_buscarHabit);
-
-        jMenuBar1.add(menu_Habitacion);
-
-        menu_CategPS.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_CategPS.setText(" Categoría de P/S");
-
-        mItem_crearCategPS.setText("Crear Categoría P/S");
-        mItem_crearCategPS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_crearCategPSActionPerformed(evt);
-            }
-        });
-        menu_CategPS.add(mItem_crearCategPS);
-
-        mItem_editarCategPS.setText("Modificar Categoría P/S");
-        mItem_editarCategPS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_editarCategPSActionPerformed(evt);
-            }
-        });
-        menu_CategPS.add(mItem_editarCategPS);
-
-        mItem_eliminarCategPS.setText("Eliminar Categoría P/S");
-        mItem_eliminarCategPS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_eliminarCategPSActionPerformed(evt);
-            }
-        });
-        menu_CategPS.add(mItem_eliminarCategPS);
-
-        mItem_buscarCategPS.setText("Buscar Categoría P/S");
-        mItem_buscarCategPS.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                mItem_buscarCategPSMouseClicked(evt);
-            }
-        });
-        mItem_buscarCategPS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_buscarCategPSActionPerformed(evt);
-            }
-        });
-        menu_CategPS.add(mItem_buscarCategPS);
-
-        jMenuBar1.add(menu_CategPS);
-
-        menu_PS.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_PS.setText("Producto/Servicio");
-
-        mItem_crearPS.setText("Registrar P/S");
-        mItem_crearPS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_crearPSActionPerformed(evt);
-            }
-        });
-        menu_PS.add(mItem_crearPS);
-
-        mItem_editarPS.setText("Editar P/S");
-        mItem_editarPS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_editarPSActionPerformed(evt);
-            }
-        });
-        menu_PS.add(mItem_editarPS);
-
-        mItem_eliminarPS.setText("Eliminar P/S");
-        mItem_eliminarPS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_eliminarPSActionPerformed(evt);
-            }
-        });
-        menu_PS.add(mItem_eliminarPS);
-
-        mItem_buscarPS.setText("Buscar P/S");
-        mItem_buscarPS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_buscarPSActionPerformed(evt);
-            }
-        });
-        menu_PS.add(mItem_buscarPS);
-
-        jMenuBar1.add(menu_PS);
-
-        menu_informePO.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_informePO.setText("Generar Informe  PO");
-        menu_informePO.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menu_informePOMouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(menu_informePO);
-
-        menu_RRHH.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_RRHH.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_RRHH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/aluno.png"))); // NOI18N
         menu_RRHH.setText("Recursos Humanos");
+        menu_RRHH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        menu_cargo.setText("Cargo");
-
-        mItem_crearCargo.setText("Crear Cargo");
-        mItem_crearCargo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_crearCargoActionPerformed(evt);
-            }
-        });
-        menu_cargo.add(mItem_crearCargo);
-
-        mItem_editarCargo.setText("EditarCargo");
-        mItem_editarCargo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_editarCargoActionPerformed(evt);
-            }
-        });
-        menu_cargo.add(mItem_editarCargo);
-
-        mItem_eliminarCargo.setText("Eliminar Cargo");
-        mItem_eliminarCargo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_eliminarCargoActionPerformed(evt);
-            }
-        });
-        menu_cargo.add(mItem_eliminarCargo);
-
-        mItem_buscarCargo.setText("Buscar Cargo");
-        mItem_buscarCargo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_buscarCargoActionPerformed(evt);
-            }
-        });
-        menu_cargo.add(mItem_buscarCargo);
-
-        menu_RRHH.add(menu_cargo);
-        menu_RRHH.add(jSeparator5);
-
+        menu_empleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cliente1.png"))); // NOI18N
         menu_empleado.setText("Empleado");
+        menu_empleado.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
 
         mItem_crearEmpleado.setText("Registrar Empleado");
         mItem_crearEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -382,9 +169,6 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_empleado.add(mItem_buscarEmpleado);
 
         menu_RRHH.add(menu_empleado);
-
-        jSeparator1.setAlignmentY(0.8F);
-        jSeparator1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         menu_RRHH.add(jSeparator1);
 
         menu_asistencia.setText("Asistencia de Empleados");
@@ -451,7 +235,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_eventos.add(mItem_buscarEvento);
 
         menu_RRHH.add(menu_eventos);
-        menu_RRHH.add(jSeparator2);
+        menu_RRHH.add(jSeparator4);
 
         mItem_planillaPagos.setText("Generar Planilla de Sueldos");
         mItem_planillaPagos.addActionListener(new java.awt.event.ActionListener() {
@@ -460,7 +244,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_RRHH.add(mItem_planillaPagos);
-        menu_RRHH.add(jSeparator4);
+        menu_RRHH.add(jSeparator5);
 
         mItem_informeAsist.setText("Generar Informe de Asistencia");
         mItem_informeAsist.addActionListener(new java.awt.event.ActionListener() {
@@ -469,8 +253,204 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_RRHH.add(mItem_informeAsist);
+        menu_RRHH.add(jSeparator6);
+
+        menu_cargo.setText("Cargo");
+
+        mItem_crearCargo.setText("Crear Cargo");
+        mItem_crearCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_crearCargoActionPerformed(evt);
+            }
+        });
+        menu_cargo.add(mItem_crearCargo);
+
+        mItem_editarCargo.setText("EditarCargo");
+        mItem_editarCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_editarCargoActionPerformed(evt);
+            }
+        });
+        menu_cargo.add(mItem_editarCargo);
+
+        mItem_eliminarCargo.setText("Eliminar Cargo");
+        mItem_eliminarCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_eliminarCargoActionPerformed(evt);
+            }
+        });
+        menu_cargo.add(mItem_eliminarCargo);
+
+        mItem_buscarCargo.setText("Buscar Cargo");
+        mItem_buscarCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_buscarCargoActionPerformed(evt);
+            }
+        });
+        menu_cargo.add(mItem_buscarCargo);
+
+        menu_RRHH.add(menu_cargo);
+        menu_RRHH.add(jSeparator2);
+
+        menu_seguimientoA.setBorder(null);
+        menu_seguimientoA.setText(" Seguimiento Actividades");
+
+        mItem_registrarSeg.setText("Registrar Seguimiento");
+        mItem_registrarSeg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_registrarSegActionPerformed(evt);
+            }
+        });
+        menu_seguimientoA.add(mItem_registrarSeg);
+
+        mItem_modificarSeg.setText("Modificar Seguimiento");
+        mItem_modificarSeg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_modificarSegActionPerformed(evt);
+            }
+        });
+        menu_seguimientoA.add(mItem_modificarSeg);
+
+        mItem_eliminarSeg.setText("Eliminar Seguimiento");
+        mItem_eliminarSeg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_eliminarSegActionPerformed(evt);
+            }
+        });
+        menu_seguimientoA.add(mItem_eliminarSeg);
+
+        mIem_buscarSeg.setText("Buscar Seguimiento");
+        mIem_buscarSeg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mIem_buscarSegActionPerformed(evt);
+            }
+        });
+        menu_seguimientoA.add(mIem_buscarSeg);
+
+        menu_RRHH.add(menu_seguimientoA);
 
         jMenuBar1.add(menu_RRHH);
+
+        menu_hotel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_hotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/home.png"))); // NOI18N
+        menu_hotel.setText("Hotel");
+        menu_hotel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        menu_CategHabitacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_CategHabitacion.setText("Categoría de Habitación");
+
+        mItem_crearCH.setText("Crear Categoría");
+        mItem_crearCH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_crearCHActionPerformed(evt);
+            }
+        });
+        menu_CategHabitacion.add(mItem_crearCH);
+
+        mItem_editarCH.setText("Editar Categoría");
+        mItem_editarCH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_editarCHActionPerformed(evt);
+            }
+        });
+        menu_CategHabitacion.add(mItem_editarCH);
+
+        mItem_eliminarCH.setText("Eliminar Categoría");
+        mItem_eliminarCH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_eliminarCHActionPerformed(evt);
+            }
+        });
+        menu_CategHabitacion.add(mItem_eliminarCH);
+
+        mItem_buscar.setText("Buscar Categoría");
+        mItem_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_buscarActionPerformed(evt);
+            }
+        });
+        menu_CategHabitacion.add(mItem_buscar);
+
+        menu_hotel.add(menu_CategHabitacion);
+
+        menu_Habitacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_Habitacion.setText("Habitación");
+        menu_Habitacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_HabitacionActionPerformed(evt);
+            }
+        });
+
+        mItem_crearHabit.setText("Crear Habitación");
+        mItem_crearHabit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_crearHabitActionPerformed(evt);
+            }
+        });
+        menu_Habitacion.add(mItem_crearHabit);
+
+        mItem_editarHabit.setText("Editar Habitación");
+        mItem_editarHabit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_editarHabitActionPerformed(evt);
+            }
+        });
+        menu_Habitacion.add(mItem_editarHabit);
+
+        mItem_eliminarHabit.setText("Eliminar Habitación");
+        mItem_eliminarHabit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_eliminarHabitActionPerformed(evt);
+            }
+        });
+        menu_Habitacion.add(mItem_eliminarHabit);
+
+        mItem_buscarHabit.setText("Buscar Habitación");
+        mItem_buscarHabit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_buscarHabitActionPerformed(evt);
+            }
+        });
+        menu_Habitacion.add(mItem_buscarHabit);
+
+        menu_hotel.add(menu_Habitacion);
+
+        menu_PS.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_PS.setText("Producto/Servicio");
+
+        mItem_crearPS.setText("Registrar P/S");
+        mItem_crearPS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_crearPSActionPerformed(evt);
+            }
+        });
+        menu_PS.add(mItem_crearPS);
+
+        mItem_editarPS.setText("Editar P/S");
+        mItem_editarPS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_editarPSActionPerformed(evt);
+            }
+        });
+        menu_PS.add(mItem_editarPS);
+
+        mItem_eliminarPS.setText("Eliminar P/S");
+        mItem_eliminarPS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_eliminarPSActionPerformed(evt);
+            }
+        });
+        menu_PS.add(mItem_eliminarPS);
+
+        mItem_buscarPS.setText("Buscar P/S");
+        mItem_buscarPS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_buscarPSActionPerformed(evt);
+            }
+        });
+        menu_PS.add(mItem_buscarPS);
+
+        menu_hotel.add(menu_PS);
 
         menu_actividad.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_actividad.setText("Actividad");
@@ -507,7 +487,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         });
         menu_actividad.add(mItem_buscarActividad);
 
-        jMenuBar1.add(menu_actividad);
+        menu_hotel.add(menu_actividad);
 
         menu_lugar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_lugar.setText("Lugar");
@@ -544,47 +524,22 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         });
         menu_lugar.add(mItem_buscarLugar);
 
-        jMenuBar1.add(menu_lugar);
+        menu_hotel.add(menu_lugar);
 
-        menu_seguimientoA.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_seguimientoA.setText(" Seguimiento Actividades");
-
-        mItem_registrarSeg.setText("Registrar Seguimiento");
-        mItem_registrarSeg.addActionListener(new java.awt.event.ActionListener() {
+        mItem_peridaOportunidades.setText("Informe de Pérdida de Oportunidades");
+        mItem_peridaOportunidades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_registrarSegActionPerformed(evt);
+                mItem_peridaOportunidadesActionPerformed(evt);
             }
         });
-        menu_seguimientoA.add(mItem_registrarSeg);
+        menu_hotel.add(mItem_peridaOportunidades);
 
-        mItem_modificarSeg.setText("Modificar Seguimiento");
-        mItem_modificarSeg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_modificarSegActionPerformed(evt);
-            }
-        });
-        menu_seguimientoA.add(mItem_modificarSeg);
+        jMenuBar1.add(menu_hotel);
 
-        mItem_eliminarSeg.setText("Eliminar Seguimiento");
-        mItem_eliminarSeg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_eliminarSegActionPerformed(evt);
-            }
-        });
-        menu_seguimientoA.add(mItem_eliminarSeg);
-
-        mIem_buscarSeg.setText("Buscar Seguimiento");
-        mIem_buscarSeg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mIem_buscarSegActionPerformed(evt);
-            }
-        });
-        menu_seguimientoA.add(mIem_buscarSeg);
-
-        jMenuBar1.add(menu_seguimientoA);
-
-        menu_salir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_salir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/login.png"))); // NOI18N
         menu_salir.setText("Cerrar Sesión");
+        menu_salir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         menu_salir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menu_salirMouseClicked(evt);
@@ -598,11 +553,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1012, Short.MAX_VALUE)
+            .addGap(0, 676, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 397, Short.MAX_VALUE)
+            .addGap(0, 357, Short.MAX_VALUE)
         );
 
         pack();
@@ -669,43 +624,6 @@ public class MenuAdminHotel extends javax.swing.JFrame {
                                      
     }//GEN-LAST:event_mItem_eliminarHabitActionPerformed
 
-    private void mItem_crearCategPSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_crearCategPSActionPerformed
-        // TODO add your handling code here:
-        String args[]=new String[1];
-        args[0]="Crear Categoría P/S";
-        CategPSCreate.main(args);
-    }//GEN-LAST:event_mItem_crearCategPSActionPerformed
-
-    private void mItem_buscarCategPSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mItem_buscarCategPSMouseClicked
-        // TODO add your handling code here:
-       
-    }//GEN-LAST:event_mItem_buscarCategPSMouseClicked
-
-    private void mItem_editarCategPSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_editarCategPSActionPerformed
-        // TODO add your handling code here:
-         opcion=1;
-        String args[]=new String[1];
-        args[0]="Buscar Categoría P/S";
-        CategPSBuscar.main(args);
-    }//GEN-LAST:event_mItem_editarCategPSActionPerformed
-
-    private void mItem_eliminarCategPSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarCategPSActionPerformed
-        // TODO add your handling code here:
-         opcion=2;
-        String args[]=new String[1];
-        args[0]="Buscar Categoría P/S";
-        CategPSBuscar.main(args);
-    }//GEN-LAST:event_mItem_eliminarCategPSActionPerformed
-
-    private void mItem_buscarCategPSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarCategPSActionPerformed
-        // TODO add your handling code here:
-         opcion=3;
-        String args[]=new String[1];
-        args[0]="Buscar Categoría P/S";
-        CategPSBuscar.main(args);
-     
-    }//GEN-LAST:event_mItem_buscarCategPSActionPerformed
-
     private void mItem_crearPSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_crearPSActionPerformed
         // TODO add your handling code here:
         String args[]=new String[1];
@@ -736,13 +654,6 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         args[0]="Buscar Producto/Servicio";
         ProdSerBuscar.main(args);
     }//GEN-LAST:event_mItem_buscarPSActionPerformed
-
-    private void menu_informePOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_informePOMouseClicked
-        // TODO add your handling code here:
-        String args[]=new String[1];
-        args[0]="Generar Informe de Pérdida de  Oportunidades";
-        PerdidaOportunidades.main(args);
-    }//GEN-LAST:event_menu_informePOMouseClicked
 
     private void menu_salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_salirMouseClicked
         // TODO add your handling code here:
@@ -804,18 +715,18 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
     private void mItem_modificarSegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_modificarSegActionPerformed
         // TODO add your handling code here:
-        opcion=1;
+  
         String args[]=new String[1];
-        args[0]="Buscar Seguimiento de Actividad";
-        BuscarSeguimiento.main(args);
+        args[0]="Modificar Seguimiento de Actividad";
+        EditarSeguimiento.main(args);
     }//GEN-LAST:event_mItem_modificarSegActionPerformed
 
     private void mItem_eliminarSegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarSegActionPerformed
         // TODO add your handling code here:
-        opcion=2;
+   
         String args[]=new String[1];
-        args[0]="Buscar Seguimiento de Actividad";
-        BuscarSeguimiento.main(args);
+        args[0]="Eliminar Seguimiento de Actividad";
+        EliminarSeguimiento.main(args);
     }//GEN-LAST:event_mItem_eliminarSegActionPerformed
 
     private void mItem_registrarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_registrarActividadActionPerformed
@@ -827,23 +738,20 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
     private void mItem_eliminarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarActividadActionPerformed
         // TODO add your handling code here:
-        opcion=2;
         String args[]=new String[1];
-        args[0]="Buscar Actividad";
-        BuscarActividad.main(args);
+        args[0]="Eliminar Actividad";
+        EliminarActividad.main(args);
     }//GEN-LAST:event_mItem_eliminarActividadActionPerformed
 
     private void mItem_editarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_editarActividadActionPerformed
-        // TODO add your handling code here:
-        opcion=1;
+        // TODO add your handling code here
         String args[]=new String[1];
-        args[0]="Buscar Actividad";
-        BuscarActividad.main(args);
+        args[0]="Modificar Actividad";
+        EditarActividad.main(args);
     }//GEN-LAST:event_mItem_editarActividadActionPerformed
 
     private void mItem_buscarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarActividadActionPerformed
         // TODO add your handling code here:
-        opcion=3;
         String args[]=new String[1];
         args[0]="Buscar Actividad";
         BuscarActividad.main(args);
@@ -911,40 +819,35 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     }//GEN-LAST:event_mItem_registrarAsistActionPerformed
 
     private void mItem_eliminarAsistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarAsistActionPerformed
-        // TODO add your handling code here:
-        opcion=1;
+  
         String args[]=new String[1];
-        args[0]="Buscar Asistencia";
-        BuscarAsistencia.main(args); 
+        args[0]="Eliminar Asistencia";
+        EliminarAsistencia.main(args); 
     }//GEN-LAST:event_mItem_eliminarAsistActionPerformed
 
     private void mItem_buscarAsistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarAsistActionPerformed
         // TODO add your handling code here:
-        opcion=2;
         String args[]=new String[1];
         args[0]="Buscar Asistencia";
         BuscarAsistencia.main(args); 
     }//GEN-LAST:event_mItem_buscarAsistActionPerformed
 
     private void mItem_editarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_editarEventoActionPerformed
-        // TODO add your handling code here:
-         opcion=1;
+
         String args[]=new String[1];
-        args[0]="Buscar Evento";
-        BuscarEvento.main(args);
+        args[0]="Modificar Evento";
+        EditarEvento.main(args);
     }//GEN-LAST:event_mItem_editarEventoActionPerformed
 
     private void mItem_eliminarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarEventoActionPerformed
         // TODO add your handling code here:
-         opcion=2;
         String args[]=new String[1];
-        args[0]="Buscar Evento";
-        BuscarEvento.main(args);
+        args[0]="Eliminar Evento";
+        EliminarEvento.main(args);
     }//GEN-LAST:event_mItem_eliminarEventoActionPerformed
 
     private void mItem_buscarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarEventoActionPerformed
         // TODO add your handling code here:
-          opcion=3;
         String args[]=new String[1];
         args[0]="Buscar Evento";
         BuscarEvento.main(args);
@@ -984,6 +887,13 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         args[0]="Editar Cargo";
         CargoEditar.main(args);
     }//GEN-LAST:event_mItem_editarCargoActionPerformed
+
+    private void mItem_peridaOportunidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_peridaOportunidadesActionPerformed
+        // TODO add your handling code here
+           String args[]=new String[1];
+        args[0]="Generar Informe de Pérdida de  Oportunidades";
+        PerdidaOportunidades.main(args);
+    }//GEN-LAST:event_mItem_peridaOportunidadesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1033,12 +943,12 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JMenuItem mIem_buscarSeg;
     private javax.swing.JMenuItem mItem_buscar;
     private javax.swing.JMenuItem mItem_buscarActividad;
     private javax.swing.JMenuItem mItem_buscarAsist;
     private javax.swing.JMenuItem mItem_buscarCargo;
-    private javax.swing.JMenuItem mItem_buscarCategPS;
     private javax.swing.JMenuItem mItem_buscarEmpleado;
     private javax.swing.JMenuItem mItem_buscarEvento;
     private javax.swing.JMenuItem mItem_buscarHabit;
@@ -1046,14 +956,12 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_buscarPS;
     private javax.swing.JMenuItem mItem_crearCH;
     private javax.swing.JMenuItem mItem_crearCargo;
-    private javax.swing.JMenuItem mItem_crearCategPS;
     private javax.swing.JMenuItem mItem_crearEmpleado;
     private javax.swing.JMenuItem mItem_crearHabit;
     private javax.swing.JMenuItem mItem_crearPS;
     private javax.swing.JMenuItem mItem_editarActividad;
     private javax.swing.JMenuItem mItem_editarCH;
     private javax.swing.JMenuItem mItem_editarCargo;
-    private javax.swing.JMenuItem mItem_editarCategPS;
     private javax.swing.JMenuItem mItem_editarEmpleado;
     private javax.swing.JMenuItem mItem_editarEvento;
     private javax.swing.JMenuItem mItem_editarHabit;
@@ -1063,7 +971,6 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_eliminarAsist;
     private javax.swing.JMenuItem mItem_eliminarCH;
     private javax.swing.JMenuItem mItem_eliminarCargo;
-    private javax.swing.JMenuItem mItem_eliminarCategPS;
     private javax.swing.JMenuItem mItem_eliminarEmpleado;
     private javax.swing.JMenuItem mItem_eliminarEvento;
     private javax.swing.JMenuItem mItem_eliminarHabit;
@@ -1072,6 +979,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_eliminarSeg;
     private javax.swing.JMenuItem mItem_informeAsist;
     private javax.swing.JMenuItem mItem_modificarSeg;
+    private javax.swing.JMenuItem mItem_peridaOportunidades;
     private javax.swing.JMenuItem mItem_planillaPagos;
     private javax.swing.JMenuItem mItem_registrarActividad;
     private javax.swing.JMenuItem mItem_registrarAsist;
@@ -1079,7 +987,6 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_registrarLugar;
     private javax.swing.JMenuItem mItem_registrarSeg;
     private javax.swing.JMenu menu_CategHabitacion;
-    private javax.swing.JMenu menu_CategPS;
     private javax.swing.JMenu menu_Habitacion;
     private javax.swing.JMenu menu_PS;
     private javax.swing.JMenu menu_RRHH;
@@ -1088,7 +995,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenu menu_cargo;
     private javax.swing.JMenu menu_empleado;
     private javax.swing.JMenu menu_eventos;
-    private javax.swing.JMenu menu_informePO;
+    private javax.swing.JMenu menu_hotel;
     private javax.swing.JMenu menu_lugar;
     private javax.swing.JMenu menu_salir;
     private javax.swing.JMenu menu_seguimientoA;

@@ -9,12 +9,15 @@ package ViewAdmHotel;
 import bean.AuditoriaSistema;
 import bean.Lugar;
 import bean.SeguimientoActividad;
+import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -24,6 +27,9 @@ import javax.swing.JOptionPane;
  */
 public class EliminarSeguimiento extends javax.swing.JFrame {
     private int resp;
+    private int fila;
+    private SeguimientoActividad sa;
+    private char ch;
 
     /**
      * Creates new form EliminarSeguimiento
@@ -40,7 +46,11 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        EntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
+        Query = java.beans.Beans.isDesignTime() ? null : EntityManager.createQuery("SELECT s FROM SeguimientoActividad s");
+        List = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(Query.getResultList());
         panel_EditarLugar = new javax.swing.JPanel();
         lbl_EditarLugar = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -58,6 +68,14 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btn_eliminar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        tf_valor = new javax.swing.JTextField();
+        lbl_valor = new javax.swing.JLabel();
+        lbl_filtro = new javax.swing.JLabel();
+        list_filtros = new javax.swing.JComboBox();
+        btn_buscar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        masterTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,7 +93,7 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
             .addGroup(panel_EditarLugarLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(lbl_EditarLugar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         panel_EditarLugarLayout.setVerticalGroup(
             panel_EditarLugarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -88,15 +106,21 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        tf_empleado.setEnabled(false);
+        tf_empleado.setEditable(false);
+        tf_empleado.setBackground(new java.awt.Color(0, 153, 255));
+        tf_empleado.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_empleado.setForeground(new java.awt.Color(255, 255, 255));
 
-        lbl_lugar.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_lugar.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_lugar.setText("Lugar de Actividad:");
 
-        lbl_descripcion.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_descripcion.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_descripcion.setText("Descripción:");
 
-        tf_codEmpleado.setEnabled(false);
+        tf_codEmpleado.setEditable(false);
+        tf_codEmpleado.setBackground(new java.awt.Color(0, 153, 255));
+        tf_codEmpleado.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_codEmpleado.setForeground(new java.awt.Color(255, 255, 255));
         tf_codEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tf_codEmpleadoKeyPressed(evt);
@@ -106,23 +130,33 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
             }
         });
 
-        tf_fechaHora.setEnabled(false);
+        tf_fechaHora.setEditable(false);
+        tf_fechaHora.setBackground(new java.awt.Color(0, 153, 255));
+        tf_fechaHora.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_fechaHora.setForeground(new java.awt.Color(255, 255, 255));
 
-        lbl_fechaHora.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_fechaHora.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_fechaHora.setText("Fecha/Hora:");
 
-        lbl_codEmpleado.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_codEmpleado.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_codEmpleado.setText(" Empleado:");
 
-        lbl_codigo.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_codigo.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_codigo.setText("Código Seguimiento:");
 
-        tf_codigo.setEditable(false);
-        tf_codigo.setEnabled(false);
+        tf_codigo.setBackground(new java.awt.Color(0, 153, 255));
+        tf_codigo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_codigo.setForeground(new java.awt.Color(255, 255, 255));
 
-        tf_lugar.setEnabled(false);
+        tf_lugar.setEditable(false);
+        tf_lugar.setBackground(new java.awt.Color(0, 153, 255));
+        tf_lugar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_lugar.setForeground(new java.awt.Color(255, 255, 255));
 
-        tf_descripcion.setEnabled(false);
+        tf_descripcion.setEditable(false);
+        tf_descripcion.setBackground(new java.awt.Color(0, 153, 255));
+        tf_descripcion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_descripcion.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -130,30 +164,29 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_codigo)
-                            .addComponent(lbl_codEmpleado))
+                        .addComponent(lbl_codigo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(tf_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(tf_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tf_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tf_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbl_codEmpleado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tf_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(tf_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(98, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_lugar)
                             .addComponent(lbl_descripcion)
                             .addComponent(lbl_fechaHora))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tf_fechaHora, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tf_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(tf_lugar)))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                            .addComponent(tf_lugar, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                            .addComponent(tf_descripcion))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,25 +194,23 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_codigo)
-                    .addComponent(tf_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tf_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_codEmpleado)
                     .addComponent(tf_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tf_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tf_lugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_lugar))
-                .addGap(29, 29, 29)
+                    .addComponent(lbl_lugar)
+                    .addComponent(tf_lugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_descripcion)
                     .addComponent(tf_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tf_fechaHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_fechaHora))
-                .addGap(46, 46, 46))
+                    .addComponent(lbl_fechaHora)
+                    .addComponent(tf_fechaHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -222,6 +253,112 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setForeground(new java.awt.Color(204, 204, 255));
+
+        tf_valor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_valorKeyTyped(evt);
+            }
+        });
+
+        lbl_valor.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_valor.setText("Valor:");
+
+        lbl_filtro.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_filtro.setText("Buscar por:");
+
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Seguimiento", "Actividad", "Lugar", "Fecha", "Código Empleado", "Nombre", "Apellido" }));
+        list_filtros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                list_filtrosActionPerformed(evt);
+            }
+        });
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusLost(evt);
+            }
+        });
+
+        btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
+        btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
+        btn_buscar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                btn_buscarFocusLost(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_filtro)
+                .addGap(18, 18, 18)
+                .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(lbl_valor)
+                .addGap(18, 18, 18)
+                .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(btn_buscar)
+                .addGap(21, 21, 21))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_filtro)
+                    .addComponent(lbl_valor)
+                    .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_buscar))
+                .addContainerGap())
+        );
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, List, masterTable);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoSeguimiento}"));
+        columnBinding.setColumnName("Seguimiento");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoEmpleado.codigoEmpleado}"));
+        columnBinding.setColumnName("Empleado");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoEmpleado.nombre}"));
+        columnBinding.setColumnName("Nombre");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoEmpleado.apellido}"));
+        columnBinding.setColumnName("Apellido");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${actividad.nombre}"));
+        columnBinding.setColumnName("Actividad");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${lugar.nombre}"));
+        columnBinding.setColumnName("Lugar");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaHora}"));
+        columnBinding.setColumnName("Fecha Hora");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                masterTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(masterTable);
+        if (masterTable.getColumnModel().getColumnCount() > 0) {
+            masterTable.getColumnModel().getColumn(0).setPreferredWidth(40);
+            masterTable.getColumnModel().getColumn(1).setPreferredWidth(40);
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -229,14 +366,20 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
+                        .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(panel_EditarLugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                        .addGap(263, 263, 263)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(163, 163, 163)
+                        .addComponent(panel_EditarLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,11 +387,17 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(panel_EditarLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -273,12 +422,10 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
         String valor;
          resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
             if (resp==JOptionPane.YES_OPTION){
-                EntityManagerFactory fact=Persistence.createEntityManagerFactory("proyectoPU");
-                EntityManager ema= fact.createEntityManager();
-                ema.getTransaction().begin();
-                SeguimientoActividad s=ema.find(SeguimientoActividad.class,Integer.parseInt(tf_codigo.getText()) );
+                EntityManager.getTransaction().begin();
+                SeguimientoActividad s=EntityManager.find(SeguimientoActividad.class,Integer.parseInt(tf_codigo.getText()) );
                 valor=s.toString();//guardamos el objeto antes de eliminar
-                ema.remove(s);
+                EntityManager.remove(s);
                 AuditoriaSistema as=new AuditoriaSistema();
                 as.setAccion("Eliminación");
                 as.setTabla("Seguimiento Actividad");
@@ -288,15 +435,202 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
                 as.setUsuario("nadie");
                 as.setAntes(valor);
                 as.setDespues("No hay modificaciones");
-                ema.persist(as);
-                ema.getTransaction().commit();
-                ema.close();
+                EntityManager.persist(as);
+                EntityManager.getTransaction().commit();
                 JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
+                List.clear();
+                List.remove(s);
+                resetear();
                 
+            }else{
+                    this.dispose();
             }
-            this.dispose();
+            
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
+    private void tf_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_valorKeyTyped
+        // TODO add your handling code here:
+        if (list_filtros.getSelectedItem()=="Código Seguimiento" || list_filtros.getSelectedItem()=="Código Empleado"){
+            ch=evt.getKeyChar();
+            if(!Character.isDigit(ch)){
+                getToolkit().beep();
+                evt.consume();
+            }
+        }
+        else{
+            if(list_filtros.getSelectedItem()=="Actividad" || list_filtros.getSelectedItem()=="Nombre" || list_filtros.getSelectedItem()=="Apellido"){
+                ch=evt.getKeyChar();
+                if(Character.isDigit(ch)){
+                    getToolkit().beep();
+                    evt.consume();
+                }
+
+            }
+        }
+    }//GEN-LAST:event_tf_valorKeyTyped
+
+    private void list_filtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_list_filtrosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_list_filtrosActionPerformed
+
+    private void list_filtrosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusLost
+        // TODO add your handling code here:
+        if(list_filtros.getSelectedItem()=="Fecha"){
+            Date fecha= new Date();
+            DateFormat formato=new SimpleDateFormat("dd-MM-yyyy");
+            tf_valor.setText(formato.format(fecha));
+        }
+    }//GEN-LAST:event_list_filtrosFocusLost
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        // TODO add your handling code here:
+        int id;
+        if (tf_valor.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Ingrese algún valor para efectuar la búsqueda", "Advertencia",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        else{
+            if (list_filtros.getSelectedItem()=="Código Seguimiento"){
+                id=Integer.parseInt(tf_valor.getText());
+                Query = EntityManager.createNamedQuery("SeguimientoActividad.findByCodigoSeguimiento");
+                Query.setParameter("codigoSeguimiento",id);
+                List<SeguimientoActividad> s = Query.getResultList();
+                if (s.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Código de Seguimiento de Actividad inexistente", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(s);
+            }
+            else if(list_filtros.getSelectedItem()=="Actividad"){
+                Query = EntityManager.createNativeQuery( "SELECT * FROM seguimiento_actividad s "
+                    + "INNER JOIN actividad a "
+                    + "ON s.actividad=a.codActividad "
+                    +"WHERE a.nombre LIKE "
+                    +"'%"+tf_valor.getText()+"%'", SeguimientoActividad.class);
+                List<SeguimientoActividad> s =Query.getResultList();
+                if (s.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Descripción de actividad inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(s);
+            }
+            else if(list_filtros.getSelectedItem()=="Lugar"){
+                Query = EntityManager.createNativeQuery( "SELECT * FROM seguimiento_actividad s "
+                    + "INNER JOIN lugar l "
+                    + "ON s.lugar=l.codLugar "
+                    +"WHERE l.nombre LIKE "
+                    +"'%"+tf_valor.getText()+"%'", SeguimientoActividad.class);
+                List<SeguimientoActividad> s = Query.getResultList();
+                if (s.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Lugar de actividad inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(s);
+            }
+            else if(list_filtros.getSelectedItem()=="Fecha"){
+                Query = EntityManager.createNativeQuery( "SELECT * FROM seguimiento_actividad  "
+                    +"WHERE fechaHora LIKE "
+                    +"'%"+tf_valor.getText()+"%'", SeguimientoActividad.class);
+                List<SeguimientoActividad> s = Query.getResultList();
+                if (s.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "No existen registros para dicha fecha","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(s);
+            }
+            else if(list_filtros.getSelectedItem()=="Nombre"){
+                Query = EntityManager.createNativeQuery( "SELECT * FROM seguimiento_actividad s "
+                    + "INNER JOIN empleado e "
+                    + "ON s.codigoEmpleado=e.codigoEmpleado "
+                    +"WHERE e.nombre LIKE "
+                    +"'%"+tf_valor.getText()+"%'", SeguimientoActividad.class);
+                List<SeguimientoActividad> s = Query.getResultList();
+                if (s.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "No existen registros para dicho empleado","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(s);
+            }
+            else if(list_filtros.getSelectedItem()=="Código Empleado"){
+                Query = EntityManager.createNativeQuery( "SELECT * FROM seguimiento_actividad  "
+                    +"WHERE codigoEmpleado="
+                    +"'"+tf_valor.getText()+"'", SeguimientoActividad.class);
+                List<SeguimientoActividad> s = Query.getResultList();
+                if (s.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "No existen registros para dicho empleado","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(s);
+            }
+               else if(list_filtros.getSelectedItem()=="Apellido"){
+                Query = EntityManager.createNativeQuery( "SELECT * FROM seguimiento_actividad s "
+                    + "INNER JOIN empleado e "
+                    + "ON s.codigoEmpleado=e.codigoEmpleado "
+                    +"WHERE e.apellido LIKE "
+                    +"'%"+tf_valor.getText()+"%'", SeguimientoActividad.class);
+                List<SeguimientoActividad> s = Query.getResultList();
+                if (s.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "No existen registros para dicho empleado","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(s);
+            }
+        }
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void btn_buscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_buscarFocusLost
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_btn_buscarFocusLost
+
+    private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
+        // TODO add your handling code here:
+        fila=masterTable.getSelectedRow();
+          obtenerSeguimiento(fila);
+         inicializarSeguimiento();
+    }//GEN-LAST:event_masterTableMouseClicked
+     private void obtenerSeguimiento(int fila) {
+            Query=EntityManager.createNamedQuery("SeguimientoActividad.findByCodigoSeguimiento");
+            Query.setParameter("codigoSeguimiento", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );
+           
+            try{
+               sa = (SeguimientoActividad)Query.getSingleResult();
+               System.out.println(sa);
+            }catch(javax.persistence.NoResultException e){
+                System.out.println(sa);
+            }
+      }
+      private void inicializarSeguimiento(){
+            tf_codigo.setText(Integer.toString(sa.getCodigoSeguimiento()));
+            tf_codEmpleado.setText(Integer.toString(sa.getCodigoEmpleado().getCodigoEmpleado()));
+            tf_empleado.setText(sa.getCodigoEmpleado().getNombre()+" "+sa.getCodigoEmpleado().getApellido());
+            tf_lugar.setText(sa.getLugar().getNombre());
+            tf_descripcion.setText(sa.getActividad().getNombre());
+            tf_fechaHora.setText(sa.getFechaHora());
+            
+    }
+    private void resetear(){
+           tf_codigo.setText(null);
+            tf_codEmpleado.setText(null);
+            tf_empleado.setText(null);   
+            tf_fechaHora.setText(null);
+            tf_lugar.setText(null);
+            tf_descripcion.setText(null);
+    }
     /**
      * @param args the command line arguments
      */
@@ -327,9 +661,11 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame frame=new BuscarSeguimiento();
+                JFrame frame=new EliminarSeguimiento();
                 frame.setVisible(true);
-                frame.setTitle("Buscar Seguimiento de Actividad");
+                frame.setTitle("Eliminar Seguimiento de Actividad");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
             }
@@ -337,22 +673,34 @@ public class EliminarSeguimiento extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.persistence.EntityManager EntityManager;
+    private java.util.List<bean.SeguimientoActividad> List;
+    private javax.persistence.Query Query;
+    private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_eliminar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_EditarLugar;
     private javax.swing.JLabel lbl_codEmpleado;
     private javax.swing.JLabel lbl_codigo;
     private javax.swing.JLabel lbl_descripcion;
     private javax.swing.JLabel lbl_fechaHora;
+    private javax.swing.JLabel lbl_filtro;
     private javax.swing.JLabel lbl_lugar;
+    private javax.swing.JLabel lbl_valor;
+    private javax.swing.JComboBox list_filtros;
+    private javax.swing.JTable masterTable;
     private javax.swing.JPanel panel_EditarLugar;
-    public static javax.swing.JTextField tf_codEmpleado;
-    public static javax.swing.JTextField tf_codigo;
-    public static javax.swing.JTextField tf_descripcion;
-    public static javax.swing.JTextField tf_empleado;
-    public static javax.swing.JTextField tf_fechaHora;
-    public static javax.swing.JTextField tf_lugar;
+    private javax.swing.JTextField tf_codEmpleado;
+    private javax.swing.JTextField tf_codigo;
+    private javax.swing.JTextField tf_descripcion;
+    private javax.swing.JTextField tf_empleado;
+    private javax.swing.JTextField tf_fechaHora;
+    private javax.swing.JTextField tf_lugar;
+    private javax.swing.JTextField tf_valor;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

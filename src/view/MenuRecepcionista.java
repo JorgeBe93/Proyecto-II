@@ -58,12 +58,12 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         mItem_confirmarPre = new javax.swing.JMenuItem();
         mItem_eliminarPres = new javax.swing.JMenuItem();
         mItem_buscarPre = new javax.swing.JMenuItem();
-        menu_consumo2 = new javax.swing.JMenu();
+        menu_consumo = new javax.swing.JMenu();
         mItem_registrarConsumo2 = new javax.swing.JMenuItem();
         mItem_modificarConsumo = new javax.swing.JMenuItem();
         mItem_eliminarConsumo = new javax.swing.JMenuItem();
         mItem_buscarConsumo = new javax.swing.JMenuItem();
-        menu_resumen = new javax.swing.JMenu();
+        mItem_resumenConsumo = new javax.swing.JMenuItem();
         menu_factura = new javax.swing.JMenu();
         mItem_generarFactura = new javax.swing.JMenuItem();
         mItem_buscarFactura = new javax.swing.JMenuItem();
@@ -71,9 +71,12 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        menu_cliente.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/clientes.png"))); // NOI18N
+        jMenuBar1.setBackground(new java.awt.Color(0, 153, 255));
+
+        menu_cliente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_cliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/aluno.png"))); // NOI18N
         menu_cliente.setText(" Clientes");
+        menu_cliente.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         menu_cliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_clienteActionPerformed(evt);
@@ -116,8 +119,11 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
         jMenuBar1.add(menu_cliente);
 
-        menu_reserva.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_reserva.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_reserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/reserva1.png"))); // NOI18N
         menu_reserva.setText(" Reservas");
+        menu_reserva.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        menu_reserva.setMaximumSize(new java.awt.Dimension(125, 32800));
         menu_reserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_reservaActionPerformed(evt);
@@ -141,6 +147,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         });
         menu_reserva.add(mItem_editarReserva);
 
+        mItem_eliminarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/SNP_2726707_en_v0.png"))); // NOI18N
         mItem_eliminarReserva.setText("Eliminar Reserva");
         mItem_eliminarReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,9 +174,10 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
         jMenuBar1.add(menu_reserva);
 
-        menu_presupuesto.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_presupuesto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icon-money.png"))); // NOI18N
+        menu_presupuesto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_presupuesto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/money.png"))); // NOI18N
         menu_presupuesto.setText("Presupuesto");
+        menu_presupuesto.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         menu_presupuesto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menu_presupuestoMouseClicked(evt);
@@ -210,8 +218,10 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
         jMenuBar1.add(menu_presupuesto);
 
-        menu_consumo2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_consumo2.setText("Consumos");
+        menu_consumo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_consumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/caixa.png"))); // NOI18N
+        menu_consumo.setText("Consumos");
+        menu_consumo.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
 
         mItem_registrarConsumo2.setText("Registrar Consumo");
         mItem_registrarConsumo2.addActionListener(new java.awt.event.ActionListener() {
@@ -219,7 +229,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
                 mItem_registrarConsumo2ActionPerformed(evt);
             }
         });
-        menu_consumo2.add(mItem_registrarConsumo2);
+        menu_consumo.add(mItem_registrarConsumo2);
 
         mItem_modificarConsumo.setText("Modificar Consumo");
         mItem_modificarConsumo.addActionListener(new java.awt.event.ActionListener() {
@@ -227,7 +237,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
                 mItem_modificarConsumoActionPerformed(evt);
             }
         });
-        menu_consumo2.add(mItem_modificarConsumo);
+        menu_consumo.add(mItem_modificarConsumo);
 
         mItem_eliminarConsumo.setText("Eliminar Consumo");
         mItem_eliminarConsumo.addActionListener(new java.awt.event.ActionListener() {
@@ -235,7 +245,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
                 mItem_eliminarConsumoActionPerformed(evt);
             }
         });
-        menu_consumo2.add(mItem_eliminarConsumo);
+        menu_consumo.add(mItem_eliminarConsumo);
 
         mItem_buscarConsumo.setText("Buscar Consumo");
         mItem_buscarConsumo.addActionListener(new java.awt.event.ActionListener() {
@@ -243,27 +253,22 @@ public class MenuRecepcionista extends javax.swing.JFrame {
                 mItem_buscarConsumoActionPerformed(evt);
             }
         });
-        menu_consumo2.add(mItem_buscarConsumo);
+        menu_consumo.add(mItem_buscarConsumo);
 
-        jMenuBar1.add(menu_consumo2);
-
-        menu_resumen.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_resumen.setText("Ver Resumen de Consumo");
-        menu_resumen.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menu_resumenMouseClicked(evt);
-            }
-        });
-        menu_resumen.addActionListener(new java.awt.event.ActionListener() {
+        mItem_resumenConsumo.setText("Resumen de Consumo");
+        mItem_resumenConsumo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_resumenActionPerformed(evt);
+                mItem_resumenConsumoActionPerformed(evt);
             }
         });
-        jMenuBar1.add(menu_resumen);
+        menu_consumo.add(mItem_resumenConsumo);
 
-        menu_factura.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_factura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/dinero.png"))); // NOI18N
+        jMenuBar1.add(menu_consumo);
+
+        menu_factura.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_factura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/factura3.png"))); // NOI18N
         menu_factura.setText("Facturas de Cobro");
+        menu_factura.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         menu_factura.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menu_facturaMouseClicked(evt);
@@ -290,9 +295,10 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
         jMenuBar1.add(menu_factura);
 
-        menu_salir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/excluded.png"))); // NOI18N
+        menu_salir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/login.png"))); // NOI18N
         menu_salir.setText("Cerrar Sesión");
+        menu_salir.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         menu_salir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menu_salirMouseClicked(evt);
@@ -306,11 +312,11 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 717, Short.MAX_VALUE)
+            .addGap(0, 810, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGap(0, 298, Short.MAX_VALUE)
         );
 
         pack();
@@ -441,20 +447,6 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         BuscarConsumoPS.main(args);
     }//GEN-LAST:event_mItem_buscarConsumoActionPerformed
 
-    private void menu_resumenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_resumenActionPerformed
-        // TODO add your handling code here:
-       
-        
-    }//GEN-LAST:event_menu_resumenActionPerformed
-
-    private void menu_resumenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_resumenMouseClicked
-        // TODO add your handling code here:
-        String args[]=new String[1];
-        args[0]="Resumen de consumo del cliente";
-        ConsumoResumen.main(args);
-       
-    }//GEN-LAST:event_menu_resumenMouseClicked
-
     private void menu_facturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_facturaMouseClicked
         // TODO add your handling code here:
        
@@ -496,27 +488,33 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
     private void mItem_eliminarPresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_eliminarPresActionPerformed
         // TODO add your handling code here:
-        opcion=2;
+        
          String args[]=new String[1];
-        args[0]="Buscar Presupuesto";
-        BuscarPresupuesto.main(args);
+        args[0]="Eliminar Presupuesto";
+        EliminarPresupuesto.main(args);
     }//GEN-LAST:event_mItem_eliminarPresActionPerformed
 
     private void mItem_confirmarPreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_confirmarPreActionPerformed
-        // TODO add your handling code here:
-        opcion=1;
+        // TODO add your handling code here
          String args[]=new String[1];
         args[0]="Buscar Presupuesto";
-        BuscarPresupuesto.main(args);
+        ConfirmarPresupuesto.main(args);
     }//GEN-LAST:event_mItem_confirmarPreActionPerformed
 
     private void mItem_buscarPreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarPreActionPerformed
         // TODO add your handling code here:
-        opcion=3;
+       
          String args[]=new String[1];
         args[0]="Buscar Presupuesto";
         BuscarPresupuesto.main(args);
     }//GEN-LAST:event_mItem_buscarPreActionPerformed
+
+    private void mItem_resumenConsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_resumenConsumoActionPerformed
+        // TODO add your handling code here:
+         String args[]=new String[1];
+        args[0]="Resumen de consumo del cliente";
+        ConsumoResumen.main(args);
+    }//GEN-LAST:event_mItem_resumenConsumoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -580,12 +578,12 @@ public class MenuRecepcionista extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_modificarConsumo;
     private javax.swing.JMenuItem mItem_registrarConsumo2;
     private javax.swing.JMenuItem mItem_registrarReserva;
+    private javax.swing.JMenuItem mItem_resumenConsumo;
     private javax.swing.JMenu menu_cliente;
-    private javax.swing.JMenu menu_consumo2;
+    private javax.swing.JMenu menu_consumo;
     private javax.swing.JMenu menu_factura;
     private javax.swing.JMenu menu_presupuesto;
     private javax.swing.JMenu menu_reserva;
-    private javax.swing.JMenu menu_resumen;
     private javax.swing.JMenu menu_salir;
     // End of variables declaration//GEN-END:variables
 }

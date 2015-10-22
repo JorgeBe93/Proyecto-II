@@ -8,10 +8,12 @@ package view;
 
 import bean.Presupuesto;
 import bean.Reserva;
+import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -64,10 +66,16 @@ public class BuscarPresupuesto extends javax.swing.JFrame {
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${numPresupuesto}"));
-        columnBinding.setColumnName("Numero Presupuesto");
+        columnBinding.setColumnName("Presupuesto");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ciCliente}"));
-        columnBinding.setColumnName("Cedula Cliente");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCliente.cedula}"));
+        columnBinding.setColumnName("Cliente CI");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCliente.nombre}"));
+        columnBinding.setColumnName("Nombre");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCliente.apellido}"));
+        columnBinding.setColumnName("Apellido");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${estado}"));
         columnBinding.setColumnName("Estado");
@@ -83,11 +91,17 @@ public class BuscarPresupuesto extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(masterTable);
+        if (masterTable.getColumnModel().getColumnCount() > 0) {
+            masterTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            masterTable.getColumnModel().getColumn(1).setPreferredWidth(50);
+            masterTable.getColumnModel().getColumn(4).setPreferredWidth(50);
+            masterTable.getColumnModel().getColumn(5).setPreferredWidth(50);
+        }
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Numero Presupuesto", "Estado", "Fecha Emisión", "Cedula" }));
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Numero Presupuesto", "Estado", "Fecha Emisión", "Cedula", "Nombre", "Apellido" }));
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusLost(evt);
@@ -127,8 +141,8 @@ public class BuscarPresupuesto extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lbl_filtro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(list_filtros, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(list_filtros, 0, 158, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_valor)
                 .addGap(18, 18, 18)
                 .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -169,53 +183,50 @@ public class BuscarPresupuesto extends javax.swing.JFrame {
         panel_auditoriaLayout.setHorizontalGroup(
             panel_auditoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_auditoriaLayout.createSequentialGroup()
-                .addContainerGap(142, Short.MAX_VALUE)
+                .addContainerGap(172, Short.MAX_VALUE)
                 .addComponent(lbl_auditoria)
-                .addGap(138, 138, 138))
+                .addGap(152, 152, 152))
         );
         panel_auditoriaLayout.setVerticalGroup(
             panel_auditoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_auditoriaLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_auditoriaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_auditoria)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btn_cancelar)
+                .addGap(306, 306, 306))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(panel_auditoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 33, Short.MAX_VALUE))
+                        .addGap(21, 21, 21)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_cancelar)
-                .addGap(251, 251, 251))
+                        .addGap(67, 67, 67)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panel_auditoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(panel_auditoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(panel_auditoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btn_cancelar)
-                .addGap(19, 19, 19))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -276,21 +287,51 @@ public class BuscarPresupuesto extends javax.swing.JFrame {
                 }
                 list.clear();
                 list.addAll(p);
-                return;
 
-            }else if(opcion.equals("Cedula")){
-                query=entityManager.createNamedQuery("Presupuesto.findByCiCliente");
-                query.setParameter("ciCliente", tf_valor.getText());
-                 List<Presupuesto> p=query.getResultList();
-                if(p.isEmpty()){
-                    JOptionPane.showMessageDialog(null,"Cédula de  Cliente Inexistente!", "Error",JOptionPane.ERROR_MESSAGE);
-                    tf_valor.setText(null);
-                    return;
-                }
-                list.clear();
-                list.addAll(p);
-                return;
-                
+            }  else if (list_filtros.getSelectedItem()=="Apellido"){
+              query = entityManager.createNativeQuery( "SELECT * FROM presupuesto p "
+                    + "INNER JOIN cliente c "
+                    + "on p.codigoCliente = c.codigoCliente "
+                    + "WHERE c.apellido LIKE "
+                    +"'%"+tf_valor.getText()+"%'", Presupuesto.class);
+            List<Presupuesto> p = query.getResultList();
+            if (p.isEmpty()){
+                 JOptionPane.showMessageDialog(null, "Apellido inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                 tf_valor.setText(null);
+                  return;
+            }
+            list.clear();
+            list.addAll(p);
+            }
+             else if (list_filtros.getSelectedItem()=="Nombre"){
+              query = entityManager.createNativeQuery( "SELECT * FROM presupuesto p "
+                    + "INNER JOIN cliente c "
+                    + "on p.codigoCliente = c.codigoCliente "
+                    + "WHERE c.nombre LIKE "
+                    +"'%"+tf_valor.getText()+"%'", Presupuesto.class);
+            List<Presupuesto> p = query.getResultList();
+            if (p.isEmpty()){
+                 JOptionPane.showMessageDialog(null, "Nombre inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                 tf_valor.setText(null);
+                  return;
+            }
+            list.clear();
+            list.addAll(p);
+            }
+             else if (list_filtros.getSelectedItem()=="Cedula"){
+              query = entityManager.createNativeQuery( "SELECT * FROM presupuesto p "
+                    + "INNER JOIN cliente c "
+                    + "on p.codigoCliente = c.codigoCliente "
+                    + "WHERE c.cedula=  "
+                    +"'"+tf_valor.getText()+"'", Presupuesto.class);
+            List<Presupuesto> p = query.getResultList();
+            if (p.isEmpty()){
+                 JOptionPane.showMessageDialog(null, "Cedula inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                 tf_valor.setText(null);
+                  return;
+            }
+            list.clear();
+            list.addAll(p);
             }
         }
     }//GEN-LAST:event_btn_buscarActionPerformed
@@ -326,69 +367,7 @@ public class BuscarPresupuesto extends javax.swing.JFrame {
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
         // TODO add your handling code here:
-        switch(MenuRecepcionista.opcion){
-            case 1:
-                      fila=masterTable.getSelectedRow();
-                      numero=(Integer) masterTable.getValueAt(fila, 0);
-                      cedula=(String) masterTable.getValueAt(fila, 1);
-                      estado=(String)masterTable.getValueAt(fila, 2);
-                      fechaEmision=(String)masterTable.getValueAt(fila, 3);
-                      JFrame frame=new ConfirmarPresupuesto();
-                      ConfirmarPresupuesto.tf_numero.setText(Integer.toString(numero));
-                      ConfirmarPresupuesto.tf_cedula.setText(cedula);
-                      ConfirmarPresupuesto.tf_estado.setText(estado);
-                      ConfirmarPresupuesto.tf_fecha.setText(fechaEmision);
-                      query=entityManager.createNativeQuery("SELECT * FROM reserva r "
-                      + "INNER JOIN presupuesto p "
-                      + "on p.numPresupuesto = r.numPresupuesto "
-                      + "WHERE r.numPresupuesto="
-                      +numero, Reserva.class);
-                      List<Reserva> r=query.getResultList();
-                      ConfirmarPresupuesto.tf_reserva.setText(Integer.toString(r.get(0).getCodigoReserva()));
-                      ConfirmarPresupuesto.tf_in.setText(formato.format(r.get(0).getCheckIn()));
-                      ConfirmarPresupuesto.tf_out.setText(formato.format(r.get(0).getCheckOut()));
-                      ConfirmarPresupuesto.tf_cliente.setText(r.get(0).getCodigoCliente().getNombre()+" "+
-                              r.get(0).getCodigoCliente().getApellido());
-                      ConfirmarPresupuesto.tf_total.setText(Integer.toString(r.get(0).getMontoTotal()));
-                      frame.setVisible(true);
-                      frame.setTitle("Confirmar Presupuesto");
-                      frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                      frame.setLocationRelativeTo(null);
-                      this.dispose();
-                      break;
-            case 2:
-                      fila=masterTable.getSelectedRow();
-                      numero=(Integer) masterTable.getValueAt(fila, 0);
-                      cedula=(String) masterTable.getValueAt(fila, 1);
-                      estado=(String)masterTable.getValueAt(fila, 2);
-                      fechaEmision=(String)masterTable.getValueAt(fila, 3);
-                      JFrame f=new EliminarPresupuesto();
-                      EliminarPresupuesto.tf_numero.setText(Integer.toString(numero));
-                      EliminarPresupuesto.tf_cedula.setText(cedula);
-                      EliminarPresupuesto.tf_estado.setText(estado);
-                      EliminarPresupuesto.tf_fecha.setText(fechaEmision);
-                      query=entityManager.createNativeQuery("SELECT * FROM reserva r "
-                      + "INNER JOIN presupuesto p "
-                      + "on p.numPresupuesto = r.numPresupuesto "
-                      + "WHERE r.numPresupuesto="
-                      +numero, Reserva.class);
-                      List<Reserva> re=query.getResultList();
-                      EliminarPresupuesto.tf_reserva.setText(Integer.toString(re.get(0).getCodigoReserva()));
-                      EliminarPresupuesto.tf_in.setText(formato.format(re.get(0).getCheckIn()));
-                      EliminarPresupuesto.tf_out.setText(formato.format(re.get(0).getCheckOut()));
-                      EliminarPresupuesto.tf_cliente.setText(re.get(0).getCodigoCliente().getNombre()+" "+
-                              re.get(0).getCodigoCliente().getApellido());
-                      EliminarPresupuesto.tf_total.setText(Integer.toString(re.get(0).getMontoTotal()));
-                      f.setVisible(true);
-                      f.setTitle("Eliminar Presupuesto");
-                      f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                      f.setLocationRelativeTo(null);
-                      this.dispose();
-                        break;
-            case 3:
-                    break;
-            
-        }
+    
     }//GEN-LAST:event_masterTableMouseClicked
 
     /**
@@ -424,6 +403,8 @@ public class BuscarPresupuesto extends javax.swing.JFrame {
                 JFrame frame= new BuscarPresupuesto();
                 frame.setVisible(true);
                 frame.setTitle("Buscar Presupuesto");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
             }

@@ -6,12 +6,13 @@
 
 package ViewAdmHotel;
 
-import bean.Asistencia;
 import bean.Eventos;
+import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -381,35 +382,7 @@ public class BuscarEvento extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cerrarActionPerformed
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
-        // TODO add your handling code here:
-         switch(MenuAdminHotel.opcion){
-             case 1:
-                    fila=masterTable.getSelectedRow();
-                    EditarEvento.evento=obtenerEvento(fila);
-                    JFrame frame=new EditarEvento();
-                    frame.setVisible(true);
-                    frame.setTitle("Editar Evento");
-                    frame.setLocationRelativeTo(null);
-                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    this.dispose();
-                     break;
-             case 2:
-                    fila=masterTable.getSelectedRow();
-                    EliminarEvento.evento=obtenerEvento(fila);
-                    JFrame fm=new EliminarEvento();
-                    fm.setVisible(true);
-                    fm.setTitle("Eliinar Evento");
-                    fm.setLocationRelativeTo(null);
-                    fm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    this.dispose();
-                    
-                    break;
-             case 3:
-                    break;
-         }
-                 
-             
-         
+        // TODO add your handling code here:     
     }//GEN-LAST:event_masterTableMouseClicked
  private Eventos obtenerEvento(int fila){
         query=entityManager.createNamedQuery("Eventos.findByIdEvento");
@@ -450,6 +423,8 @@ public class BuscarEvento extends javax.swing.JFrame {
                 JFrame frame=new BuscarEvento();
                 frame.setVisible(true);
                 frame.setTitle("Buscar Evento");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
             }

@@ -317,8 +317,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lbl_filtro" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="list_filtros" min="-2" pref="94" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <Component id="list_filtros" min="-2" pref="110" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="lbl_valor" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="tf_valor" min="-2" pref="142" max="-2" attributes="0"/>

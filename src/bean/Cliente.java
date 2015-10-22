@@ -64,7 +64,7 @@ public class Cliente implements Serializable {
     @Column(name = "ruc")
     private String ruc;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoCliente")
-    private Collection<Reserva> reservaCollection;
+    private Collection<Presupuesto> presupuestoCollection;
 
     public Cliente() {
     }
@@ -147,12 +147,12 @@ public class Cliente implements Serializable {
         this.ruc = ruc;
     }
 
-    public Collection<Reserva> getReservaCollection() {
-        return reservaCollection;
+    public Collection<Presupuesto> getPresupuestoCollection() {
+        return presupuestoCollection;
     }
 
-    public void setReservaCollection(Collection<Reserva> reservaCollection) {
-        this.reservaCollection = reservaCollection;
+    public void setPresupuestoCollection(Collection<Presupuesto> presupuestoCollection) {
+        this.presupuestoCollection = presupuestoCollection;
     }
 
     @Override
@@ -175,14 +175,9 @@ public class Cliente implements Serializable {
         return true;
     }
 
-  /*  @Override
+    @Override
     public String toString() {
         return "bean.Cliente[ codigoCliente=" + codigoCliente + " ]";
     }
-    */
-
-    @Override
-    public String toString() {
-        return  "cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + ", direccion=" + direccion + ", telefono=" + telefono + ", ruc=" + ruc;
-    }
+    
 }

@@ -172,7 +172,7 @@ public class LoginView extends javax.swing.JFrame {
                 .addGap(15, 15, 15))
         );
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/hotel4.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/hotel.png"))); // NOI18N
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));

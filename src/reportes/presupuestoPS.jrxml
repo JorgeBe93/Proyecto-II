@@ -8,17 +8,13 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     categoria_prod_ser.`codigoCategoria` AS categoria_prod_ser_codigoCategoria,
-     categoria_prod_ser.`nombre` AS categoria_prod_ser_nombre,
      producto_servicio.`codigoPS` AS producto_servicio_codigoPS,
      producto_servicio.`nombre` AS producto_servicio_nombre,
      producto_servicio.`costo` AS producto_servicio_costo
 FROM
-     `categoria_prod_ser` categoria_prod_ser INNER JOIN `producto_servicio` producto_servicio ON categoria_prod_ser.`codigoCategoria` = producto_servicio.`codigoCategoria`
+     `producto_servicio` producto_servicio
 WHERE producto_servicio.`nombre` not like  '%saldo de reserva%']]>
 	</queryString>
-	<field name="categoria_prod_ser_codigoCategoria" class="java.lang.Integer"/>
-	<field name="categoria_prod_ser_nombre" class="java.lang.String"/>
 	<field name="producto_servicio_codigoPS" class="java.lang.Integer"/>
 	<field name="producto_servicio_nombre" class="java.lang.String"/>
 	<field name="producto_servicio_costo" class="java.lang.Integer"/>
@@ -52,13 +48,6 @@ WHERE producto_servicio.`nombre` not like  '%saldo de reserva%']]>
 				<text><![CDATA[Código]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fc0fa11d-5caa-43e6-a2a0-a1f32d789c30" x="142" y="0" width="131" height="20"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Categoría]]></text>
-			</staticText>
-			<staticText>
 				<reportElement uuid="7a026956-07c8-4b61-b8f7-69f5054a15e2" x="437" y="0" width="80" height="20"/>
 				<textElement>
 					<font isBold="true"/>
@@ -66,7 +55,7 @@ WHERE producto_servicio.`nombre` not like  '%saldo de reserva%']]>
 				<text><![CDATA[Costo Gs.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6bbfbf94-e12d-440f-9e5b-3bec3a7de406" x="288" y="0" width="130" height="20"/>
+				<reportElement uuid="6bbfbf94-e12d-440f-9e5b-3bec3a7de406" x="196" y="0" width="130" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -77,26 +66,19 @@ WHERE producto_servicio.`nombre` not like  '%saldo de reserva%']]>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="9b7d1e33-59aa-41b4-9f51-b9e44bd1a70e" x="12" y="0" width="100" height="20"/>
+				<reportElement uuid="4cde61fa-4258-4ba2-80b7-b6009cae550e" x="0" y="0" width="76" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{categoria_prod_ser_codigoCategoria}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{producto_servicio_codigoPS}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e58d8444-ebfd-4b2e-bf68-cb3984457868" x="142" y="0" width="100" height="20"/>
+				<reportElement uuid="52c46b59-1723-4c57-84c2-b5e8d5b2cae7" x="178" y="0" width="176" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{categoria_prod_ser_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{producto_servicio_nombre}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement uuid="5d43d253-5a55-467d-91d0-858f41519073" x="437" y="0" width="100" height="20"/>
+				<reportElement uuid="27dcfb6a-3afc-4a39-a070-6f1c331adcae" x="437" y="0" width="106" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{producto_servicio_costo}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="090c948e-ae17-408f-9388-7504b959eef3" x="288" y="0" width="100" height="20"/>
-				<textElement>
-					<font isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{producto_servicio_nombre}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

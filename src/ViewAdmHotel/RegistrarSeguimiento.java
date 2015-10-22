@@ -11,17 +11,13 @@ import bean.AuditoriaSistema;
 import bean.Empleado;
 import bean.Lugar;
 import bean.SeguimientoActividad;
-import com.mxrck.autocompleter.TextAutoCompleter;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -32,8 +28,9 @@ import javax.swing.JOptionPane;
 public class RegistrarSeguimiento extends javax.swing.JFrame {
     private int resp;
     private char ch;
+    private int fila;
     private int limite=11;
-    private final  TextAutoCompleter textAutoCompleter;
+   // private final  TextAutoCompleter textAutoCompleter;
     Date fecha=new Date();
     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
@@ -42,11 +39,10 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
      */
     public RegistrarSeguimiento() {
         initComponents();
-        this.textAutoCompleter = new TextAutoCompleter(tf_codEmpleado);
+       // this.textAutoCompleter = new TextAutoCompleter(tf_codEmpleado);
         //infijo
-        this.textAutoCompleter.setMode(0);
-        inicializarLista();
-        setFecha();
+       // this.textAutoCompleter.setMode(0);
+       
     }
 
     /**
@@ -62,7 +58,7 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
         empleadoListRenderizar1 = new renderizar.EmpleadoListRenderizar();
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT e FROM Empleado e");
-        list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : query.getResultList();
+        list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         lugarListRenderizar1 = new renderizar.LugarListRenderizar();
         lugarQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT l FROM Lugar l");
         lugarList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : lugarQuery.getResultList();
@@ -76,14 +72,20 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
         lbl_lugar = new javax.swing.JLabel();
         lbl_descripcion = new javax.swing.JLabel();
         tf_codEmpleado = new javax.swing.JTextField();
-        tf_fechaHora = new javax.swing.JTextField();
-        lbl_fechaHora = new javax.swing.JLabel();
         lbl_codEmpleado = new javax.swing.JLabel();
         list_lugar = new javax.swing.JComboBox();
         list_descripcion = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         btn_guardar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        tf_valor = new javax.swing.JTextField();
+        lbl_valor = new javax.swing.JLabel();
+        lbl_filtro = new javax.swing.JLabel();
+        list_filtros = new javax.swing.JComboBox();
+        btn_buscar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        masterTable = new javax.swing.JTable();
 
         lugarListRenderizar1.setText("lugarListRenderizar1");
 
@@ -96,16 +98,16 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
 
         lbl_registrarC.setFont(new java.awt.Font("Corbel", 1, 30)); // NOI18N
         lbl_registrarC.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_registrarC.setText("Registrar Actividad");
+        lbl_registrarC.setText("Registrar Seguimiento Actividad");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(120, 120, 120)
+                .addGap(72, 72, 72)
                 .addComponent(lbl_registrarC)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,14 +120,21 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        tf_empleado.setEnabled(false);
+        tf_empleado.setEditable(false);
+        tf_empleado.setBackground(new java.awt.Color(0, 153, 255));
+        tf_empleado.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_empleado.setForeground(new java.awt.Color(255, 255, 255));
 
-        lbl_lugar.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_lugar.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_lugar.setText("Lugar de Actividad:");
 
-        lbl_descripcion.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_descripcion.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_descripcion.setText("Descripción:");
 
+        tf_codEmpleado.setEditable(false);
+        tf_codEmpleado.setBackground(new java.awt.Color(0, 153, 255));
+        tf_codEmpleado.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_codEmpleado.setForeground(new java.awt.Color(255, 255, 255));
         tf_codEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tf_codEmpleadoKeyPressed(evt);
@@ -135,12 +144,7 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
             }
         });
 
-        tf_fechaHora.setEnabled(false);
-
-        lbl_fechaHora.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        lbl_fechaHora.setText("Fecha/Hora:");
-
-        lbl_codEmpleado.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_codEmpleado.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_codEmpleado.setText("Código Empleado:");
 
         list_lugar.setRenderer(lugarListRenderizar1);
@@ -159,26 +163,21 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbl_codEmpleado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tf_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(tf_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(tf_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_lugar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(list_lugar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lbl_fechaHora)
-                                .addComponent(lbl_descripcion))
-                            .addGap(47, 47, 47)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(list_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(tf_fechaHora, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(lbl_descripcion))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(list_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(list_lugar, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -189,19 +188,15 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
                     .addComponent(lbl_codEmpleado)
                     .addComponent(tf_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tf_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_lugar)
                     .addComponent(list_lugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(list_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_descripcion))
-                .addGap(49, 49, 49)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_fechaHora)
-                    .addComponent(tf_fechaHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23))
+                    .addComponent(lbl_descripcion)
+                    .addComponent(list_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -244,6 +239,111 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel4.setForeground(new java.awt.Color(204, 204, 255));
+
+        tf_valor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_valorKeyTyped(evt);
+            }
+        });
+
+        lbl_valor.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_valor.setText("Valor:");
+
+        lbl_filtro.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        lbl_filtro.setText("Buscar por:");
+
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Empleado", "Cedula", "Nombre", "Apellido", "Cargo", "Jefe" }));
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
+        });
+
+        btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
+        btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
+        btn_buscar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                btn_buscarFocusLost(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(lbl_filtro)
+                .addGap(18, 18, 18)
+                .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(lbl_valor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(btn_buscar)
+                .addGap(53, 53, 53))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_filtro)
+                    .addComponent(lbl_valor)
+                    .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_buscar))
+                .addContainerGap())
+        );
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, list, masterTable);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoEmpleado}"));
+        columnBinding.setColumnName(" Empleado");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cedula}"));
+        columnBinding.setColumnName("Cedula");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
+        columnBinding.setColumnName("Nombre");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${apellido}"));
+        columnBinding.setColumnName("Apellido");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCargo.nombre}"));
+        columnBinding.setColumnName("Cargo");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${telefono}"));
+        columnBinding.setColumnName("Telefono");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${email}"));
+        columnBinding.setColumnName("Email");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoJefe}"));
+        columnBinding.setColumnName("Codigo Jefe");
+        columnBinding.setColumnClass(bean.Empleado.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                masterTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(masterTable);
+        if (masterTable.getColumnModel().getColumnCount() > 0) {
+            masterTable.getColumnModel().getColumn(0).setPreferredWidth(40);
+            masterTable.getColumnModel().getColumn(1).setPreferredWidth(50);
+            masterTable.getColumnModel().getColumn(7).setPreferredWidth(40);
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -251,25 +351,35 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 792, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(144, 144, 144)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(125, 125, 125)
+                        .addGap(301, 301, 301)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -328,7 +438,7 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
                     Lugar l=(Lugar) list_lugar.getSelectedItem();
                     a.setLugar(l);
                     Actividad ac=(Actividad) list_descripcion.getSelectedItem();
-                    a.setFechaHora(tf_fechaHora.getText());
+                    a.setFechaHora(formato.format(fecha));
                     a.setActividad(ac);
                     entityManager.getTransaction().begin();
                     entityManager.persist(a);
@@ -343,14 +453,144 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
                     as.setUsuario("nadie");  
                     entityManager.persist(as);
                     entityManager.getTransaction().commit();
-                    entityManager.close();
                     JOptionPane.showMessageDialog(null,"Creación exitosa", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
+                    resetear();
+                    
+        }else{
+                 this.dispose();
         }
-        this.dispose();
+       
     }//GEN-LAST:event_btn_guardarActionPerformed
-public  void setFecha(){
-    tf_fechaHora.setText(formato.format(fecha));
-}
+
+    private void tf_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_valorKeyTyped
+        // TODO add your handling code here:
+        char ch;
+        if (list_filtros.getSelectedItem()=="Jefe"
+            || list_filtros.getSelectedItem()=="Empleado"
+            || list_filtros.getSelectedItem()=="Cedula"
+        ){
+            ch=evt.getKeyChar();
+            if(!Character.isDigit(ch)){
+                getToolkit().beep();
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_tf_valorKeyTyped
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        // TODO add your handling code here:
+        if (tf_valor.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Ingrese algún valor para efectuar la búsqueda", "Advertencia",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        else{
+            if (list_filtros.getSelectedItem()=="Nombre"){
+                query = entityManager.createNativeQuery("SELECT * FROM empleado "
+                    + "WHERE nombre LIKE '%"+tf_valor.getText()+"%'", Empleado.class);
+                List<Empleado> r = query.getResultList();
+                if (r.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Nombre inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(r);
+            }
+            else if (list_filtros.getSelectedItem()=="Apellido"){
+                query = entityManager.createNativeQuery("SELECT * FROM empleado "
+                    + "WHERE apellido LIKE '%"+tf_valor.getText()+"%'", Empleado.class);
+                List<Empleado> r = query.getResultList();
+                if (r.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Apellido inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(r);
+            }
+            else if(list_filtros.getSelectedItem()=="Cedula"){
+                query = entityManager.createNativeQuery("SELECT * FROM empleado "
+                    + "WHERE cedula LIKE '%"+tf_valor.getText()+"%'", Empleado.class);
+                List<Empleado> a=query.getResultList();
+                if(a.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Cedula Inexistente", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(a);
+                return;
+            }
+            else if(list_filtros.getSelectedItem()=="Empleado"){
+                query=entityManager.createNamedQuery("Empleado.findByCodigoEmpleado");
+                query.setParameter("codigoEmpleado", Integer.parseInt(tf_valor.getText()));
+                List<Empleado> a=query.getResultList();
+                if(a.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Empleado Inexistente", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(a);
+                return;
+            }
+            else if(list_filtros.getSelectedItem()=="Cargo"){
+                query = entityManager.createNativeQuery( "SELECT * FROM empleado e "
+                    + "INNER JOIN cargo c "
+                    + "on e.codigoCargo = c.codigoCargo "
+                    + "WHERE c.nombre like '%"
+                    +tf_valor.getText() + "%'", Empleado.class);
+                List<Empleado> a=query.getResultList();
+                if(a.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"No se han encontrado registros para la fecha", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(a);
+                return;
+            }
+            else if(list_filtros.getSelectedItem()=="Jefe"){
+                //query=entityManager.createNamedQuery("Empleado.findByCedula");
+                //query.setParameter("cedula", tf_valor.getText());
+                query = entityManager.createNativeQuery( "SELECT * FROM empleado e "
+                    + "INNER JOIN empleado j "
+                    + "on e.codigoJefe = j.codigoEmpleado "
+                    + "WHERE j.cedula like '%"
+                    +tf_valor.getText() + "%'", Empleado.class);
+                List<Empleado> a=query.getResultList();
+                if(a.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Cedula Inexistente", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(a);
+                return;
+            }
+        }
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void btn_buscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_buscarFocusLost
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btn_buscarFocusLost
+
+    private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
+        // TODO add your handling code here:
+        int codigo;
+           fila=masterTable.getSelectedRow();
+           codigo= (Integer)masterTable.getValueAt(fila, 0);
+           tf_codEmpleado.setText(Integer.toString(codigo));
+           tf_empleado.setText(masterTable.getValueAt(fila, 2)+" "+masterTable.getValueAt(fila, 3));
+        
+    }//GEN-LAST:event_masterTableMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -384,12 +624,14 @@ public  void setFecha(){
                JFrame frame= new RegistrarSeguimiento(); 
                frame.setVisible(true);
                frame.setTitle("Registrar Seguimiento de Actividad");
+               Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+               frame.setIconImage(icon);
                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                frame.setLocationRelativeTo(null);
             }
         });
     }
-      private void inicializarLista(){
+  /*    private void inicializarLista(){
         EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
         EntityManager ema = fact.createEntityManager();
         Query query = ema.createNamedQuery("Empleado.findAll");
@@ -398,12 +640,10 @@ public  void setFecha(){
         while (it.hasNext()){
             textAutoCompleter.addItem(it.next().getCodigoEmpleado());
         }
-        ema.close();
-    }
+        
+    }*/
        private Empleado obtenerEmpleado(){
-        EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
-        EntityManager ema = fact.createEntityManager();
-        Query query = ema.createNamedQuery("Empleado.findByCodigoEmpleado");
+        query = entityManager.createNamedQuery("Empleado.findByCodigoEmpleado");
         query.setParameter("codigoEmpleado", Integer.parseInt(tf_codEmpleado.getText()));
         List<Empleado> em = query.getResultList();
         Empleado emple = null;
@@ -416,15 +656,19 @@ public  void setFecha(){
         }catch(Exception e){
             System.out.println("Algo pasó");
         }
-        
-        ema.close();
         return emple;
     }
+       private void resetear(){
+           tf_codEmpleado.setText(null);
+           tf_empleado.setText(null);
+       
+       }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.util.List<bean.Actividad> actividadList;
     private renderizar.ActividadListRenderizar actividadListRenderizar1;
     private javax.persistence.Query actividadQuery;
+    private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_guardar;
     private renderizar.EmpleadoListRenderizar empleadoListRenderizar1;
     private javax.persistence.EntityManager entityManager;
@@ -432,21 +676,26 @@ public  void setFecha(){
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_codEmpleado;
     private javax.swing.JLabel lbl_descripcion;
-    private javax.swing.JLabel lbl_fechaHora;
+    private javax.swing.JLabel lbl_filtro;
     private javax.swing.JLabel lbl_lugar;
     private javax.swing.JLabel lbl_registrarC;
+    private javax.swing.JLabel lbl_valor;
     private java.util.List<bean.Empleado> list;
     private javax.swing.JComboBox list_descripcion;
+    private javax.swing.JComboBox list_filtros;
     private javax.swing.JComboBox list_lugar;
     private java.util.List<bean.Lugar> lugarList;
     private renderizar.LugarListRenderizar lugarListRenderizar1;
     private javax.persistence.Query lugarQuery;
+    private javax.swing.JTable masterTable;
     private javax.persistence.Query query;
     private javax.swing.JTextField tf_codEmpleado;
     private javax.swing.JTextField tf_empleado;
-    public static javax.swing.JTextField tf_fechaHora;
+    private javax.swing.JTextField tf_valor;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

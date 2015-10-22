@@ -8,10 +8,12 @@ package ViewAdmHotel;
 
 import bean.Actividad;
 import bean.SeguimientoActividad;
+import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -107,7 +109,7 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
         lbl_filtro.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         lbl_filtro.setText("Buscar por:");
 
-        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Seguimiento", "Actividad", "Lugar", "Fecha", "Código Empleado", "Nombre" }));
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Seguimiento", "Actividad", "Lugar", "Fecha", "Código Empleado", "Nombre", "Apellido", " " }));
         list_filtros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 list_filtrosActionPerformed(evt);
@@ -164,7 +166,7 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, List, masterTable);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoSeguimiento}"));
-        columnBinding.setColumnName("Codigo Seguimiento");
+        columnBinding.setColumnName("Seguimiento");
         columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${actividad.nombre}"));
         columnBinding.setColumnName("Actividad");
@@ -181,6 +183,9 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoEmpleado.nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoEmpleado.apellido}"));
+        columnBinding.setColumnName("Apellido");
+        columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -190,6 +195,7 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
+            masterTable.getColumnModel().getColumn(0).setPreferredWidth(40);
             masterTable.getColumnModel().getColumn(2).setPreferredWidth(120);
             masterTable.getColumnModel().getColumn(4).setPreferredWidth(60);
             masterTable.getColumnModel().getColumn(5).setPreferredWidth(60);
@@ -199,35 +205,34 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 19, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
+                        .addGap(133, 133, 133)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panel_BuscarAct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(365, 365, 365)
-                        .addComponent(btn_cancelar)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(123, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panel_BuscarAct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(117, 117, 117))
+                        .addGap(394, 394, 394)
+                        .addComponent(btn_cancelar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap()
                 .addComponent(panel_BuscarAct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_cancelar)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -245,7 +250,7 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
             }
         }
         else{
-                if(list_filtros.getSelectedItem()=="Actividad" || list_filtros.getSelectedItem()=="Nombre"){
+                if(list_filtros.getSelectedItem()=="Actividad" || list_filtros.getSelectedItem()=="Nombre" || list_filtros.getSelectedItem()=="Apellido"){
                      ch=evt.getKeyChar();
                     if(Character.isDigit(ch)){
                         getToolkit().beep();
@@ -339,6 +344,21 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
                 List.clear();
                 List.addAll(s);
             }
+             else if(list_filtros.getSelectedItem()=="Apellido"){
+                Query = EntityManager.createNativeQuery( "SELECT * FROM seguimiento_actividad s "
+                    + "INNER JOIN empleado e "
+                    + "ON s.codigoEmpleado=e.codigoEmpleado "
+                    +"WHERE e.apellido LIKE "
+                    +"'%"+tf_valor.getText()+"%'", SeguimientoActividad.class);
+                List<SeguimientoActividad> s = Query.getResultList();
+                if (s.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "No existen registros para dicho empleado","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(s);
+            }
              else if(list_filtros.getSelectedItem()=="Código Empleado"){
                 Query = EntityManager.createNativeQuery( "SELECT * FROM seguimiento_actividad  "
                         +"WHERE codigoEmpleado="
@@ -376,51 +396,7 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
         // TODO add your handling code here:
-         switch (MenuAdminHotel.opcion){
-             case 1:
-                 fila=masterTable.getSelectedRow();
-                 codSeg=(Integer) masterTable.getValueAt(fila, 0);
-                 fecha=(String) masterTable.getValueAt(fila, 3);
-                 Query= EntityManager.createNamedQuery("SeguimientoActividad.findByCodigoSeguimiento");
-                 Query.setParameter("codigoSeguimiento", codSeg);
-                 List<SeguimientoActividad> s=Query.getResultList();
-                 JFrame frame=new EditarSeguimiento();
-                 EditarSeguimiento.tf_codigo.setText(Integer.toString(codSeg));
-                 EditarSeguimiento.tf_fechaHora.setText(fecha);
-                 EditarSeguimiento.tf_codEmpleado.setText(Integer.toString(s.get(0).getCodigoEmpleado().getCodigoEmpleado()));
-                 EditarSeguimiento.tf_empleado.setText(s.get(0).getCodigoEmpleado().getNombre()+" "
-                 + s.get(0).getCodigoEmpleado().getApellido());
-                 EditarSeguimiento.list_descripcion.setSelectedItem(s.get(0).getActividad());
-                 EditarSeguimiento.list_lugar.setSelectedItem(s.get(0).getLugar());
-                 frame.setVisible(true);
-                 frame.setTitle("Editar Seguimiento de Actividad");
-                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                 frame.setLocationRelativeTo(null);
-                 this.dispose();
-                 break;
-             case 2:
-                 fila=masterTable.getSelectedRow();
-                 codSeg=(Integer) masterTable.getValueAt(fila, 0);
-                 Query= EntityManager.createNamedQuery("SeguimientoActividad.findByCodigoSeguimiento");
-                 Query.setParameter("codigoSeguimiento", codSeg);
-                 List<SeguimientoActividad> se=Query.getResultList();
-                 JFrame f= new EliminarSeguimiento();
-                 EliminarSeguimiento.tf_codigo.setText(Integer.toString(codSeg));
-                 EliminarSeguimiento.tf_fechaHora.setText((String) masterTable.getValueAt(fila, 3));
-                 EliminarSeguimiento.tf_codEmpleado.setText(Integer.toString(se.get(0).getCodigoEmpleado().getCodigoEmpleado()));
-                 EliminarSeguimiento.tf_empleado.setText(se.get(0).getCodigoEmpleado().getNombre()+" "
-                 + se.get(0).getCodigoEmpleado().getApellido());
-                 EliminarSeguimiento.tf_lugar.setText(se.get(0).getLugar().getNombre());
-                 EliminarSeguimiento.tf_descripcion.setText(se.get(0).getActividad().getNombre());
-                 f.setVisible(true);
-                 f.setTitle("Eliminar Seguimiento de Actividad");
-                 f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                 f.setLocationRelativeTo(null);
-                 this.dispose();
-                 break;
-             case 3:
-                 break;
-         }
+        
         
     }//GEN-LAST:event_masterTableMouseClicked
 
@@ -457,6 +433,8 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
                 JFrame frame=new BuscarSeguimiento();
                 frame.setVisible(true);
                 frame.setTitle("Buscar Seguimiento de Actividad");
+                 Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
             }
