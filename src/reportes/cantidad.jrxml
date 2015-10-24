@@ -16,22 +16,27 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select r.codigoReserva,r.checkOut,r.checkIn,r.numHabitacion,
-IF(count(r.codigoReserva)=0,0,IF(r.checkIn<$P{FechaDesde},datediff(r.checkOut,$P{FechaDesde}),
+		<![CDATA[select ha.numero,ifnull(tp.codigoReserva,0) as codigoReserva,ifnull(tp.checkIn,'0000-00-00')as checkIn,ifnull(tp.checkOut,'0000-00-00') as checkOut,ifnull(tp.dif,0) as diferencia
+from habitacion ha left outer join
+(select r.codigoReserva,r.checkIn,r.checkOut,h.numero,
+IF(r.checkIn<$P{FechaDesde},datediff(r.checkOut,$P{FechaDesde}),
 IF(r.checkOut>$P{FechaHasta},datediff($P{FechaHasta},r.checkIn),
-datediff(r.checkOut,r.checkIn))))
-as dif  from reserva r
+datediff(r.checkOut,r.checkIn)))
+as dif  from reserva r inner join habitacion h
+on r.numHabitacion=h.numero
 where ((r.checkIn>=$P{FechaDesde} and r.checkIn<=$P{FechaHasta}) or (r.checkOut>=$P{FechaDesde} and r.checkOut<=$P{FechaHasta}) )
-and r.numHabitacion=$P{Habitacion}
-group by codigoReserva]]>
+and r.numHabitacion=$P{Habitacion})tp
+on ha.numero=tp.numero
+where ha.numero=$P{Habitacion}
+]]>
 	</queryString>
-	<field name="codigoReserva" class="java.lang.Integer"/>
-	<field name="checkOut" class="java.sql.Date"/>
-	<field name="checkIn" class="java.sql.Date"/>
-	<field name="numHabitacion" class="java.lang.Integer"/>
-	<field name="dif" class="java.lang.Long"/>
+	<field name="numero" class="java.lang.Integer"/>
+	<field name="codigoReserva" class="java.lang.Long"/>
+	<field name="checkIn" class="java.lang.String"/>
+	<field name="checkOut" class="java.lang.String"/>
+	<field name="diferencia" class="java.lang.Long"/>
 	<variable name="dif_1" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{dif}]]></variableExpression>
+		<variableExpression><![CDATA[$F{diferencia}]]></variableExpression>
 		<initialValueExpression><![CDATA[new Double(0.0)]]></initialValueExpression>
 	</variable>
 	<variable name="desocupacion" class="java.lang.Integer">
@@ -60,7 +65,7 @@ group by codigoReserva]]>
 				<text><![CDATA[checkOut]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="eb114c49-59ff-4645-99e7-a095ac54a25b" x="130" y="2" width="21" height="20"/>
+				<reportElement uuid="eb114c49-59ff-4645-99e7-a095ac54a25b" x="148" y="2" width="21" height="20"/>
 				<textElement/>
 				<text><![CDATA[Días]]></text>
 			</staticText>
@@ -69,19 +74,19 @@ group by codigoReserva]]>
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement uuid="1c28b1cd-5950-41a6-9fc6-fc5d3b0133e3" x="0" y="0" width="53" height="20"/>
+				<reportElement uuid="96b1cbb0-c036-4aa9-9579-be55720f54bc" x="0" y="0" width="53" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{checkIn}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e11f8efc-8550-4d66-b976-f954e4e59af4" x="64" y="0" width="52" height="20"/>
+				<reportElement uuid="1dd3303f-2bba-4108-9782-f22f228058bb" x="64" y="0" width="52" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{checkOut}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="af992e44-3332-419f-bc2e-3c2272a6ebe2" x="130" y="0" width="21" height="20"/>
+				<reportElement uuid="67ee896b-2786-42b6-bde3-9075d0b61963" x="148" y="2" width="21" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{dif}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{diferencia}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -93,11 +98,6 @@ group by codigoReserva]]>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch">
-			<textField>
-				<reportElement uuid="d2b78d70-8bcb-4798-b552-8b22504df89f" x="151" y="2" width="66" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$V{dif_1}.intValue()]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement uuid="4a8f22c6-6b6d-4cec-b97f-8b7b432d83bc" x="0" y="22" width="130" height="20"/>
 				<textElement>
@@ -116,6 +116,11 @@ group by codigoReserva]]>
 					<font size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{desocupacion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement uuid="9bc3ddf4-276a-420f-8ac5-e0614a904c70" x="148" y="0" width="69" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{dif_1}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

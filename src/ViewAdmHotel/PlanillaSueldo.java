@@ -185,7 +185,7 @@ public class PlanillaSueldo extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -279,8 +279,9 @@ public class PlanillaSueldo extends javax.swing.JFrame {
                  st.setInt(2, anho);
                  st.registerOutParameter(3, java.sql.Types.INTEGER);
                  st.execute();
-                 int deposito=st.getInt(3);
-                 System.out.println("Deposito: "+deposito);
+                 int extraccion=st.getInt(3);
+                 // extraccion es el monto
+                 System.out.println("Extracción: "+extraccion);
                 connection.close();
             }else{
                 System.out.println("Conexion Fallida!");                
