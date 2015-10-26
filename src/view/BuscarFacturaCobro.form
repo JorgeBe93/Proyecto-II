@@ -68,28 +68,30 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="panel_BuscarFacturaCobro" min="-2" max="-2" attributes="0"/>
+                  <Component id="jPanel1" min="-2" max="-2" attributes="1"/>
+              </Group>
+              <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
+          </Group>
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="panel_BuscarFacturaCobro" max="32767" attributes="0"/>
-                          <Component id="jPanel1" max="32767" attributes="1"/>
-                      </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="881" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jScrollPane1" pref="731" max="32767" attributes="0"/>
-                          <Component id="jPanel2" max="32767" attributes="0"/>
-                      </Group>
+                      <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="253" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="319" max="-2" attributes="0"/>
                       <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
+              <EmptySpace pref="28" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -104,7 +106,7 @@
               <Component id="jScrollPane1" min="-2" pref="227" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
           </Group>
@@ -130,7 +132,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="191" max="-2" attributes="0"/>
                   <Component id="lbl_BuscarFacturaCobro" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="155" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -283,6 +285,21 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="80" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="100" resizable="true">
                   <Title/>
                   <Editor/>
@@ -322,6 +339,18 @@
               </Subbinding>
               <Subbinding sourcePath="${tipoFactura}">
                 <BindingParameter name="NAME" value="Tipo Factura"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${formaPago.forma}">
+                <BindingParameter name="NAME" value="Pago"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${formaPago.numeroChTarj}">
+                <BindingParameter name="NAME" value="Numero T/C"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${formaPago.entidad}">
+                <BindingParameter name="NAME" value="Entidad"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
               <Subbinding sourcePath="${concepto}">
@@ -366,7 +395,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" pref="699" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>

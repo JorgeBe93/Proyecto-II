@@ -88,7 +88,7 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
             .addGroup(panel_BuscarFacturaCobroLayout.createSequentialGroup()
                 .addGap(191, 191, 191)
                 .addComponent(lbl_BuscarFacturaCobro)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
         panel_BuscarFacturaCobroLayout.setVerticalGroup(
             panel_BuscarFacturaCobroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,6 +174,15 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tipoFactura}"));
         columnBinding.setColumnName("Tipo Factura");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${formaPago.forma}"));
+        columnBinding.setColumnName("Pago");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${formaPago.numeroChTarj}"));
+        columnBinding.setColumnName("Numero T/C");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${formaPago.entidad}"));
+        columnBinding.setColumnName("Entidad");
+        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${concepto}"));
         columnBinding.setColumnName("Concepto");
         columnBinding.setColumnClass(String.class);
@@ -199,8 +208,9 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
         jScrollPane1.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
             masterTable.getColumnModel().getColumn(0).setPreferredWidth(40);
-            masterTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-            masterTable.getColumnModel().getColumn(3).setPreferredWidth(50);
+            masterTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+            masterTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+            masterTable.getColumnModel().getColumn(6).setPreferredWidth(50);
         }
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle de Factura"));
@@ -240,7 +250,7 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -296,22 +306,24 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panel_BuscarFacturaCobro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(122, 122, 122))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(panel_BuscarFacturaCobro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(95, 95, 95)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(253, 253, 253)
+                        .addGap(319, 319, 319)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,7 +336,7 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34))
         );
@@ -604,6 +616,8 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
                JFrame frame=new BuscarFacturaCobro();
                frame.setVisible(true);
                frame.setTitle("Buscar Factura de Cobro");
+               Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+               frame.setIconImage(icon);
                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                frame.setLocationRelativeTo(null);
               

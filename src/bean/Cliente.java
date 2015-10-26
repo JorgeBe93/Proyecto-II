@@ -65,6 +65,8 @@ public class Cliente implements Serializable {
     private String ruc;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoCliente")
     private Collection<Presupuesto> presupuestoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoCliente")
+    private Collection<Reserva> reservaCollection;
 
     public Cliente() {
     }
@@ -153,6 +155,14 @@ public class Cliente implements Serializable {
 
     public void setPresupuestoCollection(Collection<Presupuesto> presupuestoCollection) {
         this.presupuestoCollection = presupuestoCollection;
+    }
+
+    public Collection<Reserva> getReservaCollection() {
+        return reservaCollection;
+    }
+
+    public void setReservaCollection(Collection<Reserva> reservaCollection) {
+        this.reservaCollection = reservaCollection;
     }
 
     @Override

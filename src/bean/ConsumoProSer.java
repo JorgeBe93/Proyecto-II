@@ -6,8 +6,6 @@
 
 package bean;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -20,7 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  *
@@ -34,8 +31,6 @@ import javax.persistence.Transient;
     @NamedQuery(name = "ConsumoProSer.findByCantidad", query = "SELECT c FROM ConsumoProSer c WHERE c.cantidad = :cantidad"),
     @NamedQuery(name = "ConsumoProSer.findByTotal", query = "SELECT c FROM ConsumoProSer c WHERE c.total = :total")})
 public class ConsumoProSer implements Serializable {
-    @Transient
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,15 +43,15 @@ public class ConsumoProSer implements Serializable {
     @Basic(optional = false)
     @Column(name = "total")
     private int total;
+    @JoinColumn(name = "numFactura", referencedColumnName = "numFactura")
+    @ManyToOne
+    private FacturaCobro numFactura;
     @JoinColumn(name = "codigoPS", referencedColumnName = "codigoPS")
     @ManyToOne
     private ProductoServicio codigoPS;
     @JoinColumn(name = "codigoReserva", referencedColumnName = "codigoReserva")
     @ManyToOne
     private Reserva codigoReserva;
-    @JoinColumn(name = "numFactura", referencedColumnName = "numFactura")
-    @ManyToOne
-    private FacturaCobro numFactura;
 
     public ConsumoProSer() {
     }
@@ -76,9 +71,7 @@ public class ConsumoProSer implements Serializable {
     }
 
     public void setCodigoConsumo(Integer codigoConsumo) {
-        Integer oldCodigoConsumo = this.codigoConsumo;
         this.codigoConsumo = codigoConsumo;
-        changeSupport.firePropertyChange("codigoConsumo", oldCodigoConsumo, codigoConsumo);
     }
 
     public int getCantidad() {
@@ -86,9 +79,7 @@ public class ConsumoProSer implements Serializable {
     }
 
     public void setCantidad(int cantidad) {
-        int oldCantidad = this.cantidad;
         this.cantidad = cantidad;
-        changeSupport.firePropertyChange("cantidad", oldCantidad, cantidad);
     }
 
     public int getTotal() {
@@ -96,29 +87,7 @@ public class ConsumoProSer implements Serializable {
     }
 
     public void setTotal(int total) {
-        int oldTotal = this.total;
         this.total = total;
-        changeSupport.firePropertyChange("total", oldTotal, total);
-    }
-
-    public ProductoServicio getCodigoPS() {
-        return codigoPS;
-    }
-
-    public void setCodigoPS(ProductoServicio codigoPS) {
-        ProductoServicio oldCodigoPS = this.codigoPS;
-        this.codigoPS = codigoPS;
-        changeSupport.firePropertyChange("codigoPS", oldCodigoPS, codigoPS);
-    }
-
-    public Reserva getCodigoReserva() {
-        return codigoReserva;
-    }
-
-    public void setCodigoReserva(Reserva codigoReserva) {
-        Reserva oldCodigoReserva = this.codigoReserva;
-        this.codigoReserva = codigoReserva;
-        changeSupport.firePropertyChange("codigoReserva", oldCodigoReserva, codigoReserva);
     }
 
     public FacturaCobro getNumFactura() {
@@ -126,9 +95,23 @@ public class ConsumoProSer implements Serializable {
     }
 
     public void setNumFactura(FacturaCobro numFactura) {
-        FacturaCobro oldNumFactura = this.numFactura;
         this.numFactura = numFactura;
-        changeSupport.firePropertyChange("numFactura", oldNumFactura, numFactura);
+    }
+
+    public ProductoServicio getCodigoPS() {
+        return codigoPS;
+    }
+
+    public void setCodigoPS(ProductoServicio codigoPS) {
+        this.codigoPS = codigoPS;
+    }
+
+    public Reserva getCodigoReserva() {
+        return codigoReserva;
+    }
+
+    public void setCodigoReserva(Reserva codigoReserva) {
+        this.codigoReserva = codigoReserva;
     }
 
     @Override
@@ -151,22 +134,9 @@ public class ConsumoProSer implements Serializable {
         return true;
     }
 
-    /* @Override
-    public String toString() {
-    return "bean.ConsumoProSer[ codigoConsumo=" + codigoConsumo + " ]";
-    }*/
     @Override
     public String toString() {
-        return "codigoConsumo=" + codigoConsumo + ", cantidad=" + cantidad + ", total=" + total + ", codigoPS=" + codigoPS + ", codigoReserva=" + codigoReserva + ", numFactura=" + numFactura;
+        return "bean.ConsumoProSer[ codigoConsumo=" + codigoConsumo + " ]";
     }
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(listener);
-    }
-    
     
 }

@@ -7,6 +7,7 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -41,6 +43,8 @@ public class ProductoServicio implements Serializable {
     @Basic(optional = false)
     @Column(name = "costo")
     private int costo;
+    @OneToMany(mappedBy = "codigoPS")
+    private Collection<ConsumoProSer> consumoProSerCollection;
 
     public ProductoServicio() {
     }
@@ -77,6 +81,14 @@ public class ProductoServicio implements Serializable {
 
     public void setCosto(int costo) {
         this.costo = costo;
+    }
+
+    public Collection<ConsumoProSer> getConsumoProSerCollection() {
+        return consumoProSerCollection;
+    }
+
+    public void setConsumoProSerCollection(Collection<ConsumoProSer> consumoProSerCollection) {
+        this.consumoProSerCollection = consumoProSerCollection;
     }
 
     @Override

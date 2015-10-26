@@ -6,8 +6,6 @@
 
 package bean;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -25,7 +23,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 /**
  *
@@ -42,12 +39,6 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Reserva.findByMontoTotal", query = "SELECT r FROM Reserva r WHERE r.montoTotal = :montoTotal"),
     @NamedQuery(name = "Reserva.findByMontoAbonado", query = "SELECT r FROM Reserva r WHERE r.montoAbonado = :montoAbonado")})
 public class Reserva implements Serializable {
-    @Transient
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
-    @OneToMany(mappedBy = "codigoReserva")
-    private Collection<FacturaCobro> facturaCobroCollection;
-    @OneToMany(mappedBy = "codigoReserva")
-    private Collection<ConsumoProSer> consumoProSerCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,15 +61,19 @@ public class Reserva implements Serializable {
     private int montoTotal;
     @Column(name = "montoAbonado")
     private Integer montoAbonado;
+    @OneToMany(mappedBy = "codigoReserva")
+    private Collection<FacturaCobro> facturaCobroCollection;
+    @JoinColumn(name = "numPresupuesto", referencedColumnName = "numPresupuesto")
+    @ManyToOne
+    private Presupuesto numPresupuesto;
     @JoinColumn(name = "numHabitacion", referencedColumnName = "numero")
     @ManyToOne(optional = false)
     private Habitacion numHabitacion;
     @JoinColumn(name = "codigoCliente", referencedColumnName = "codigoCliente")
     @ManyToOne(optional = false)
     private Cliente codigoCliente;
-    @JoinColumn(name = "numPresupuesto", referencedColumnName = "numPresupuesto")
-    @ManyToOne
-    private Presupuesto numPresupuesto;
+    @OneToMany(mappedBy = "codigoReserva")
+    private Collection<ConsumoProSer> consumoProSerCollection;
 
     public Reserva() {
     }
@@ -100,9 +95,7 @@ public class Reserva implements Serializable {
     }
 
     public void setCodigoReserva(Integer codigoReserva) {
-        Integer oldCodigoReserva = this.codigoReserva;
         this.codigoReserva = codigoReserva;
-        changeSupport.firePropertyChange("codigoReserva", oldCodigoReserva, codigoReserva);
     }
 
     public Date getCheckIn() {
@@ -110,9 +103,7 @@ public class Reserva implements Serializable {
     }
 
     public void setCheckIn(Date checkIn) {
-        Date oldCheckIn = this.checkIn;
         this.checkIn = checkIn;
-        changeSupport.firePropertyChange("checkIn", oldCheckIn, checkIn);
     }
 
     public Date getCheckOut() {
@@ -120,9 +111,7 @@ public class Reserva implements Serializable {
     }
 
     public void setCheckOut(Date checkOut) {
-        Date oldCheckOut = this.checkOut;
         this.checkOut = checkOut;
-        changeSupport.firePropertyChange("checkOut", oldCheckOut, checkOut);
     }
 
     public int getCantPersonas() {
@@ -130,9 +119,7 @@ public class Reserva implements Serializable {
     }
 
     public void setCantPersonas(int cantPersonas) {
-        int oldCantPersonas = this.cantPersonas;
         this.cantPersonas = cantPersonas;
-        changeSupport.firePropertyChange("cantPersonas", oldCantPersonas, cantPersonas);
     }
 
     public int getMontoTotal() {
@@ -140,9 +127,7 @@ public class Reserva implements Serializable {
     }
 
     public void setMontoTotal(int montoTotal) {
-        int oldMontoTotal = this.montoTotal;
         this.montoTotal = montoTotal;
-        changeSupport.firePropertyChange("montoTotal", oldMontoTotal, montoTotal);
     }
 
     public Integer getMontoAbonado() {
@@ -150,29 +135,15 @@ public class Reserva implements Serializable {
     }
 
     public void setMontoAbonado(Integer montoAbonado) {
-        Integer oldMontoAbonado = this.montoAbonado;
         this.montoAbonado = montoAbonado;
-        changeSupport.firePropertyChange("montoAbonado", oldMontoAbonado, montoAbonado);
     }
 
-    public Habitacion getNumHabitacion() {
-        return numHabitacion;
+    public Collection<FacturaCobro> getFacturaCobroCollection() {
+        return facturaCobroCollection;
     }
 
-    public void setNumHabitacion(Habitacion numHabitacion) {
-        Habitacion oldNumHabitacion = this.numHabitacion;
-        this.numHabitacion = numHabitacion;
-        changeSupport.firePropertyChange("numHabitacion", oldNumHabitacion, numHabitacion);
-    }
-
-    public Cliente getCodigoCliente() {
-        return codigoCliente;
-    }
-
-    public void setCodigoCliente(Cliente codigoCliente) {
-        Cliente oldCodigoCliente = this.codigoCliente;
-        this.codigoCliente = codigoCliente;
-        changeSupport.firePropertyChange("codigoCliente", oldCodigoCliente, codigoCliente);
+    public void setFacturaCobroCollection(Collection<FacturaCobro> facturaCobroCollection) {
+        this.facturaCobroCollection = facturaCobroCollection;
     }
 
     public Presupuesto getNumPresupuesto() {
@@ -180,9 +151,31 @@ public class Reserva implements Serializable {
     }
 
     public void setNumPresupuesto(Presupuesto numPresupuesto) {
-        Presupuesto oldNumPresupuesto = this.numPresupuesto;
         this.numPresupuesto = numPresupuesto;
-        changeSupport.firePropertyChange("numPresupuesto", oldNumPresupuesto, numPresupuesto);
+    }
+
+    public Habitacion getNumHabitacion() {
+        return numHabitacion;
+    }
+
+    public void setNumHabitacion(Habitacion numHabitacion) {
+        this.numHabitacion = numHabitacion;
+    }
+
+    public Cliente getCodigoCliente() {
+        return codigoCliente;
+    }
+
+    public void setCodigoCliente(Cliente codigoCliente) {
+        this.codigoCliente = codigoCliente;
+    }
+
+    public Collection<ConsumoProSer> getConsumoProSerCollection() {
+        return consumoProSerCollection;
+    }
+
+    public void setConsumoProSerCollection(Collection<ConsumoProSer> consumoProSerCollection) {
+        this.consumoProSerCollection = consumoProSerCollection;
     }
 
     @Override
@@ -205,38 +198,9 @@ public class Reserva implements Serializable {
         return true;
     }
 
-    /* @Override
-    public String toString() {
-    return "bean.Reserva[ codigoReserva=" + codigoReserva + " ]";
-    }*/
     @Override
     public String toString() {
-        return "codigoReserva=" + codigoReserva + ", checkIn=" + checkIn + ", checkOut=" + checkOut + ", cantPersonas=" + cantPersonas + ", montoTotal=" + montoTotal + ", montoAbonado=" + montoAbonado + ", numHabitacion=" + numHabitacion + ", codigoCliente=" + codigoCliente + ", numPresupuesto=" + numPresupuesto;
+        return "bean.Reserva[ codigoReserva=" + codigoReserva + " ]";
     }
-
-    public Collection<FacturaCobro> getFacturaCobroCollection() {
-        return facturaCobroCollection;
-    }
-
-    public void setFacturaCobroCollection(Collection<FacturaCobro> facturaCobroCollection) {
-        this.facturaCobroCollection = facturaCobroCollection;
-    }
-
-    public Collection<ConsumoProSer> getConsumoProSerCollection() {
-        return consumoProSerCollection;
-    }
-
-    public void setConsumoProSerCollection(Collection<ConsumoProSer> consumoProSerCollection) {
-        this.consumoProSerCollection = consumoProSerCollection;
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(listener);
-    }
-    
     
 }

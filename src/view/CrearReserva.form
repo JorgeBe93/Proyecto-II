@@ -163,7 +163,6 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lbl_pago" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -178,10 +177,6 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="list_pago" min="-2" pref="131" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                      </Group>
                                       <Group type="102" attributes="0">
                                           <Component id="tf_precioCategoria" max="32767" attributes="0"/>
                                           <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
@@ -261,8 +256,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tf_montoAbonado" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lbl_pago" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="list_pago" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -470,25 +463,6 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lbl_pago">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Candara" size="16" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Forma Pago:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="list_pago">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value="Contado"/>
-                <StringItem index="1" value="Cr&#xe9;dito/Cheque"/>
-                <StringItem index="2" value="Cr&#xe9;dito/Tarjeta"/>
-              </StringArray>
-            </Property>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="tf_cliente">
           <Properties>

@@ -6,9 +6,8 @@
 
 package bean;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,8 +18,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  *
@@ -34,8 +33,6 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Presupuesto.findByEstado", query = "SELECT p FROM Presupuesto p WHERE p.estado = :estado"),
     @NamedQuery(name = "Presupuesto.findByFechaEmision", query = "SELECT p FROM Presupuesto p WHERE p.fechaEmision = :fechaEmision")})
 public class Presupuesto implements Serializable {
-    @Transient
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +48,8 @@ public class Presupuesto implements Serializable {
     @JoinColumn(name = "codigoCliente", referencedColumnName = "codigoCliente")
     @ManyToOne(optional = false)
     private Cliente codigoCliente;
+    @OneToMany(mappedBy = "numPresupuesto")
+    private Collection<Reserva> reservaCollection;
 
     public Presupuesto() {
     }
@@ -70,9 +69,7 @@ public class Presupuesto implements Serializable {
     }
 
     public void setNumPresupuesto(Integer numPresupuesto) {
-        Integer oldNumPresupuesto = this.numPresupuesto;
         this.numPresupuesto = numPresupuesto;
-        changeSupport.firePropertyChange("numPresupuesto", oldNumPresupuesto, numPresupuesto);
     }
 
     public String getEstado() {
@@ -80,9 +77,7 @@ public class Presupuesto implements Serializable {
     }
 
     public void setEstado(String estado) {
-        String oldEstado = this.estado;
         this.estado = estado;
-        changeSupport.firePropertyChange("estado", oldEstado, estado);
     }
 
     public String getFechaEmision() {
@@ -90,9 +85,7 @@ public class Presupuesto implements Serializable {
     }
 
     public void setFechaEmision(String fechaEmision) {
-        String oldFechaEmision = this.fechaEmision;
         this.fechaEmision = fechaEmision;
-        changeSupport.firePropertyChange("fechaEmision", oldFechaEmision, fechaEmision);
     }
 
     public Cliente getCodigoCliente() {
@@ -100,9 +93,15 @@ public class Presupuesto implements Serializable {
     }
 
     public void setCodigoCliente(Cliente codigoCliente) {
-        Cliente oldCodigoCliente = this.codigoCliente;
         this.codigoCliente = codigoCliente;
-        changeSupport.firePropertyChange("codigoCliente", oldCodigoCliente, codigoCliente);
+    }
+
+    public Collection<Reserva> getReservaCollection() {
+        return reservaCollection;
+    }
+
+    public void setReservaCollection(Collection<Reserva> reservaCollection) {
+        this.reservaCollection = reservaCollection;
     }
 
     @Override
@@ -128,14 +127,6 @@ public class Presupuesto implements Serializable {
     @Override
     public String toString() {
         return "bean.Presupuesto[ numPresupuesto=" + numPresupuesto + " ]";
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

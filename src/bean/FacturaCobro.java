@@ -6,8 +6,6 @@
 
 package bean;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -22,7 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  *
@@ -39,10 +36,6 @@ import javax.persistence.Transient;
     @NamedQuery(name = "FacturaCobro.findByTotal", query = "SELECT f FROM FacturaCobro f WHERE f.total = :total"),
     @NamedQuery(name = "FacturaCobro.findByTipoFactura", query = "SELECT f FROM FacturaCobro f WHERE f.tipoFactura = :tipoFactura")})
 public class FacturaCobro implements Serializable {
-    @OneToMany(mappedBy = "numFactura")
-    private Collection<ConsumoProSer> consumoProSerCollection;
-    @Transient
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,8 +58,13 @@ public class FacturaCobro implements Serializable {
     @Column(name = "tipoFactura")
     private String tipoFactura;
     @JoinColumn(name = "codigoReserva", referencedColumnName = "codigoReserva")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Reserva codigoReserva;
+    @JoinColumn(name = "forma_pago", referencedColumnName = "idDetalle")
+    @ManyToOne(optional = false)
+    private DetalleCobro formaPago;
+    @OneToMany(mappedBy = "numFactura")
+    private Collection<ConsumoProSer> consumoProSerCollection;
 
     public FacturaCobro() {
     }
@@ -89,9 +87,7 @@ public class FacturaCobro implements Serializable {
     }
 
     public void setNumFactura(Integer numFactura) {
-        Integer oldNumFactura = this.numFactura;
         this.numFactura = numFactura;
-        changeSupport.firePropertyChange("numFactura", oldNumFactura, numFactura);
     }
 
     public String getFechaEmision() {
@@ -99,9 +95,7 @@ public class FacturaCobro implements Serializable {
     }
 
     public void setFechaEmision(String fechaEmision) {
-        String oldFechaEmision = this.fechaEmision;
         this.fechaEmision = fechaEmision;
-        changeSupport.firePropertyChange("fechaEmision", oldFechaEmision, fechaEmision);
     }
 
     public String getRucCliente() {
@@ -109,9 +103,7 @@ public class FacturaCobro implements Serializable {
     }
 
     public void setRucCliente(String rucCliente) {
-        String oldRucCliente = this.rucCliente;
         this.rucCliente = rucCliente;
-        changeSupport.firePropertyChange("rucCliente", oldRucCliente, rucCliente);
     }
 
     public String getConcepto() {
@@ -119,9 +111,7 @@ public class FacturaCobro implements Serializable {
     }
 
     public void setConcepto(String concepto) {
-        String oldConcepto = this.concepto;
         this.concepto = concepto;
-        changeSupport.firePropertyChange("concepto", oldConcepto, concepto);
     }
 
     public int getTotal() {
@@ -129,9 +119,7 @@ public class FacturaCobro implements Serializable {
     }
 
     public void setTotal(int total) {
-        int oldTotal = this.total;
         this.total = total;
-        changeSupport.firePropertyChange("total", oldTotal, total);
     }
 
     public String getTipoFactura() {
@@ -139,9 +127,7 @@ public class FacturaCobro implements Serializable {
     }
 
     public void setTipoFactura(String tipoFactura) {
-        String oldTipoFactura = this.tipoFactura;
         this.tipoFactura = tipoFactura;
-        changeSupport.firePropertyChange("tipoFactura", oldTipoFactura, tipoFactura);
     }
 
     public Reserva getCodigoReserva() {
@@ -149,9 +135,23 @@ public class FacturaCobro implements Serializable {
     }
 
     public void setCodigoReserva(Reserva codigoReserva) {
-        Reserva oldCodigoReserva = this.codigoReserva;
         this.codigoReserva = codigoReserva;
-        changeSupport.firePropertyChange("codigoReserva", oldCodigoReserva, codigoReserva);
+    }
+
+    public DetalleCobro getFormaPago() {
+        return formaPago;
+    }
+
+    public void setFormaPago(DetalleCobro formaPago) {
+        this.formaPago = formaPago;
+    }
+
+    public Collection<ConsumoProSer> getConsumoProSerCollection() {
+        return consumoProSerCollection;
+    }
+
+    public void setConsumoProSerCollection(Collection<ConsumoProSer> consumoProSerCollection) {
+        this.consumoProSerCollection = consumoProSerCollection;
     }
 
     @Override
@@ -174,29 +174,9 @@ public class FacturaCobro implements Serializable {
         return true;
     }
 
-/*    @Override
-    public String toString() {
-    return "bean.FacturaCobro[ numFactura=" + numFactura + " ]";
-    }*/
     @Override
     public String toString() {
-        return  "numFactura=" + numFactura + ", fechaEmision=" + fechaEmision + ", rucCliente=" + rucCliente + ", concepto=" + concepto + ", total=" + total + ", tipoFactura=" + tipoFactura + ", codigoReserva=" + codigoReserva;
-    }
-    
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(listener);
-    }
-
-    public Collection<ConsumoProSer> getConsumoProSerCollection() {
-        return consumoProSerCollection;
-    }
-
-    public void setConsumoProSerCollection(Collection<ConsumoProSer> consumoProSerCollection) {
-        this.consumoProSerCollection = consumoProSerCollection;
+        return "bean.FacturaCobro[ numFactura=" + numFactura + " ]";
     }
     
 }

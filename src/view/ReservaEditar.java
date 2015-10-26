@@ -12,21 +12,16 @@ import bean.ConsumoProSer;
 import bean.Correo;
 import bean.FacturaCobro;
 import bean.Habitacion;
-import bean.NumberToText;
 import bean.ProductoServicio;
 import bean.Reserva;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -34,9 +29,6 @@ import javax.persistence.Query;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -47,13 +39,13 @@ public class ReservaEditar extends javax.swing.JFrame {
     private int diferencia;
     private String condicion;
     private int dias;
-    private int monto_fac;
+    public static int monto_fac;
     private int fila;
     public Date auxIn ;
     public Date auxOut;
     private String datos[]=new String[3];
     FacturaCobro f=new FacturaCobro();
-    Reserva reservaLocal = new Reserva();
+    public static Reserva reservaLocal = new Reserva();
      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     /**
      * Creates new form ReservaEditar
@@ -108,8 +100,6 @@ public class ReservaEditar extends javax.swing.JFrame {
         tf_anticipar = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         tf_montoAbonado = new javax.swing.JTextField();
-        lbl_pago = new javax.swing.JLabel();
-        list_pago = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         tf_valor = new javax.swing.JTextField();
         lbl_valor = new javax.swing.JLabel();
@@ -121,7 +111,6 @@ public class ReservaEditar extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(913, 686));
-        setResizable(false);
 
         panel_CrearReserva.setBackground(new java.awt.Color(0, 153, 255));
         panel_CrearReserva.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -331,11 +320,6 @@ public class ReservaEditar extends javax.swing.JFrame {
             }
         });
 
-        lbl_pago.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
-        lbl_pago.setText("Forma Pago:");
-
-        list_pago.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Contado", "Crédito/Cheque", "Crédito/Tarjeta" }));
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -384,11 +368,9 @@ public class ReservaEditar extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
-                            .addComponent(jLabel8)
-                            .addComponent(lbl_pago))
+                            .addComponent(jLabel8))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(list_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(tf_precioCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -454,10 +436,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                             .addComponent(tf_montoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbl_anticipar)
                             .addComponent(tf_anticipar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(list_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_pago))))
+                        .addGap(39, 39, 39)))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -671,7 +650,14 @@ public class ReservaEditar extends javax.swing.JFrame {
                                 query.setParameter("numero", Integer.parseInt(tf_numeroHabitacion.getText()));
                                 habitacion = (Habitacion)query.getSingleResult();
                                 reservaLocal.setNumHabitacion(habitacion);
+                                System.out.println("Monto Abonado Ahora "+reservaLocal.getMontoAbonado());
+                                System.out.println("Monto Abonado Antes "+reserva.getMontoAbonado());
+                                monto_fac=ReservaEditar.reservaLocal.getMontoAbonado()-reserva.getMontoAbonado();
+                                System.out.println("Monto Factura "+monto_fac);
                                 entityManager.merge(reservaLocal);
+                               
+                                
+                              
                                 entityManager.flush();
                                 //despues de los cambios
                                 despues = reservaLocal.toString();
@@ -732,10 +718,10 @@ public class ReservaEditar extends javax.swing.JFrame {
                                                 entityManager.persist(cp);
                                                 entityManager.flush();
                                          }        
-                                }  
-                                monto_fac=reservaLocal.getMontoAbonado()-reserva.getMontoAbonado();
+                                }
+                              
                                  //generamos la factura en caso de que haya aportado algo
-                                if(monto_fac!=0){
+                              /*  if(monto_fac!=0){
                                         f.setCodigoReserva(reserva);
                                         f.setConcepto("anticipo de reserva");
                                        if("".equals(reserva.getCodigoCliente().getRuc())){
@@ -754,7 +740,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                                        }else{
                                            condicion="Contado";
                                        }
-                                }
+                                }*/
                                
 
                             }
@@ -779,7 +765,10 @@ public class ReservaEditar extends javax.swing.JFrame {
                                 list.add(reservaLocal);
                             //mostramos la factura
                             if(!"0".equals(tf_montoAbonado.getText()) && monto_fac!=0){
-                                 try
+                               
+                                 RegistrarDetalleCobro.invoca="Editar Reserva";
+                                 formaPago();
+                             /*    try
                                 {
                                      //convertimos el numero en letras
                                     NumberToText nt=new NumberToText();
@@ -805,7 +794,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                                 catch(Exception e)
                                 {
                                     e.printStackTrace();
-                                }
+                                }*/
                             }
                              enviarDatosEmail();
                         }
@@ -828,7 +817,12 @@ public class ReservaEditar extends javax.swing.JFrame {
            
         }
     }//GEN-LAST:event_btn_modificarActionPerformed
-
+     private void formaPago(){
+        String args[]=new String[1];
+        args[0]="Forma de Pago";
+        RegistrarDetalleCobro.main(args);
+        
+    }
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -1250,12 +1244,10 @@ public class ReservaEditar extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_anticipar;
     private javax.swing.JLabel lbl_codReserva;
     private javax.swing.JLabel lbl_filtro;
-    private javax.swing.JLabel lbl_pago;
     private javax.swing.JLabel lbl_presupuesto;
     private javax.swing.JLabel lbl_valor;
     private java.util.List<bean.Reserva> list;
     private javax.swing.JComboBox list_filtros;
-    private javax.swing.JComboBox list_pago;
     private javax.swing.JTable masterTable;
     private javax.swing.JPanel panel_CrearReserva;
     private javax.persistence.Query query;
@@ -1265,7 +1257,7 @@ public class ReservaEditar extends javax.swing.JFrame {
     public static javax.swing.JTextField tf_cedulaCliente;
     private javax.swing.JTextField tf_cliente;
     private javax.swing.JTextField tf_codReserva;
-    public static javax.swing.JTextField tf_montoAbonado;
+    private javax.swing.JTextField tf_montoAbonado;
     public static javax.swing.JTextField tf_montoTotal;
     public static javax.swing.JTextField tf_numeroHabitacion;
     public static javax.swing.JTextField tf_precioCategoria;

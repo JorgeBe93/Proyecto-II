@@ -55,8 +55,9 @@ public class CrearReserva extends javax.swing.JFrame {
     private String datos[]=new String[3];
      DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
      DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
-    java.util.Date fecha = new Date();
-    Reserva reserva = new Reserva();
+   java.util.Date fecha = new Date();
+   public static Reserva reserva = new Reserva();
+   
 
     /**
      * Creates new form CrearReserva
@@ -100,8 +101,6 @@ public class CrearReserva extends javax.swing.JFrame {
         btn_buscar = new javax.swing.JButton();
         tf_categoriaHabitacion = new javax.swing.JTextField();
         tf_cedulaCliente = new javax.swing.JTextField();
-        lbl_pago = new javax.swing.JLabel();
-        list_pago = new javax.swing.JComboBox();
         tf_cliente = new javax.swing.JTextField();
         lbl_anticipar = new javax.swing.JLabel();
         tf_anticipar = new javax.swing.JTextField();
@@ -234,11 +233,6 @@ public class CrearReserva extends javax.swing.JFrame {
             }
         });
 
-        lbl_pago.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
-        lbl_pago.setText("Forma Pago:");
-
-        list_pago.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Contado", "Crédito/Cheque", "Crédito/Tarjeta" }));
-
         tf_cliente.setEditable(false);
         tf_cliente.setBackground(new java.awt.Color(0, 153, 255));
         tf_cliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -292,7 +286,6 @@ public class CrearReserva extends javax.swing.JFrame {
                                     .addComponent(tf_montoAbonado, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(45, 45, 45)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbl_pago)
                                     .addComponent(jLabel11)
                                     .addComponent(jLabel8))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,9 +296,6 @@ public class CrearReserva extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(list_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(tf_precioCategoria)
                                         .addGap(27, 27, 27)
@@ -368,9 +358,7 @@ public class CrearReserva extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(tf_montoAbonado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_pago)
-                    .addComponent(list_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_montoAbonado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -668,8 +656,9 @@ public class CrearReserva extends javax.swing.JFrame {
                                 ema.persist(cp);
                                 ema.flush(); 
                              }
-                              //generamos la factura
-                             f.setCodigoReserva(reserva);
+                              //llamamos la ventana forma de pago
+                         
+                            /* f.setCodigoReserva(reserva);
                              f.setConcepto("anticipo de reserva");
                              if("".equals(reserva.getCodigoCliente().getRuc())){
                                    f.setRucCliente(reserva.getCodigoCliente().getCedula());
@@ -678,18 +667,19 @@ public class CrearReserva extends javax.swing.JFrame {
                              }
                              f.setFechaEmision(form.format(fecha));
                              f.setTotal(Integer.parseInt(tf_montoAbonado.getText()));
-                             f.setTipoFactura((String) list_pago.getSelectedItem());
+                             f.setTipoFactura(RegistrarDetalleCobro.dc.getForma());
+                             f.setFormaPago(RegistrarDetalleCobro.dc);
                              ema.persist(f);
                              ema.flush();
                              //verificar la condicion de pago
-                             if("Crédito/Cheque".equals(f.getTipoFactura()) || "Crédito/Tarjeta".equals(f.getTipoFactura()) ){
+                             if("Cheque".equals(f.getTipoFactura()) || "Tarjeta Crédito".equals(f.getTipoFactura()) ){
                                  condicion="Crédito";
                                  
                              }else{
                                  condicion="Contado";
-                             }
+                             }*/
 
-                         }                  
+                         }             
                          //creacion de auditoria de sistema
                          AuditoriaSistema as=new AuditoriaSistema();
                          as.setAccion("Inserción");
@@ -704,10 +694,16 @@ public class CrearReserva extends javax.swing.JFrame {
                          ema.getTransaction().commit();
                          ema.close();
                          JOptionPane.showMessageDialog(null, "Registro Exitoso");
+                          if(!"0".equals(tf_montoAbonado.getText())){
+                                 RegistrarDetalleCobro.invoca="Crear Reserva";
+                                formaPago();
+                          }
+                          nuevoRegistro();
+                          enviarDatosEmail();
                         // this.dispose();
                         
                            //volvemos a preguntar si aporto algo y se genera la factura
-                          if(!"0".equals(tf_montoAbonado.getText())){
+                        /*  if(!"0".equals(tf_montoAbonado.getText())){
                               try
                              {
                                  NumberToText nt=new NumberToText();
@@ -735,9 +731,8 @@ public class CrearReserva extends javax.swing.JFrame {
                                  e.printStackTrace();
                              }
                                
-                          }
-                          nuevoRegistro();
-                          enviarDatosEmail();
+                          }*/
+                         
 
                      }
                      else{
@@ -758,7 +753,12 @@ public class CrearReserva extends javax.swing.JFrame {
                    + "impiden el registro");  
      }
     }//GEN-LAST:event_btn_registrarActionPerformed
-
+    private void formaPago(){
+        String args[]=new String[1];
+        args[0]="Forma de Pago";
+        RegistrarDetalleCobro.main(args);
+        
+    }
     private void tf_numeroHabitacionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_numeroHabitacionFocusLost
         // TODO add your handling code here:
         
@@ -1131,10 +1131,8 @@ public class CrearReserva extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_anticipar;
     private javax.swing.JLabel lbl_cantidadPersonas;
     private javax.swing.JLabel lbl_filtro;
-    private javax.swing.JLabel lbl_pago;
     private javax.swing.JLabel lbl_valor;
     private javax.swing.JComboBox list_filtros;
-    private javax.swing.JComboBox list_pago;
     private javax.swing.JTable masterTableCliente;
     private javax.swing.JPanel panel_CrearReserva;
     private javax.swing.JTextField tf_anticipar;
