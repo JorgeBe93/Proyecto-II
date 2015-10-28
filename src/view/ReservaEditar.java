@@ -437,7 +437,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                             .addComponent(lbl_anticipar)
                             .addComponent(tf_anticipar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(39, 39, 39)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
@@ -565,12 +565,15 @@ public class ReservaEditar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(400, 400, 400)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(143, 143, 143))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(384, 384, 384))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -580,11 +583,12 @@ public class ReservaEditar extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         bindingGroup.bind();
@@ -646,7 +650,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                                 reservaLocal.setMontoAbonado(Integer.parseInt(tf_montoAbonado.getText()));
                                 reservaLocal.setMontoTotal(Integer.parseInt(tf_montoTotal.getText()));
                                 //consulta para obtener habitacion
-                                 query = entityManager.createNamedQuery("Habitacion.findByNumero");
+                                query = entityManager.createNamedQuery("Habitacion.findByNumero");
                                 query.setParameter("numero", Integer.parseInt(tf_numeroHabitacion.getText()));
                                 habitacion = (Habitacion)query.getSingleResult();
                                 reservaLocal.setNumHabitacion(habitacion);
@@ -692,6 +696,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                                          System.out.print(cps.get(0).getCodigoConsumo());
                                          cp.setCodigoReserva(reservaLocal);
                                          cp.setCantidad(dias);
+                                         cp.setFecha(form.format(fecha));
                                          cp.setTotal(diferencia);
                                          cp.setCodigoPS(p.get(0));
                                          entityManager.merge(cp);
@@ -714,6 +719,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                                                 cp.setCodigoReserva(reservaLocal);
                                                 cp.setCantidad(dias);
                                                 cp.setTotal(diferencia);
+                                                cp.setFecha(form.format(fecha));
                                                 cp.setCodigoPS(p.get(0));
                                                 entityManager.persist(cp);
                                                 entityManager.flush();
@@ -796,7 +802,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                                     e.printStackTrace();
                                 }*/
                             }
-                             enviarDatosEmail();
+                           //  enviarDatosEmail();
                         }
                         else{
                             this.dispose();
@@ -1258,7 +1264,7 @@ public class ReservaEditar extends javax.swing.JFrame {
     private javax.swing.JTextField tf_cliente;
     private javax.swing.JTextField tf_codReserva;
     private javax.swing.JTextField tf_montoAbonado;
-    public static javax.swing.JTextField tf_montoTotal;
+    private javax.swing.JTextField tf_montoTotal;
     public static javax.swing.JTextField tf_numeroHabitacion;
     public static javax.swing.JTextField tf_precioCategoria;
     private javax.swing.JTextField tf_presupuesto;

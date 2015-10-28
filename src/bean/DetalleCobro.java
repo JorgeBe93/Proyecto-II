@@ -7,7 +7,9 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -30,6 +33,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "DetalleCobro.findByNumeroChTarj", query = "SELECT d FROM DetalleCobro d WHERE d.numeroChTarj = :numeroChTarj"),
     @NamedQuery(name = "DetalleCobro.findByEntidad", query = "SELECT d FROM DetalleCobro d WHERE d.entidad = :entidad")})
 public class DetalleCobro implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "formaPago")
+    private Collection<FacturaCobro> facturaCobroCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -112,9 +117,22 @@ public class DetalleCobro implements Serializable {
         return true;
     }
 
+    /* @Override
+    public String toString() {
+    return "bean.DetalleCobro[ idDetalle=" + idDetalle + " ]";
+    }*/
     @Override
     public String toString() {
-        return "bean.DetalleCobro[ idDetalle=" + idDetalle + " ]";
+        return  "idDetalle=" + idDetalle + ", forma=" + forma + ", numeroChTarj=" + numeroChTarj + ", entidad=" + entidad;
     }
+
+    public Collection<FacturaCobro> getFacturaCobroCollection() {
+        return facturaCobroCollection;
+    }
+
+    public void setFacturaCobroCollection(Collection<FacturaCobro> facturaCobroCollection) {
+        this.facturaCobroCollection = facturaCobroCollection;
+    }
+    
     
 }

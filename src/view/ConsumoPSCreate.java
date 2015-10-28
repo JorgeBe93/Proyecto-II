@@ -45,9 +45,10 @@ private int resp;
 private int fila;
 private boolean esArticulo=false;
 private final  TextAutoCompleter textAutoCompleter;
- private  List<Articulo> ar;
- Date fecha=new Date();
-  DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+private  List<Articulo> ar;
+Date fecha=new Date();
+DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
     /**
      * Creates new form ConsumoPSCreate
      */
@@ -99,7 +100,6 @@ private final  TextAutoCompleter textAutoCompleter;
         btn_guardar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
         btn_nuevo = new javax.swing.JButton();
-        btn_factura = new javax.swing.JButton();
         btn_consumos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
@@ -140,13 +140,13 @@ private final  TextAutoCompleter textAutoCompleter;
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lbl_total.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        lbl_total.setText("Total de consumo:");
+        lbl_total.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        lbl_total.setText("Total de consumo (Gs.):");
 
-        lbl_codigoReserva.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_codigoReserva.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_codigoReserva.setText("Código Reserva:");
 
-        lbl_ps.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_ps.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_ps.setText("Producto/Servicio:");
 
         tf_total.setEditable(false);
@@ -176,10 +176,10 @@ private final  TextAutoCompleter textAutoCompleter;
             }
         });
 
-        lbl_cantidad.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_cantidad.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_cantidad.setText("Cantidad:");
 
-        lbl_precio.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_precio.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_precio.setText("Precio (Gs.):");
 
         tf_precio.setEditable(false);
@@ -218,7 +218,7 @@ private final  TextAutoCompleter textAutoCompleter;
         tf_codigoReserva.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_codigoReserva.setForeground(new java.awt.Color(255, 255, 255));
 
-        lbl_habitacion.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_habitacion.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_habitacion.setText("Habitación:");
 
         tf_habitacion.setEditable(false);
@@ -226,7 +226,7 @@ private final  TextAutoCompleter textAutoCompleter;
         tf_habitacion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_habitacion.setForeground(new java.awt.Color(255, 255, 255));
 
-        lbl_categoria.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_categoria.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_categoria.setText("Categoría:");
 
         tf_categoria.setEditable(false);
@@ -234,10 +234,10 @@ private final  TextAutoCompleter textAutoCompleter;
         tf_categoria.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_categoria.setForeground(new java.awt.Color(255, 255, 255));
 
-        lbl_huesped.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_huesped.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_huesped.setText("Nombre/Apellido:");
 
-        lbl_cedula.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_cedula.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_cedula.setText("Cédula:");
 
         tf_cedula.setEditable(false);
@@ -286,15 +286,12 @@ private final  TextAutoCompleter textAutoCompleter;
                                     .addComponent(tf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(lbl_categoria)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tf_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(tf_huesped, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(29, 29, 29)))
-                    .addComponent(tf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lbl_categoria)
+                        .addGap(39, 39, 39)
+                        .addComponent(tf_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_huesped, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -356,9 +353,6 @@ private final  TextAutoCompleter textAutoCompleter;
             }
         });
 
-        btn_factura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icon-money.png"))); // NOI18N
-        btn_factura.setText("Factura");
-
         btn_consumos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icono-listado.gif"))); // NOI18N
         btn_consumos.setText("Consumos");
         btn_consumos.addActionListener(new java.awt.event.ActionListener() {
@@ -372,32 +366,25 @@ private final  TextAutoCompleter textAutoCompleter;
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
+                .addGap(19, 19, 19)
                 .addComponent(btn_nuevo)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_guardar)
-                .addGap(18, 18, 18)
+                .addGap(31, 31, 31)
                 .addComponent(btn_consumos)
-                .addGap(27, 27, 27)
-                .addComponent(btn_factura, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(29, 29, 29)
                 .addComponent(btn_cancelar)
-                .addGap(41, 41, 41))
+                .addGap(133, 133, 133))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(btn_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_consumos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_factura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_consumos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(btn_guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -516,12 +503,11 @@ private final  TextAutoCompleter textAutoCompleter;
                         .addGap(81, 81, 81)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(panel_registrarCPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(26, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66))
+                            .addComponent(panel_registrarCPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -533,10 +519,10 @@ private final  TextAutoCompleter textAutoCompleter;
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -581,6 +567,7 @@ private final  TextAutoCompleter textAutoCompleter;
           resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar una nuevo consumo de producto/servicio?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
           if (resp==JOptionPane.YES_OPTION){
               ConsumoProSer cp= new ConsumoProSer();
+              cp.setFecha(form.format(fecha));
               cp.setCantidad(Integer.parseInt(tf_cantidad.getText()));
               cp.setTotal(Integer.parseInt(tf_total.getText()));
               codigo=Integer.parseInt(tf_codigoReserva.getText());
@@ -599,7 +586,7 @@ private final  TextAutoCompleter textAutoCompleter;
               if(esArticulo){
                    actualizarStock(cp.getCodigoPS().getCodigoPS(),cp.getCantidad());
               }   
-               registrarAuditoria("Consumo P/S",cp.toString());
+              registrarAuditoria("Consumo P/S","Inserción",cp.toString(),null);
               entityManager.getTransaction().commit();
              // entityManager.close();
               JOptionPane.showMessageDialog(null,"Registro exitoso!", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
@@ -912,7 +899,12 @@ private final  TextAutoCompleter textAutoCompleter;
             e.printStackTrace();
         }
     }//GEN-LAST:event_btn_consumosActionPerformed
- private List<Articulo> buscarArticulo(int cod){
+     private void formaPago(){
+        String args[]=new String[1];
+        args[0]="Forma de Pago";
+        RegistrarDetalleCobro.main(args);     
+    }
+    private List<Articulo> buscarArticulo(int cod){
      ar=null;
       Query=entityManager.createNativeQuery("SELECT * FROM articulo WHERE codigoArticulo= "
             +cod,Articulo.class);
@@ -929,7 +921,7 @@ private final  TextAutoCompleter textAutoCompleter;
         art.setCantidadStock(ar.get(0).getCantidadStock()-cantidad);
         entityManager.merge(art);
         entityManager.flush();
-      registrarAuditoria("articulo",ar.toString());
+       registrarAuditoria("articulo","Modificación",ar.toString(),art.toString());
  }
         private void inicializarListaReserva(){
         Query=entityManager.createNativeQuery("select * from reserva  "
@@ -938,13 +930,14 @@ private final  TextAutoCompleter textAutoCompleter;
         List.addAll(r);
     
     }
-       private void registrarAuditoria(String entidad,String valor){
+       private void registrarAuditoria(String entidad,String accion,String antes,String despues){
          AuditoriaSistema as=new AuditoriaSistema();
-            as.setAccion("Inserción");
+            as.setAccion(accion);
             as.setTabla(entidad);
             as.setFechaHora(formato.format(fecha));
             as.setUsuario(LoginView.nombreUsuario);
-            as.setAntes(valor);
+            as.setAntes(antes);
+            as.setDespues(despues);
             as.setDespues("No hay modificaciones");
             entityManager.persist(as);
             entityManager.flush();
@@ -997,7 +990,6 @@ private final  TextAutoCompleter textAutoCompleter;
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_consumos;
-    private javax.swing.JButton btn_factura;
     private javax.swing.JButton btn_guardar;
     private javax.swing.JButton btn_nuevo;
     private javax.persistence.EntityManager entityManager;

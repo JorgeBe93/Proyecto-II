@@ -6,6 +6,8 @@
 
 package view;
 
+import bean.AuditoriaSistema;
+import bean.ConsumoProSer;
 import bean.DetalleCobro;
 import bean.FacturaCobro;
 import bean.NumberToText;
@@ -23,6 +25,7 @@ import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
+import static view.ConsumoFactura.cps;
 
 
 
@@ -38,7 +41,8 @@ private int diferencia;
 private FacturaCobro f=new FacturaCobro();
 private String condicion;
 DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
-java.util.Date fecha = new Date();
+ Date fecha=new Date();
+ DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     /**
      * Creates new form FormaPago
      */
@@ -115,6 +119,8 @@ java.util.Date fecha = new Date();
 
         list_entidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cabal", "Visa", "Master Card", "American Express", "Itau", "Vision", "Continental", "BBVA", "BNF", "GNB" }));
 
+        cb_cheque.setBackground(new java.awt.Color(0, 153, 255));
+        cb_cheque.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         cb_cheque.setText("Cheque");
         cb_cheque.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -125,6 +131,8 @@ java.util.Date fecha = new Date();
         lbl_entidad.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_entidad.setText("Entidad:");
 
+        cb_contado.setBackground(new java.awt.Color(0, 153, 255));
+        cb_contado.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         cb_contado.setText("Contado");
         cb_contado.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -132,6 +140,8 @@ java.util.Date fecha = new Date();
             }
         });
 
+        cb_tc.setBackground(new java.awt.Color(0, 153, 255));
+        cb_tc.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         cb_tc.setText("Tarjeta Crédito");
         cb_tc.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -144,30 +154,34 @@ java.util.Date fecha = new Date();
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(cb_contado)
+                        .addGap(52, 52, 52)
+                        .addComponent(cb_tc)
+                        .addGap(44, 44, 44)
+                        .addComponent(cb_cheque)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_numero)
                             .addComponent(lbl_entidad))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tf_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(list_entidad, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cb_contado)
-                        .addGap(37, 37, 37)
-                        .addComponent(cb_tc)
-                        .addGap(42, 42, 42)
-                        .addComponent(cb_cheque)))
-                .addContainerGap())
+                            .addComponent(list_entidad, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tf_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(20, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -177,15 +191,12 @@ java.util.Date fecha = new Date();
                         .addGap(46, 46, 46)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbl_numero)
-                            .addComponent(tf_numero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_entidad)
-                    .addComponent(list_entidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                            .addComponent(tf_numero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_entidad)
+                            .addComponent(list_entidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         btn_aceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/accept.png"))); // NOI18N
@@ -203,15 +214,15 @@ java.util.Date fecha = new Date();
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(123, 123, 123)
                         .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(298, 298, 298)
+                        .addGap(29, 29, 29)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(309, 309, 309)
                         .addComponent(btn_aceptar)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,9 +231,9 @@ java.util.Date fecha = new Date();
                 .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btn_aceptar)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -262,6 +273,8 @@ java.util.Date fecha = new Date();
                 dc.setForma("Tarjeta Crédito");
                 entityManager.getTransaction().begin();
                 entityManager.persist(dc);
+                entityManager.flush();
+                registrarAuditoria("Detalle de cobro","Inserción",dc.toString(),null);
            }
            
        }
@@ -275,6 +288,8 @@ java.util.Date fecha = new Date();
                 dc.setForma("Cheque");
                 entityManager.getTransaction().begin();
                 entityManager.persist(dc);
+                entityManager.flush();
+                registrarAuditoria("Detalle de cobro","Inserción",dc.toString(),null);
            }
            
        }
@@ -282,7 +297,8 @@ java.util.Date fecha = new Date();
                 dc.setForma("Contado");
                 entityManager.getTransaction().begin();
                 entityManager.persist(dc);
-           
+                entityManager.flush();
+                registrarAuditoria("Detalle de cobro","Inserción",dc.toString(),null);
       
        }
        this.dispose();
@@ -293,9 +309,12 @@ java.util.Date fecha = new Date();
        if("Editar Reserva".equals(invoca)){
            generarFactEditarReserva();
        }
+        if("Liquidar Reserva".equals(invoca)){
+           generarFactLiquidarReserva();
+       }
     }//GEN-LAST:event_btn_aceptarActionPerformed
 private void   generarFactCrearReserva(){
-    f.setCodigoReserva(CrearReserva.reserva);
+           f.setCodigoReserva(CrearReserva.reserva);
            f.setConcepto("anticipo de reserva");
            if("".equals(CrearReserva.reserva.getCodigoCliente().getRuc())){
                   f.setRucCliente(CrearReserva.reserva.getCodigoCliente().getCedula());
@@ -312,9 +331,10 @@ private void   generarFactCrearReserva(){
                       condicion="Contado";
                } 
               f.setFormaPago(dc);
-               f.setTipoFactura(condicion);
+              f.setTipoFactura(condicion);
               entityManager.persist(f);
               entityManager.flush();
+              registrarAuditoria("Factura de cobro","Inserción",f.toString(),null);
               entityManager.getTransaction().commit();
              //verificar la condicion de pago
                try
@@ -346,54 +366,110 @@ private void   generarFactCrearReserva(){
                         }
 }
 private void   generarFactEditarReserva(){
-      f.setCodigoReserva(ReservaEditar.reservaLocal);
-      f.setConcepto("anticipo de reserva");
-      if("".equals(ReservaEditar.reservaLocal.getCodigoCliente().getRuc())){
-                  f.setRucCliente(ReservaEditar.reservaLocal.getCodigoCliente().getCedula());
-     }else{
-                  f.setRucCliente(ReservaEditar.reservaLocal.getCodigoCliente().getRuc());
-      }
-    f.setFechaEmision(form.format(fecha));
-    f.setTotal(ReservaEditar.monto_fac);
-    if("Cheque".equals(dc.getForma()) || "Tarjeta Crédito".equals(dc.getForma()) ){
-                     condicion="Crédito";
+            f.setCodigoReserva(ReservaEditar.reservaLocal);
+            f.setConcepto("anticipo de reserva");
+            if("".equals(ReservaEditar.reservaLocal.getCodigoCliente().getRuc())){
+                        f.setRucCliente(ReservaEditar.reservaLocal.getCodigoCliente().getCedula());
+           }else{
+                        f.setRucCliente(ReservaEditar.reservaLocal.getCodigoCliente().getRuc());
+            }
+            f.setFechaEmision(form.format(fecha));
+            f.setTotal(ReservaEditar.monto_fac);
+            if("Cheque".equals(dc.getForma()) || "Tarjeta Crédito".equals(dc.getForma()) ){
+                             condicion="Crédito";
 
-   }else{
-                     condicion="Contado";
-   }
-    f.setTipoFactura(condicion);
-    f.setFormaPago(dc);
-    entityManager.persist(f);
-    entityManager.flush();
-    entityManager.getTransaction().commit();
-     try
-      {
-        //convertimos el numero en letras
-        NumberToText nt=new NumberToText();
-        letras=nt.convertirLetras(f.getTotal());
-        System.out.print(letras);
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
-        HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
-        Map parametros=new HashMap();
-        System.out.print(f.getNumFactura());
-        par.put("Letras", letras);
-        par.put("NumFactura",f.getNumFactura() );
-        par.put("Saldo", diferencia);
-        par.put("Condicion", condicion);
-        JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/facturaAnticipo.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
-        JasperViewer jv = new JasperViewer(jp,false);
-        jv.setVisible(true);
-        jv.setTitle("Factura de Anticipo de Reserva");
-        Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
-        jv.setIconImage(icon);
-        jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-     }
-        catch(Exception e)
-     {
-        e.printStackTrace();
-     }
+           }else{
+                             condicion="Contado";
+           }
+            f.setTipoFactura(condicion);
+            f.setFormaPago(dc);
+            entityManager.persist(f);
+            entityManager.flush();
+            registrarAuditoria("Factura de cobro","Inserción",f.toString(),null);
+            entityManager.getTransaction().commit();
+           try
+            {
+              //convertimos el numero en letras
+              NumberToText nt=new NumberToText();
+              letras=nt.convertirLetras(f.getTotal());
+              diferencia=(ReservaEditar.reservaLocal.getMontoTotal()-ReservaEditar.reservaLocal.getMontoAbonado());
+              System.out.print(letras);
+              Class.forName("com.mysql.jdbc.Driver");
+              Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
+              HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
+              Map parametros=new HashMap();
+              System.out.print(f.getNumFactura());
+              par.put("Letras", letras);
+              par.put("NumFactura",f.getNumFactura() );
+              par.put("Saldo", diferencia);
+              par.put("Condicion", condicion);
+              JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/facturaAnticipo.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
+              JasperViewer jv = new JasperViewer(jp,false);
+              jv.setVisible(true);
+              jv.setTitle("Factura de Anticipo de Reserva");
+              Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+              jv.setIconImage(icon);
+              jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+           }
+              catch(Exception e)
+           {
+              e.printStackTrace();
+           }
 }
+private void generarFactLiquidarReserva(){
+                    f.setCodigoReserva(ConsumoFactura.re);
+                    f.setConcepto("liquidación de reserva");
+                    if("".equals(ConsumoFactura.re.getCodigoCliente().getRuc())){
+                        f.setRucCliente(ConsumoFactura.re.getCodigoCliente().getCedula());
+                    }else{
+                          f.setRucCliente(ConsumoFactura.re.getCodigoCliente().getRuc());
+                    }
+                    f.setFechaEmision(form.format(fecha));
+                     if("Cheque".equals(dc.getForma()) || "Tarjeta Crédito".equals(dc.getForma()) ){
+                           condicion="Crédito";
+
+                     }else{
+                           condicion="Contado";
+                     }
+                    f.setTotal(ConsumoFactura.total);
+                    f.setTipoFactura(condicion);
+                    f.setFormaPago(dc);
+                    entityManager.persist(f);
+                    System.out.println(f.toString());
+                    entityManager.flush();
+                     //verificar la condicion de pago
+                    registrarAuditoria("Factura de cobro","Inserción",f.toString(),null);
+                     // aca llamamos al metodo que va a poner el numero de factura a los detalles
+                    actualizarDetalle(f);
+                    entityManager.getTransaction().commit();
+                    this.dispose();
+                    //llamamos al jasper
+                      try
+                        {
+                            NumberToText nt=new NumberToText();
+                            letras=nt.convertirLetras(ConsumoFactura.total);
+                            System.out.print(letras);
+                            Class.forName("com.mysql.jdbc.Driver");
+                            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
+                            HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
+                            Map parametros=new HashMap();
+                            par.put("NumFactura",f.getNumFactura() );
+                            par.put("Letras", letras);
+                            par.put("Condicion", condicion);
+                            JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/facturaLiquidacion.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
+                            JasperViewer jv = new JasperViewer(jp,false);
+                            jv.setVisible(true);
+                            jv.setTitle("Factura de Liquidación de Reserva");
+                            Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                            jv.setIconImage(icon);
+                            jv.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                        }
+                        catch(Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+}
+
     /**
      * @param args the command line arguments
      */
@@ -435,6 +511,43 @@ private void   generarFactEditarReserva(){
             }
         });
     }
+      private void actualizarDetalle(FacturaCobro f){
+        String antes;
+        String despues;
+        int i=0;
+        for(i=0;i<cps.size();i++){
+            antes=cps.get(i).toString();
+            ConsumoProSer c=new ConsumoProSer();
+            c.setCodigoConsumo(cps.get(i).getCodigoConsumo());
+            c.setNumFactura(f);
+            c.setTotal(cps.get(i).getTotal());
+            c.setCodigoReserva(cps.get(i).getCodigoReserva());
+            c.setCantidad(cps.get(i).getCantidad());
+            c.setCodigoPS(cps.get(i).getCodigoPS());
+            entityManager.merge(c);
+            entityManager.flush();
+            despues=c.toString();
+            registrarAuditoria("Detalle de cobro","Modificación",antes,despues);
+           
+        }
+        
+    }
+      private void registrarAuditoria(String entidad,String accion,String antes, String despues){
+          AuditoriaSistema as=new AuditoriaSistema();
+                    as.setAccion(accion);
+                    as.setTabla(entidad);
+                    as.setAntes(antes);
+                    if(despues==null){
+                        as.setDespues("No hay cambios");
+                    } else{
+                        as.setDespues(despues);
+                    }
+                    //trabajamos con la fecha
+                    as.setFechaHora(formato.format(fecha));
+                    as.setUsuario("nadie");
+                    entityManager.persist(as);
+                    entityManager.flush();
+   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_aceptar;

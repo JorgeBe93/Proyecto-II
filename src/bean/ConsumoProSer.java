@@ -29,7 +29,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "ConsumoProSer.findAll", query = "SELECT c FROM ConsumoProSer c"),
     @NamedQuery(name = "ConsumoProSer.findByCodigoConsumo", query = "SELECT c FROM ConsumoProSer c WHERE c.codigoConsumo = :codigoConsumo"),
     @NamedQuery(name = "ConsumoProSer.findByCantidad", query = "SELECT c FROM ConsumoProSer c WHERE c.cantidad = :cantidad"),
-    @NamedQuery(name = "ConsumoProSer.findByTotal", query = "SELECT c FROM ConsumoProSer c WHERE c.total = :total")})
+    @NamedQuery(name = "ConsumoProSer.findByTotal", query = "SELECT c FROM ConsumoProSer c WHERE c.total = :total"),
+    @NamedQuery(name = "ConsumoProSer.findByFecha", query = "SELECT c FROM ConsumoProSer c WHERE c.fecha = :fecha")})
 public class ConsumoProSer implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,6 +44,9 @@ public class ConsumoProSer implements Serializable {
     @Basic(optional = false)
     @Column(name = "total")
     private int total;
+    @Basic(optional = false)
+    @Column(name = "fecha")
+    private String fecha;
     @JoinColumn(name = "numFactura", referencedColumnName = "numFactura")
     @ManyToOne
     private FacturaCobro numFactura;
@@ -60,10 +64,11 @@ public class ConsumoProSer implements Serializable {
         this.codigoConsumo = codigoConsumo;
     }
 
-    public ConsumoProSer(Integer codigoConsumo, int cantidad, int total) {
+    public ConsumoProSer(Integer codigoConsumo, int cantidad, int total, String fecha) {
         this.codigoConsumo = codigoConsumo;
         this.cantidad = cantidad;
         this.total = total;
+        this.fecha = fecha;
     }
 
     public Integer getCodigoConsumo() {
@@ -88,6 +93,14 @@ public class ConsumoProSer implements Serializable {
 
     public void setTotal(int total) {
         this.total = total;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
     public FacturaCobro getNumFactura() {

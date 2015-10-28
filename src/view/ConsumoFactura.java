@@ -8,24 +8,15 @@ package view;
 
 import bean.AuditoriaSistema;
 import bean.ConsumoProSer;
-import bean.FacturaCobro;
-import bean.NumberToText;
 import bean.Reserva;
 import java.awt.Image;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -35,10 +26,12 @@ public class ConsumoFactura extends javax.swing.JFrame {
     private int resp;
     private String condicion;
     private int fila;
-    private List<ConsumoProSer> cps;
+    public static int total;
+    public static List<ConsumoProSer> cps;
+    public static  Reserva re=new Reserva();
     Date fecha=new Date();
     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-     DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
+    DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
     /**
      * Creates new form ConsumoFactura
      */
@@ -80,8 +73,6 @@ public class ConsumoFactura extends javax.swing.JFrame {
         lbl_habitación = new javax.swing.JLabel();
         lbl_nomApe = new javax.swing.JLabel();
         lbl_categoria = new javax.swing.JLabel();
-        list_tipo = new javax.swing.JComboBox();
-        lbl_tipo = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         tf_valor = new javax.swing.JTextField();
         lbl_valor = new javax.swing.JLabel();
@@ -177,7 +168,7 @@ public class ConsumoFactura extends javax.swing.JFrame {
         tf_nomApe.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_nomApe.setForeground(new java.awt.Color(255, 255, 255));
 
-        lbl_cedula.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_cedula.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_cedula.setText("Cédula:");
 
         tf_cedula.setEditable(false);
@@ -185,7 +176,7 @@ public class ConsumoFactura extends javax.swing.JFrame {
         tf_cedula.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_cedula.setForeground(new java.awt.Color(255, 255, 255));
 
-        lbl_codigo.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_codigo.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_codigo.setText("Código Reserva:");
 
         tf_habitacion.setEditable(false);
@@ -193,19 +184,14 @@ public class ConsumoFactura extends javax.swing.JFrame {
         tf_habitacion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_habitacion.setForeground(new java.awt.Color(255, 255, 255));
 
-        lbl_habitación.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_habitación.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_habitación.setText("Habitación:");
 
-        lbl_nomApe.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_nomApe.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_nomApe.setText("Nombre/Apellido:");
 
-        lbl_categoria.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        lbl_categoria.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_categoria.setText("Categoría:");
-
-        list_tipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Contado", "Crédito/Cheque", "Crédito/Tarjeta" }));
-
-        lbl_tipo.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
-        lbl_tipo.setText("Forma de Pago:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -215,35 +201,28 @@ public class ConsumoFactura extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbl_tipo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(list_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lbl_codigo)
+                        .addGap(18, 18, 18)
+                        .addComponent(tf_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(lbl_codigo)
-                                .addGap(18, 18, 18)
-                                .addComponent(tf_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(lbl_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(tf_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(lbl_habitación)
-                                .addGap(42, 42, 42)
-                                .addComponent(tf_habitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbl_categoria)
-                                .addGap(31, 31, 31)
-                                .addComponent(tf_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(lbl_nomApe, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(tf_nomApe, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(51, 51, 51))))
+                        .addComponent(lbl_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(tf_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbl_habitación)
+                        .addGap(42, 42, 42)
+                        .addComponent(tf_habitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbl_categoria)
+                        .addGap(31, 31, 31)
+                        .addComponent(tf_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbl_nomApe, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(tf_nomApe, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(51, 51, 51))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,11 +241,7 @@ public class ConsumoFactura extends javax.swing.JFrame {
                     .addComponent(tf_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_nomApe)
                     .addComponent(tf_nomApe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_tipo)
-                    .addComponent(list_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
@@ -375,35 +350,36 @@ public class ConsumoFactura extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 744, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(58, 58, 58)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(panel_generarFact, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(233, 233, 233)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(panel_generarFact, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(239, 239, 239)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap()
                 .addComponent(panel_generarFact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -424,12 +400,11 @@ public class ConsumoFactura extends javax.swing.JFrame {
         }
         codigo=Integer.parseInt(tf_codigo.getText());
        // ruc=r.getCodigoCliente().getRuc();
-        int total=0;
         query=entityManager.createNamedQuery("Reserva.findByCodigoReserva");
         query.setParameter("codigoReserva", codigo);
         r=(Reserva) query.getSingleResult();
-       cedula=r.getCodigoCliente().getCedula();
-       ruc=r.getCodigoCliente().getRuc();
+        cedula=r.getCodigoCliente().getCedula();
+        ruc=r.getCodigoCliente().getRuc();
         //
         query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser  "
                     + "WHERE codigoReserva="
@@ -459,7 +434,6 @@ public class ConsumoFactura extends javax.swing.JFrame {
               entityManager.getTransaction().begin();
                 //sumamos el total a pagar por el cliente
                if(r.getMontoTotal()!=r.getMontoAbonado()){
-                   Reserva re=new Reserva();
                    re.setCodigoReserva(r.getCodigoReserva());
                    re.setCheckIn(r.getCheckIn());
                    re.setCheckOut(r.getCheckOut());
@@ -470,8 +444,11 @@ public class ConsumoFactura extends javax.swing.JFrame {
                    re.setNumHabitacion(r.getNumHabitacion());
                    entityManager.flush();
                    entityManager.merge(re);
+                   registrarAuditoria("Reserva","Modificación",r.toString(),re.toString());
                }
-                    FacturaCobro f=new FacturaCobro();
+                RegistrarDetalleCobro.invoca="Liquidar Reserva";
+                formaPago();
+                  /*  FacturaCobro f=new FacturaCobro();
                     f.setCodigoReserva(r);
                     f.setConcepto("liquidación de reserva");
                     if("".equals(ruc)){
@@ -521,13 +498,18 @@ public class ConsumoFactura extends javax.swing.JFrame {
                         catch(Exception e)
                         {
                             e.printStackTrace();
-                        }
+                        }*/
           }else{
-              
+                this.dispose();
           }
         
     }//GEN-LAST:event_btn_generarActionPerformed
-
+      private void formaPago(){
+        String args[]=new String[1];
+        args[0]="Forma de Pago";
+        RegistrarDetalleCobro.main(args);
+        
+    }
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -680,26 +662,7 @@ public class ConsumoFactura extends javax.swing.JFrame {
         tf_cedula.setText((String) masterTable.getValueAt(fila, 5));
         tf_nomApe.setText(masterTable.getValueAt(fila, 6)+" "+masterTable.getValueAt(fila, 7));
     }//GEN-LAST:event_masterTableMouseClicked
-    private void actualizarDetalle(FacturaCobro f){
-        String antes;
-        String despues;
-        int i=0;
-        for(i=0;i<cps.size();i++){
-            antes=cps.get(i).toString();
-            ConsumoProSer c=new ConsumoProSer();
-            c.setCodigoConsumo(cps.get(i).getCodigoConsumo());
-            c.setNumFactura(f);
-            c.setTotal(cps.get(i).getTotal());
-            c.setCodigoReserva(cps.get(i).getCodigoReserva());
-            c.setCantidad(cps.get(i).getCantidad());
-            c.setCodigoPS(cps.get(i).getCodigoPS());
-            entityManager.merge(c);
-            entityManager.flush();
-            despues=cps.get(i).toString();
-            registrarAuditoria("Consumo P/S","Modificación",antes,despues);
-        }
-        
-    }
+  
    private void registrarAuditoria(String entidad,String accion,String antes, String despues){
           AuditoriaSistema as=new AuditoriaSistema();
                     as.setAccion(accion);
@@ -715,6 +678,7 @@ public class ConsumoFactura extends javax.swing.JFrame {
                     as.setUsuario("nadie");
                     entityManager.persist(as);
                     entityManager.flush();
+                    entityManager.getTransaction().commit();
    }
    private void inicializarLista(){
     reservaQuery=entityManager.createNativeQuery("select * from reserva  "
@@ -780,11 +744,9 @@ public class ConsumoFactura extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_generarFact;
     private javax.swing.JLabel lbl_habitación;
     private javax.swing.JLabel lbl_nomApe;
-    private javax.swing.JLabel lbl_tipo;
     private javax.swing.JLabel lbl_valor;
     private java.util.List<bean.Reserva> list;
     private javax.swing.JComboBox list_filtros;
-    private javax.swing.JComboBox list_tipo;
     private javax.swing.JTable masterTable;
     private javax.swing.JPanel panel_generarFact;
     private javax.persistence.Query query;

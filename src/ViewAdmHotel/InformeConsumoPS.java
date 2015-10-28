@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package view;
+package ViewAdmHotel;
 
+import view.*;
 import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,12 +25,12 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author Jorge
  */
-public class PerdidaOportunidades extends javax.swing.JFrame {
+public class InformeConsumoPS extends javax.swing.JFrame {
 
     /**
      * Creates new form PerdidaOportunidades
      */
-    public PerdidaOportunidades() {
+    public InformeConsumoPS() {
         initComponents();
     }
 
@@ -60,23 +61,23 @@ public class PerdidaOportunidades extends javax.swing.JFrame {
 
         lbl_BuscarRol.setFont(new java.awt.Font("Corbel", 1, 24)); // NOI18N
         lbl_BuscarRol.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_BuscarRol.setText("Generar Informa de Pérdidas de  Oportunidades");
+        lbl_BuscarRol.setText("Generar Informa de Consumo de P/S");
 
         javax.swing.GroupLayout panel_BuscarRolLayout = new javax.swing.GroupLayout(panel_BuscarRol);
         panel_BuscarRol.setLayout(panel_BuscarRolLayout);
         panel_BuscarRolLayout.setHorizontalGroup(
             panel_BuscarRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_BuscarRolLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_BuscarRolLayout.createSequentialGroup()
+                .addContainerGap(41, Short.MAX_VALUE)
                 .addComponent(lbl_BuscarRol)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
         panel_BuscarRolLayout.setVerticalGroup(
             panel_BuscarRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_BuscarRolLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_BuscarRolLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_BuscarRol)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -157,25 +158,24 @@ public class PerdidaOportunidades extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(176, 176, 176))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(67, 67, 67))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(23, 23, 23)
                 .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(27, 27, 27)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,7 +195,7 @@ public class PerdidaOportunidades extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null,"Rango de Fechas Inválidas", "Error",JOptionPane.ERROR_MESSAGE);
              return;
          }
-          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+          SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
           String desde=format.format(ch_desde.getDate());
           String hasta=format.format(ch_hasta.getDate());
          
@@ -206,11 +206,10 @@ public class PerdidaOportunidades extends javax.swing.JFrame {
                     HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
                     par.put("FechaDesde",desde );
                      par.put("FechaHasta",hasta );
-                     par.put("CantDias", cantidadDias());
-                    JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/perdidasOportunidades.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
+                    JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/ConsumoPS.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
                     JasperViewer jv = new JasperViewer(jp,false);
                     jv.setVisible(true);
-                    jv.setTitle("Informe de Pérdidas de  Oportunidades");
+                    jv.setTitle("Informe de Consumo de P/S");
                     Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
                     jv.setIconImage(icon);
                     jv.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -225,12 +224,12 @@ public class PerdidaOportunidades extends javax.swing.JFrame {
         // TODO add your handling code here:3
         this.dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
-    private long cantidadDias(){
+   /* private long cantidadDias(){
          final long MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
          long cantidadDias = (ch_hasta.getDate().getTime() - ch_desde.getDate().getTime())/MILLSECS_PER_DAY;
            System.out.println("Fecha calculada"+" "+cantidadDias);
           return  cantidadDias;
-    }
+    }*/
     /**
      * @param args the command line arguments
      */
@@ -263,7 +262,7 @@ public class PerdidaOportunidades extends javax.swing.JFrame {
             public void run() {
                 JFrame frame=new PerdidaOportunidades();
                 frame.setVisible(true);
-                frame.setTitle("Generar Informe de  Pérdidas de Oportunidades");
+                frame.setTitle("Generar Informe de  Consumo de P/S");
                 Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
                 frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -29,6 +29,7 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
     private int fila;
     Date fecha=new Date();
     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
 
     /**
      * Creates new form ConsumoProdSerEliminar
@@ -71,6 +72,8 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         tf_cedula = new javax.swing.JTextField();
         tf_datosCliente = new javax.swing.JTextField();
+        lbl_fecha = new javax.swing.JLabel();
+        tf_fecha = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btn_eliminar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
@@ -99,7 +102,7 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
             .addGroup(panel_eliminarCPSLayout.createSequentialGroup()
                 .addGap(137, 137, 137)
                 .addComponent(lbl_eliminarCPS)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
         panel_eliminarCPSLayout.setVerticalGroup(
             panel_eliminarCPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,14 +199,35 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
         tf_datosCliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_datosCliente.setForeground(new java.awt.Color(255, 255, 255));
 
+        lbl_fecha.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        lbl_fecha.setText("Fecha:");
+
+        tf_fecha.setEditable(false);
+        tf_fecha.setBackground(new java.awt.Color(0, 153, 255));
+        tf_fecha.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_fecha.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
+                        .addComponent(lbl_codigoConsumo)
+                        .addGap(18, 18, 18)
+                        .addComponent(tf_codigoConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbl_codigoReserva)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tf_codigoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tf_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
                         .addComponent(lbl_ps)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,26 +246,16 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(tf_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lbl_codigoConsumo)
-                                .addGap(18, 18, 18)
-                                .addComponent(tf_codigoConsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbl_codigoReserva)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tf_codigoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tf_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tf_datosCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lbl_cantidad)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(lbl_cantidad)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lbl_fecha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tf_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_datosCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -269,7 +283,9 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
                     .addComponent(lbl_total)
                     .addComponent(tf_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_factura)
-                    .addComponent(tf_factura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_factura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_fecha)
+                    .addComponent(tf_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
@@ -320,7 +336,7 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel2.setText("Buscar por:");
 
-        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Consumo", "Reserva", "Producto/Servicio", "Total", "Número Factura", "Habitación", "Cedula" }));
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Consumo", "Reserva", "Producto/Servicio", "Total", "Número Factura", "Habitación", "Cedula", "Fecha" }));
         list_filtros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 list_filtrosActionPerformed(evt);
@@ -329,6 +345,9 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusLost(evt);
             }
         });
 
@@ -409,6 +428,9 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoPS.nombre}"));
         columnBinding.setColumnName("Producto/Servicio");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fecha}"));
+        columnBinding.setColumnName("Fecha");
+        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cantidad}"));
         columnBinding.setColumnName("Cantidad");
         columnBinding.setColumnClass(Integer.class);
@@ -435,7 +457,8 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
             masterTable.getColumnModel().getColumn(2).setPreferredWidth(40);
             masterTable.getColumnModel().getColumn(6).setPreferredWidth(100);
             masterTable.getColumnModel().getColumn(7).setPreferredWidth(40);
-            masterTable.getColumnModel().getColumn(10).setPreferredWidth(40);
+            masterTable.getColumnModel().getColumn(8).setPreferredWidth(40);
+            masterTable.getColumnModel().getColumn(11).setPreferredWidth(40);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -443,25 +466,23 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1074, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(217, 217, 217)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(panel_eliminarCPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(234, 234, 234)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panel_eliminarCPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1090, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81))
+                        .addGap(103, 103, 103))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(414, 414, 414))))
+                        .addGap(433, 433, 433))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -476,7 +497,7 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -621,6 +642,19 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
                 list.clear();
                 list.addAll(c);
             }
+               else if (list_filtros.getSelectedItem()=="Fecha"){
+                query = entityManager.createNamedQuery("ConsumoProSer.findByFecha");
+                query.setParameter("fecha", tf_valor.getText());
+                List<ConsumoProSer> c = query.getResultList();
+                if (c.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Fecha inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(c);
+
+            }
             else if (list_filtros.getSelectedItem()=="Total"){
                 query = entityManager.createNativeQuery( "SELECT * FROM consumo_pro_ser "
                     + "WHERE total>= "
@@ -706,11 +740,19 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
         obtenerConsumo(fila);
         inicializarConsumo();
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void list_filtrosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusLost
+        // TODO add your handling code here:
+        if(list_filtros.getSelectedItem()=="Fecha"){
+            tf_valor.setText(form.format(fecha));   
+         }
+    }//GEN-LAST:event_list_filtrosFocusLost
     private void inicializarConsumo(){
         
             if(cps.getNumFactura()==null){
-                     tf_codigoConsumo.setText(Integer.toString(cps.getCodigoConsumo()));
+                    tf_codigoConsumo.setText(Integer.toString(cps.getCodigoConsumo()));
                     tf_cantidad.setText(Integer.toString(cps.getCantidad()));
+                    tf_fecha.setText(cps.getFecha());
                     tf_codigoReserva.setText(Integer.toString(cps.getCodigoReserva().getCodigoReserva()));
                     tf_ps.setText(cps.getCodigoPS().getNombre());
                     tf_precio.setText(Integer.toString(cps.getCodigoPS().getCosto()));
@@ -783,6 +825,7 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
             tf_cedula.setText(null);
             tf_datosCliente.setText(null);
             tf_factura.setText(null);
+            tf_fecha.setText(null);
        
     }
     /**
@@ -842,6 +885,7 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_codigoReserva;
     private javax.swing.JLabel lbl_eliminarCPS;
     private javax.swing.JLabel lbl_factura;
+    private javax.swing.JLabel lbl_fecha;
     private javax.swing.JLabel lbl_precio;
     private javax.swing.JLabel lbl_ps;
     private javax.swing.JLabel lbl_total;
@@ -857,6 +901,7 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
     private javax.swing.JTextField tf_codigoReserva;
     private javax.swing.JTextField tf_datosCliente;
     private javax.swing.JTextField tf_factura;
+    private javax.swing.JTextField tf_fecha;
     private javax.swing.JTextField tf_precio;
     private javax.swing.JTextField tf_ps;
     private javax.swing.JTextField tf_total;

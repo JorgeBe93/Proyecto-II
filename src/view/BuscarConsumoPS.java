@@ -8,6 +8,9 @@ package view;
 
 import bean.ConsumoProSer;
 import java.awt.Image;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -27,6 +30,8 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
     private int total;
     private int precio;
     private int numFact;
+     Date fecha=new Date();
+    DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
     /**
      * Creates new form BuscarConsumoPS
      */
@@ -92,7 +97,7 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel1.setText("Buscar por:");
 
-        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Consumo", "Reserva", "Producto/Servicio", "Total", "Número Factura", "Habitación", "Cedula" }));
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Consumo", "Reserva", "Producto/Servicio", "Total", "Número Factura", "Habitación", "Cedula", "Fecha" }));
         list_filtros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 list_filtrosActionPerformed(evt);
@@ -101,6 +106,9 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusLost(evt);
             }
         });
 
@@ -189,6 +197,9 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoPS.nombre}"));
         columnBinding.setColumnName("Producto/Servicio");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fecha}"));
+        columnBinding.setColumnName("Fecha");
+        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cantidad}"));
         columnBinding.setColumnName("Cantidad");
         columnBinding.setColumnClass(Integer.class);
@@ -214,11 +225,12 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
             masterTable.getColumnModel().getColumn(1).setPreferredWidth(20);
             masterTable.getColumnModel().getColumn(2).setPreferredWidth(25);
             masterTable.getColumnModel().getColumn(6).setPreferredWidth(100);
-            masterTable.getColumnModel().getColumn(7).setPreferredWidth(15);
-            masterTable.getColumnModel().getColumn(8).setResizable(false);
-            masterTable.getColumnModel().getColumn(8).setPreferredWidth(20);
-            masterTable.getColumnModel().getColumn(9).setPreferredWidth(25);
-            masterTable.getColumnModel().getColumn(10).setPreferredWidth(30);
+            masterTable.getColumnModel().getColumn(7).setPreferredWidth(40);
+            masterTable.getColumnModel().getColumn(8).setPreferredWidth(15);
+            masterTable.getColumnModel().getColumn(9).setResizable(false);
+            masterTable.getColumnModel().getColumn(9).setPreferredWidth(20);
+            masterTable.getColumnModel().getColumn(10).setPreferredWidth(25);
+            masterTable.getColumnModel().getColumn(11).setPreferredWidth(30);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -226,19 +238,19 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 298, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panel_BuscarCPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(219, 219, 219))
             .addGroup(layout.createSequentialGroup()
-                .addGap(498, 498, 498)
-                .addComponent(btn_cancelar)
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1097, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1050, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_cancelar)
+                .addGap(468, 468, 468))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,11 +259,11 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
                 .addComponent(panel_BuscarCPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_cancelar)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -307,6 +319,18 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
                 List.clear();
                 List.addAll(c);
             }
+            else if (list_filtros.getSelectedItem()=="Fecha"){
+                Query = EntityManager.createNamedQuery("ConsumoProSer.findByFecha");
+                Query.setParameter("fecha", tf_valor.getText());
+                List<ConsumoProSer> c = Query.getResultList();
+                if (c.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Fecha inexistente","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                List.clear();
+                List.addAll(c);
+              }
             else if (list_filtros.getSelectedItem()=="Producto/Servicio"){
                 Query = EntityManager.createNativeQuery( "SELECT * FROM consumo_pro_ser c "
                     + "INNER JOIN producto_servicio p "
@@ -420,6 +444,13 @@ public class BuscarConsumoPS extends javax.swing.JFrame {
     private void list_filtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_list_filtrosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_list_filtrosActionPerformed
+
+    private void list_filtrosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusLost
+        // TODO add your handling code here:
+        if(list_filtros.getSelectedItem()=="Fecha"){
+            tf_valor.setText(form.format(fecha));   
+         }
+    }//GEN-LAST:event_list_filtrosFocusLost
  private ConsumoProSer obtenerConsumo(int fila){
         Query=EntityManager.createNamedQuery("ConsumoProSer.findByCodigoConsumo");
         Query.setParameter("codigoConsumo", masterTable.getValueAt(fila, 0));

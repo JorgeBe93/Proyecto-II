@@ -12,13 +12,11 @@ import bean.ConsumoProSer;
 import bean.Correo;
 import bean.FacturaCobro;
 import bean.Habitacion;
-import bean.NumberToText;
 import bean.ProductoServicio;
 import bean.Reserva;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -30,13 +28,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.swing.ImageIcon;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -653,6 +646,7 @@ public class CrearReserva extends javax.swing.JFrame {
                                 cp.setCantidad(0);
                                 cp.setTotal(diferencia);
                                 cp.setCodigoPS(p.get(0));
+                                cp.setFecha(form.format(fecha));
                                 ema.persist(cp);
                                 ema.flush(); 
                              }
@@ -696,12 +690,10 @@ public class CrearReserva extends javax.swing.JFrame {
                          JOptionPane.showMessageDialog(null, "Registro Exitoso");
                           if(!"0".equals(tf_montoAbonado.getText())){
                                  RegistrarDetalleCobro.invoca="Crear Reserva";
-                                formaPago();
+                                 formaPago();
                           }
                           nuevoRegistro();
-                          enviarDatosEmail();
-                        // this.dispose();
-                        
+                        //  enviarDatosEmail();   
                            //volvemos a preguntar si aporto algo y se genera la factura
                         /*  if(!"0".equals(tf_montoAbonado.getText())){
                               try

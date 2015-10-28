@@ -120,6 +120,8 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         mItem_eliminarLugar = new javax.swing.JMenuItem();
         mItem_buscarLugar = new javax.swing.JMenuItem();
         mItem_peridaOportunidades = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
+        mItem_consumoPS = new javax.swing.JMenuItem();
         menu_estilos = new javax.swing.JMenu();
         menu_salir = new javax.swing.JMenu();
 
@@ -534,6 +536,15 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_hotel.add(mItem_peridaOportunidades);
+        menu_hotel.add(jSeparator7);
+
+        mItem_consumoPS.setText("Informe de Consumo P/S");
+        mItem_consumoPS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_consumoPSActionPerformed(evt);
+            }
+        });
+        menu_hotel.add(mItem_consumoPS);
 
         jMenuBar1.add(menu_hotel);
 
@@ -902,6 +913,13 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         PerdidaOportunidades.main(args);
     }//GEN-LAST:event_mItem_peridaOportunidadesActionPerformed
 
+    private void mItem_consumoPSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_consumoPSActionPerformed
+        // TODO add your handling code here:
+         String args[]=new String[1];
+        args[0]="Generar Informe de Consumo de P/S";
+        InformeConsumoPS.main(args);
+    }//GEN-LAST:event_mItem_consumoPSActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -951,6 +969,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JMenuItem mIem_buscarSeg;
     private javax.swing.JMenuItem mItem_buscar;
     private javax.swing.JMenuItem mItem_buscarActividad;
@@ -961,6 +980,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_buscarHabit;
     private javax.swing.JMenuItem mItem_buscarLugar;
     private javax.swing.JMenuItem mItem_buscarPS;
+    private javax.swing.JMenuItem mItem_consumoPS;
     private javax.swing.JMenuItem mItem_crearCH;
     private javax.swing.JMenuItem mItem_crearCargo;
     private javax.swing.JMenuItem mItem_crearEmpleado;
