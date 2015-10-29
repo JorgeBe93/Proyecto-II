@@ -241,7 +241,7 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 			</textField>
 			<textField pattern="###0.0">
 				<reportElement uuid="038a44d6-011d-4999-a077-a28f821f2950" x="373" y="0" width="60" height="20">
-					<printWhenExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}>136]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}>168]]></printWhenExpression>
 				</reportElement>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}-168]]></textFieldExpression>

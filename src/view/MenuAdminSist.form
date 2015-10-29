@@ -41,15 +41,12 @@
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="99" red="0" type="rgb"/>
+          <Color blue="cc" green="cc" red="cc" type="rgb"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
-            <EtchetBorder/>
+          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+            <BevelBorder/>
           </Border>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="99" red="0" type="rgb"/>
         </Property>
       </Properties>
       <SubComponents>
@@ -63,12 +60,13 @@
                 <BevelBorder/>
               </Border>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagenes/id4.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Administrar Rol"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Candara" size="14" style="0"/>
             </Property>
-            <Property name="verticalAlignment" type="int" value="1"/>
-            <Property name="verticalTextPosition" type="int" value="1"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mItem_crearR">
@@ -124,6 +122,9 @@
                 <BevelBorder/>
               </Border>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagenes/aluno.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Administrar Usuario"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Candara" size="14" style="0"/>
@@ -177,6 +178,9 @@
                 <BevelBorder/>
               </Border>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagenes/pc2.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Auditor&#xed;a de Sistema"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Candara" size="14" style="0"/>
@@ -207,6 +211,17 @@
               </Events>
             </MenuItem>
           </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="menu_estilos">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagenes/ventana2.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Estilos"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="13" style="0"/>
+            </Property>
+          </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menu_salir">
           <Properties>
@@ -252,12 +267,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="460" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="790" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="290" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="260" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>

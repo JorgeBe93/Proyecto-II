@@ -320,7 +320,6 @@ public class ClienteBuscar extends javax.swing.JFrame {
                   reservaList.clear();
                   list.clear();
                   list.addAll(c);
-                  cargarReserva(id);
                    
               }
               if(list_filtros.getSelectedItem()=="Cedula"){
@@ -401,8 +400,8 @@ public class ClienteBuscar extends javax.swing.JFrame {
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
         // TODO add your handling code here:
-   
-            
+            fila=masterTable.getSelectedRow();
+            cargarReserva((Integer)masterTable.getValueAt(fila, 0));
     }//GEN-LAST:event_masterTableMouseClicked
 
     private void tf_valorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_valorActionPerformed

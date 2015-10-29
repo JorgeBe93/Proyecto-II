@@ -149,6 +149,9 @@ public class ClienteEdit extends javax.swing.JFrame {
             }
         });
         tf_ruc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_rucKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_rucKeyTyped(evt);
             }
@@ -165,6 +168,9 @@ public class ClienteEdit extends javax.swing.JFrame {
             }
         });
         tf_cedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_cedulaKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_cedulaKeyTyped(evt);
             }
@@ -233,11 +239,11 @@ public class ClienteEdit extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbl_cedula)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tf_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
+                        .addComponent(tf_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85)
                         .addComponent(lbl_ruc)
                         .addGap(18, 18, 18)
-                        .addComponent(tf_ruc, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tf_ruc, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbl_telef)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -248,7 +254,7 @@ public class ClienteEdit extends javax.swing.JFrame {
                         .addComponent(tf_email, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbl_apellido)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tf_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 35, Short.MAX_VALUE))
         );
@@ -510,20 +516,7 @@ public class ClienteEdit extends javax.swing.JFrame {
 
     private void tf_rucFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_rucFocusLost
         // TODO add your handling code here:
-        int codigo;
-          if(tf_ruc.getText().length()!=0){//si el ruc no es nulo
-                    query=entityManager.createNamedQuery("Cliente.findByRuc");
-                    query.setParameter("ruc", tf_ruc.getText().toLowerCase());
-                    List<Cliente> clie=query.getResultList();
-                    if(clie.size()!=0){
-                        codigo=clie.get(0).getCodigoCliente();
-                        if(Integer.parseInt(tf_codigo.getText())!=codigo){//pregunta si esta intentando cambiar por un numero de cedula ya existente
-                            JOptionPane.showMessageDialog(null,"El numero de RUC ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
-                            tf_ruc.setText(null);
-                            return;
-                        }  
-                     }  
-                } 
+     
           
     }//GEN-LAST:event_tf_rucFocusLost
 
@@ -541,20 +534,7 @@ public class ClienteEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_cedulaActionPerformed
 
     private void tf_cedulaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_cedulaFocusLost
-        // TODO add your handling code here:
-        int codigo;
-         query=entityManager.createNamedQuery("Cliente.findByCedula");
-              query.setParameter("cedula", tf_cedula.getText());
-              List<Cliente> c=query.getResultList();
-              if(c.size()!=0){
-                    codigo=c.get(0).getCodigoCliente();
-                    if(Integer.parseInt(tf_codigo.getText())!=codigo){//pregunta si esta intentando cambiar por un numero de cedula ya existente
-                            JOptionPane.showMessageDialog(null,"El numero de cedula ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
-                            tf_cedula.setText(null);
-                            return;
-                     }
-                }
-        
+        // TODO add your handling code here:      
     }//GEN-LAST:event_tf_cedulaFocusLost
 
     private void tf_cedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_cedulaKeyTyped
@@ -758,6 +738,40 @@ public class ClienteEdit extends javax.swing.JFrame {
         obtenerCliente(fila);
          inicializarCliente();
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void tf_cedulaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_cedulaKeyReleased
+        // TODO add your handling code here:
+         int codigo;
+         query=entityManager.createNamedQuery("Cliente.findByCedula");
+              query.setParameter("cedula", tf_cedula.getText());
+              List<Cliente> c=query.getResultList();
+              if(c.size()!=0){
+                    codigo=c.get(0).getCodigoCliente();
+                    if(Integer.parseInt(tf_codigo.getText())!=codigo){//pregunta si esta intentando cambiar por un numero de cedula ya existente
+                            JOptionPane.showMessageDialog(null,"El numero de cedula ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
+                            tf_cedula.setText(null);
+                            tf_cedula.requestFocus();
+                     }
+                }
+    }//GEN-LAST:event_tf_cedulaKeyReleased
+
+    private void tf_rucKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_rucKeyReleased
+        // TODO add your handling code here:
+           int codigo;
+          if(tf_ruc.getText().length()!=0){//si el ruc no es nulo
+                    query=entityManager.createNamedQuery("Cliente.findByRuc");
+                    query.setParameter("ruc", tf_ruc.getText().toLowerCase());
+                    List<Cliente> clie=query.getResultList();
+                    if(clie.size()!=0){
+                        codigo=clie.get(0).getCodigoCliente();
+                        if(Integer.parseInt(tf_codigo.getText())!=codigo){//pregunta si esta intentando cambiar por un numero de cedula ya existente
+                            JOptionPane.showMessageDialog(null,"El numero de RUC ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
+                            tf_ruc.setText(null);
+                            tf_ruc.requestFocus();
+                        }  
+                     }  
+                } 
+    }//GEN-LAST:event_tf_rucKeyReleased
     private void obtenerCliente(int fila) {
             query = entityManager.createNamedQuery("Cliente.findByCodigoCliente");
             query.setParameter("codigoCliente", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );

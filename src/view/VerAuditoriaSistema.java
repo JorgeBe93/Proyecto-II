@@ -353,7 +353,9 @@ public class VerAuditoriaSistema extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame=new VerAuditoriaSistema();
-                 frame.setTitle("Auditoría de Sistema");
+                frame.setTitle("Auditoría de Sistema");
+                Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                frame.setIconImage(icon);
                 frame.setVisible(true);
                 frame.setLocationRelativeTo(null);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

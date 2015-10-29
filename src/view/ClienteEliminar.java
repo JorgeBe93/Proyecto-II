@@ -229,11 +229,11 @@ public class ClienteEliminar extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(lbl_cedula)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tf_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(tf_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61)
                         .addComponent(lbl_ruc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tf_ruc, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tf_ruc, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -460,19 +460,8 @@ public class ClienteEliminar extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(129, 129, 129)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(panel_eliminarC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(31, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 68, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -480,6 +469,17 @@ public class ClienteEliminar extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(57, 57, 57))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(129, 129, 129)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panel_eliminarC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 782, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -565,16 +565,19 @@ public class ClienteEliminar extends javax.swing.JFrame {
         // TODO add your handling code here:
         int i;
        String valor;
-       JOptionPane.showMessageDialog(null, "Existen registros de reservas para este cliente"
-                    + "si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
-        resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
-        if(resp==JOptionPane.YES_OPTION){
-            entityManager.getTransaction().begin();
-            //eliminamos las reservas efectuadas por dicho cliente
-                query=entityManager.createNativeQuery("SELECT * FROM reserva WHERE "
+       //avisamos si hay reservas que dependen de este cliente
+       query=entityManager.createNativeQuery("SELECT * FROM reserva WHERE "
                         + "codigoCliente= "
                         + "'"+tf_codigo.getText()+"'",Reserva.class);
                 List<Reserva> r=query.getResultList();
+        if((r.size()>=1)){
+             JOptionPane.showMessageDialog(null, "Existen registros de reservas para este cliente"
+                    + "si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
+        }
+        resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
+        if(resp==JOptionPane.YES_OPTION){
+            entityManager.getTransaction().begin();
+            //eliminamos las reservas efectuadas por dicho clien
                 if(r.size()>=1){
                     for(i=0;i<r.size();i++){
                         valor=r.get(i).toString();
@@ -583,7 +586,6 @@ public class ClienteEliminar extends javax.swing.JFrame {
                     }
                     entityManager.flush();
                 }
-                //
              Cliente c=entityManager.find(Cliente.class,Integer.parseInt(tf_codigo.getText()) );
              valor=c.toString();//guardamos el objeto antes de eliminar
              entityManager.remove(c);
@@ -592,7 +594,7 @@ public class ClienteEliminar extends javax.swing.JFrame {
              entityManager.getTransaction().commit();
             // entityManager.close();
              JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
-             list.clear();
+            // list.clear();
              list.remove(c);
              resetear();
              

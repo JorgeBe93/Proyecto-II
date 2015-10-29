@@ -296,11 +296,11 @@ public class VerEstadodeHabitaciones extends javax.swing.JFrame {
                 System.out.println("Error");
             }
             cerrarConexion();
-            llamadaCrearReserva = "";
+             llamadaCrearReserva = "";
             llamadaEditarReserva = "";
             llamadaGenerarPresupuesto="";
         
     }
-    
+     
 
 }

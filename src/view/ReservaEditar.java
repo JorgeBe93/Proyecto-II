@@ -836,26 +836,7 @@ public class ReservaEditar extends javax.swing.JFrame {
 
     private void tf_cedulaClienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_cedulaClienteFocusLost
         // TODO add your handling code here:
-        Cliente cliente = obtenerCliente();
-        int respuesta  = 0;
-        if (cliente == null){
-            if (!tf_cedulaCliente.getText().equals("")){
-                respuesta = JOptionPane.showConfirmDialog(null, "Cliente Inexistente ¿Desea "
-                    + "registrarlo en el sistema?");
-                if (respuesta == JOptionPane.YES_OPTION){
-                    JFrame frame=new ClienteCreate();
-                    frame.setVisible(true);
-                    frame.setTitle("Registar Cliente");
-                    frame.setLocationRelativeTo(null);
-                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    ClienteCreate.llamadaEditarReserva = "Invocado";
-                    ClienteCreate.tf_cedula.setText(tf_cedulaCliente.getText());
-                }else{
-                    tf_cedulaCliente.setText("");
-                    tf_cedulaCliente.requestFocus();
-                }
-            }
-        }
+    
     }//GEN-LAST:event_tf_cedulaClienteFocusLost
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed

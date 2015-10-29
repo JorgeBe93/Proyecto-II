@@ -13,6 +13,7 @@ package view;
 
 import bean.AuditoriaSistema;
 import bean.Rol;
+import java.awt.Image;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import static view.RolEliminar.tf_identi;
 
@@ -66,6 +68,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
         menu_auditoria = new javax.swing.JMenu();
         mItem_buscarRegistros = new javax.swing.JMenuItem();
         mItem_informeAud = new javax.swing.JMenuItem();
+        menu_estilos = new javax.swing.JMenu();
         menu_salir = new javax.swing.JMenu();
 
         jMenu1.setText("File");
@@ -83,16 +86,14 @@ public class MenuAdminSist extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Menu Administrador del Sistema");
 
-        jMenuBar1.setBackground(new java.awt.Color(0, 153, 255));
-        jMenuBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jMenuBar1.setForeground(new java.awt.Color(0, 153, 255));
+        jMenuBar1.setBackground(new java.awt.Color(204, 204, 204));
+        jMenuBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         menu_rol.setBackground(new java.awt.Color(204, 204, 204));
         menu_rol.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_rol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/id4.png"))); // NOI18N
         menu_rol.setText("Administrar Rol");
         menu_rol.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
-        menu_rol.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        menu_rol.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
         mItem_crearR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         mItem_crearR.setText("Crear Rol");
@@ -133,6 +134,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
         jMenuBar1.add(menu_rol);
 
         menu_usuario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/aluno.png"))); // NOI18N
         menu_usuario.setText("Administrar Usuario");
         menu_usuario.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
 
@@ -173,6 +175,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
         jMenuBar1.add(menu_usuario);
 
         menu_auditoria.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_auditoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pc2.png"))); // NOI18N
         menu_auditoria.setText("Auditoría de Sistema");
         menu_auditoria.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         menu_auditoria.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -205,6 +208,11 @@ public class MenuAdminSist extends javax.swing.JFrame {
 
         jMenuBar1.add(menu_auditoria);
 
+        menu_estilos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ventana2.png"))); // NOI18N
+        menu_estilos.setText("Estilos");
+        menu_estilos.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jMenuBar1.add(menu_estilos);
+
         menu_salir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_salir.setText("Salir");
         menu_salir.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
@@ -226,11 +234,11 @@ public class MenuAdminSist extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 460, Short.MAX_VALUE)
+            .addGap(0, 790, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 290, Short.MAX_VALUE)
+            .addGap(0, 260, Short.MAX_VALUE)
         );
 
         pack();
@@ -360,7 +368,9 @@ public class MenuAdminSist extends javax.swing.JFrame {
                JFrame frame= new MenuAdminSist();
                frame.setVisible(true);
                frame.setLocationRelativeTo(null);
-               frame.setTitle(args[0]);
+               frame.setTitle("Menu Administrador del Sistema");
+               Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+               frame.setIconImage(icon);
                frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             }
         });
@@ -381,6 +391,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_eliminarR;
     private javax.swing.JMenuItem mItem_informeAud;
     private javax.swing.JMenu menu_auditoria;
+    private javax.swing.JMenu menu_estilos;
     private javax.swing.JMenu menu_rol;
     private javax.swing.JMenu menu_salir;
     private javax.swing.JMenu menu_usuario;

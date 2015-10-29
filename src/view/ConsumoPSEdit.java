@@ -590,6 +590,7 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
               r=(Reserva) Query.getSingleResult();
               //
             cp.setCodigoReserva(r); 
+            cp.setFecha(form.format(fecha));
             ProductoServicio ps=obtenerProductoServicio(tf_productoServicio.getText());
             cp.setCodigoPS(ps);
             entityManager.getTransaction().begin();
@@ -871,16 +872,21 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
         System.out.println("Nuevo "+cantidadNueva);
         if(cantidadVieja>cantidadNueva){ //registro viejo mayor al nuevo
             dif=cantidadVieja-cantidadNueva;
+             //verificamos que no supere el stock del producto
+            /* if(prod.get(0).getCantidadStock()<dif){
+                JOptionPane.showMessageDialog(null,"Cantidad Supera Stock Existente ", "Error",JOptionPane.ERROR_MESSAGE);
+                return;
+            }*/
             System.out.println("Diferencia1: "+dif);
             art.setCantidadStock(prod.get(0).getCantidadStock()+dif);
            
         }else if(cantidadVieja<cantidadNueva){
             dif=cantidadNueva-cantidadVieja;
             //verificamos que no supere el stock del producto
-            if(prod.get(0).getCantidadStock()<dif){
+         /*   if(prod.get(0).getCantidadStock()<dif){
                 JOptionPane.showMessageDialog(null,"Cantidad Supera Stock Existente ", "Error",JOptionPane.ERROR_MESSAGE);
                 return;
-            }
+            }*/
              System.out.println("Diferencia2: "+dif);
             art.setCantidadStock(prod.get(0).getCantidadStock()-dif);
         

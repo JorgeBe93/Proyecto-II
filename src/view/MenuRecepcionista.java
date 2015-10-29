@@ -44,28 +44,43 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         menu_cliente = new javax.swing.JMenu();
         mItem_crearC = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
         mItem_editarC = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarC = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarC = new javax.swing.JMenuItem();
         menu_reserva = new javax.swing.JMenu();
         mItem_registrarReserva = new javax.swing.JMenuItem();
+        jSeparator9 = new javax.swing.JPopupMenu.Separator();
         mItem_editarReserva = new javax.swing.JMenuItem();
+        jSeparator10 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarReserva = new javax.swing.JMenuItem();
+        jSeparator8 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarReserva2 = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
         mItem_contrato = new javax.swing.JMenuItem();
         menu_presupuesto = new javax.swing.JMenu();
         mItem_generarPre = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         mItem_confirmarPre = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarPres = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarPre = new javax.swing.JMenuItem();
         menu_consumo = new javax.swing.JMenu();
         mItem_registrarConsumo2 = new javax.swing.JMenuItem();
+        jSeparator13 = new javax.swing.JPopupMenu.Separator();
         mItem_modificarConsumo = new javax.swing.JMenuItem();
+        jSeparator14 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarConsumo = new javax.swing.JMenuItem();
+        jSeparator12 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarConsumo = new javax.swing.JMenuItem();
+        jSeparator11 = new javax.swing.JPopupMenu.Separator();
         mItem_resumenConsumo = new javax.swing.JMenuItem();
         menu_factura = new javax.swing.JMenu();
         mItem_generarFactura = new javax.swing.JMenuItem();
+        jSeparator15 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarFactura = new javax.swing.JMenuItem();
         menu_estilos = new javax.swing.JMenu();
         menu_salir = new javax.swing.JMenu();
@@ -92,7 +107,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_cliente.add(mItem_crearC);
+        menu_cliente.add(jSeparator6);
 
+        mItem_editarC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/editarusuario.png"))); // NOI18N
         mItem_editarC.setText("Editar Cliente");
         mItem_editarC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +117,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_cliente.add(mItem_editarC);
+        menu_cliente.add(jSeparator5);
 
+        mItem_eliminarC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarC.setText("Eliminar Cliente");
         mItem_eliminarC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,6 +127,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_cliente.add(mItem_eliminarC);
+        menu_cliente.add(jSeparator4);
 
         mItem_buscarC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarC.setText("Buscar Cliente");
@@ -131,7 +151,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
 
-        mItem_registrarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icon-student.png"))); // NOI18N
+        mItem_registrarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         mItem_registrarReserva.setText("Registrar Reserva");
         mItem_registrarReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,7 +159,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_reserva.add(mItem_registrarReserva);
+        menu_reserva.add(jSeparator9);
 
+        mItem_editarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/refrescar.png"))); // NOI18N
         mItem_editarReserva.setText("Editar Reserva");
         mItem_editarReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,8 +169,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_reserva.add(mItem_editarReserva);
+        menu_reserva.add(jSeparator10);
 
-        mItem_eliminarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/SNP_2726707_en_v0.png"))); // NOI18N
+        mItem_eliminarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarReserva.setText("Eliminar Reserva");
         mItem_eliminarReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,7 +179,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_reserva.add(mItem_eliminarReserva);
+        menu_reserva.add(jSeparator8);
 
+        mItem_buscarReserva2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarReserva2.setText("Buscar Reserva");
         mItem_buscarReserva2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,7 +189,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_reserva.add(mItem_buscarReserva2);
+        menu_reserva.add(jSeparator7);
 
+        mItem_contrato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pdf.png"))); // NOI18N
         mItem_contrato.setText("Generar Contrato de Reserva");
         mItem_contrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,6 +212,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
 
+        mItem_generarPre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pdf.png"))); // NOI18N
         mItem_generarPre.setText("Generar Presupuesto");
         mItem_generarPre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,7 +220,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_presupuesto.add(mItem_generarPre);
+        menu_presupuesto.add(jSeparator3);
 
+        mItem_confirmarPre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/accept.png"))); // NOI18N
         mItem_confirmarPre.setText("Confirmar Presupuesto");
         mItem_confirmarPre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,7 +230,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_presupuesto.add(mItem_confirmarPre);
+        menu_presupuesto.add(jSeparator2);
 
+        mItem_eliminarPres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarPres.setText("Eliminar Presupuesto");
         mItem_eliminarPres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,7 +240,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_presupuesto.add(mItem_eliminarPres);
+        menu_presupuesto.add(jSeparator1);
 
+        mItem_buscarPre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarPre.setText("Buscar Presupuesto");
         mItem_buscarPre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,6 +258,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_consumo.setText("Consumos");
         menu_consumo.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
 
+        mItem_registrarConsumo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         mItem_registrarConsumo2.setText("Registrar Consumo");
         mItem_registrarConsumo2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -231,7 +266,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_consumo.add(mItem_registrarConsumo2);
+        menu_consumo.add(jSeparator13);
 
+        mItem_modificarConsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/refrescar.png"))); // NOI18N
         mItem_modificarConsumo.setText("Modificar Consumo");
         mItem_modificarConsumo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,7 +276,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_consumo.add(mItem_modificarConsumo);
+        menu_consumo.add(jSeparator14);
 
+        mItem_eliminarConsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarConsumo.setText("Eliminar Consumo");
         mItem_eliminarConsumo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,7 +286,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_consumo.add(mItem_eliminarConsumo);
+        menu_consumo.add(jSeparator12);
 
+        mItem_buscarConsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarConsumo.setText("Buscar Consumo");
         mItem_buscarConsumo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,7 +296,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_consumo.add(mItem_buscarConsumo);
+        menu_consumo.add(jSeparator11);
 
+        mItem_resumenConsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pdf.png"))); // NOI18N
         mItem_resumenConsumo.setText("Resumen de Consumo");
         mItem_resumenConsumo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -284,6 +327,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
         menu_factura.add(mItem_generarFactura);
+        menu_factura.add(jSeparator15);
 
         mItem_buscarFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarFactura.setText("Buscar Facturas");
@@ -319,11 +363,11 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 908, Short.MAX_VALUE)
+            .addGap(0, 926, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 297, Short.MAX_VALUE)
+            .addGap(0, 325, Short.MAX_VALUE)
         );
 
         pack();
@@ -566,6 +610,21 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
+    private javax.swing.JPopupMenu.Separator jSeparator11;
+    private javax.swing.JPopupMenu.Separator jSeparator12;
+    private javax.swing.JPopupMenu.Separator jSeparator13;
+    private javax.swing.JPopupMenu.Separator jSeparator14;
+    private javax.swing.JPopupMenu.Separator jSeparator15;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
+    private javax.swing.JPopupMenu.Separator jSeparator8;
+    private javax.swing.JPopupMenu.Separator jSeparator9;
     private javax.swing.JMenuItem mItem_buscarC;
     private javax.swing.JMenuItem mItem_buscarConsumo;
     private javax.swing.JMenuItem mItem_buscarFactura;
