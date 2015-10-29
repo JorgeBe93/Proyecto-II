@@ -28,10 +28,11 @@ public class ConsumoFactura extends javax.swing.JFrame {
     private int fila;
     public static int total;
     public static List<ConsumoProSer> cps;
-    public static  Reserva re=new Reserva();
+    private  Reserva re=new Reserva();
     Date fecha=new Date();
     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
+    public static Reserva r=new Reserva();
     /**
      * Creates new form ConsumoFactura
      */
@@ -393,7 +394,6 @@ public class ConsumoFactura extends javax.swing.JFrame {
         int codigo;
         String cedula;
         String ruc;
-        Reserva r;
         if(tf_codigo.getText().length()==0){
             JOptionPane.showMessageDialog(null,"Seleccione una Reserva", "Error",JOptionPane.INFORMATION_MESSAGE);
               return;

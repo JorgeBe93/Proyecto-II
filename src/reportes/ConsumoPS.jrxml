@@ -19,7 +19,10 @@
      producto_servicio.`nombre` AS producto_servicio_nombre,
      producto_servicio.`costo` AS producto_servicio_costo
 FROM
-     `producto_servicio` producto_servicio INNER JOIN `consumo_pro_ser` consumo_pro_ser ON producto_servicio.`codigoPS` = consumo_pro_ser.`codigoPS`]]>
+     `producto_servicio` producto_servicio INNER JOIN `consumo_pro_ser` consumo_pro_ser ON producto_servicio.`codigoPS` = consumo_pro_ser.`codigoPS`
+WHERE
+	(fecha>=$P{FechaDesde} and fecha<= $P{FechaHasta})
+	and nombre NOT LIKE '%saldo de reserva%']]>
 	</queryString>
 	<field name="consumo_pro_ser_codigoConsumo" class="java.lang.Integer"/>
 	<field name="consumo_pro_ser_cantidad" class="java.lang.Integer"/>

@@ -96,7 +96,7 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 				<textElement textAlignment="Justified">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Horas Trabajadas en el mes:  128]]></text>
+				<text><![CDATA[Horas Trabajadas en el mes:  168]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -244,7 +244,7 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 					<printWhenExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}>136]]></printWhenExpression>
 				</reportElement>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}-136]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}-168]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -4,16 +4,15 @@
  * and open the template in the editor.
  */
 
-package ViewAdmHotel;
+package view;
 
+import ViewAdmHotel.*;
 import view.*;
 import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -25,12 +24,12 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author Jorge
  */
-public class InformeConsumoPS extends javax.swing.JFrame {
+public class InformeAuditoria extends javax.swing.JFrame {
 
     /**
      * Creates new form PerdidaOportunidades
      */
-    public InformeConsumoPS() {
+    public InformeAuditoria() {
         initComponents();
     }
 
@@ -61,23 +60,23 @@ public class InformeConsumoPS extends javax.swing.JFrame {
 
         lbl_BuscarRol.setFont(new java.awt.Font("Corbel", 1, 24)); // NOI18N
         lbl_BuscarRol.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_BuscarRol.setText("Generar Informe de Consumo de P/S");
+        lbl_BuscarRol.setText("Generar Informe de Auditoria");
 
         javax.swing.GroupLayout panel_BuscarRolLayout = new javax.swing.GroupLayout(panel_BuscarRol);
         panel_BuscarRol.setLayout(panel_BuscarRolLayout);
         panel_BuscarRolLayout.setHorizontalGroup(
             panel_BuscarRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_BuscarRolLayout.createSequentialGroup()
-                .addContainerGap(41, Short.MAX_VALUE)
+            .addGroup(panel_BuscarRolLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
                 .addComponent(lbl_BuscarRol)
-                .addGap(37, 37, 37))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         panel_BuscarRolLayout.setVerticalGroup(
             panel_BuscarRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_BuscarRolLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panel_BuscarRolLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lbl_BuscarRol)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -148,9 +147,11 @@ public class InformeConsumoPS extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_generar)
-                    .addComponent(btn_cancelar))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btn_cancelar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btn_generar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -160,28 +161,28 @@ public class InformeConsumoPS extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(151, 151, 151))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(91, 91, 91)
+                        .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addContainerGap()
                 .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(28, 28, 28)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -208,7 +209,7 @@ public class InformeConsumoPS extends javax.swing.JFrame {
                     HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
                     par.put("FechaDesde",desde );
                      par.put("FechaHasta",hasta );
-                    JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/ConsumoPS.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
+                    JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/auditoriaFecha.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
                     JasperViewer jv = new JasperViewer(jp,false);
                     jv.setVisible(true);
                     jv.setTitle("Informe de Consumo de P/S");
@@ -262,9 +263,9 @@ public class InformeConsumoPS extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame frame=new InformeConsumoPS();
+                JFrame frame=new InformeAuditoria();
                 frame.setVisible(true);
-                frame.setTitle("Generar Informe de  Consumo de P/S");
+                frame.setTitle("Generar Informe de Auditoria de Sistema");
                 Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
                 frame.setIconImage(icon);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

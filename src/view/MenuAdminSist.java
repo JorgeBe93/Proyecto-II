@@ -64,6 +64,8 @@ public class MenuAdminSist extends javax.swing.JFrame {
         mitem_eliminarusuario = new javax.swing.JMenuItem();
         miItem_buscarUsuario = new javax.swing.JMenuItem();
         menu_auditoria = new javax.swing.JMenu();
+        mItem_buscarRegistros = new javax.swing.JMenuItem();
+        mItem_informeAud = new javax.swing.JMenuItem();
         menu_salir = new javax.swing.JMenu();
 
         jMenu1.setText("File");
@@ -171,7 +173,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
         jMenuBar1.add(menu_usuario);
 
         menu_auditoria.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_auditoria.setText("Ver Auditoría de Sistema");
+        menu_auditoria.setText("Auditoría de Sistema");
         menu_auditoria.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         menu_auditoria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -183,6 +185,24 @@ public class MenuAdminSist extends javax.swing.JFrame {
                 menu_auditoriaActionPerformed(evt);
             }
         });
+
+        mItem_buscarRegistros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
+        mItem_buscarRegistros.setText("Buscar Registros");
+        mItem_buscarRegistros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_buscarRegistrosActionPerformed(evt);
+            }
+        });
+        menu_auditoria.add(mItem_buscarRegistros);
+
+        mItem_informeAud.setText("Informe de Auditoría");
+        mItem_informeAud.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItem_informeAudActionPerformed(evt);
+            }
+        });
+        menu_auditoria.add(mItem_informeAud);
+
         jMenuBar1.add(menu_auditoria);
 
         menu_salir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -278,9 +298,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
 
     private void menu_auditoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_auditoriaMouseClicked
         // TODO add your handling code here:
-        String args[]=new String[1];
-        args[0]="Auditoría de Sistema";
-        VerAuditoriaSistema.main(args);
+      
     }//GEN-LAST:event_menu_auditoriaMouseClicked
 
     private void mitem_regis_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitem_regis_usuarioActionPerformed
@@ -319,6 +337,20 @@ public class MenuAdminSist extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_menu_salirActionPerformed
 
+    private void mItem_buscarRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_buscarRegistrosActionPerformed
+        // TODO add your handling code here:
+          String args[]=new String[1];
+        args[0]="Auditoría de Sistema";
+        VerAuditoriaSistema.main(args);
+    }//GEN-LAST:event_mItem_buscarRegistrosActionPerformed
+
+    private void mItem_informeAudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_informeAudActionPerformed
+        // TODO add your handling code here:
+          String args[]=new String[1];
+        args[0]="Informe Auditoría de Sistema";
+        InformeAuditoria.main(args);
+    }//GEN-LAST:event_mItem_informeAudActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -343,9 +375,11 @@ public class MenuAdminSist extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem mItem_buscarR;
+    private javax.swing.JMenuItem mItem_buscarRegistros;
     private javax.swing.JMenuItem mItem_crearR;
     private javax.swing.JMenuItem mItem_editarR;
     private javax.swing.JMenuItem mItem_eliminarR;
+    private javax.swing.JMenuItem mItem_informeAud;
     private javax.swing.JMenu menu_auditoria;
     private javax.swing.JMenu menu_rol;
     private javax.swing.JMenu menu_salir;

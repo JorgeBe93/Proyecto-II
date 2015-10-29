@@ -113,7 +113,9 @@ public class ProductoServicio implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.ProductoServicio[ codigoPS=" + codigoPS + " ]";
+        return  "codigoPS=" + codigoPS + ", nombre=" + nombre + ", costo=" + costo;
     }
+
+   
     
 }

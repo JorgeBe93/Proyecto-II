@@ -417,12 +417,12 @@ private void   generarFactEditarReserva(){
            }
 }
 private void generarFactLiquidarReserva(){
-                    f.setCodigoReserva(ConsumoFactura.re);
+                    f.setCodigoReserva(ConsumoFactura.r);
                     f.setConcepto("liquidación de reserva");
-                    if("".equals(ConsumoFactura.re.getCodigoCliente().getRuc())){
-                        f.setRucCliente(ConsumoFactura.re.getCodigoCliente().getCedula());
+                    if("".equals(ConsumoFactura.r.getCodigoCliente().getRuc())){
+                        f.setRucCliente(ConsumoFactura.r.getCodigoCliente().getCedula());
                     }else{
-                          f.setRucCliente(ConsumoFactura.re.getCodigoCliente().getRuc());
+                          f.setRucCliente(ConsumoFactura.r.getCodigoCliente().getRuc());
                     }
                     f.setFechaEmision(form.format(fecha));
                      if("Cheque".equals(dc.getForma()) || "Tarjeta Crédito".equals(dc.getForma()) ){
@@ -524,6 +524,7 @@ private void generarFactLiquidarReserva(){
             c.setCodigoReserva(cps.get(i).getCodigoReserva());
             c.setCantidad(cps.get(i).getCantidad());
             c.setCodigoPS(cps.get(i).getCodigoPS());
+            c.setFecha(form.format(fecha));
             entityManager.merge(c);
             entityManager.flush();
             despues=c.toString();

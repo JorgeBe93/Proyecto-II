@@ -200,7 +200,9 @@ public class Reserva implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.Reserva[ codigoReserva=" + codigoReserva + " ]";
+        return "Reserva=" + codigoReserva + ", checkIn=" + checkIn + ", checkOut=" + checkOut + ", cantPersonas=" + cantPersonas + ", montoTotal=" + montoTotal + ", montoAbonado=" + montoAbonado + ", numPresupuesto=" + numPresupuesto + ", numHabitacion=" + numHabitacion + ", codigoCliente=" + codigoCliente;
     }
+
+  
     
 }

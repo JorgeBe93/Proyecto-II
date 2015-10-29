@@ -149,7 +149,9 @@ public class ConsumoProSer implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.ConsumoProSer[ codigoConsumo=" + codigoConsumo + " ]";
+        return  "codigoConsumo=" + codigoConsumo + ", cantidad=" + cantidad + ", total=" + total + ", fecha=" + fecha + ", numFactura=" + numFactura + ", codigoPS=" + codigoPS + ", codigoReserva=" + codigoReserva;
     }
+
+  
     
 }

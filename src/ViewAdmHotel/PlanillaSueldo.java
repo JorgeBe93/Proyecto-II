@@ -6,10 +6,14 @@
 
 package ViewAdmHotel;
 
+import bean.AuditoriaSistema;
 import java.awt.Image;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -22,6 +26,7 @@ import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
+import view.LoginView;
 
 /**
  *
@@ -29,6 +34,15 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class PlanillaSueldo extends javax.swing.JFrame {
  private Connection connection;
+ private  int respuesta;
+ private  int mes;
+ private int anho;
+ private String periodo;
+ Date fecha=new Date();
+ DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+ EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
+ EntityManager ema = fact.createEntityManager();
+ private String valor;
 
     /**
      * Creates new form GenerarInformeAsist
@@ -57,6 +71,7 @@ public class PlanillaSueldo extends javax.swing.JFrame {
         lbl_año = new javax.swing.JLabel();
         lbl_mes = new javax.swing.JLabel();
         jy_año = new com.toedter.calendar.JYearChooser();
+        tf_aguinaldo = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btn_generar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
@@ -74,17 +89,17 @@ public class PlanillaSueldo extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(83, Short.MAX_VALUE)
                 .addComponent(lbl_registrarC)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(80, 80, 80))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_registrarC)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -96,31 +111,44 @@ public class PlanillaSueldo extends javax.swing.JFrame {
         lbl_mes.setFont(new java.awt.Font("Candara", 1, 16)); // NOI18N
         lbl_mes.setText("Mes:");
 
+        tf_aguinaldo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/dinero.png"))); // NOI18N
+        tf_aguinaldo.setText("Aguinaldo");
+        tf_aguinaldo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_aguinaldoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(32, 32, 32)
                 .addComponent(lbl_mes)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(jm_mes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
+                .addGap(41, 41, 41)
                 .addComponent(lbl_año)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jy_año, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(51, 51, 51)
+                .addComponent(tf_aguinaldo)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
+                .addContainerGap(40, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbl_mes, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jy_año, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_año)
-                    .addComponent(jm_mes, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tf_aguinaldo)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbl_mes, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jy_año, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jm_mes, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(40, 40, 40))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -168,26 +196,27 @@ public class PlanillaSueldo extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(49, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(133, 133, 133))
+                .addGap(0, 37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(158, 158, 158))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(19, 19, 19)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -200,10 +229,7 @@ public class PlanillaSueldo extends javax.swing.JFrame {
 
     private void btn_generarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generarActionPerformed
         // TODO add your handling code here:
-       int mes;
-       int anho;
-       int respuesta;
-       String periodo;
+  
         Query q;
         mes=jm_mes.getMonth();
         mes=mes+1;
@@ -220,6 +246,8 @@ public class PlanillaSueldo extends javax.swing.JFrame {
                      + "periodo= "+"'"+periodo+"'");
              List<bean.PlanillaPagoSueldo>pps=q.getResultList();
              if(pps.isEmpty()){
+                    valor="Pago de sueldo periodo: "+periodo;
+                    registrarAuditoria(valor);
                     Connection(mes,anho);//genero la planilla y despues consulto
                      try
                     {
@@ -266,6 +294,62 @@ public class PlanillaSueldo extends javax.swing.JFrame {
        
               
     }//GEN-LAST:event_btn_generarActionPerformed
+
+    private void tf_aguinaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_aguinaldoActionPerformed
+        // TODO add your handling code here:
+        Query q;
+         respuesta=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea efectuar el pago de salarios?", "Confirmar Registro",JOptionPane.YES_NO_OPTION );
+            if (respuesta==JOptionPane.YES_OPTION){
+                periodo="2015"+"-"+"13";
+                q=ema.createNativeQuery("Select * from planilla_pago_sueldo where "
+                     + "periodo= "+"'"+periodo+"'");
+                 List<bean.PlanillaPagoSueldo>pps=q.getResultList();
+                if(pps.isEmpty()){
+                        valor="Pago de sueldo aguinaldo: "+periodo;
+                        registrarAuditoria(valor);
+                        ConnectionAguinaldo(periodo);
+                        try
+                        {
+                            Class.forName("com.mysql.jdbc.Driver");
+                            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
+                            HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
+                            par.put("Periodo_q", periodo);
+                            JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/pagoAguinaldo.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
+                            JasperViewer jv = new JasperViewer(jp,false);
+                            jv.setVisible(true);
+                            jv.setTitle("Planilla de Pago de Aguinaldos");
+                            Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                            jv.setIconImage(icon);
+                            jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                       }
+                        catch(Exception e)
+                       {
+                            e.printStackTrace();
+                       }  
+                }else{ 
+                        //sólo consulto
+                        try
+                        {
+                            Class.forName("com.mysql.jdbc.Driver");
+                            Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
+                            HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
+                            par.put("Periodo_q", periodo);
+                            JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/pagoAguinaldo.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
+                            JasperViewer jv = new JasperViewer(jp,false);
+                            jv.setVisible(true);
+                            jv.setTitle("Planilla de Pago de Aguinaldos");
+                            Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+                            jv.setIconImage(icon);
+                            jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                       }
+                        catch(Exception e)
+                       {
+                            e.printStackTrace();
+                       }  
+                }
+                   
+            }
+    }//GEN-LAST:event_tf_aguinaldoActionPerformed
       private void Connection(int mes, int anho){
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -290,6 +374,30 @@ public class PlanillaSueldo extends javax.swing.JFrame {
             e.printStackTrace();
         }
         
+    }
+    private void  ConnectionAguinaldo(String periodo){
+         try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String BaseDeDatos = "jdbc:mysql://localhost/hotel db?user=root&password=user";
+            connection = DriverManager.getConnection(BaseDeDatos);
+            if(connection != null){
+                System.out.println("Conexion Exitosa!");
+                CallableStatement st=connection.prepareCall("{call pago_aguinaldo (?,?)}");
+               //  CallableStatement st=connection.prepareCall("{call planilla_pago }");
+                 st.setString(1, periodo);
+                 st.registerOutParameter(2, java.sql.Types.INTEGER);
+                 st.execute();
+                 int extraccion=st.getInt(2);
+                 // extraccion es el monto
+                 System.out.println("Extracción para aguinaldo: "+extraccion);
+                connection.close();
+            }else{
+                System.out.println("Conexion Fallida!");                
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+   
     }
       private String fechaLetra(int mes,int anho){
           String fechaLetra=" ";
@@ -336,7 +444,18 @@ public class PlanillaSueldo extends javax.swing.JFrame {
           return fechaLetra;
           
       }
-      
+         private void registrarAuditoria(String valor){
+            AuditoriaSistema as=new AuditoriaSistema();
+            as.setAccion("Inserción");
+            as.setTabla("Planilla Pago Sueldo");
+            as.setFechaHora(formato.format(fecha));
+            as.setUsuario(LoginView.nombreUsuario);
+            as.setAntes(valor);
+            as.setDespues("No hay modificaciones");
+            ema.getTransaction().begin();
+            ema.persist(as);
+            ema.getTransaction().commit();
+    }
     /**
      * @param args the command line arguments
      */
@@ -392,5 +511,6 @@ public class PlanillaSueldo extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_registrarC;
     private java.util.List<bean.Asistencia> list;
     private javax.persistence.Query query;
+    private javax.swing.JButton tf_aguinaldo;
     // End of variables declaration//GEN-END:variables
 }

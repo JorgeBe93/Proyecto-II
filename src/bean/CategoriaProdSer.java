@@ -88,7 +88,9 @@ public class CategoriaProdSer implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.CategoriaProdSer[ codigoCategoria=" + codigoCategoria + " ]";
+        return "codigoCategoria=" + codigoCategoria + ", nombre=" + nombre ;
     }
+
+   
     
 }

@@ -3,7 +3,10 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="Fecha" class="java.lang.String">
+	<parameter name="FechaDesde" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FechaHasta" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -17,7 +20,7 @@
      auditoria_sistema.`despues` AS auditoria_sistema_despues
 FROM
      `auditoria_sistema` auditoria_sistema
-Where auditoria_sistema.`fechaHora` like concat($P{Fecha},'%')]]>
+]]>
 	</queryString>
 	<field name="auditoria_sistema_codigoAuditoria" class="java.lang.Integer"/>
 	<field name="auditoria_sistema_tabla" class="java.lang.String"/>

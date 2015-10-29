@@ -187,7 +187,9 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.Cliente[ codigoCliente=" + codigoCliente + " ]";
+        return "codigoCliente=" + codigoCliente + ", cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + ", direccion=" + direccion + ", telefono=" + telefono + ", ruc=" + ruc;
     }
+
+   
     
 }
