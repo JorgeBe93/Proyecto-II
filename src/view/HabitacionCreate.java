@@ -14,9 +14,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -99,6 +96,9 @@ public class HabitacionCreate extends javax.swing.JFrame {
             }
         });
         tf_numeroHabit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_numeroHabitKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_numeroHabitKeyTyped(evt);
             }
@@ -231,19 +231,21 @@ public class HabitacionCreate extends javax.swing.JFrame {
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         // TODO add your handling code here:
+        
         if(tf_numeroHabit.getText().length()==0){
              JOptionPane.showMessageDialog(null,"Ingrese algun valor para el campo numero", "Advertencia",JOptionPane.ERROR_MESSAGE);
-             return;
+             tf_numeroHabit.requestFocus();
         }else{
-                Query=EntityManager.createNamedQuery("Habitacion.findByNumero");
+                //verificar otra vez si el numero de habitacion no está repetida
+               Query=EntityManager.createNamedQuery("Habitacion.findByNumero");
                 Query.setParameter("numero",Integer.parseInt(tf_numeroHabit.getText()));
                 List<Habitacion> h=Query.getResultList();
                 if(h.size()>=1){
-                    JOptionPane.showMessageDialog(null,"El número de habitación ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
                     tf_numeroHabit.setText(null);
+                    tf_numeroHabit.requestFocus(); 
                     return;
-                    
-                }
+                 }
+                //
                resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar una nueva habitación?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
                if (resp==JOptionPane.YES_OPTION){
                    EntityManager.getTransaction().begin();
@@ -284,8 +286,26 @@ public class HabitacionCreate extends javax.swing.JFrame {
 
     private void tf_numeroHabitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_numeroHabitFocusLost
         // TODO add your handling code here:
-         
+         if(tf_numeroHabit.getText().length()==0){
+            tf_numeroHabit.requestFocus();
+            return;
+        }
+       Query=EntityManager.createNamedQuery("Habitacion.findByNumero");
+                Query.setParameter("numero",Integer.parseInt(tf_numeroHabit.getText()));
+                List<Habitacion> h=Query.getResultList();
+                if(h.size()>=1){
+                    JOptionPane.showMessageDialog(null,"El número de habitación ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_numeroHabit.setText(null);
+                    tf_numeroHabit.requestFocus();   
+        }
     }//GEN-LAST:event_tf_numeroHabitFocusLost
+
+    private void tf_numeroHabitKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_numeroHabitKeyReleased
+        // TODO add your handling code here:
+      
+        
+    }//GEN-LAST:event_tf_numeroHabitKeyReleased
+  
     private void resetear(){
         tf_numeroHabit.setText(null);
     }

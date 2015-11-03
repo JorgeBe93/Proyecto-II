@@ -60,6 +60,7 @@ public class HabitacionEdit extends javax.swing.JFrame {
         lbl_numeroHabit = new javax.swing.JLabel();
         list_categoria = new javax.swing.JComboBox();
         lbl_categoria = new javax.swing.JLabel();
+        tf_numeroHabit = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btn_cancelar = new javax.swing.JButton();
         btn_guardar = new javax.swing.JButton();
@@ -71,7 +72,6 @@ public class HabitacionEdit extends javax.swing.JFrame {
         btn_buscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
-        tf_numeroHabit = new javax.swing.JTextField();
 
         categHabitacionRenderizar1.setText("categHabitacionRenderizar1");
 
@@ -115,6 +115,21 @@ public class HabitacionEdit extends javax.swing.JFrame {
         lbl_categoria.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_categoria.setText("Nombre de Categoría:");
 
+        tf_numeroHabit.setEditable(false);
+        tf_numeroHabit.setBackground(new java.awt.Color(0, 153, 255));
+        tf_numeroHabit.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_numeroHabit.setForeground(new java.awt.Color(255, 255, 255));
+        tf_numeroHabit.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tf_numeroHabitFocusLost(evt);
+            }
+        });
+        tf_numeroHabit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_numeroHabitKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -125,14 +140,18 @@ public class HabitacionEdit extends javax.swing.JFrame {
                     .addComponent(lbl_numeroHabit)
                     .addComponent(lbl_categoria))
                 .addGap(44, 44, 44)
-                .addComponent(list_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(list_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_numeroHabit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(lbl_numeroHabit)
+                .addGap(23, 23, 23)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_numeroHabit)
+                    .addComponent(tf_numeroHabit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_categoria)
@@ -267,21 +286,6 @@ public class HabitacionEdit extends javax.swing.JFrame {
             masterTable.getColumnModel().getColumn(1).setPreferredWidth(40);
         }
 
-        tf_numeroHabit.setEditable(false);
-        tf_numeroHabit.setBackground(new java.awt.Color(0, 153, 255));
-        tf_numeroHabit.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        tf_numeroHabit.setForeground(new java.awt.Color(255, 255, 255));
-        tf_numeroHabit.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tf_numeroHabitFocusLost(evt);
-            }
-        });
-        tf_numeroHabit.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tf_numeroHabitKeyTyped(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -296,14 +300,11 @@ public class HabitacionEdit extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addGap(60, 60, 60)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 49, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tf_numeroHabit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(114, 114, 114))
         );
@@ -316,13 +317,8 @@ public class HabitacionEdit extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(tf_numeroHabit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -352,17 +348,17 @@ public class HabitacionEdit extends javax.swing.JFrame {
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
       int n;
         if(tf_numeroHabit.getText().length()==0){
-            JOptionPane.showMessageDialog(null,"No se permiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Seleccione una habitación", "Error",JOptionPane.ERROR_MESSAGE);
              return;    
             
         }else{
-                 n=Integer.parseInt(tf_numeroHabit.getText());
-                Date fecha1=new Date();
+                n=Integer.parseInt(tf_numeroHabit.getText());
+               Date fecha1=new Date();
                 String fecha2;
                 DateFormat formato1=new SimpleDateFormat("yyyy-MM-dd");
                 fecha2=formato1.format(fecha1);
                 //para verificar que no se elimine una habitacion que tiene reservas asignadas
-                Query = entityManager.createNativeQuery( "SELECT * FROM habitacion h "
+             /*   Query = entityManager.createNativeQuery( "SELECT * FROM habitacion h "
                         + "INNER JOIN reserva r "
                         + "on h.numero = r.numHabitacion "
                         + "WHERE (r.checkIn>="
@@ -376,7 +372,7 @@ public class HabitacionEdit extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Esta habitación tiene reservas asignadas, no puede modificar","Error",JOptionPane.ERROR_MESSAGE );
                     this.dispose();
                     return;
-                } 
+                } */
                 resp=  JOptionPane.showConfirmDialog(null,"Desea guardar los cambios?", "Confirmar Modificación",JOptionPane.YES_NO_OPTION );
                 if (resp==JOptionPane.YES_OPTION){
                     //antes de los cambios
@@ -535,7 +531,7 @@ public class HabitacionEdit extends javax.swing.JFrame {
      }
        private void resetear(){
         tf_numeroHabit.setText(null);
-        list_categoria.setSelectedItem(null);
+        //list_categoria.setSelectedItem(null);
     }
     /**
      * @param args the command line arguments

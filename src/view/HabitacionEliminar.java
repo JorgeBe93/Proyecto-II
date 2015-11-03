@@ -354,6 +354,10 @@ public class HabitacionEliminar extends javax.swing.JFrame {
             DateFormat formato1=new SimpleDateFormat("yyyy-MM-dd");
             fecha2=formato1.format(fecha1);
             //para verificar que no se elimine una habitacion que tiene reservas asignadas
+            if(tf_numeroHabit.getText().length()==0){
+                 JOptionPane.showMessageDialog(null,"Seleccione una habitación", "Error",JOptionPane.ERROR_MESSAGE);
+                 return; 
+            }
             n=Integer.parseInt(tf_numeroHabit.getText());
             query = entityManager.createNativeQuery( "SELECT * FROM habitacion h "
                     + "INNER JOIN reserva r "
@@ -367,8 +371,7 @@ public class HabitacionEliminar extends javax.swing.JFrame {
             List<Habitacion> ha=query.getResultList();
             if(!ha.isEmpty()){
                  JOptionPane.showMessageDialog(null, "Esta habitación tiene reservas asignadas, si elimima perderá dichas reservas","Aviso",JOptionPane.INFORMATION_MESSAGE );
-            }
-               
+            }    
                 resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
                   if(resp==JOptionPane.YES_OPTION){
                     entityManager.getTransaction().begin();
@@ -394,7 +397,6 @@ public class HabitacionEliminar extends javax.swing.JFrame {
                    // entityManager.close();
                     JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
                     resetear();
-                    list.clear();
                     list.remove(h);
                 }else{
                       this.dispose();

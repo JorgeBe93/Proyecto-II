@@ -451,13 +451,33 @@ public class ClienteCreate extends javax.swing.JFrame {
 
     private void tf_cedulaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_cedulaFocusLost
         // TODO add your handling code here:
-    
+        if(tf_cedula.getText().length()==0){
+            tf_cedula.requestFocus();
+            return;
+        }
+         query=entityManager.createNamedQuery("Cliente.findByCedula");
+                query.setParameter("cedula", tf_cedula.getText());
+                List<Cliente> cli=query.getResultList();
+                if(cli.size()>=1){
+                    JOptionPane.showMessageDialog(null,"El número de cedula ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_cedula.setText(null);
+                     tf_cedula.requestFocus();
+                 }
       
     }//GEN-LAST:event_tf_cedulaFocusLost
 
     private void tf_rucFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_rucFocusLost
         // TODO add your handling code here:
-       
+           if(tf_ruc.getText().length()!=0){
+                    query=entityManager.createNamedQuery("Cliente.findByRuc");
+                    query.setParameter("ruc", tf_ruc.getText().toLowerCase());
+                    List<Cliente> cl=query.getResultList();
+                    if(cl.size()>=1){
+                         JOptionPane.showMessageDialog(null,"El número de RUC ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
+                         tf_ruc.setText(null);
+                         tf_ruc.requestFocus();
+                     }  
+            } 
       
     }//GEN-LAST:event_tf_rucFocusLost
 
@@ -469,6 +489,24 @@ public class ClienteCreate extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null,"No se permiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
              return;    
         }else{
+                //verifica nuevamente que el numero de cedula no este repetido
+                query=entityManager.createNamedQuery("Cliente.findByCedula");
+                query.setParameter("cedula", tf_cedula.getText());
+                List<Cliente> a=query.getResultList();
+                if(a.size()>=1){
+                     tf_cedula.setText(null);
+                     tf_cedula.requestFocus();
+                     return;
+                 }
+                //verifica nuevamente que el ruc no esté repetido
+                 query=entityManager.createNamedQuery("Cliente.findByRuc");
+                    query.setParameter("ruc", tf_ruc.getText().toLowerCase());
+                    List<Cliente> b=query.getResultList();
+                    if(b.size()>=1){
+                         tf_ruc.setText(null);
+                         tf_ruc.requestFocus();
+                         return;
+                     } 
                resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar un nuevo Cliente?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
                if (resp==JOptionPane.YES_OPTION){
                    entityManager.getTransaction().begin();
@@ -539,26 +577,12 @@ public class ClienteCreate extends javax.swing.JFrame {
 
     private void tf_cedulaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_cedulaKeyReleased
         // TODO add your handling code here:
-         query=entityManager.createNamedQuery("Cliente.findByCedula");
-                query.setParameter("cedula", tf_cedula.getText());
-                List<Cliente> cli=query.getResultList();
-                if(cli.size()>=1){
-                    JOptionPane.showMessageDialog(null,"El número de cedula ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
-                    tf_cedula.setText(null);
-                 }
+        
     }//GEN-LAST:event_tf_cedulaKeyReleased
 
     private void tf_rucKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_rucKeyReleased
         // TODO add your handling code here:
-          if(tf_ruc.getText().length()!=0){
-                    query=entityManager.createNamedQuery("Cliente.findByRuc");
-                    query.setParameter("ruc", tf_ruc.getText().toLowerCase());
-                    List<Cliente> cl=query.getResultList();
-                    if(cl.size()>=1){
-                         JOptionPane.showMessageDialog(null,"El número de RUC ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
-                         tf_ruc.setText(null);
-                     }  
-                 } 
+      
     }//GEN-LAST:event_tf_rucKeyReleased
       private void resetear(){
         
