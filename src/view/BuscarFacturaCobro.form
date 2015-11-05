@@ -353,7 +353,7 @@
                 <BindingParameter name="NAME" value="Numero T/C"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
-              <Subbinding sourcePath="${formaPago.entidad}">
+              <Subbinding sourcePath="${formaPago.idBanco.nombre}">
                 <BindingParameter name="NAME" value="Entidad"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>

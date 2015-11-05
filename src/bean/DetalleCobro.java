@@ -7,17 +7,16 @@
 package bean;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -30,11 +29,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "DetalleCobro.findAll", query = "SELECT d FROM DetalleCobro d"),
     @NamedQuery(name = "DetalleCobro.findByIdDetalle", query = "SELECT d FROM DetalleCobro d WHERE d.idDetalle = :idDetalle"),
     @NamedQuery(name = "DetalleCobro.findByForma", query = "SELECT d FROM DetalleCobro d WHERE d.forma = :forma"),
-    @NamedQuery(name = "DetalleCobro.findByNumeroChTarj", query = "SELECT d FROM DetalleCobro d WHERE d.numeroChTarj = :numeroChTarj"),
-    @NamedQuery(name = "DetalleCobro.findByEntidad", query = "SELECT d FROM DetalleCobro d WHERE d.entidad = :entidad")})
+    @NamedQuery(name = "DetalleCobro.findByNumeroChTarj", query = "SELECT d FROM DetalleCobro d WHERE d.numeroChTarj = :numeroChTarj")})
 public class DetalleCobro implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "formaPago")
-    private Collection<FacturaCobro> facturaCobroCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +40,11 @@ public class DetalleCobro implements Serializable {
     @Basic(optional = false)
     @Column(name = "forma")
     private String forma;
-    @Basic(optional = false)
     @Column(name = "numero_ch_tarj")
     private String numeroChTarj;
-    @Basic(optional = false)
-    @Column(name = "entidad")
-    private String entidad;
+    @JoinColumn(name = "id_banco", referencedColumnName = "idBanco")
+    @ManyToOne(optional = false)
+    private Banco idBanco;
 
     public DetalleCobro() {
     }
@@ -58,11 +53,9 @@ public class DetalleCobro implements Serializable {
         this.idDetalle = idDetalle;
     }
 
-    public DetalleCobro(Integer idDetalle, String forma, String numeroChTarj, String entidad) {
+    public DetalleCobro(Integer idDetalle, String forma) {
         this.idDetalle = idDetalle;
         this.forma = forma;
-        this.numeroChTarj = numeroChTarj;
-        this.entidad = entidad;
     }
 
     public Integer getIdDetalle() {
@@ -89,12 +82,12 @@ public class DetalleCobro implements Serializable {
         this.numeroChTarj = numeroChTarj;
     }
 
-    public String getEntidad() {
-        return entidad;
+    public Banco getIdBanco() {
+        return idBanco;
     }
 
-    public void setEntidad(String entidad) {
-        this.entidad = entidad;
+    public void setIdBanco(Banco idBanco) {
+        this.idBanco = idBanco;
     }
 
     @Override
@@ -117,22 +110,9 @@ public class DetalleCobro implements Serializable {
         return true;
     }
 
-    /* @Override
-    public String toString() {
-    return "bean.DetalleCobro[ idDetalle=" + idDetalle + " ]";
-    }*/
     @Override
     public String toString() {
-        return  "idDetalle=" + idDetalle + ", forma=" + forma + ", numeroChTarj=" + numeroChTarj + ", entidad=" + entidad;
+        return "bean.DetalleCobro[ idDetalle=" + idDetalle + " ]";
     }
-
-    public Collection<FacturaCobro> getFacturaCobroCollection() {
-        return facturaCobroCollection;
-    }
-
-    public void setFacturaCobroCollection(Collection<FacturaCobro> facturaCobroCollection) {
-        this.facturaCobroCollection = facturaCobroCollection;
-    }
-    
     
 }

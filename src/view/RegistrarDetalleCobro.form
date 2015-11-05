@@ -166,8 +166,8 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="list_entidad" min="-2" pref="187" max="-2" attributes="0"/>
                               <Component id="tf_numero" min="-2" pref="242" max="-2" attributes="0"/>
+                              <Component id="tf_entidad" min="-2" pref="158" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="20" max="32767" attributes="0"/>
                       </Group>
@@ -198,7 +198,7 @@
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lbl_entidad" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="list_entidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="tf_entidad" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -228,24 +228,6 @@
           <Events>
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tf_numeroFocusGained"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="list_entidad">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="10">
-                <StringItem index="0" value="Cabal"/>
-                <StringItem index="1" value="Visa"/>
-                <StringItem index="2" value="Master Card"/>
-                <StringItem index="3" value="American Express"/>
-                <StringItem index="4" value="Itau"/>
-                <StringItem index="5" value="Vision"/>
-                <StringItem index="6" value="Continental"/>
-                <StringItem index="7" value="BBVA"/>
-                <StringItem index="8" value="BNF"/>
-                <StringItem index="9" value="GNB"/>
-              </StringArray>
-            </Property>
-          </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="cb_cheque">
           <Properties>
@@ -296,6 +278,8 @@
           <Events>
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cb_tcFocusGained"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="tf_entidad">
         </Component>
       </SubComponents>
     </Container>

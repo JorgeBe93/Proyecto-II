@@ -639,7 +639,6 @@ public class ReservaEliminar extends javax.swing.JFrame {
             entityManager.getTransaction().commit();
            // ema.close();
             JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
-            list.clear();
             list.remove(reservaFind);
             resetear();
           

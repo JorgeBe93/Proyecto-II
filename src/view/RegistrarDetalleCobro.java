@@ -7,10 +7,12 @@
 package view;
 
 import bean.AuditoriaSistema;
+import bean.Banco;
 import bean.ConsumoProSer;
 import bean.DetalleCobro;
 import bean.FacturaCobro;
 import bean.NumberToText;
+import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,6 +20,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -43,11 +47,16 @@ private String condicion;
 DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
  Date fecha=new Date();
  DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+ private final  TextAutoCompleter textAutoCompleter;
     /**
      * Creates new form FormaPago
      */
     public RegistrarDetalleCobro() {
         initComponents();
+         this.textAutoCompleter = new TextAutoCompleter(tf_entidad);
+        //infijo
+        this.textAutoCompleter.setMode(0);
+        inicializarLista();
     }
 
     /**
@@ -69,11 +78,11 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
         jLabel2 = new javax.swing.JLabel();
         lbl_numero = new javax.swing.JLabel();
         tf_numero = new javax.swing.JTextField();
-        list_entidad = new javax.swing.JComboBox();
         cb_cheque = new javax.swing.JCheckBox();
         lbl_entidad = new javax.swing.JLabel();
         cb_contado = new javax.swing.JCheckBox();
         cb_tc = new javax.swing.JCheckBox();
+        tf_entidad = new javax.swing.JTextField();
         btn_aceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -116,8 +125,6 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
                 tf_numeroFocusGained(evt);
             }
         });
-
-        list_entidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cabal", "Visa", "Master Card", "American Express", "Itau", "Vision", "Continental", "BBVA", "BNF", "GNB" }));
 
         cb_cheque.setBackground(new java.awt.Color(0, 153, 255));
         cb_cheque.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
@@ -171,8 +178,8 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
                             .addComponent(lbl_entidad))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(list_entidad, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tf_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tf_entidad, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(20, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -195,7 +202,7 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
                         .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbl_entidad)
-                            .addComponent(list_entidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(tf_entidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
@@ -264,34 +271,34 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
 
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
         // TODO add your handling code here:
-       if(cb_tc.isSelected()){
-           if(tf_numero.getText().length()==0){
-                JOptionPane.showMessageDialog(null,"No se ha ingresado el numero de Tarjeta", "Error",JOptionPane.ERROR_MESSAGE);
-           }else{
-                dc.setEntidad((String) list_entidad.getSelectedItem());
-                dc.setNumeroChTarj(tf_numero.getText());
-                dc.setForma("Tarjeta Crédito");
-                entityManager.getTransaction().begin();
-                entityManager.persist(dc);
-                entityManager.flush();
-                registrarAuditoria("Detalle de cobro","Inserción",dc.toString(),null);
-           }
+        if(cb_tc.isSelected() || cb_cheque.isSelected() || cb_contado.isSelected()){
+             if(cb_tc.isSelected() ){
+                if(tf_numero.getText().length()==0 || tf_entidad.getText().length()==0){
+                     JOptionPane.showMessageDialog(null,"Algún campo con valor nulo", "Error",JOptionPane.ERROR_MESSAGE);
+                }else{
+                     dc.setIdBanco(obtenerBanco(tf_entidad.getText()));
+                     dc.setNumeroChTarj(tf_numero.getText());
+                     dc.setForma("Tarjeta Crédito");
+                     entityManager.getTransaction().begin();
+                     entityManager.persist(dc);
+                     entityManager.flush();
+                     registrarAuditoria("Detalle de cobro","Inserción",dc.toString(),null);
+                }
            
-       }
+            }
        if(cb_cheque.isSelected()){
-           if(tf_numero.getText().length()==0){
-                JOptionPane.showMessageDialog(null,"No se ha ingresado el numero de Cheque", "Error",JOptionPane.ERROR_MESSAGE);
-           }else{
-               
-                dc.setEntidad((String) list_entidad.getSelectedItem());
-                dc.setNumeroChTarj(tf_numero.getText());
-                dc.setForma("Cheque");
-                entityManager.getTransaction().begin();
-                entityManager.persist(dc);
-                entityManager.flush();
-                registrarAuditoria("Detalle de cobro","Inserción",dc.toString(),null);
-           }
-           
+            if(tf_numero.getText().length()==0 || tf_entidad.getText().length()==0){
+                 JOptionPane.showMessageDialog(null,"Algún campo con valor nulo", "Error",JOptionPane.ERROR_MESSAGE);
+            }else{
+
+                 dc.setIdBanco(obtenerBanco(tf_entidad.getText()));
+                 dc.setNumeroChTarj(tf_numero.getText());
+                 dc.setForma("Cheque");
+                 entityManager.getTransaction().begin();
+                 entityManager.persist(dc);
+                 entityManager.flush();
+                 registrarAuditoria("Detalle de cobro","Inserción",dc.toString(),null);
+            }
        }
        if(cb_contado.isSelected()){
                 dc.setForma("Contado");
@@ -301,15 +308,21 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
                 registrarAuditoria("Detalle de cobro","Inserción",dc.toString(),null);
       
        }
-       this.dispose();
+        }else{
+               JOptionPane.showMessageDialog(null,"Seleccione una forma de pago", "Error",JOptionPane.ERROR_MESSAGE);
+               return;
+        }
        if("Crear Reserva".equals(invoca)){
+           this.dispose();
            generarFactCrearReserva();
            
        }
        if("Editar Reserva".equals(invoca)){
+           this.dispose();
            generarFactEditarReserva();
        }
         if("Liquidar Reserva".equals(invoca)){
+            this.dispose();
            generarFactLiquidarReserva();
        }
     }//GEN-LAST:event_btn_aceptarActionPerformed
@@ -549,6 +562,21 @@ private void generarFactLiquidarReserva(){
                     entityManager.persist(as);
                     entityManager.flush();
    }
+    private void inicializarLista(){
+        query = entityManager.createNamedQuery("Banco.findAll");
+        List<Banco> b = query.getResultList();
+        Iterator <Banco> it = b.iterator();
+        while (it.hasNext()){
+            textAutoCompleter.addItem(it.next().getNombre());
+        }
+    }
+    private Banco obtenerBanco(String nombre){
+        Banco banco=new Banco();
+        query=entityManager.createNamedQuery("Banco.findByNombre");
+        query.setParameter("nombre", nombre);
+        banco = (Banco) query.getSingleResult();
+        return banco;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_aceptar;
@@ -563,9 +591,9 @@ private void generarFactLiquidarReserva(){
     private javax.swing.JLabel lbl_entidad;
     private javax.swing.JLabel lbl_numero;
     private java.util.List<DetalleCobro> list;
-    private javax.swing.JComboBox list_entidad;
     private javax.swing.JPanel panel_BuscarRol;
     private javax.persistence.Query query;
+    private javax.swing.JTextField tf_entidad;
     private javax.swing.JTextField tf_numero;
     // End of variables declaration//GEN-END:variables
 }
