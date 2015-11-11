@@ -10,6 +10,7 @@ import bean.AuditoriaSistema;
 import bean.CategHabitacion;
 import java.awt.Image;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -22,9 +23,9 @@ import javax.swing.JOptionPane;
  * @author Jorge
  */
 public class CategHabitCreate extends javax.swing.JFrame {
-    
-private char ch;
-private int resp;
+       DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
+       private char ch;
+       private int resp;
     /**
      * Creates new form CategHabitCreate
      */
@@ -91,6 +92,9 @@ private int resp;
         lbl_costo.setText("Costo por noche:");
 
         tf_costo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_costoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_costoKeyTyped(evt);
             }
@@ -257,7 +261,7 @@ private int resp;
               if (resp==JOptionPane.YES_OPTION){
                         CategHabitacion ca=new CategHabitacion();
                         ca.setNombre(tf_nombre.getText().toLowerCase());
-                        ca.setCostoxnoche(Integer.parseInt(tf_costo.getText()));
+                        ca.setCostoxnoche(desformatear(tf_costo.getText()));
                         entityManager.getTransaction().begin();//necesario
                         entityManager.persist(ca);
                         entityManager.flush();
@@ -283,6 +287,17 @@ private int resp;
         }
        
     }//GEN-LAST:event_btn_guardarActionPerformed
+
+    private void tf_costoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_costoKeyReleased
+        // TODO add your handling code here:
+       String valor;
+        int numero;
+        if(tf_costo.getText().length()!=0){
+            valor=tf_costo.getText();
+            numero=(desformatear(valor));
+            tf_costo.setText(formateador(numero));
+        }
+    }//GEN-LAST:event_tf_costoKeyReleased
     private void resetear(){
         tf_nombre.setText(null);
         tf_costo.setText(null);
@@ -326,6 +341,17 @@ private int resp;
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         });
+    }
+     private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+    private int desformatear(String num){
+        int numero;
+        num=num.replace(".", "");
+        numero=Integer.parseInt(num);
+        return numero;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,4 +1,4 @@
-/*
+  /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -35,8 +35,7 @@ public class VerEstadodeHabitaciones extends javax.swing.JFrame {
     public static String llamadaCrearReserva="";
     public static String llamadaEditarReserva="";
     public static String llamadaGenerarPresupuesto="";
-    
-
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
     /**
      * Creates new form VerEstadodeHabitaciones
      */
@@ -182,10 +181,6 @@ public class VerEstadodeHabitaciones extends javax.swing.JFrame {
             Conneccion();
             try {
                 for(int i = 0 ; i < categorias.size(); i++){
-                    
-                    
-                    
-                    
                     /*query = "select funcion_hab_libre(" +"'"
                         +fechain+"', "+"'"+fechaout+"', "
                         +Integer.toString(categorias.get(i).getCodigoCategoria())
@@ -201,10 +196,6 @@ public class VerEstadodeHabitaciones extends javax.swing.JFrame {
                             "where ((r.checkIn>= '"+fechain+"' and r.checkIn<= '"+fechaout+"' ) or "
                             + "(r.checkOut> '"+fechain+"' and r.checkOut<= '"+fechaout+"'))"
                             + " and h.numero=ha.numero) order by ha.numero";
-                    
-                    
-                    
-                    
                     stm = connection.createStatement();
                     rs = stm.executeQuery(query);
                     
@@ -230,6 +221,7 @@ public class VerEstadodeHabitaciones extends javax.swing.JFrame {
                         final JButton habitacion  = new JButton();
                         final int codCategoria = categorias.get(i).getCodigoCategoria();
                         final int codigoCategoria, numHabitacion;
+                        int costo;
                         habitacion.addActionListener(new ActionListener() {
 
                             public void actionPerformed(ActionEvent e) {
@@ -239,19 +231,19 @@ public class VerEstadodeHabitaciones extends javax.swing.JFrame {
                                 //CrearReserva.cb_categoriaHabitacion.setSelectedIndex(codCategoria);
                                 if(!llamadaCrearReserva.equals("")){
                                     CrearReserva.tf_categoriaHabitacion.setText(nombreCategoria.getText());
-                                    CrearReserva.tf_precioCategoria.setText(costoCategoria.getText());
+                                    CrearReserva.tf_precioCategoria.setText(formateador( Integer.parseInt(costoCategoria.getText())));
                                     CrearReserva.tf_numeroHabitacion.setText(habitacion.getText());
                                     dispose();
                                 }
                                 if(!llamadaEditarReserva.equals("")){
                                     ReservaEditar.tf_categoriaHabitacion.setText(nombreCategoria.getText());
-                                    ReservaEditar.tf_precioCategoria.setText(costoCategoria.getText());
+                                    ReservaEditar.tf_precioCategoria.setText(formateador( Integer.parseInt(costoCategoria.getText())));
                                     ReservaEditar.tf_numeroHabitacion.setText(habitacion.getText());
                                     dispose();
                                 }
                                  if(!llamadaGenerarPresupuesto.equals("")){
                                     Presupuestar.tf_categoriaHabitacion.setText(nombreCategoria.getText());
-                                    Presupuestar.tf_precioCategoria.setText(costoCategoria.getText());
+                                    Presupuestar.tf_precioCategoria.setText(formateador( Integer.parseInt(costoCategoria.getText())));
                                     Presupuestar.tf_numeroHabitacion.setText(habitacion.getText());
                                     dispose();
                                 }
@@ -301,6 +293,10 @@ public class VerEstadodeHabitaciones extends javax.swing.JFrame {
             llamadaGenerarPresupuesto="";
         
     }
-     
+      private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
 
 }

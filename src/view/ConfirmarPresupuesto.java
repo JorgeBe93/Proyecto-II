@@ -11,6 +11,7 @@ import bean.Presupuesto;
 import bean.Reserva;
 import java.awt.Image;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +28,7 @@ public class ConfirmarPresupuesto extends javax.swing.JFrame {
     private char ch;
     Date fecha= new Date();
     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy");
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
     private int fila;
     private Reserva reserva;
 
@@ -651,7 +653,7 @@ public class ConfirmarPresupuesto extends javax.swing.JFrame {
         tf_out.setText(formato.format(reserva.getCheckOut()));
         tf_cliente.setText(reserva.getCodigoCliente().getNombre()+" "+
                               reserva.getCodigoCliente().getApellido());
-        tf_total.setText(Integer.toString(reserva.getMontoTotal()));
+        tf_total.setText(formateador(reserva.getMontoTotal()));
      }
      private void resetear(){
            tf_numero.setText(null);
@@ -703,6 +705,11 @@ public class ConfirmarPresupuesto extends javax.swing.JFrame {
                frame.setLocationRelativeTo(null);
             }
         });
+    }
+     private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

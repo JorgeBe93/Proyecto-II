@@ -11,6 +11,7 @@ import bean.CategHabitacion;
 import bean.Habitacion;
 import java.awt.Image;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -27,9 +28,9 @@ public class CategHabitEliminar extends javax.swing.JFrame {
     private char ch;
     private int fila;
     private CategHabitacion chab;
-     Date fecha=new Date();
-     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-
+    Date fecha=new Date();
+    DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
     /**
      * Creates new form CategHabitEliminar
      */
@@ -479,7 +480,7 @@ public class CategHabitEliminar extends javax.swing.JFrame {
     private void inicializarCategoria(){
         tf_codigo.setText(Integer.toString(chab.getCodigoCategoria()));
         tf_nombre.setText(chab.getNombre());
-        tf_costo.setText(Integer.toString(chab.getCostoxnoche()));
+        tf_costo.setText(formateador(chab.getCostoxnoche()));
      }
         private void resetear(){
         tf_nombre.setText(null);
@@ -536,6 +537,11 @@ public class CategHabitEliminar extends javax.swing.JFrame {
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         });
+    }
+       private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -46,10 +46,11 @@ public class CrearReserva extends javax.swing.JFrame {
     private int fila;
     public static int opcionReserva=0;
     private String datos[]=new String[3];
-     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-     DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
-   java.util.Date fecha = new Date();
-   public static Reserva reserva = new Reserva();
+    DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
+    java.util.Date fecha = new Date();
+    public static Reserva reserva = new Reserva();
    
 
     /**
@@ -144,6 +145,9 @@ public class CrearReserva extends javax.swing.JFrame {
             }
         });
         tf_montoAbonado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_montoAbonadoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_montoAbonadoKeyTyped(evt);
             }
@@ -174,6 +178,11 @@ public class CrearReserva extends javax.swing.JFrame {
         tf_montoTotal.setBackground(new java.awt.Color(0, 153, 255));
         tf_montoTotal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_montoTotal.setForeground(new java.awt.Color(255, 255, 255));
+        tf_montoTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_montoTotalActionPerformed(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         jLabel11.setText("Precio de Categoría:");
@@ -256,62 +265,57 @@ public class CrearReserva extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(lbl_cantidadPersonas))
+                                .addGap(22, 22, 22))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(tf_cantidadPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(52, 52, 52)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tf_montoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tf_categoriaHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tf_montoAbonado, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(45, 45, 45)
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(tf_precioCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addComponent(lbl_anticipar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tf_numeroHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tf_anticipar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(tf_cedulaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tf_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jc_checkin, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(29, 29, 29)
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jc_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6)
-                                            .addComponent(lbl_cantidadPersonas))
-                                        .addGap(22, 22, 22))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(18, 18, 18)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tf_cantidadPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tf_categoriaHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tf_montoAbonado, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(45, 45, 45)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel8))))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(59, 59, 59)
-                                .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(tf_precioCategoria)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(tf_numeroHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(74, 74, 74))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(tf_montoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(31, 31, 31)
-                                        .addComponent(lbl_anticipar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tf_anticipar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(42, 42, 42))))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(tf_cedulaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tf_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jc_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(66, 66, 66)
-                        .addComponent(btn_registrarCliente)
-                        .addContainerGap())))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_registrarCliente))))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,10 +333,8 @@ public class CrearReserva extends javax.swing.JFrame {
                         .addComponent(jc_checkin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5)
                         .addComponent(jc_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(btn_buscar)))
-                .addGap(28, 28, 28)
+                    .addComponent(btn_buscar))
+                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tf_categoriaHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -527,22 +529,23 @@ public class CrearReserva extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(273, 273, 273))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 840, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(266, 266, 266)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(162, 162, 162)
+                        .addGap(176, 176, 176)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(panel_CrearReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -551,11 +554,11 @@ public class CrearReserva extends javax.swing.JFrame {
                 .addComponent(panel_CrearReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -585,7 +588,7 @@ public class CrearReserva extends javax.swing.JFrame {
             if (auxIn.equals(jc_checkin.getDate())
                     && auxOut.equals(jc_checkout.getDate())){
                 if(jc_checkin.getDate().before(jc_checkout.getDate())                
-                        && Integer.parseInt(tf_montoAbonado.getText()) <= Integer.parseInt(tf_montoTotal.getText())
+                        && desformatear(tf_montoAbonado.getText()) <= desformatear(tf_montoTotal.getText())
                   //      &&jc_checkin.getDate().after(fecha)
                   //      &&jc_checkin.getDate().after(fecha)
                         ){
@@ -616,9 +619,9 @@ public class CrearReserva extends javax.swing.JFrame {
                          if (tf_montoAbonado.getText().equals(""))
                              reserva.setMontoAbonado(0);
                          else
-                             reserva.setMontoAbonado(Integer.parseInt(tf_montoAbonado.getText()));
+                             reserva.setMontoAbonado(desformatear(tf_montoAbonado.getText()));
 
-                         reserva.setMontoTotal(Integer.parseInt(tf_montoTotal.getText()));
+                         reserva.setMontoTotal(desformatear(tf_montoTotal.getText()));
                          //consulta para obtener habitacion
                          Query query = ema.createNamedQuery("Habitacion.findByNumero");
                          query.setParameter("numero", Integer.parseInt(tf_numeroHabitacion.getText()));
@@ -629,7 +632,7 @@ public class CrearReserva extends javax.swing.JFrame {
                          //Registrarlo en consumo de P/S
                          if(!"0".equals(tf_montoAbonado.getText())){
                              //saldo de la reserva
-                             diferencia=Integer.parseInt(tf_montoTotal.getText())-Integer.parseInt(tf_montoAbonado.getText());
+                             diferencia=desformatear(tf_montoTotal.getText())-desformatear(tf_montoAbonado.getText());
                              query= ema.createNativeQuery( "SELECT * FROM producto_servicio p "
                              + "WHERE p.nombre LIKE "
                              +"'%saldo de reserva%'", ProductoServicio.class);
@@ -865,7 +868,7 @@ public class CrearReserva extends javax.swing.JFrame {
                           ){
                       final float MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
                       long cantidadPersonas = Integer.parseInt(tf_cantidadPersonas.getText());
-                      long precioxnoche = Integer.parseInt(tf_precioCategoria.getText());
+                      long precioxnoche = desformatear(tf_precioCategoria.getText());
                       float cantidadDias = (jc_checkout.getDate().getTime() - jc_checkin.getDate().getTime())/MILLSECS_PER_DAY;
                       System.out.println("Cantidad de dias devuelto"+" "+cantidadDias);
                       d=deci.format(cantidadDias);
@@ -873,9 +876,9 @@ public class CrearReserva extends javax.swing.JFrame {
                       cantidadDias=Float.parseFloat(d);
                       System.out.println("Cantidad de dias calculado"+" "+cantidadDias);
                       long precioTotal = (long) (cantidadPersonas * precioxnoche * cantidadDias);
-                      tf_montoTotal.setText(Long.toString(precioTotal));
+                      tf_montoTotal.setText(formato(precioTotal));
                       anticipo=(int) (precioTotal*0.5);
-                      tf_anticipar.setText(Integer.toString(anticipo));
+                      tf_anticipar.setText(formateador(anticipo));
                   }else{
                       JOptionPane.showMessageDialog(null, "Fecha de checkin posterior a checkout");
                   }
@@ -1014,6 +1017,21 @@ public class CrearReserva extends javax.swing.JFrame {
         tf_anticipar.setText(null);
         tf_montoAbonado.setText("0");
     }//GEN-LAST:event_btn_nuevoActionPerformed
+
+    private void tf_montoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_montoTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_montoTotalActionPerformed
+
+    private void tf_montoAbonadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_montoAbonadoKeyReleased
+        // TODO add your handling code here:
+        String valor;
+        int numero;
+        if(tf_montoAbonado.getText().length()!=0){
+            valor=tf_montoAbonado.getText();
+            numero=(desformatear(valor));
+            tf_montoAbonado.setText(formateador(numero));
+        }
+    }//GEN-LAST:event_tf_montoAbonadoKeyReleased
     private void nuevoRegistro(){
         jc_checkin.setDate(null);
         jc_checkout.setDate(null);
@@ -1163,5 +1181,21 @@ public class CrearReserva extends javax.swing.JFrame {
          }
          return cliente;
      }
+     private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+      private String formato(long num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+    private int desformatear(String num){
+        int numero;
+        num=num.replace(".", "");
+        numero=Integer.parseInt(num);
+        return numero;
+    }
     
 }

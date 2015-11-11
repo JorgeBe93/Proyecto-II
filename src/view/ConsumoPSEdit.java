@@ -15,6 +15,7 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -37,6 +38,7 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
     Date fecha=new Date();
     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
     /**
      * Creates new form ConsumoPSEdit
      */
@@ -583,7 +585,7 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
             //
             cp.setCodigoConsumo(Integer.parseInt(tf_codigoConsumo.getText()));
             cp.setCantidad(Integer.parseInt(tf_cantidad.getText()));
-            cp.setTotal(Integer.parseInt(tf_total.getText()));
+            cp.setTotal(desformatear(tf_total.getText()));
              //obejto reserva
               Query=entityManager.createNamedQuery("Reserva.findByCodigoReserva");
               Query.setParameter("codigoReserva", cod);
@@ -625,7 +627,7 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
         // TODO add your handling code here:
         ProductoServicio pro = obtenerProductoServicio(tf_productoServicio.getText());
         try{
-            tf_precio.setText(Integer.toString(pro.getCosto()));
+            tf_precio.setText(formateador(pro.getCosto()));
         }catch(NullPointerException e){
             System.out.println("Continua. Excepción lanzada por problemas del jar");
         }
@@ -639,7 +641,7 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
          ProductoServicio p= obtenerProductoServicio(tf_productoServicio.getText());
           if(evt.getKeyCode() == KeyEvent.VK_ENTER){
                 total=p.getCosto()*(Integer.parseInt(tf_cantidad.getText()));
-                tf_total.setText(Integer.toString(total));  
+                tf_total.setText(formateador(total));  
                      
           }
           if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE){
@@ -836,8 +838,8 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
             tf_cantidad.setText(Integer.toString(cps.getCantidad()));
             tf_codigoReserva.setText(Integer.toString(cps.getCodigoReserva().getCodigoReserva()));
             tf_productoServicio.setText(cps.getCodigoPS().getNombre());
-            tf_precio.setText(Integer.toString(cps.getCodigoPS().getCosto()));
-            tf_total.setText(Integer.toString(cps.getTotal()));
+            tf_precio.setText(formateador(cps.getCodigoPS().getCosto()));
+            tf_total.setText(formateador(cps.getTotal()));
             tf_fecha.setText(cps.getFecha());
             tf_cedula.setText(cps.getCodigoReserva().getCodigoCliente().getCedula());
             tf_datosCliente.setText(cps.getCodigoReserva().getCodigoCliente().getNombre()+" "+cps.getCodigoReserva().getCodigoCliente().getApellido());
@@ -1040,5 +1042,16 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
         while (it.hasNext()){
             textAutoCompleter.addItem(it.next().getNombre());
         }
+    }
+    private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+    private int desformatear(String num){
+        int numero;
+        num=num.replace(".", "");
+        numero=Integer.parseInt(num);
+        return numero;
     }
 }

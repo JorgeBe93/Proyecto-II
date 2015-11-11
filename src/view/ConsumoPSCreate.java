@@ -27,6 +27,7 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -49,6 +50,7 @@ private  List<Articulo> ar;
 Date fecha=new Date();
 DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
+DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
     /**
      * Creates new form ConsumoPSCreate
      */
@@ -575,7 +577,7 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
               ConsumoProSer cp= new ConsumoProSer();
               cp.setFecha(form.format(fecha));
               cp.setCantidad(Integer.parseInt(tf_cantidad.getText()));
-              cp.setTotal(Integer.parseInt(tf_total.getText()));
+              cp.setTotal(desformatear(tf_total.getText()));
               codigo=Integer.parseInt(tf_codigoReserva.getText());
               //obejto reserva
               Query=entityManager.createNamedQuery("Reserva.findByCodigoReserva");
@@ -618,7 +620,7 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
         // TODO add your handling code here:
         ProductoServicio pro = obtenerProductoServicio(tf_productoServicio.getText()); 
               try{
-                  tf_precio.setText(Integer.toString(pro.getCosto()));
+                  tf_precio.setText(formateador(pro.getCosto()));
               }catch(NullPointerException e){
                   System.out.println("Continua. Excepción lanzada por problemas del jar");
               }
@@ -793,14 +795,14 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
                              return;
                     }else{
                             total=p.getCosto()*(Integer.parseInt(tf_cantidad.getText()));
-                            tf_total.setText(Integer.toString(total)); 
+                            tf_total.setText(formateador(total)); 
                             esArticulo=true;
                     }
                    
                    
              }else{//es un servicio
                      total=p.getCosto()*(Integer.parseInt(tf_cantidad.getText()));
-                     tf_total.setText(Integer.toString(total));  
+                     tf_total.setText(formateador(total));  
               }
                     
           }
@@ -1063,5 +1065,15 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
         }
         ema.close();
     }
-
+    private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+    private int desformatear(String num){
+        int numero;
+        num=num.replace(".", "");
+        numero=Integer.parseInt(num);
+        return numero;
+    }
 }

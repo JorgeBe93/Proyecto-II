@@ -46,7 +46,8 @@ public class ReservaEditar extends javax.swing.JFrame {
     private String datos[]=new String[3];
     FacturaCobro f=new FacturaCobro();
     public static Reserva reservaLocal = new Reserva();
-     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
     /**
      * Creates new form ReservaEditar
      */
@@ -315,6 +316,9 @@ public class ReservaEditar extends javax.swing.JFrame {
             }
         });
         tf_montoAbonado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_montoAbonadoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_montoAbonadoKeyTyped(evt);
             }
@@ -616,7 +620,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                     && !tf_cedulaCliente.getText().equals("") && !tf_codReserva.getText().equals(""))
                 {
                     if(jc_checkin.getDate().before(jc_checkout.getDate())
-                        && Integer.parseInt(tf_montoAbonado.getText()) <= Integer.parseInt(tf_montoTotal.getText())
+                        && desformatear(tf_montoAbonado.getText()) <= desformatear(tf_montoTotal.getText())
                         //      &&jc_checkin.getDate().after(fecha)
                         //      &&jc_checkin.getDate().after(fecha)
                     ){
@@ -647,8 +651,8 @@ public class ReservaEditar extends javax.swing.JFrame {
                             if (tf_montoAbonado.getText().equals(""))
                                 reservaLocal.setMontoAbonado(0);
                             else
-                                reservaLocal.setMontoAbonado(Integer.parseInt(tf_montoAbonado.getText()));
-                                reservaLocal.setMontoTotal(Integer.parseInt(tf_montoTotal.getText()));
+                                reservaLocal.setMontoAbonado(desformatear(tf_montoAbonado.getText()));
+                                reservaLocal.setMontoTotal(desformatear(tf_montoTotal.getText()));
                                 //consulta para obtener habitacion
                                 query = entityManager.createNamedQuery("Habitacion.findByNumero");
                                 query.setParameter("numero", Integer.parseInt(tf_numeroHabitacion.getText()));
@@ -669,7 +673,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                              if(!"0".equals(tf_montoAbonado.getText())){
                                 int codigo=reservaLocal.getCodigoReserva();
                                 //saldo de la reserva
-                                diferencia=Integer.parseInt(tf_montoTotal.getText())-Integer.parseInt(tf_montoAbonado.getText());
+                                diferencia=desformatear(tf_montoTotal.getText())-desformatear(tf_montoAbonado.getText());
                                 query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser c "
                                  + "INNER JOIN reserva r "
                                 + "on r.codigoReserva = c.codigoReserva "
@@ -1109,7 +1113,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                     if (jc_checkin.getDate().before(jc_checkout.getDate())){
                         final float MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
                         long cantidadPersonas = Integer.parseInt(tf_cantidadPersonas.getText());
-                        long precioxnoche = Integer.parseInt(tf_precioCategoria.getText());
+                        long precioxnoche = desformatear(tf_precioCategoria.getText());
                         float cantidadDias = (jc_checkout.getDate().getTime() - jc_checkin.getDate().getTime())/MILLSECS_PER_DAY;
                         System.out.println("Cantidad de dias devuelto"+" "+cantidadDias);
                         d=deci.format(cantidadDias);
@@ -1117,9 +1121,9 @@ public class ReservaEditar extends javax.swing.JFrame {
                         cantidadDias=Float.parseFloat(d);
                         System.out.println("Cantidad de dias calculado"+" "+cantidadDias);
                         long precioTotal = (long) (cantidadPersonas * precioxnoche * cantidadDias);
-                        tf_montoTotal.setText(Long.toString(precioTotal));
+                        tf_montoTotal.setText(formato(precioTotal));
                         anticipo=(int) (precioTotal*0.5);
-                        tf_anticipar.setText(Integer.toString(anticipo));
+                        tf_anticipar.setText(formateador(anticipo));
                     }else{
                         JOptionPane.showMessageDialog(null, "Fecha de checkin posterior a checkout");
                     }
@@ -1138,6 +1142,18 @@ public class ReservaEditar extends javax.swing.JFrame {
         
        
     }//GEN-LAST:event_tf_cantidadPersonasActionPerformed
+
+    private void tf_montoAbonadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_montoAbonadoKeyReleased
+        //
+         String valor;
+         int numero;
+        if(tf_montoAbonado.getText().length()!=0){
+            valor=tf_montoAbonado.getText();
+            numero=(desformatear(valor));
+            tf_montoAbonado.setText(formateador(numero));
+        }
+       
+    }//GEN-LAST:event_tf_montoAbonadoKeyReleased
         private Reserva obtenerReserva(int fila) {
             query = entityManager.createNamedQuery("Reserva.findByCodigoReserva");
             query.setParameter("codigoReserva", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );
@@ -1291,7 +1307,7 @@ public class ReservaEditar extends javax.swing.JFrame {
     
     private void inicializarReserva(){
         int anticipo;
-        Long total;
+        int total;
         tf_codReserva.setText(Integer.toString(reserva.getCodigoReserva()));
         if(reserva.getNumPresupuesto()==null){
             tf_presupuesto.setText("Sin presupuesto");
@@ -1301,19 +1317,19 @@ public class ReservaEditar extends javax.swing.JFrame {
         tf_cedulaCliente.setText(reserva.getCodigoCliente().getCedula());
         tf_cliente.setText(reserva.getCodigoCliente().getNombre()+" "+reserva.getCodigoCliente().getApellido());
         tf_cantidadPersonas.setText(Integer.toString(reserva.getCantPersonas()));
-        tf_montoAbonado.setText(Integer.toString(reserva.getMontoAbonado()));
-        tf_montoTotal.setText(Integer.toString(reserva.getMontoTotal()));
+        tf_montoAbonado.setText(formateador(reserva.getMontoAbonado()));
+        tf_montoTotal.setText(formateador(reserva.getMontoTotal()));
         if(tf_montoAbonado.getText().equals(tf_montoTotal.getText())){
             tf_montoAbonado.setEnabled(false);
         }
         tf_numeroHabitacion.setText(Integer.toString(reserva.getNumHabitacion().getNumero()));
-        tf_precioCategoria.setText(Integer.toString(reserva.getNumHabitacion().getCodigoCategoria().getCostoxnoche()));
+        tf_precioCategoria.setText(formateador(reserva.getNumHabitacion().getCodigoCategoria().getCostoxnoche()));
         tf_categoriaHabitacion.setText(reserva.getNumHabitacion().getCodigoCategoria().getNombre());
         jc_checkin.setDate(reserva.getCheckIn());
         jc_checkout.setDate(reserva.getCheckOut());
-        total=Long.parseLong(tf_montoTotal.getText());
+        total=desformatear(tf_montoTotal.getText());
         anticipo= (int)(total*0.5);
-        tf_anticipar.setText(Integer.toString(anticipo));
+        tf_anticipar.setText(formateador(anticipo));
         
     }
     private void resetear(){
@@ -1331,5 +1347,21 @@ public class ReservaEditar extends javax.swing.JFrame {
         jc_checkout.setDate(null);
         tf_anticipar.setText(null);
         
+    }
+     private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+      private String formato(long num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+    private int desformatear(String num){
+        int numero;
+        num=num.replace(".", "");
+        numero=Integer.parseInt(num);
+        return numero;
     }
 }

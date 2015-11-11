@@ -11,6 +11,7 @@ import bean.AuditoriaSistema;
 import bean.ProductoServicio;
 import java.awt.Image;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ProdSerEliminar extends javax.swing.JFrame {
     private int fila;
     private ProductoServicio prodser;
     private  char ch;
-
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##"); 
     
 
     /**
@@ -518,7 +519,7 @@ public class ProdSerEliminar extends javax.swing.JFrame {
     private void inicializarProdSer(){
       tf_codigoPS.setText(Integer.toString(prodser.getCodigoPS()));
       tf_nombrePS.setText(prodser.getNombre());
-      tf_costoPS.setText(Integer.toString(prodser.getCosto()));
+      tf_costoPS.setText(formateador(prodser.getCosto()));
      }
        private void resetear(){
         tf_codigoPS.setText(null);
@@ -564,6 +565,11 @@ public class ProdSerEliminar extends javax.swing.JFrame {
                 frame.setLocationRelativeTo(null);
             }
         });
+    }
+      private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

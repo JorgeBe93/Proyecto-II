@@ -11,6 +11,7 @@ import bean.AuditoriaSistema;
 import bean.ConsumoProSer;
 import java.awt.Image;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,7 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
     Date fecha=new Date();
     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
 
     /**
      * Creates new form ConsumoProdSerEliminar
@@ -755,8 +757,8 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
                     tf_fecha.setText(cps.getFecha());
                     tf_codigoReserva.setText(Integer.toString(cps.getCodigoReserva().getCodigoReserva()));
                     tf_ps.setText(cps.getCodigoPS().getNombre());
-                    tf_precio.setText(Integer.toString(cps.getCodigoPS().getCosto()));
-                    tf_total.setText(Integer.toString(cps.getTotal()));
+                    tf_precio.setText(formateador(cps.getCodigoPS().getCosto()));
+                    tf_total.setText(formateador(cps.getTotal()));
                     tf_cedula.setText(cps.getCodigoReserva().getCodigoCliente().getCedula());
                     tf_datosCliente.setText(cps.getCodigoReserva().getCodigoCliente().getNombre()+" "+cps.getCodigoReserva().getCodigoCliente().getApellido());
                   //tf_factura.setText(Integer.toString(cps.getNumFactura().getNumFactura()));
@@ -867,6 +869,11 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
                 frame.setLocationRelativeTo(null);
             }
         });
+    }
+     private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

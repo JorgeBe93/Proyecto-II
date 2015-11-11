@@ -37,7 +37,7 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class Presupuestar extends javax.swing.JFrame {
     private Connection connection;
-  
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
     private int diferencia;
     public static int opcionReserva=0;
     private char ch;
@@ -593,7 +593,7 @@ public class Presupuestar extends javax.swing.JFrame {
                          reserva.setCodigoCliente(cliente);
                          reserva.setMontoAbonado(0);
                          reserva.setNumPresupuesto(p);
-                         reserva.setMontoTotal(Integer.parseInt(tf_montoTotal.getText()));
+                         reserva.setMontoTotal(desformatear(tf_montoTotal.getText()));
                          query = entityManager.createNamedQuery("Habitacion.findByNumero");
                          query.setParameter("numero", Integer.parseInt(tf_numeroHabitacion.getText()));
                          habitacion = (Habitacion)query.getSingleResult();
@@ -672,7 +672,7 @@ public class Presupuestar extends javax.swing.JFrame {
                 ){
                     final float MILLSECS_PER_DAY = 24 * 60 * 60 * 1000;
                     long cantidadPersonas = Integer.parseInt(tf_cantidadPersonas.getText());
-                    long precioxnoche = Integer.parseInt(tf_precioCategoria.getText());
+                    long precioxnoche = desformatear(tf_precioCategoria.getText());
                     float cantidadDias = (jc_checkout.getDate().getTime() - jc_checkin.getDate().getTime())/MILLSECS_PER_DAY;
                     System.out.println("Cantidad de dias devuelto"+" "+cantidadDias);
                     d=deci.format(cantidadDias);
@@ -680,9 +680,9 @@ public class Presupuestar extends javax.swing.JFrame {
                     cantidadDias=Float.parseFloat(d);
                     System.out.println("Cantidad de dias calculado"+" "+cantidadDias);
                     long precioTotal = (long) (cantidadPersonas * precioxnoche * cantidadDias);
-                    tf_montoTotal.setText(Long.toString(precioTotal));
+                    tf_montoTotal.setText(formato(precioTotal));
                     anticipo=(int) (precioTotal*0.5);
-                    tf_anticipar.setText(Integer.toString(anticipo));
+                    tf_anticipar.setText(formateador(anticipo));
                 }else{
                     JOptionPane.showMessageDialog(null, "Fecha de checkin posterior a checkout");
                 }
@@ -1019,5 +1019,21 @@ public class Presupuestar extends javax.swing.JFrame {
          }
          return cliente;
      }
+     private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+      private String formato(long num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+    private int desformatear(String num){
+        int numero;
+        num=num.replace(".", "");
+        numero=Integer.parseInt(num);
+        return numero;
+    }
     
 }

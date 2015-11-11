@@ -11,6 +11,7 @@ import bean.CategoriaProdSer;
 import bean.ProductoServicio;
 import java.awt.Image;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +26,7 @@ import javax.swing.JOptionPane;
 public class ProdSerCreate extends javax.swing.JFrame {
     private char ch;
     private int resp;
-
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##"); 
     /**
      * Creates new form ProdSerCreate
      */
@@ -92,6 +93,9 @@ public class ProdSerCreate extends javax.swing.JFrame {
         lbl_nombrePS.setText("Nombre:");
 
         tf_costo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_costoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_costoKeyTyped(evt);
             }
@@ -256,7 +260,7 @@ public class ProdSerCreate extends javax.swing.JFrame {
                if (resp==JOptionPane.YES_OPTION){
                    ProductoServicio p=new ProductoServicio();
                    p.setNombre(tf_nombrePS.getText().toLowerCase());
-                   p.setCosto(Integer.parseInt(tf_costo.getText()));
+                   p.setCosto(desformatear(tf_costo.getText()));
                  /*  CategoriaProdSer c=(CategoriaProdSer) list_categoriaPS.getSelectedItem();
                    p.setCodigoCategoria(c);*/
                    entityManager.getTransaction().begin();
@@ -284,6 +288,17 @@ public class ProdSerCreate extends javax.swing.JFrame {
         }
        
     }//GEN-LAST:event_btn_guardarActionPerformed
+
+    private void tf_costoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_costoKeyReleased
+        // TODO add your handling code here:
+        String valor;
+        int numero;
+        if(tf_costo.getText().length()!=0){
+            valor=tf_costo.getText();
+            numero=(desformatear(valor));
+            tf_costo.setText(formateador(numero));
+        }
+    }//GEN-LAST:event_tf_costoKeyReleased
     private void resetear(){
         tf_nombrePS.setText(null);
         tf_costo.setText(null);
@@ -327,6 +342,17 @@ public class ProdSerCreate extends javax.swing.JFrame {
                 frame.setLocationRelativeTo(null);
             }
         });
+    }
+    private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+    private int desformatear(String num){
+        int numero;
+        num=num.replace(".", "");
+        numero=Integer.parseInt(num);
+        return numero;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

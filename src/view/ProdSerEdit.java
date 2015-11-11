@@ -11,6 +11,7 @@ import bean.AuditoriaSistema;
 import bean.ProductoServicio;
 import java.awt.Image;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +28,7 @@ public class ProdSerEdit extends javax.swing.JFrame {
     private char ch;
     private int fila;
     private ProductoServicio prodser;
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##"); 
 
     /**
      * Creates new form ProdSerEdit
@@ -112,6 +114,15 @@ public class ProdSerEdit extends javax.swing.JFrame {
 
         lbl_nombrePS.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_nombrePS.setText("Nombre:");
+
+        tf_costoPS.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_costoPSKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_costoPSKeyTyped(evt);
+            }
+        });
 
         lbl_costoPS.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_costoPS.setText("Costo:");
@@ -359,7 +370,7 @@ public class ProdSerEdit extends javax.swing.JFrame {
                      ProductoServicio pser= new ProductoServicio();
                      pser.setCodigoPS(Integer.parseInt(tf_codigoPS.getText()));
                      pser.setNombre(tf_nombrePS.getText());
-                     pser.setCosto(Integer.parseInt(tf_costoPS.getText()));
+                     pser.setCosto(desformatear(tf_costoPS.getText()));
                /*      CategoriaProdSer cps=(CategoriaProdSer) list_categoriaPS.getSelectedItem();
                      pser.setCodigoCategoria(cps);*/
                      entityManager.getTransaction().begin();
@@ -498,6 +509,33 @@ public class ProdSerEdit extends javax.swing.JFrame {
          obtenerProdSer(fila);
          inicializarProdSer();
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void tf_costoPSKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_costoPSKeyReleased
+        // TODO add your handling code here:
+         String valor;
+        int numero;
+        if(tf_costoPS.getText().length()!=0){
+            valor=tf_costoPS.getText();
+            numero=(desformatear(valor));
+            tf_costoPS.setText(formateador(numero));
+        }
+         
+    }//GEN-LAST:event_tf_costoPSKeyReleased
+
+    private void tf_costoPSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_costoPSKeyTyped
+        // TODO add your handling code here:
+        int limite=11;
+        if(tf_costoPS.getText().length()==limite){
+            getToolkit().beep();
+            evt.consume(); //se le ignora
+
+        }
+        ch=evt.getKeyChar();
+        if(!Character.isDigit(ch)){
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_tf_costoPSKeyTyped
     private void obtenerProdSer(int fila) {
             query = entityManager.createNamedQuery("ProductoServicio.findByCodigoPS");
             query.setParameter("codigoPS", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );
@@ -512,7 +550,7 @@ public class ProdSerEdit extends javax.swing.JFrame {
     private void inicializarProdSer(){
       tf_codigoPS.setText(Integer.toString(prodser.getCodigoPS()));
       tf_nombrePS.setText(prodser.getNombre());
-      tf_costoPS.setText(Integer.toString(prodser.getCosto()));
+      tf_costoPS.setText(formateador(prodser.getCosto()));
      }
        private void resetear(){
          tf_codigoPS.setText(null);
@@ -558,6 +596,17 @@ public class ProdSerEdit extends javax.swing.JFrame {
                 frame.setLocationRelativeTo(null);
             }
         });
+    }
+     private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+    private int desformatear(String num){
+        int numero;
+        num=num.replace(".", "");
+        numero=Integer.parseInt(num);
+        return numero;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

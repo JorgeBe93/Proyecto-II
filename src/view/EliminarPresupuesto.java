@@ -11,6 +11,7 @@ import bean.Presupuesto;
 import bean.Reserva;
 import java.awt.Image;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +30,8 @@ public class EliminarPresupuesto extends javax.swing.JFrame {
     private int fila;
     Date fecha=new Date();
     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-
+     DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
     /**
      * Creates new form EliminarPresupuesto
      */
@@ -645,11 +647,11 @@ public class EliminarPresupuesto extends javax.swing.JFrame {
         tf_estado.setText(reserva.getNumPresupuesto().getEstado());
         tf_fecha.setText(reserva.getNumPresupuesto().getFechaEmision());
         tf_reserva.setText(Integer.toString(reserva.getCodigoReserva()));
-        tf_in.setText(formato.format(reserva.getCheckIn()));
-        tf_out.setText(formato.format(reserva.getCheckOut()));
+        tf_in.setText(form.format(reserva.getCheckIn()));
+        tf_out.setText(form.format(reserva.getCheckOut()));
         tf_cliente.setText(reserva.getCodigoCliente().getNombre()+" "+
                               reserva.getCodigoCliente().getApellido());
-        tf_total.setText(Integer.toString(reserva.getMontoTotal()));
+        tf_total.setText(formateador(reserva.getMontoTotal()));
      }
      private void resetear(){
            tf_numero.setText(null);
@@ -701,6 +703,11 @@ public class EliminarPresupuesto extends javax.swing.JFrame {
                 frame.setLocationRelativeTo(null);
             }
         });
+    }
+      private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

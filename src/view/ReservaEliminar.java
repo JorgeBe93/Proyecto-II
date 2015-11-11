@@ -12,6 +12,7 @@ import bean.FacturaCobro;
 import bean.Reserva;
 import java.awt.Image;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,7 @@ public class ReservaEliminar extends javax.swing.JFrame {
     private int fila;
     Date fecha=new Date();
     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
     /**
      * Creates new form ReservaEliminar
      */
@@ -935,10 +937,10 @@ public class ReservaEliminar extends javax.swing.JFrame {
         tf_cedulaCliente.setText(reserva.getCodigoCliente().getCedula());
         tf_cliente.setText(reserva.getCodigoCliente().getNombre()+" "+reserva.getCodigoCliente().getApellido());
         tf_cantidadPersonas.setText(Integer.toString(reserva.getCantPersonas()));
-        tf_montoAbonado.setText(Integer.toString(reserva.getMontoAbonado()));
-        tf_montoTotal.setText(Integer.toString(reserva.getMontoTotal()));
+        tf_montoAbonado.setText(formateador(reserva.getMontoAbonado()));
+        tf_montoTotal.setText(formateador(reserva.getMontoTotal()));
         tf_numeroHabitacion.setText(Integer.toString(reserva.getNumHabitacion().getNumero()));
-        tf_precioCategoria.setText(Integer.toString(reserva.getNumHabitacion().getCodigoCategoria().getCostoxnoche()));
+        tf_precioCategoria.setText(formateador(reserva.getNumHabitacion().getCodigoCategoria().getCostoxnoche()));
         tf_categoriaHabitacion.setText(reserva.getNumHabitacion().getCodigoCategoria().getNombre());
         
         jc_checkin.setDate(reserva.getCheckIn());
@@ -958,5 +960,10 @@ public class ReservaEliminar extends javax.swing.JFrame {
         jc_checkin.setDate(null);
         jc_checkout.setDate(null);
         
+    }
+       private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
     }
 }

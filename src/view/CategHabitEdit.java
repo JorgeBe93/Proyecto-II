@@ -10,6 +10,7 @@ import bean.AuditoriaSistema;
 import bean.CategHabitacion;
 import java.awt.Image;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,7 @@ public class CategHabitEdit extends javax.swing.JFrame {
     private int resp;
     private int fila;
     private  CategHabitacion chab;
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
 
     /**
      * Creates new form CategHabitEdt
@@ -107,6 +109,12 @@ public class CategHabitEdit extends javax.swing.JFrame {
 
         lbl_nombre.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_nombre.setText("Nombre:");
+
+        tf_costo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_costoKeyReleased(evt);
+            }
+        });
 
         lbl_codigo.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_codigo.setText("Código de Categoría:");
@@ -332,7 +340,7 @@ public class CategHabitEdit extends javax.swing.JFrame {
                         CategHabitacion ca=new CategHabitacion();
                         ca.setCodigoCategoria(Integer.parseInt(tf_codigo.getText()));
                         ca.setNombre(tf_nombre.getText());
-                        ca.setCostoxnoche(Integer.parseInt(tf_costo.getText()));
+                        ca.setCostoxnoche(desformatear(tf_costo.getText()));
                         entityManager.getTransaction().begin();
                         entityManager.merge(ca);
                         entityManager.flush();
@@ -465,6 +473,17 @@ public class CategHabitEdit extends javax.swing.JFrame {
          obtenerCategoria(fila);
          inicializarCategoria();
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void tf_costoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_costoKeyReleased
+        // TODO add your handling code here:
+        String valor;
+        int numero;
+        if(tf_costo.getText().length()!=0){
+            valor=tf_costo.getText();
+            numero=(desformatear(valor));
+            tf_costo.setText(formateador(numero));
+        }
+    }//GEN-LAST:event_tf_costoKeyReleased
     private void obtenerCategoria(int fila) {
             query = entityManager.createNamedQuery("CategHabitacion.findByCodigoCategoria");
             query.setParameter("codigoCategoria", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );
@@ -479,7 +498,7 @@ public class CategHabitEdit extends javax.swing.JFrame {
     private void inicializarCategoria(){
         tf_codigo.setText(Integer.toString(chab.getCodigoCategoria()));
         tf_nombre.setText(chab.getNombre());
-        tf_costo.setText(Integer.toString(chab.getCostoxnoche()));
+        tf_costo.setText(formateador(chab.getCostoxnoche()));
      }
         private void resetear(){
         tf_nombre.setText(null);
@@ -526,6 +545,17 @@ public class CategHabitEdit extends javax.swing.JFrame {
                 
             }
         });
+    }
+     private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+    private int desformatear(String num){
+        int numero;
+        num=num.replace(".", "");
+        numero=Integer.parseInt(num);
+        return numero;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
