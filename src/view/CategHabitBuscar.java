@@ -319,15 +319,20 @@ public class CategHabitBuscar extends javax.swing.JFrame {
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
         // TODO add your handling code here:
-         
+        int num;
+         fila = masterTable.getSelectedRow();
+         num=(Integer) masterTable.getValueAt(fila, 0);
+         cargarHabitacion(num);
     }//GEN-LAST:event_masterTableMouseClicked
       private void cargarHabitacion(int codCateg){
          habitacionQuery=EntityManager.createNativeQuery("SELECT * FROM habitacion "
                      + "WHERE codigoCategoria= "
                      +codCateg, Habitacion.class);
         List<Habitacion> h=habitacionQuery.getResultList();
-        habitacionList.clear();
-        habitacionList.addAll(h);
+        if(h.size()>=1){
+              habitacionList.clear();
+              habitacionList.addAll(h);
+        }
     }
     /**
      * @param args the command line arguments

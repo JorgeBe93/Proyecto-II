@@ -350,24 +350,30 @@ public class CategHabitEliminar extends javax.swing.JFrame {
         // TODO add your handling code here:
          String valor;
          int i;
-          JOptionPane.showMessageDialog(null, "Podrían existir registros de habitaciones para esta categoría"
-                    + " si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
-        resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
-        if(resp==JOptionPane.YES_OPTION){
-            entityManager.getTransaction().begin();
-             //eliminamos las habitaciones que dependen de dicha reserva
-                query=entityManager.createNativeQuery("SELECT * FROM habitacion WHERE "
+         if(tf_codigo.getText().length()==0){
+              JOptionPane.showMessageDialog(null,"Seleccione una categoría", "Error",JOptionPane.ERROR_MESSAGE);
+                 return;
+         }
+          query=entityManager.createNativeQuery("SELECT * FROM habitacion WHERE "
                         + "codigoCategoria= "
                         + "'"+tf_codigo.getText()+"'",Habitacion.class);
                 List<Habitacion> h=query.getResultList();
                 if(h.size()>=1){
+                      JOptionPane.showMessageDialog(null, "Esta categoría tiene habitaciones asignadas"
+                    + " si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
+                }
+        
+        resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
+        if(resp==JOptionPane.YES_OPTION){
+            entityManager.getTransaction().begin();
+             //eliminamos las habitaciones que dependen de dicha categoria
                     for(i=0;i<h.size();i++){
                         valor=h.get(i).toString();
                         entityManager.remove(h.get(i));
                         registrarAuditoria("Habitacion",valor);
                     }
                     entityManager.flush();
-                }
+                
                 //
              CategHabitacion c=entityManager.find(CategHabitacion.class,Integer.parseInt(tf_codigo.getText()) );
              valor=c.toString();//guardamos el objeto antes de eliminar
@@ -378,7 +384,6 @@ public class CategHabitEliminar extends javax.swing.JFrame {
              //entityManager.close();
              JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
              resetear();
-             list.clear();
              list.remove(c);
              
         }else{

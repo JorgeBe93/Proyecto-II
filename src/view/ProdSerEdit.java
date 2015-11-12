@@ -115,6 +115,12 @@ public class ProdSerEdit extends javax.swing.JFrame {
         lbl_nombrePS.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
         lbl_nombrePS.setText("Nombre:");
 
+        tf_nombrePS.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tf_nombrePSFocusLost(evt);
+            }
+        });
+
         tf_costoPS.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tf_costoPSKeyReleased(evt);
@@ -125,7 +131,7 @@ public class ProdSerEdit extends javax.swing.JFrame {
         });
 
         lbl_costoPS.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
-        lbl_costoPS.setText("Costo:");
+        lbl_costoPS.setText("Costo (Gs.):");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -136,16 +142,16 @@ public class ProdSerEdit extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbl_costoPS)
-                        .addGap(44, 44, 44)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tf_nombrePS, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_costoPS, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(tf_costoPS, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lbl_nombrePS)
                             .addComponent(lbl_codigoPS))
                         .addGap(30, 30, 30)
-                        .addComponent(tf_codigoPS, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tf_codigoPS, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tf_nombrePS, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -213,7 +219,7 @@ public class ProdSerEdit extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel1.setText("Buscar por:");
 
-        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código P/S", "Nombre", "Costo", "Categoría P/S" }));
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código P/S", "Nombre", "Costo", " " }));
 
         lbl_valor.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         lbl_valor.setText("Valor:");
@@ -274,12 +280,12 @@ public class ProdSerEdit extends javax.swing.JFrame {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoPS}"));
         columnBinding.setColumnName("Codigo PS");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${costo}"));
-        columnBinding.setColumnName("Costo");
-        columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${costo}"));
+        columnBinding.setColumnName("Costo");
+        columnBinding.setColumnClass(Integer.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -289,7 +295,7 @@ public class ProdSerEdit extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
-            masterTable.getColumnModel().getColumn(2).setPreferredWidth(180);
+            masterTable.getColumnModel().getColumn(1).setPreferredWidth(180);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -319,9 +325,9 @@ public class ProdSerEdit extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panel_modificarPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(11, 11, 11)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -345,21 +351,21 @@ public class ProdSerEdit extends javax.swing.JFrame {
         String antes;
         String despues;
         int codigo;
+        query=entityManager.createNamedQuery("ProductoServicio.findByNombre");
+        query.setParameter("nombre", tf_nombrePS.getText().toLowerCase());
+        List<ProductoServicio> ps=query.getResultList();
+        if(ps.size()!=0){
+            codigo=ps.get(0).getCodigoPS();
+            if(Integer.parseInt(tf_codigoPS.getText())!=codigo){//pregunta si esta intentando cambiar por un nombre ya existente
+                     tf_nombrePS.setText(null);
+                     tf_nombrePS.requestFocus();
+                     return;
+             }
+         }
         if(tf_nombrePS.getText().length()==0 || tf_costoPS.getText().length()==0){
                 JOptionPane.showMessageDialog(null,"No se admiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
                  return;
         }else{
-                query=entityManager.createNamedQuery("ProductoServicio.findByNombre");
-                query.setParameter("nombre", tf_nombrePS.getText().toLowerCase());
-                List<ProductoServicio> ps=query.getResultList();
-                if(ps.size()!=0){
-                        codigo=ps.get(0).getCodigoPS();
-                         if(Integer.parseInt(tf_codigoPS.getText())!=codigo){//pregunta si esta intentando cambiar por un nombre ya existente
-                            JOptionPane.showMessageDialog(null,"Ya existe un producto/servicio con el mismo nombre", "Error",JOptionPane.ERROR_MESSAGE);
-                            tf_nombrePS.setText(null);
-                            return;
-                         }
-                 }
                  resp=  JOptionPane.showConfirmDialog(null,"Desea guardar los cambios?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
                  if (resp==JOptionPane.YES_OPTION){
                      query=entityManager.createNamedQuery("ProductoServicio.findByCodigoPS");
@@ -415,13 +421,7 @@ public class ProdSerEdit extends javax.swing.JFrame {
                 evt.consume();
             }
         }
-        else{
-            ch=evt.getKeyChar();
-            if(Character.isDigit(ch)){
-                getToolkit().beep();
-                evt.consume();
-            }
-        }
+       
     }//GEN-LAST:event_tf_valorKeyTyped
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
@@ -536,6 +536,26 @@ public class ProdSerEdit extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_tf_costoPSKeyTyped
+
+    private void tf_nombrePSFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_nombrePSFocusLost
+        // TODO add your handling code here:
+        int codigo;
+        if(tf_nombrePS.getText().length()==0){
+            tf_nombrePS.requestFocus();
+            return;
+        }
+        query=entityManager.createNamedQuery("ProductoServicio.findByNombre");
+        query.setParameter("nombre", tf_nombrePS.getText().toLowerCase());
+        List<ProductoServicio> ps=query.getResultList();
+        if(ps.size()!=0){
+            codigo=ps.get(0).getCodigoPS();
+            if(Integer.parseInt(tf_codigoPS.getText())!=codigo){//pregunta si esta intentando cambiar por un nombre ya existente
+                    JOptionPane.showMessageDialog(null,"Ya existe un producto/servicio con el mismo nombre", "Error",JOptionPane.ERROR_MESSAGE);
+                     tf_nombrePS.setText(null);
+                     tf_nombrePS.requestFocus();
+             }
+         }
+    }//GEN-LAST:event_tf_nombrePSFocusLost
     private void obtenerProdSer(int fila) {
             query = entityManager.createNamedQuery("ProductoServicio.findByCodigoPS");
             query.setParameter("codigoPS", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );

@@ -8,6 +8,7 @@ package view;
 
 import bean.Articulo;
 import bean.AuditoriaSistema;
+import bean.ConsumoProSer;
 import bean.ProductoServicio;
 import java.awt.Image;
 import java.text.DateFormat;
@@ -29,6 +30,8 @@ public class ProdSerEliminar extends javax.swing.JFrame {
     private ProductoServicio prodser;
     private  char ch;
     DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##"); 
+    Date fecha=new Date();
+   DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     
 
     /**
@@ -88,7 +91,7 @@ public class ProdSerEliminar extends javax.swing.JFrame {
             .addGroup(panel_eliminarPSLayout.createSequentialGroup()
                 .addGap(142, 142, 142)
                 .addComponent(lbl_eliminarPS)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
         panel_eliminarPSLayout.setVerticalGroup(
             panel_eliminarPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,7 +214,7 @@ public class ProdSerEliminar extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel1.setText("Buscar por:");
 
-        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código P/S", "Nombre", "Costo", "Categoría P/S" }));
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código P/S", "Nombre", "Costo", " " }));
 
         lbl_valor.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         lbl_valor.setText("Valor:");
@@ -272,12 +275,12 @@ public class ProdSerEliminar extends javax.swing.JFrame {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoPS}"));
         columnBinding.setColumnName("Codigo PS");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${costo}"));
-        columnBinding.setColumnName("Costo");
-        columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${costo}"));
+        columnBinding.setColumnName("Costo");
+        columnBinding.setColumnClass(Integer.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -287,28 +290,32 @@ public class ProdSerEliminar extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(masterTable);
         if (masterTable.getColumnModel().getColumnCount() > 0) {
-            masterTable.getColumnModel().getColumn(2).setPreferredWidth(180);
+            masterTable.getColumnModel().getColumn(1).setPreferredWidth(180);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(113, 113, 113))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(158, 158, 158))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panel_eliminarPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(168, 168, 168)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(45, Short.MAX_VALUE))
+                        .addGap(54, 54, 54)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panel_eliminarPS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -343,16 +350,21 @@ public class ProdSerEliminar extends javax.swing.JFrame {
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
             int codigo;
-            codigo=Integer.parseInt(tf_codigoPS.getText());
+            int i;
             String valor;
             Date fecha1=new Date();
             String fecha2;
             DateFormat formato1=new SimpleDateFormat("yyyy-MM-dd");
             fecha2=formato1.format(fecha1);
+             if(tf_codigoPS.getText().length()==0){
+              JOptionPane.showMessageDialog(null,"Seleccione un servicio", "Error",JOptionPane.ERROR_MESSAGE);
+                 return;
+             }
+             codigo=Integer.parseInt(tf_codigoPS.getText());
             //verificamos que no se este intentando eliminar un producto o servicio que tiene consumo registrados para 
             //una reserva actual
-           query=entityManager.createNativeQuery("SELECT * FROM producto_servicio ps "
-                    + "INNER JOIN consumo_pro_ser c "
+           query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser c  "
+                    + "INNER JOIN producto_servicio ps "
                     + "on ps.codigoPS = c.codigoPS "
                     +"INNER JOIN reserva r "
                     +"on c.codigoReserva=r.codigoReserva "
@@ -361,43 +373,48 @@ public class ProdSerEliminar extends javax.swing.JFrame {
                     +"AND r.checkOut>="
                     +"'"+fecha2+"')"
                     +"AND ps.codigoPS="
-                    +codigo, ProductoServicio.class);
-            List<ProductoServicio> p=query.getResultList();
+                    +codigo, ConsumoProSer.class);
+            List<ConsumoProSer> p=query.getResultList();
             if(!p.isEmpty()){
                 JOptionPane.showMessageDialog(null, "Este Servicio tiene consumos registrados de reservas actuales, si elimina perderá dichos registros","Error",JOptionPane.INFORMATION_MESSAGE );
                 
             }
-                   resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
+                  resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
                   if(resp==JOptionPane.YES_OPTION){
                         entityManager.getTransaction().begin();
+                        for(i=0;i<p.size();i++){
+                            valor=p.get(i).toString();
+                            entityManager.remove(p.get(i));
+                            registrarAuditoria("Consumo Prod/Ser",valor);
+                        }
+                        entityManager.flush();
                         ProductoServicio ps=entityManager.find(ProductoServicio.class, Integer.parseInt(tf_codigoPS.getText()));
                         valor=ps.toString();
                         entityManager.remove(ps);
-                        //registramos los datos necesarios para la auditoria
-                        AuditoriaSistema as=new AuditoriaSistema();
-                        as.setAccion("Eliminación");
-                        as.setTabla("Producto/Servicio");
-                        as.setAntes(valor);
-                        as.setDespues("No hay cambios");
-                        //trabajamos con la fecha
-                        Date fecha=new Date();
-                        DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                        as.setFechaHora((formato.format(fecha)));
-                        as.setUsuario("nadie");
-                        entityManager.persist(as);
+                        entityManager.flush();
+                        registrarAuditoria("Prod/Ser",valor);
                         entityManager.getTransaction().commit();
                        // entityManager.close();
                         JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
-                        list.clear();
                         list.remove(ps);
                         resetear();
                   }else{
                          this.dispose();
                   }
             
-           
+     
     }//GEN-LAST:event_btn_eliminarActionPerformed
-
+   private void registrarAuditoria(String entidad,String valor){
+            AuditoriaSistema as=new AuditoriaSistema();
+            as.setAccion("Eliminación");
+            as.setTabla(entidad);
+            as.setFechaHora(formato.format(fecha));
+            as.setUsuario(LoginView.nombreUsuario);
+            as.setAntes(valor);
+            as.setDespues("No hay modificaciones");
+            entityManager.persist(as);
+            entityManager.flush();
+    }
     private void tf_valorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_valorKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_valorKeyPressed
@@ -411,13 +428,7 @@ public class ProdSerEliminar extends javax.swing.JFrame {
                 evt.consume();
             }
         }
-        else{
-            ch=evt.getKeyChar();
-            if(Character.isDigit(ch)){
-                getToolkit().beep();
-                evt.consume();
-            }
-        }
+       
     }//GEN-LAST:event_tf_valorKeyTyped
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed

@@ -89,7 +89,7 @@ public class CategHabitCreate extends javax.swing.JFrame {
         lbl_nombre.setText("Nombre de categoría:");
 
         lbl_costo.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
-        lbl_costo.setText("Costo por noche:");
+        lbl_costo.setText("Costo por noche (Gs.):");
 
         tf_costo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -100,6 +100,11 @@ public class CategHabitCreate extends javax.swing.JFrame {
             }
         });
 
+        tf_nombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tf_nombreFocusLost(evt);
+            }
+        });
         tf_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_nombreKeyTyped(evt);
@@ -182,7 +187,7 @@ public class CategHabitCreate extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
+                .addContainerGap(46, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -245,18 +250,17 @@ public class CategHabitCreate extends javax.swing.JFrame {
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         // TODO add your handling code here:
-        if (tf_nombre.getText().length()==0){
-                JOptionPane.showMessageDialog(null,"Ingrese algun valor para el campo nombre", "Error",JOptionPane.ERROR_MESSAGE);
-                return;
-         }else{
-             query=entityManager.createNamedQuery("CategHabitacion.findByNombre");
+         query=entityManager.createNamedQuery("CategHabitacion.findByNombre");
              query.setParameter("nombre", tf_nombre.getText().toLowerCase());
              List<CategHabitacion> ch= query.getResultList();
              if(ch.size()>=1){//comprueba si ya existe una categoria con el mismo nombre
-                     JOptionPane.showMessageDialog(null,"Ya existe una categoría con el mismo nombre", "Error",JOptionPane.ERROR_MESSAGE);
                      tf_nombre.setText(null);
+                     tf_nombre.requestFocus();
                      return;
               }
+        if (tf_nombre.getText().length()==0 || tf_costo.getText().length()==0){
+                JOptionPane.showMessageDialog(null,"No se admiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
+         }else{
               resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar una nueva Categoría de Habitación?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
               if (resp==JOptionPane.YES_OPTION){
                         CategHabitacion ca=new CategHabitacion();
@@ -298,6 +302,22 @@ public class CategHabitCreate extends javax.swing.JFrame {
             tf_costo.setText(formateador(numero));
         }
     }//GEN-LAST:event_tf_costoKeyReleased
+
+    private void tf_nombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_nombreFocusLost
+        // TODO add your handling code here:
+        if(tf_nombre.getText().length()==0){
+            tf_nombre.requestFocus();
+            return;
+        }
+         query=entityManager.createNamedQuery("CategHabitacion.findByNombre");
+             query.setParameter("nombre", tf_nombre.getText().toLowerCase());
+             List<CategHabitacion> ch= query.getResultList();
+             if(ch.size()>=1){//comprueba si ya existe una categoria con el mismo nombre
+                     JOptionPane.showMessageDialog(null,"Ya existe una categoría con el mismo nombre", "Error",JOptionPane.ERROR_MESSAGE);
+                     tf_nombre.setText(null);
+                     tf_nombre.requestFocus();
+              }
+    }//GEN-LAST:event_tf_nombreFocusLost
     private void resetear(){
         tf_nombre.setText(null);
         tf_costo.setText(null);

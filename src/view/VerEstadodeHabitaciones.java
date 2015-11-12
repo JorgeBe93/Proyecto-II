@@ -202,9 +202,9 @@ public class VerEstadodeHabitaciones extends javax.swing.JFrame {
                     final JLabel nombreCategoria = new JLabel(categorias.get(i).getNombre());
                     getContentPane().add(nombreCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints((px-20), (py-20), 90, -1));
                     nombreCategoria.setBorder(BorderFactory.createBevelBorder(5));
-                    nombreCategoria.setFont(new Font("Serif", Font.BOLD, 13));
+                    nombreCategoria.setFont(new Font("Candara", Font.BOLD, 14));
                     
-                    final JLabel costoCategoria = new JLabel(Integer.toString(categorias.get(i).getCostoxnoche()));
+                    final JLabel costoCategoria = new JLabel(formateador(categorias.get(i).getCostoxnoche()));
                     getContentPane().add(costoCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints((px+170), (py-20), 200, -1));
                     nombreCategoria.setBorder(BorderFactory.createBevelBorder(5));
                     
@@ -212,7 +212,7 @@ public class VerEstadodeHabitaciones extends javax.swing.JFrame {
                     getContentPane().add(etiquetaCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints((px+130), (py-20), 200, -1));
                     etiquetaCosto.setFont(new Font("Serif", Font.BOLD, 13));
                     
-                    JLabel hb = new JLabel("Sin habitaciones");
+                    JLabel hb = new JLabel("SIN HABITACIONES");
                     hb.setForeground(Color.red);
                     getContentPane().add(hb, new org.netbeans.lib.awtextra.AbsoluteConstraints(px, py, 200, -1));
                     
@@ -231,19 +231,22 @@ public class VerEstadodeHabitaciones extends javax.swing.JFrame {
                                 //CrearReserva.cb_categoriaHabitacion.setSelectedIndex(codCategoria);
                                 if(!llamadaCrearReserva.equals("")){
                                     CrearReserva.tf_categoriaHabitacion.setText(nombreCategoria.getText());
-                                    CrearReserva.tf_precioCategoria.setText(formateador( Integer.parseInt(costoCategoria.getText())));
+                                   //CrearReserva.tf_precioCategoria.setText(formateador( Integer.parseInt(costoCategoria.getText())));
+                                    CrearReserva.tf_precioCategoria.setText(costoCategoria.getText());
                                     CrearReserva.tf_numeroHabitacion.setText(habitacion.getText());
                                     dispose();
                                 }
                                 if(!llamadaEditarReserva.equals("")){
                                     ReservaEditar.tf_categoriaHabitacion.setText(nombreCategoria.getText());
-                                    ReservaEditar.tf_precioCategoria.setText(formateador( Integer.parseInt(costoCategoria.getText())));
+                                    //ReservaEditar.tf_precioCategoria.setText(formateador( Integer.parseInt(costoCategoria.getText())));
+                                    ReservaEditar.tf_precioCategoria.setText(costoCategoria.getText());
                                     ReservaEditar.tf_numeroHabitacion.setText(habitacion.getText());
                                     dispose();
                                 }
                                  if(!llamadaGenerarPresupuesto.equals("")){
                                     Presupuestar.tf_categoriaHabitacion.setText(nombreCategoria.getText());
-                                    Presupuestar.tf_precioCategoria.setText(formateador( Integer.parseInt(costoCategoria.getText())));
+                                   // Presupuestar.tf_precioCategoria.setText(formateador( Integer.parseInt(costoCategoria.getText())));
+                                    Presupuestar.tf_precioCategoria.setText(costoCategoria.getText());
                                     Presupuestar.tf_numeroHabitacion.setText(habitacion.getText());
                                     dispose();
                                 }
@@ -263,7 +266,7 @@ public class VerEstadodeHabitaciones extends javax.swing.JFrame {
                         }else{*/
                             hb.setVisible(false);
                             habitacion.setText(Integer.toString(rs.getInt(1)));
-                            habitacion.setForeground(Color.GREEN);
+                            habitacion.setForeground(Color.BLUE);
                         //}
                         numeroHabitacion.add(habitacion);
                         px+=50;
@@ -288,7 +291,7 @@ public class VerEstadodeHabitaciones extends javax.swing.JFrame {
                 System.out.println("Error");
             }
             cerrarConexion();
-             llamadaCrearReserva = "";
+            llamadaCrearReserva = "";
             llamadaEditarReserva = "";
             llamadaGenerarPresupuesto="";
         

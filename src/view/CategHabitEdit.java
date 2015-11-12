@@ -114,6 +114,9 @@ public class CategHabitEdit extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tf_costoKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_costoKeyTyped(evt);
+            }
         });
 
         lbl_codigo.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
@@ -122,6 +125,11 @@ public class CategHabitEdit extends javax.swing.JFrame {
         tf_nombre.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 tf_nombreFocusLost(evt);
+            }
+        });
+        tf_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_nombreKeyTyped(evt);
             }
         });
 
@@ -163,7 +171,7 @@ public class CategHabitEdit extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/excluded.png"))); // NOI18N
+        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete.png"))); // NOI18N
         btn_cancelar.setText("Cancelar");
         btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -284,37 +292,37 @@ public class CategHabitEdit extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel_EditarCH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(panel_buscarCH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(panel_EditarCH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(85, 85, 85))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(176, 176, 176))))
+                            .addGap(35, 35, 35))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane1)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(85, 85, 85))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(176, 176, 176)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap()
                 .addComponent(panel_EditarCH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(panel_buscarCH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -327,8 +335,20 @@ public class CategHabitEdit extends javax.swing.JFrame {
         String antes;
         String despues;
         int codigo;
+        //verifica nuevamente si esta intentando cambiar por un nombre ya existente
+                        query=entityManager.createNamedQuery("CategHabitacion.findByNombre");
+                        query.setParameter("nombre", tf_nombre.getText().toLowerCase());
+                        List<CategHabitacion> ch= query.getResultList();
+                        if(ch.size()!=0){
+                            codigo=ch.get(0).getCodigoCategoria();
+                             if(Integer.parseInt(tf_codigo.getText())!=codigo){//pregunta si esta intentando cambiar por un nombre ya existente
+                                tf_nombre.setText(null);
+                                tf_nombre.requestFocus();
+                                return;
+                             }
+                        }
          if (tf_nombre.getText().length()==0 || tf_costo.getText().length()==0){
-                JOptionPane.showMessageDialog(null,"Algún campo com valor nulo", "Advertencia",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"No se admiten campos con valores nulos", "Advertencia",JOptionPane.ERROR_MESSAGE);
                 return;
              }else{
                         resp=  JOptionPane.showConfirmDialog(null,"Desea Guardar los cambios?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
@@ -378,7 +398,11 @@ public class CategHabitEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void tf_nombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_nombreFocusLost
-        int codigo;
+         int codigo;
+        if(tf_nombre.getText().length()==0){
+            tf_nombre.requestFocus();
+            return;
+        }
          query=entityManager.createNamedQuery("CategHabitacion.findByNombre");
                     query.setParameter("nombre", tf_nombre.getText().toLowerCase());
                     List<CategHabitacion> ch= query.getResultList();
@@ -387,7 +411,7 @@ public class CategHabitEdit extends javax.swing.JFrame {
                          if(Integer.parseInt(tf_codigo.getText())!=codigo){//pregunta si esta intentando cambiar por un nombre ya existente
                             JOptionPane.showMessageDialog(null,"Ya existe una categoría con el mismo nombre", "Error",JOptionPane.ERROR_MESSAGE);
                             tf_nombre.setText(null);
-                            return;
+                            tf_nombre.requestFocus();
                          }
                     }
     }//GEN-LAST:event_tf_nombreFocusLost
@@ -484,6 +508,37 @@ public class CategHabitEdit extends javax.swing.JFrame {
             tf_costo.setText(formateador(numero));
         }
     }//GEN-LAST:event_tf_costoKeyReleased
+
+    private void tf_nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nombreKeyTyped
+        // TODO add your handling code here:
+         int limite=45;
+         if(tf_nombre.getText().length()==limite){
+            getToolkit().beep();
+            evt.consume(); //se le ignora
+
+        }
+        ch=evt.getKeyChar();
+        if(Character.isDigit(ch)){
+            getToolkit().beep();
+            evt.consume();
+        }
+        
+    }//GEN-LAST:event_tf_nombreKeyTyped
+
+    private void tf_costoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_costoKeyTyped
+        // TODO add your handling code here:
+         int limite=10;
+         if(tf_costo.getText().length()==limite){
+            getToolkit().beep();
+            evt.consume(); //se le ignora
+
+        }
+        ch=evt.getKeyChar();
+        if(!Character.isDigit(ch)){
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_tf_costoKeyTyped
     private void obtenerCategoria(int fila) {
             query = entityManager.createNamedQuery("CategHabitacion.findByCodigoCategoria");
             query.setParameter("codigoCategoria", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );

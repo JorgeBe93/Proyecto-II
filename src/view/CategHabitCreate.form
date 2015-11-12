@@ -50,7 +50,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace pref="50" max="32767" attributes="0"/>
+              <EmptySpace pref="46" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
@@ -190,7 +190,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Candara" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Costo por noche:"/>
+            <Property name="text" type="java.lang.String" value="Costo por noche (Gs.):"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="tf_costo">
@@ -201,6 +201,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="tf_nombre">
           <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tf_nombreFocusLost"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tf_nombreKeyTyped"/>
           </Events>
         </Component>

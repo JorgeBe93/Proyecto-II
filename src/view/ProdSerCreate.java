@@ -101,6 +101,11 @@ public class ProdSerCreate extends javax.swing.JFrame {
             }
         });
 
+        tf_nombrePS.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tf_nombrePSFocusLost(evt);
+            }
+        });
         tf_nombrePS.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_nombrePSKeyTyped(evt);
@@ -108,7 +113,7 @@ public class ProdSerCreate extends javax.swing.JFrame {
         });
 
         lbl_costo.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
-        lbl_costo.setText("Costo:");
+        lbl_costo.setText("Costo (Gs.):");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -193,7 +198,7 @@ public class ProdSerCreate extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(panel_registrarPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,20 +248,20 @@ public class ProdSerCreate extends javax.swing.JFrame {
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         // TODO add your handling code here:
+         //verificar que no se ingrese nombre repetido
+          query=entityManager.createNamedQuery("ProductoServicio.findByNombre");
+          query.setParameter("nombre", tf_nombrePS.getText().toLowerCase());
+          List<ProductoServicio> ps=query.getResultList();
+          if(ps.size()!=0){
+                   tf_nombrePS.setText(null);
+                   tf_nombrePS.requestFocus();
+                   return;
+          }
         if(tf_nombrePS.getText().length()==0 || tf_costo.getText().length()==0){
                 JOptionPane.showMessageDialog(null,"No se admiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
                  return;
         }else{
-                //verificar que no se ingrese nombre repetido
-               query=entityManager.createNamedQuery("ProductoServicio.findByNombre");
-               query.setParameter("nombre", tf_nombrePS.getText().toLowerCase());
-               List<ProductoServicio> ps=query.getResultList();
-               if(ps.size()!=0){
-                   JOptionPane.showMessageDialog(null,"El nombre del producto/servicio ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
-                   tf_nombrePS.setText(null);
-                   return;
-               }
-               resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar una nuevo producto/servicio?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
+               resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar una nuevo servicio?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
                if (resp==JOptionPane.YES_OPTION){
                    ProductoServicio p=new ProductoServicio();
                    p.setNombre(tf_nombrePS.getText().toLowerCase());
@@ -299,6 +304,22 @@ public class ProdSerCreate extends javax.swing.JFrame {
             tf_costo.setText(formateador(numero));
         }
     }//GEN-LAST:event_tf_costoKeyReleased
+
+    private void tf_nombrePSFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_nombrePSFocusLost
+        // TODO add your handling code here:
+         if(tf_nombrePS.getText().length()==0){
+            tf_nombrePS.requestFocus();
+            return;
+        }
+         query=entityManager.createNamedQuery("ProductoServicio.findByNombre");
+               query.setParameter("nombre", tf_nombrePS.getText().toLowerCase());
+               List<ProductoServicio> ps=query.getResultList();
+               if(ps.size()!=0){
+                   JOptionPane.showMessageDialog(null,"El nombre del servicio ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
+                   tf_nombrePS.setText(null);
+                   tf_nombrePS.requestFocus();
+               }
+    }//GEN-LAST:event_tf_nombrePSFocusLost
     private void resetear(){
         tf_nombrePS.setText(null);
         tf_costo.setText(null);
