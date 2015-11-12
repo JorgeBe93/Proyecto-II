@@ -562,22 +562,21 @@ public class ReservaEditar extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(230, 230, 230)
-                .addComponent(panel_CrearReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(230, 230, 230)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel_CrearReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(143, 143, 143))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(384, 384, 384))))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(139, 139, 139))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(390, 390, 390)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -588,7 +587,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(11, 11, 11)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -770,7 +769,6 @@ public class ReservaEditar extends javax.swing.JFrame {
                            // ema.close();
                             JOptionPane.showMessageDialog(null, "Modificación Exitosa");
                               //actualizamos la tabla
-                                resetear();
                                 list.clear();
                                 list.add(reservaLocal);
                             //mostramos la factura
@@ -806,7 +804,8 @@ public class ReservaEditar extends javax.swing.JFrame {
                                     e.printStackTrace();
                                 }*/
                             }
-                           //  enviarDatosEmail();
+                            resetear();
+                           enviarDatosEmail();
                         }
                         else{
                             this.dispose();
@@ -944,6 +943,13 @@ public class ReservaEditar extends javax.swing.JFrame {
                 evt.consume();
             }
         }
+        if (list_filtros.getSelectedItem()=="Categoría" || list_filtros.getSelectedItem()=="Nombre" || list_filtros.getSelectedItem()=="Apellido"){
+            ch=evt.getKeyChar();
+            if(Character.isDigit(ch)){
+                getToolkit().beep();
+                evt.consume();
+            }
+        }
 
     }//GEN-LAST:event_tf_valorKeyTyped
 
@@ -1029,7 +1035,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                     +tf_valor.getText(), Reserva.class);
                 List<Reserva> a=query.getResultList();
                 if(a.size()==0){
-                    JOptionPane.showMessageDialog(null,"No se han encontrado registros para la fecha", "Error",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"No se han encontrado registros para la habitación", "Error",JOptionPane.ERROR_MESSAGE);
                     tf_valor.setText(null);
                     return;
                 }
@@ -1166,19 +1172,23 @@ public class ReservaEditar extends javax.swing.JFrame {
             }
             return r;
         }
-        private void enviarDatosEmail(){
+  private void enviarDatosEmail(){
         boolean resultado;
-            datos[0]=reserva.getCodigoCliente().getEmail();
-            datos[1]="Detalles de  Reserva ";
-            datos[2]=" BIENVENIDO AL HOTEL SANTA MARÍA"+"\n "
-           +"Su reserva es la n°: "+reservaLocal.getCodigoReserva()+"\n " 
-           +"Check In: "+" "+format.format(reservaLocal.getCheckIn())+"\n"+"Check Out: "+" "+format.format(reserva.getCheckOut())+"\n "
-           +"Habitación: "+" "+reservaLocal.getNumHabitacion().getNumero()+"\n"+"Categoría: "+" "+reservaLocal.getNumHabitacion().getCodigoCategoria().getNombre()+"\n"
-           +"Monto Habitación: "+" "+reservaLocal.getNumHabitacion().getCodigoCategoria().getCostoxnoche()+"\n"+"Monto Total: "+" "+reservaLocal.getMontoTotal()+"\n"+"Monto Abonado: "+" "+reserva.getMontoAbonado()+"\n"
-           +"Debe abonar el 30% del monto total de la reserva, de lo contrario perderá la misma";
-            Correo c=new Correo();
-            resultado=c.enviarCorreo(datos);
-            System.out.println(resultado);
+        if(reservaLocal.getCodigoCliente().getEmail()!=null){
+                datos[0]=reserva.getCodigoCliente().getEmail();
+                datos[1]="Detalles de  Reserva ";
+                datos[2]=" BIENVENIDO AL HOTEL SANTA MARÍA"+"\n "
+                +"SR/SRA: "+reservaLocal.getCodigoCliente().getNombre()+" "+reserva.getCodigoCliente().getApellido()+"\n " 
+               +"Su reserva es la n°: "+reservaLocal.getCodigoReserva()+"\n " 
+               +"Check In: "+" "+format.format(reservaLocal.getCheckIn())+"\n"+"Check Out: "+" "+format.format(reserva.getCheckOut())+"\n "
+               +"Habitación: "+" "+reservaLocal.getNumHabitacion().getNumero()+"\n"+"Categoría: "+" "+reservaLocal.getNumHabitacion().getCodigoCategoria().getNombre()+"\n"
+               +"Monto Habitación: "+" "+formateador(reservaLocal.getNumHabitacion().getCodigoCategoria().getCostoxnoche())+"\n"+"Monto Total: "+" "+formateador(reservaLocal.getMontoTotal())+"\n"+"Monto Abonado: "+" "+formateador(reserva.getMontoAbonado())+"\n"
+               +"Debe abonar el 30% del monto total de la reserva, de lo contrario perderá la misma";
+                Correo c=new Correo();
+                resultado=c.enviarCorreo(datos);
+                System.out.println(resultado);
+        }
+            
 }
     /**
      * @param args the command line arguments

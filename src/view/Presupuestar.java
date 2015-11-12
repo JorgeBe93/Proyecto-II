@@ -8,6 +8,7 @@ package view;
 
 import bean.AuditoriaSistema;
 import bean.Cliente;
+import bean.Correo;
 import bean.FacturaCobro;
 import bean.Habitacion;
 import bean.Presupuesto;
@@ -45,10 +46,12 @@ public class Presupuestar extends javax.swing.JFrame {
     private Date auxIn = null;
     private Date auxOut = null;
     private int fila;
-
-    //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    //public static int codigoCategoria = 0;
-    //public static int numHabitacion = 0;
+    private String datos[]=new String[3];
+    Reserva reserva = new Reserva();
+    DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
+    java.util.Date fecha = new Date();
+  
     /**
      * Creates new form CrearReserva
      */
@@ -143,9 +146,9 @@ public class Presupuestar extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(btn_nuevo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
                 .addComponent(btn_registrar)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(btn_cancelar)
                 .addContainerGap())
         );
@@ -172,16 +175,16 @@ public class Presupuestar extends javax.swing.JFrame {
         panel_CrearReservaLayout.setHorizontalGroup(
             panel_CrearReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_CrearReservaLayout.createSequentialGroup()
-                .addGap(164, 164, 164)
+                .addGap(170, 170, 170)
                 .addComponent(lbl_BuscarRol)
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_CrearReservaLayout.setVerticalGroup(
             panel_CrearReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_CrearReservaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panel_CrearReservaLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lbl_BuscarRol)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -308,6 +311,38 @@ public class Presupuestar extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(lbl_cantidadPersonas))
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(tf_categoriaHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(45, 45, 45)
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tf_precioCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(tf_cantidadPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(60, 60, 60)
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(tf_montoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addComponent(lbl_anticipar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tf_numeroHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tf_anticipar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(tf_cedulaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tf_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -315,50 +350,12 @@ public class Presupuestar extends javax.swing.JFrame {
                                 .addGap(29, 29, 29)
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jc_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(lbl_cantidadPersonas))
-                                .addGap(22, 22, 22)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tf_cantidadPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tf_categoriaHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(45, 45, 45)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel8))))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(59, 59, 59)
-                                .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(tf_precioCategoria)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(tf_numeroHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(74, 74, 74))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(tf_montoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(31, 31, 31)
-                                        .addComponent(lbl_anticipar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tf_anticipar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(42, 42, 42))))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(tf_cedulaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tf_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jc_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(66, 66, 66)
-                        .addComponent(btn_registrarCliente)
-                        .addContainerGap())))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_registrarCliente))))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -376,10 +373,8 @@ public class Presupuestar extends javax.swing.JFrame {
                         .addComponent(jc_checkin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5)
                         .addComponent(jc_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(btn_buscar)))
-                .addGap(28, 28, 28)
+                    .addComponent(btn_buscar))
+                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tf_categoriaHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -442,11 +437,11 @@ public class Presupuestar extends javax.swing.JFrame {
                 .addComponent(lbl_filtro)
                 .addGap(18, 18, 18)
                 .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(lbl_valor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addComponent(btn_buscar1)
                 .addGap(36, 36, 36))
         );
@@ -498,24 +493,25 @@ public class Presupuestar extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 943, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(panel_CrearReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(197, 197, 197))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(156, 156, 156)
-                        .addComponent(panel_CrearReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(53, 53, 53)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(179, 179, 179)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(46, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(34, 34, 34))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(260, 260, 260)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(286, 286, 286)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -529,9 +525,9 @@ public class Presupuestar extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -547,16 +543,16 @@ public class Presupuestar extends javax.swing.JFrame {
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
         // TODO add your handling code here:
          String letras;
-         DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-         DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
-        java.util.Date fecha = new Date();
         //JOptionPane.showConfirmDialog(null, fecha);
+        if(tf_cedulaCliente.getText().length()==0){
+             JOptionPane.showMessageDialog(null,"Seleccione un cliente", "Error",JOptionPane.ERROR_MESSAGE);
+        }
         if ((jc_checkin.getDate() != null) 
                 && (jc_checkout.getDate() != null) 
                 && !tf_montoTotal.getText().equals("")
                 && !tf_cantidadPersonas.getText().equals("")
                 && !tf_numeroHabitacion.getText().equals("")
-                && !tf_numeroHabitacion.getText().equals("") && !tf_cedulaCliente.getText().equals(""))
+                && !tf_numeroHabitacion.getText().equals(""))
                         {
             if (auxIn.equals(jc_checkin.getDate())
                     && auxOut.equals(jc_checkout.getDate())){
@@ -585,8 +581,8 @@ public class Presupuestar extends javax.swing.JFrame {
                          entityManager.getTransaction().begin();
                          entityManager.persist(p);
                          entityManager.flush();
+                         registrarAuditoria("Presupuesto",p.toString());
                          //generamos la reserva
-                         Reserva reserva = new Reserva();
                          reserva.setCantPersonas(Integer.parseInt(tf_cantidadPersonas.getText()));
                          reserva.setCheckIn(dateIn);
                          reserva.setCheckOut(dateOut);
@@ -600,17 +596,7 @@ public class Presupuestar extends javax.swing.JFrame {
                          reserva.setNumHabitacion(habitacion);
                          entityManager.persist(reserva);
                          entityManager.flush();    
-                         //creacion de auditoria de sistema
-                         AuditoriaSistema as=new AuditoriaSistema();
-                         as.setAccion("Inserción");
-                         as.setTabla("Reserva");
-                         as.setAntes(reserva.toString());
-                         as.setDespues("No hay cambios");
-                         //trabajamos con la fecha
-                         as.setFechaHora(formato.format(fecha));
-                         as.setUsuario(LoginView.nombreUsuario);
-                         entityManager.persist(as);
-                         entityManager.flush();
+                         registrarAuditoria("Reserva",reserva.toString());
                          entityManager.getTransaction().commit();
                          JOptionPane.showMessageDialog(null, "Registro Exitoso");
                          resetear();
@@ -653,8 +639,21 @@ public class Presupuestar extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Datos Invalidos o Incompletos "
                    + "impiden el registro");  
      }
+      if(reserva.getCodigoCliente().getEmail()!=null){
+          enviarDatosEmail();
+      }
     }//GEN-LAST:event_btn_registrarActionPerformed
-
+     private void registrarAuditoria(String Entidad,String valor){
+                    AuditoriaSistema as=new AuditoriaSistema();
+                   as.setAccion("Inserción");
+                   as.setTabla(Entidad);
+                   as.setAntes(valor);
+                   as.setDespues("No hay cambios");
+                   as.setFechaHora((formato.format(fecha)));
+                   as.setUsuario("nadie");
+                   entityManager.persist(as);
+                   entityManager.flush();
+    }
     private void tf_cantidadPersonasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_cantidadPersonasKeyPressed
         // TODO add your handling code here:
         DecimalFormat deci= new DecimalFormat("0");
@@ -948,10 +947,23 @@ public class Presupuestar extends javax.swing.JFrame {
         ventana.setTitle("Ver Estado de Habitaciones");
         Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
         ventana.setIconImage(icon);
-        ventana.setVisible(true);
-                    
-
-        
+        ventana.setVisible(true);   
+    }
+       private void enviarDatosEmail(){
+        boolean resultado;
+           datos[0]=reserva.getCodigoCliente().getEmail();
+           datos[1]="Detalles de  Reserva ";
+           datos[2]=" BIENVENIDO AL HOTEL SANTA MARÍA"+"\n "
+           +"Sr/Sra: "+reserva.getCodigoCliente().getNombre()+" "+reserva.getCodigoCliente().getApellido()+"\n " 
+           +"Su reserva es la n°: "+reserva.getCodigoReserva()+"\n " 
+           +"Check In: "+" "+form.format(reserva.getCheckIn())+"\n"+"Check Out: "+" "+form.format(reserva.getCheckOut())+"\n "
+           +"Habitación: "+" "+reserva.getNumHabitacion().getNumero()+"\n"+"Categoría: "+" "+reserva.getNumHabitacion().getCodigoCategoria().getNombre()+"\n"
+           +"Monto Habitación: "+" "+formateador(reserva.getNumHabitacion().getCodigoCategoria().getCostoxnoche())+"\n"+"Monto Total: "+" "+formateador(reserva.getMontoTotal())+"\n"+"Monto Abonado: "+" "+formateador(reserva.getMontoAbonado())+"\n"
+           +"Tiene un plazo de 8 hs para confirmar su presupuesto, de lo contrario la misma será cancelada "+"\n"
+           +"Debe abonar el 30% del monto total de la reserva, de lo contrario perderá la misma";
+            Correo c=new Correo();
+            resultado=c.enviarCorreo(datos);
+            System.out.println(resultado);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;

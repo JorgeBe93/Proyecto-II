@@ -565,6 +565,10 @@ public class ClienteEliminar extends javax.swing.JFrame {
         // TODO add your handling code here:
         int i;
        String valor;
+       if(tf_codigo.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Seleccione un cliente", "Error",JOptionPane.ERROR_MESSAGE);
+            return;
+       }
        //avisamos si hay reservas que dependen de este cliente
        query=entityManager.createNativeQuery("SELECT * FROM reserva WHERE "
                         + "codigoCliente= "

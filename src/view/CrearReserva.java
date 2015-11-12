@@ -576,7 +576,9 @@ public class CrearReserva extends javax.swing.JFrame {
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
         // TODO add your handling code here:
          String letras;
-        //JOptionPane.showConfirmDialog(null, fecha);
+        if(tf_cedulaCliente.getText().length()==0){
+             JOptionPane.showMessageDialog(null,"Seleccione un cliente", "Error",JOptionPane.ERROR_MESSAGE);
+        }
         if ((jc_checkin.getDate() != null) 
                 && (jc_checkout.getDate() != null) 
                 && !tf_montoTotal.getText().equals("")
@@ -589,8 +591,6 @@ public class CrearReserva extends javax.swing.JFrame {
                     && auxOut.equals(jc_checkout.getDate())){
                 if(jc_checkin.getDate().before(jc_checkout.getDate())                
                         && desformatear(tf_montoAbonado.getText()) <= desformatear(tf_montoTotal.getText())
-                  //      &&jc_checkin.getDate().after(fecha)
-                  //      &&jc_checkin.getDate().after(fecha)
                         ){
                      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                      String dIN = format.format(jc_checkin.getDate());
@@ -614,7 +614,6 @@ public class CrearReserva extends javax.swing.JFrame {
                          reserva.setCantPersonas(Integer.parseInt(tf_cantidadPersonas.getText()));
                          reserva.setCheckIn(dateIn);
                          reserva.setCheckOut(dateOut);
-                         //reserva.setCheckOut(format.parse(format.format(jc_checkout.toString())));
                          reserva.setCodigoCliente(cliente);
                          if (tf_montoAbonado.getText().equals(""))
                              reserva.setMontoAbonado(0);
@@ -653,29 +652,6 @@ public class CrearReserva extends javax.swing.JFrame {
                                 ema.persist(cp);
                                 ema.flush(); 
                              }
-                              //llamamos la ventana forma de pago
-                         
-                            /* f.setCodigoReserva(reserva);
-                             f.setConcepto("anticipo de reserva");
-                             if("".equals(reserva.getCodigoCliente().getRuc())){
-                                   f.setRucCliente(reserva.getCodigoCliente().getCedula());
-                             }else{
-                                   f.setRucCliente(reserva.getCodigoCliente().getRuc());
-                             }
-                             f.setFechaEmision(form.format(fecha));
-                             f.setTotal(Integer.parseInt(tf_montoAbonado.getText()));
-                             f.setTipoFactura(RegistrarDetalleCobro.dc.getForma());
-                             f.setFormaPago(RegistrarDetalleCobro.dc);
-                             ema.persist(f);
-                             ema.flush();
-                             //verificar la condicion de pago
-                             if("Cheque".equals(f.getTipoFactura()) || "Tarjeta Crédito".equals(f.getTipoFactura()) ){
-                                 condicion="Crédito";
-                                 
-                             }else{
-                                 condicion="Contado";
-                             }*/
-
                          }             
                          //creacion de auditoria de sistema
                          AuditoriaSistema as=new AuditoriaSistema();
@@ -696,39 +672,7 @@ public class CrearReserva extends javax.swing.JFrame {
                                  formaPago();
                           }
                           nuevoRegistro();
-                        //  enviarDatosEmail();   
-                           //volvemos a preguntar si aporto algo y se genera la factura
-                        /*  if(!"0".equals(tf_montoAbonado.getText())){
-                              try
-                             {
-                                 NumberToText nt=new NumberToText();
-                                 letras=nt.convertirLetras(f.getTotal());
-                                 System.out.print(letras);
-                                 Class.forName("com.mysql.jdbc.Driver");
-                                 Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
-                                 HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
-                                 Map parametros=new HashMap();
-                                 System.out.print(f.getNumFactura());
-                                 par.put("Letras", letras);
-                                 par.put("NumFactura",f.getNumFactura() );
-                                 par.put("Saldo",diferencia);
-                                 par.put("Condicion", condicion);
-                                 JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/facturaAnticipo.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
-                                 JasperViewer jv = new JasperViewer(jp,false);
-                                 jv.setVisible(true);
-                                 jv.setTitle("Factura de Anticipio de Reserva");
-                                 Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
-                                jv.setIconImage(icon);
-                                 jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                             }
-                             catch(Exception e)
-                             {
-                                 e.printStackTrace();
-                             }
-                               
-                          }*/
-                         
-
+                          enviarDatosEmail();
                      }
                      else{
                          this.dispose();
@@ -1045,18 +989,21 @@ public class CrearReserva extends javax.swing.JFrame {
     }
     private void enviarDatosEmail(){
         boolean resultado;
-    datos[0]=reserva.getCodigoCliente().getEmail();
-   datos[1]="Detalles de  Reserva ";
-   datos[2]=" BIENVENIDO AL HOTEL SANTA MARÍA"+"\n "
+        if(reserva.getCodigoCliente().getEmail()!=null){
+                datos[0]=reserva.getCodigoCliente().getEmail();
+           datos[1]="Detalles de  Reserva ";
+           datos[2]=" BIENVENIDO AL HOTEL SANTA MARÍA"+"\n "
+           +"SR/SRA: "+reserva.getCodigoCliente().getNombre()+" "+reserva.getCodigoCliente().getApellido()+"\n " 
            +"Su reserva es la n°: "+reserva.getCodigoReserva()+"\n " 
            +"Check In: "+" "+form.format(reserva.getCheckIn())+"\n"+"Check Out: "+" "+form.format(reserva.getCheckOut())+"\n "
            +"Habitación: "+" "+reserva.getNumHabitacion().getNumero()+"\n"+"Categoría: "+" "+reserva.getNumHabitacion().getCodigoCategoria().getNombre()+"\n"
-           +"Monto Habitación: "+" "+reserva.getNumHabitacion().getCodigoCategoria().getCostoxnoche()+"\n"+"Monto Total: "+" "+reserva.getMontoTotal()+"\n"+"Monto Abonado: "+" "+reserva.getMontoAbonado()+"\n"
+           +"Monto Habitación: "+" "+formateador(reserva.getNumHabitacion().getCodigoCategoria().getCostoxnoche())+"\n"+"Monto Total: "+" "+formateador(reserva.getMontoTotal())+"\n"+"Monto Abonado: "+" "+formateador(reserva.getMontoAbonado())+"\n"
            +"Debe abonar el 30% del monto total de la reserva, de lo contrario perderá la misma";
-    Correo c=new Correo();
-     resultado=c.enviarCorreo(datos);
-     System.out.println(resultado);
-}
+            Correo c=new Correo();
+            resultado=c.enviarCorreo(datos);
+            System.out.println(resultado);
+        }         
+    }
     /**
      * @param args the command line arguments
      */

@@ -8,6 +8,7 @@ package bean;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -126,7 +127,10 @@ public class Presupuesto implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.Presupuesto[ numPresupuesto=" + numPresupuesto + " ]";
+        return  "numPresupuesto=" + numPresupuesto + ", estado=" + estado + ", fechaEmision=" + fechaEmision + ", codigoCliente=" + codigoCliente;
     }
+    
+
+   
     
 }

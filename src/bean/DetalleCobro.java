@@ -112,7 +112,9 @@ public class DetalleCobro implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.DetalleCobro[ idDetalle=" + idDetalle + " ]";
+        return  "idDetalle=" + idDetalle + ", forma=" + forma + ", numeroChTarj=" + numeroChTarj + ", idBanco=" + idBanco;
     }
+
+  
     
 }

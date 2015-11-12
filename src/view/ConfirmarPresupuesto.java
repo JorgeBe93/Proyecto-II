@@ -453,11 +453,15 @@ public class ConfirmarPresupuesto extends javax.swing.JFrame {
         // TODO add your handling code here:
         String antes;
         String despues;
+        if(tf_numero.getText().length()==0){
+              JOptionPane.showMessageDialog(null,"Seleccione un presupuesto", "Error",JOptionPane.ERROR_MESSAGE);
+              return;
+        }
         if("Confirmado".equals(tf_estado.getText())){
             JOptionPane.showMessageDialog(null,"El presupuesto ya ha sido confirmado", "Aviso",JOptionPane.INFORMATION_MESSAGE);
              return;  
         }else{
-              resp=  JOptionPane.showConfirmDialog(null,"Desea confirmar la reserva?", "Confirmar Modificación",JOptionPane.YES_NO_OPTION );
+              resp=  JOptionPane.showConfirmDialog(null,"Desea confirmar el presupuesto?", "Confirmar Modificación",JOptionPane.YES_NO_OPTION );
               if (resp==JOptionPane.YES_OPTION){
                     query = entityManager.createNamedQuery("Presupuesto.findByNumPresupuesto");
                     query.setParameter("numPresupuesto", Integer.parseInt(tf_numero.getText()));
@@ -606,7 +610,7 @@ public class ConfirmarPresupuesto extends javax.swing.JFrame {
         // TODO add your handling code here:
         String opc;
         opc=(String) list_filtros.getSelectedItem();
-        if("Estado".equals(opc)){
+        if("Estado".equals(opc) || opc=="Nombre" || opc=="Apellido"){
             ch=evt.getKeyChar();
             if(Character.isDigit(ch)){
                 getToolkit().beep();

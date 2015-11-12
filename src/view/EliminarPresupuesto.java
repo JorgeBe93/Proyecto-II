@@ -453,6 +453,10 @@ public class EliminarPresupuesto extends javax.swing.JFrame {
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
         String valor;
+        if(tf_numero.getText().length()==0){
+              JOptionPane.showMessageDialog(null,"Seleccione un presupuesto", "Error",JOptionPane.ERROR_MESSAGE);
+              return;
+        }
          resp=  JOptionPane.showConfirmDialog(null,"Desea eliminar el presupuesto?", "Confirmar Eliminar",JOptionPane.YES_NO_OPTION );
               if (resp==JOptionPane.YES_OPTION){
                   //eliminamos la reserva
@@ -471,7 +475,6 @@ public class EliminarPresupuesto extends javax.swing.JFrame {
                    registrarAuditoria("Presupuesto",valor);
                    entityManager.getTransaction().commit();
                    JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
-                   list.clear();
                    list.remove(p);
                    resetear();
               }else{
@@ -483,7 +486,7 @@ public class EliminarPresupuesto extends javax.swing.JFrame {
     private void registrarAuditoria(String Entidad,String valor){
                     AuditoriaSistema as=new AuditoriaSistema();
                    as.setAccion("Eliminación");
-                   as.setTabla("Reserva");
+                   as.setTabla(Entidad);
                    as.setAntes(valor);
                    as.setDespues("No hay cambios");
                    as.setFechaHora((formato.format(fecha)));
@@ -495,7 +498,7 @@ public class EliminarPresupuesto extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(list_filtros.getSelectedItem()=="Fecha Emisión"){
 
-            tf_valor.setText(formato.format(fecha));
+            tf_valor.setText(form.format(fecha));
         }
     }//GEN-LAST:event_list_filtrosFocusLost
 
@@ -601,7 +604,7 @@ public class EliminarPresupuesto extends javax.swing.JFrame {
         // TODO add your handling code here:
         String opc;
         opc=(String) list_filtros.getSelectedItem();
-        if("Estado".equals(opc)){
+        if("Estado".equals(opc) || opc=="Nombre" || opc=="Apellido"){
             ch=evt.getKeyChar();
             if(Character.isDigit(ch)){
                 getToolkit().beep();

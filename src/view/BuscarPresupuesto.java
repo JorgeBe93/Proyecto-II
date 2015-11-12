@@ -345,7 +345,7 @@ public class BuscarPresupuesto extends javax.swing.JFrame {
         // TODO add your handling code here:
         String opc;
         opc=(String) list_filtros.getSelectedItem();
-        if("Estado".equals(opc)){
+        if("Estado".equals(opc) || opc=="Nombre" || opc=="Apellido"){
             ch=evt.getKeyChar();
             if(Character.isDigit(ch)){
                 getToolkit().beep();
