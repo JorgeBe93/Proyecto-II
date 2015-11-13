@@ -7,6 +7,7 @@
 package view;
 
 import bean.ConsumoProSer;
+import bean.DetalleCobro;
 import bean.FacturaCobro;
 import bean.NumberToText;
 import bean.Reserva;
@@ -114,7 +115,7 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
         lbl_filtro.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         lbl_filtro.setText("Buscar por:");
 
-        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Número Factura", "Condición de Pago", "Concepto", "Fecha", "Reserva", "Ruc Cliente", " " }));
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Número Factura", "Tipo Factura", "Forma Pago", "Concepto", "Fecha", "Reserva", "Ruc Cliente", " " }));
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusGained(evt);
@@ -359,7 +360,7 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
                 evt.consume();
             }
         }else{
-                if(list_filtros.getSelectedItem()=="Concepto" || list_filtros.getSelectedItem()=="Condición de Pago"){
+                if(list_filtros.getSelectedItem()=="Concepto" || list_filtros.getSelectedItem()=="Forma Pago" || list_filtros.getSelectedItem()=="Tipo Factura"){
                         ch=evt.getKeyChar();
                         if(Character.isDigit(ch)){
                              getToolkit().beep();
@@ -394,14 +395,29 @@ public class BuscarFacturaCobro extends javax.swing.JFrame {
                 list.addAll(f);
                
             }
-            else if (list_filtros.getSelectedItem()=="Condición de Pago"){
+            else if (list_filtros.getSelectedItem()=="Tipo Factura"){
                   DetalleList.clear();
                 query = entityManager.createNativeQuery("SELECT * FROM factura_cobro "
                     + "WHERE tipoFactura LIKE "
                     +"'%"+tf_valor.getText()+"%'", FacturaCobro.class);
                 List<FacturaCobro> f = query.getResultList();
                 if (f.isEmpty()){
-                    JOptionPane.showMessageDialog(null, "Condición de Pago Inexistente!","Error",JOptionPane.ERROR_MESSAGE );
+                    JOptionPane.showMessageDialog(null, "Tipo  de Factura inexistente!","Error",JOptionPane.ERROR_MESSAGE );
+                    tf_valor.setText(null);
+                    return;
+                }
+                list.clear();
+                list.addAll(f);
+            }
+            else if (list_filtros.getSelectedItem()=="Forma Pago"){
+                query = entityManager.createNativeQuery( "SELECT * FROM detalle_cobro d "
+                    + "INNER JOIN factura_cobro f "
+                    + "on f.forma_pago = d.idDetalle "
+                    + "WHERE d.forma LIKE "
+                    +"'%"+tf_valor.getText()+"%'", FacturaCobro.class);
+                List<FacturaCobro> f = query.getResultList();
+                if (f.isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Forma de Pago inexistente", "Error",JOptionPane.ERROR_MESSAGE);
                     tf_valor.setText(null);
                     return;
                 }

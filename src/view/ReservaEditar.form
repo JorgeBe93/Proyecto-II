@@ -887,9 +887,9 @@
                 <BindingParameter name="NAME" value="Monto Total"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
               </Subbinding>
-              <Subbinding sourcePath="${numPresupuesto}">
+              <Subbinding sourcePath="${numPresupuesto.numPresupuesto}">
                 <BindingParameter name="NAME" value="Presupuesto"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="bean.Presupuesto.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
               </Subbinding>
             </BindingProperty>
           </BindingProperties>

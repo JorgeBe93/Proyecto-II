@@ -118,9 +118,9 @@ public class CargoBuscar extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(btn_buscar)
-                .addGap(23, 23, 23))
+                .addGap(24, 24, 24))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,7 +180,7 @@ public class CargoBuscar extends javax.swing.JFrame {
             .addGroup(panel_BuscarUsuarioLayout.createSequentialGroup()
                 .addGap(185, 185, 185)
                 .addComponent(lbl_BuscarUsuario)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_BuscarUsuarioLayout.setVerticalGroup(
             panel_BuscarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,9 +250,9 @@ public class CargoBuscar extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(122, 122, 122)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(panel_BuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panel_BuscarUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -303,13 +303,11 @@ public class CargoBuscar extends javax.swing.JFrame {
                  tf_valor.setText(null);
                  return;
             }
-            empleadoList.clear();
             list.clear();
             list.addAll(r);
-            cargarEmpleado(id);
+           
         }
          else if (list_filtros.getSelectedItem()=="Nombre"){
-             empleadoList.clear();
             String nombre = tf_valor.getText();
             query = entityManager.createNativeQuery( "SELECT * FROM cargo c "
                     + "WHERE c.nombre LIKE "
@@ -325,7 +323,6 @@ public class CargoBuscar extends javax.swing.JFrame {
             list.addAll(r);            
          }
          else if (list_filtros.getSelectedItem()=="Sueldo"){
-            empleadoList.clear();
             query = entityManager.createNativeQuery( "SELECT * FROM cargo c "
                     + "WHERE c.sueldo = "
                     +tf_valor.getText(), Cargo.class);
@@ -340,16 +337,9 @@ public class CargoBuscar extends javax.swing.JFrame {
          }
          //ver este
          else if (list_filtros.getSelectedItem()=="Fecha Creación"){
-                empleadoList.clear();
-               /* String q="SELECT * FROM cargo "
-                         + "WHERE fechaCreacion= STR_TO_DATE("
-                    +"'"+tf_valor.getText()+"'"
-                    +","+"'%d/%m/%Y' )";
-                System.out.println(q);*/
                 query=entityManager.createNativeQuery("SELECT * FROM cargo "
-                         + "WHERE fechaCreacion= STR_TO_DATE("
-                    +"'"+tf_valor.getText()+"'"
-                    +","+"'%d/%m/%Y' )", Cargo.class);
+                         + "WHERE STR_TO_DATE(fechaCreacion, '%Y-%m-%d')= "
+                    +"'"+tf_valor.getText()+"'", Cargo.class);
             List<Cargo> r = query.getResultList();
             if (r.isEmpty()){
                  JOptionPane.showMessageDialog(null, "Fecha inexistente","Error",JOptionPane.ERROR_MESSAGE );
@@ -370,7 +360,10 @@ public class CargoBuscar extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_valorKeyPressed
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
-        
+         int num;
+         fila = masterTable.getSelectedRow();
+         num=(Integer) masterTable.getValueAt(fila, 0);
+         cargarEmpleado(num);
 
     }//GEN-LAST:event_masterTableMouseClicked
 
@@ -380,6 +373,13 @@ public class CargoBuscar extends javax.swing.JFrame {
                || list_filtros.getSelectedItem() == "Código"){
              ch=evt.getKeyChar();
              if(!Character.isDigit(ch)){
+                   getToolkit().beep();
+                    evt.consume();
+            }
+         }
+          if (list_filtros.getSelectedItem()=="Nombre"){
+             ch=evt.getKeyChar();
+             if(Character.isDigit(ch)){
                    getToolkit().beep();
                     evt.consume();
             }

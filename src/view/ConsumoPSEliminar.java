@@ -93,18 +93,18 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
         panel_eliminarCPS.setBackground(new java.awt.Color(0, 153, 255));
         panel_eliminarCPS.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        lbl_eliminarCPS.setFont(new java.awt.Font("Corbel", 1, 25)); // NOI18N
+        lbl_eliminarCPS.setFont(new java.awt.Font("Corbel", 1, 28)); // NOI18N
         lbl_eliminarCPS.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_eliminarCPS.setText("Eliminar Consumo Producto/Servicio");
+        lbl_eliminarCPS.setText("Eliminar Consumo ");
 
         javax.swing.GroupLayout panel_eliminarCPSLayout = new javax.swing.GroupLayout(panel_eliminarCPS);
         panel_eliminarCPS.setLayout(panel_eliminarCPSLayout);
         panel_eliminarCPSLayout.setHorizontalGroup(
             panel_eliminarCPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_eliminarCPSLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
+                .addGap(234, 234, 234)
                 .addComponent(lbl_eliminarCPS)
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_eliminarCPSLayout.setVerticalGroup(
             panel_eliminarCPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,24 +467,24 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(234, 234, 234)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panel_eliminarCPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(34, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1090, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1090, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(103, 103, 103))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(433, 433, 433))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(234, 234, 234)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panel_eliminarCPS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(443, 443, 443)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -497,9 +497,9 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         bindingGroup.bind();
@@ -528,7 +528,7 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
          int codigo;
-         codigo=Integer.parseInt(tf_codigoConsumo.getText());
+         int i;
          String valor;
          Date fecha1=new Date();
          String fecha2;
@@ -551,7 +551,15 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
                 return;
                 
               } */
-                   resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
+                if(tf_codigoConsumo.getText().length()==0){
+                     JOptionPane.showMessageDialog(null,"Seleccione un consumo", "Error",JOptionPane.ERROR_MESSAGE);
+                      return;
+                  }
+                 if(tf_factura.getText().length()!=0){
+                      JOptionPane.showMessageDialog(null,"Si elimina el consumo perderá los detalles de la factura", "Error",JOptionPane.INFORMATION_MESSAGE);
+                 }
+                  codigo=Integer.parseInt(tf_codigoConsumo.getText());
+                  resp= JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
                   if(resp==JOptionPane.YES_OPTION){
                         entityManager.getTransaction().begin();
                         ConsumoProSer ps=entityManager.find(ConsumoProSer.class,codigo);
@@ -559,13 +567,14 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
                         entityManager.remove(ps);
                         //registramos los datos necesarios para la auditoria
                         registrarAuditoria("Consumo P/S","Eliminacion",valor,"No hay modificaciones");
-                        actualizarStock(ps.getCodigoPS().getCodigoPS(),ps.getCantidad());
+                        if(ps.getNumFactura()==null){
+                             actualizarStock(ps.getCodigoPS().getCodigoPS(),ps.getCantidad());
+                        }
+                       
                         entityManager.getTransaction().commit();
-                        //entityManager.close();
                         JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
                          resetear();
                           //actualizo el master table
-                        list.clear();
                         list.remove(ps);
                         
                   }else{
@@ -750,8 +759,6 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
          }
     }//GEN-LAST:event_list_filtrosFocusLost
     private void inicializarConsumo(){
-        
-            if(cps.getNumFactura()==null){
                     tf_codigoConsumo.setText(Integer.toString(cps.getCodigoConsumo()));
                     tf_cantidad.setText(Integer.toString(cps.getCantidad()));
                     tf_fecha.setText(cps.getFecha());
@@ -761,11 +768,13 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
                     tf_total.setText(formateador(cps.getTotal()));
                     tf_cedula.setText(cps.getCodigoReserva().getCodigoCliente().getCedula());
                     tf_datosCliente.setText(cps.getCodigoReserva().getCodigoCliente().getNombre()+" "+cps.getCodigoReserva().getCodigoCliente().getApellido());
-                  //tf_factura.setText(Integer.toString(cps.getNumFactura().getNumFactura()));
-            }else{
-                     JOptionPane.showMessageDialog(null,"No puede eliminar un consumo facturado ", "Error",JOptionPane.ERROR_MESSAGE);
-                    return;
-            }     
+                    if(cps.getNumFactura()!=null){
+                        tf_factura.setText(Integer.toString(cps.getNumFactura().getNumFactura()));
+                    }else{
+                            tf_factura.setText(null);
+                    }
+                    
+              
     }
      private void obtenerConsumo(int fila) {
             query = entityManager.createNamedQuery("ConsumoProSer.findByCodigoConsumo");

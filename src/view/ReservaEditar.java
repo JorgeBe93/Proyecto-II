@@ -544,9 +544,9 @@ public class ReservaEditar extends javax.swing.JFrame {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${montoTotal}"));
         columnBinding.setColumnName("Monto Total");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${numPresupuesto}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${numPresupuesto.numPresupuesto}"));
         columnBinding.setColumnName("Presupuesto");
-        columnBinding.setColumnClass(bean.Presupuesto.class);
+        columnBinding.setColumnClass(Integer.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -606,7 +606,10 @@ public class ReservaEditar extends javax.swing.JFrame {
         String letras;
          DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
         java.util.Date fecha = new Date();
-        //JOptionPane.showConfirmDialog(null, fecha);
+          if(tf_codReserva.getText().length()==0){
+              JOptionPane.showMessageDialog(null,"Seleccione una reserva", "Error",JOptionPane.ERROR_MESSAGE);
+                 return;
+            }
         if ( auxIn.equals(jc_checkin.getDate())
                 && auxOut.equals(jc_checkout.getDate())
                  ){
@@ -616,7 +619,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                     && !tf_cantidadPersonas.getText().equals("")
                     && !tf_numeroHabitacion.getText().equals("")
                     && !tf_numeroHabitacion.getText().equals("")
-                    && !tf_cedulaCliente.getText().equals("") && !tf_codReserva.getText().equals(""))
+                    && !tf_cedulaCliente.getText().equals(""))
                 {
                     if(jc_checkin.getDate().before(jc_checkout.getDate())
                         && desformatear(tf_montoAbonado.getText()) <= desformatear(tf_montoTotal.getText())

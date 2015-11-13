@@ -8,9 +8,9 @@ package ViewAdmHotel;
 
 import bean.AuditoriaSistema;
 import bean.Cargo;
-import bean.Cliente;
 import java.awt.Image;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +27,7 @@ import view.LoginView;
 public class CargoCreate extends javax.swing.JFrame {
     private char ch;
     private int resp;
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
 
     /**
      * Creates new form ClienteCreate
@@ -82,6 +83,9 @@ public class CargoCreate extends javax.swing.JFrame {
             }
         });
         tf_sueldo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_sueldoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_sueldoKeyTyped(evt);
             }
@@ -112,6 +116,11 @@ public class CargoCreate extends javax.swing.JFrame {
         tf_nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_nombreActionPerformed(evt);
+            }
+        });
+        tf_nombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tf_nombreFocusLost(evt);
             }
         });
         tf_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -329,21 +338,20 @@ public class CargoCreate extends javax.swing.JFrame {
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         // TODO add your handling code here:
-       
+         query = entityManager.createNamedQuery( "Cargo.findByNombre");
+         query.setParameter("nombre",tf_nombre.getText().toLowerCase());
+         List<Cargo> cli=query.getResultList();
+         if(cli.size()>=1){
+             tf_nombre.setText(null);
+             tf_nombre.requestFocus();
+             return;
+          }
         if(tf_nombre.getText().length()==0
              || tf_actividad.getText().length()==0 
               || tf_fechaCreacion.getText().length()==0 || tf_sueldo.getText().length()==0  ){
-             JOptionPane.showMessageDialog(null,"No se permiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
-             return;    
+             JOptionPane.showMessageDialog(null,"No se permiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);   
         }else{
-            query = entityManager.createNamedQuery( "Cargo.findByNombre");
-            query.setParameter("nombre",tf_nombre.getText());
-                List<Cargo> cli=query.getResultList();
-                if(cli.size()>=1){
-                    JOptionPane.showMessageDialog(null,"El cargo ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
-                    tf_nombre.setText(null);
-                    return;
-                 }
+           
                resp=  JOptionPane.showConfirmDialog(null,"¿Desea crear el nuevo Cargo?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
                if (resp==JOptionPane.YES_OPTION){
                    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -356,7 +364,7 @@ public class CargoCreate extends javax.swing.JFrame {
                         System.out.println("Error fechas");
                     }
                     c.setNombre(tf_nombre.getText());
-                    c.setSueldo(Integer.parseInt(tf_sueldo.getText()));
+                    c.setSueldo(desformatear(tf_sueldo.getText()));
                     entityManager.persist(c);
                     entityManager.flush();
                     //registramos los datos necesarios para la auditoria
@@ -384,6 +392,35 @@ public class CargoCreate extends javax.swing.JFrame {
     private void tf_sueldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_sueldoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_sueldoActionPerformed
+
+    private void tf_nombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_nombreFocusLost
+        // TODO add your handling code here:
+        String valor;
+        int numero;
+        if(tf_nombre.getText().length()==0){
+            tf_nombre.requestFocus();
+            return;
+        }
+        query = entityManager.createNamedQuery( "Cargo.findByNombre");
+            query.setParameter("nombre",tf_nombre.getText().toLowerCase());
+                List<Cargo> cli=query.getResultList();
+                if(cli.size()>=1){
+                    JOptionPane.showMessageDialog(null,"El nombre cargo ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_nombre.setText(null);
+                    tf_nombre.requestFocus();
+                 }
+    }//GEN-LAST:event_tf_nombreFocusLost
+
+    private void tf_sueldoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_sueldoKeyReleased
+        // TODO add your handling code here:
+         String valor;
+        int numero;
+        if(tf_sueldo.getText().length()!=0){
+            valor=tf_sueldo.getText();
+            numero=(desformatear(valor));
+            tf_sueldo.setText(formateador(numero));
+        }
+    }//GEN-LAST:event_tf_sueldoKeyReleased
     private void resetear(){
         tf_nombre.setText(null);
         tf_sueldo.setText(null);
@@ -455,5 +492,16 @@ public class CargoCreate extends javax.swing.JFrame {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         Date fechaActual = new Date();
         tf_fechaCreacion.setText(formatoFecha.format(fechaActual));
+    }
+     private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+    private int desformatear(String num){
+        int numero;
+        num=num.replace(".", "");
+        numero=Integer.parseInt(num);
+        return numero;
     }
 }

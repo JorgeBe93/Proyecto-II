@@ -10,6 +10,7 @@ import bean.AuditoriaSistema;
 import bean.Cargo;
 import java.awt.Image;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,7 +31,7 @@ public class CargoEditar extends javax.swing.JFrame {
     private int fila;
     Date fecha=new Date();
     SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
     /**
      * Creates new form ClienteCreate
      */
@@ -96,6 +97,9 @@ public class CargoEditar extends javax.swing.JFrame {
             }
         });
         tf_sueldo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tf_sueldoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_sueldoKeyTyped(evt);
             }
@@ -127,6 +131,11 @@ public class CargoEditar extends javax.swing.JFrame {
         tf_nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tf_nombreActionPerformed(evt);
+            }
+        });
+        tf_nombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tf_nombreFocusLost(evt);
             }
         });
         tf_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -363,15 +372,15 @@ public class CargoEditar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(191, 191, 191)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(91, 91, 91)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(34, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -466,22 +475,24 @@ public class CargoEditar extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
-if(tf_nombre.getText().length()==0
+         if(tf_codigo.getText().length()==0){
+                JOptionPane.showMessageDialog(null,"Seleccione un cargo", "Advertencia",JOptionPane.ERROR_MESSAGE);
+                return;
+         }
+        query = entityManager.createNamedQuery( "Cargo.findByNombre");
+         query.setParameter("nombre",tf_nombre.getText().toLowerCase());
+         List<Cargo> cli=query.getResultList();
+         if(cli.size()>=1){
+             tf_nombre.setText(null);
+             tf_nombre.requestFocus();
+             return;
+          }
+        if(tf_nombre.getText().length()==0
              || tf_actividad.getText().length()==0 
               || tf_fechaCreacion.getText().length()==0 || tf_sueldo.getText().length()==0  ){
              JOptionPane.showMessageDialog(null,"No se permiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
              return;    
         }else{
-                query = entityManager.createNamedQuery( "Cargo.findByNombre");
-                query.setParameter("nombre",tf_nombre.getText().toLowerCase());
-                List<Cargo> cli=query.getResultList();
-                if(cli.size()!= 0){
-                    if(!cli.get(0).getNombre().equals(cargo.getNombre().toLowerCase())){
-                        JOptionPane.showMessageDialog(null,"El cargo ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
-                        tf_nombre.setText(cargo.getNombre());
-                        return;
-                    }
-                 }
                resp=  JOptionPane.showConfirmDialog(null,"¿Desea modificar el Cargo?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
                if (resp==JOptionPane.YES_OPTION){
                    String viejoValor = cargo.toString();
@@ -495,7 +506,7 @@ if(tf_nombre.getText().length()==0
                         System.out.println("Error fechas");
                     }
                     c.setNombre(tf_nombre.getText());
-                    c.setSueldo(Integer.parseInt(tf_sueldo.getText()));
+                    c.setSueldo(desformatear(tf_sueldo.getText()));
                     entityManager.merge(c);
                     entityManager.flush();
                     //registramos los datos necesarios para la auditoria
@@ -512,7 +523,7 @@ if(tf_nombre.getText().length()==0
                     as.setUsuario(LoginView.nombreUsuario);  
                     entityManager.persist(as);
                     entityManager.getTransaction().commit();
-                    JOptionPane.showMessageDialog(null,"Creación exitosa", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Modificación exitosa", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
                     list.clear();
                     list.add(c);
                     resetear();
@@ -541,13 +552,13 @@ if(tf_nombre.getText().length()==0
                 evt.consume();
             }
         }
-        /* else{
-            ch=evt.getKeyChar();
-            if(Character.isDigit(ch)){
-                getToolkit().beep();
-                evt.consume();
+         if (list_filtros.getSelectedItem()=="Nombre"){
+             ch=evt.getKeyChar();
+             if(Character.isDigit(ch)){
+                   getToolkit().beep();
+                    evt.consume();
             }
-        }*/
+         }
     }//GEN-LAST:event_tf_valorKeyTyped
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
@@ -603,9 +614,8 @@ if(tf_nombre.getText().length()==0
             //ver este
             else if (list_filtros.getSelectedItem()=="Fecha Creación"){
                 query=entityManager.createNativeQuery("SELECT * FROM cargo "
-                    + "WHERE fechaCreacion= STR_TO_DATE("
-                    +"'"+tf_valor.getText()+"'"
-                    +","+"'%d/%m/%Y' )", Cargo.class);
+                         + "WHERE STR_TO_DATE(fechaCreacion, '%Y-%m-%d')= "
+                    +"'"+tf_valor.getText()+"'", Cargo.class);
                 List<Cargo> r = query.getResultList();
                 if (r.isEmpty()){
                     JOptionPane.showMessageDialog(null, "Fecha inexistente","Error",JOptionPane.ERROR_MESSAGE );
@@ -638,6 +648,35 @@ if(tf_nombre.getText().length()==0
             tf_valor.setText(formatoFecha.format(fecha));   
          }
     }//GEN-LAST:event_list_filtrosFocusLost
+
+    private void tf_nombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_nombreFocusLost
+        // TODO add your handling code here:
+        String valor;
+        int numero;
+        if(tf_nombre.getText().length()==0){
+            tf_nombre.requestFocus();
+            return;
+        }
+        query = entityManager.createNamedQuery( "Cargo.findByNombre");
+        query.setParameter("nombre",tf_nombre.getText().toLowerCase());
+                List<Cargo> cli=query.getResultList();
+                if(cli.size()>=1){
+                    JOptionPane.showMessageDialog(null,"El nombre cargo ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_nombre.setText(null);
+                    tf_nombre.requestFocus();
+                 }
+    }//GEN-LAST:event_tf_nombreFocusLost
+
+    private void tf_sueldoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_sueldoKeyReleased
+        // TODO add your handling code here:
+        String valor;
+        int numero;
+        if(tf_sueldo.getText().length()!=0){
+            valor=tf_sueldo.getText();
+            numero=(desformatear(valor));
+            tf_sueldo.setText(formateador(numero));
+        }
+    }//GEN-LAST:event_tf_sueldoKeyReleased
          private void obtenerCargo(int fila) {
             query = entityManager.createNamedQuery("Cargo.findByCodigoCargo");
             query.setParameter("codigoCargo", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );
@@ -653,7 +692,7 @@ if(tf_nombre.getText().length()==0
             tf_codigo.setText(Integer.toString(cargo.getCodigoCargo()));
             tf_actividad.setText(cargo.getActividades());
             tf_nombre.setText(cargo.getNombre());
-            tf_sueldo.setText(Integer.toString(cargo.getSueldo()));
+            tf_sueldo.setText(formateador(cargo.getSueldo()));
             tf_fechaCreacion.setText(formatoFecha.format(cargo.getFechaCreacion()));
     }
   
@@ -703,6 +742,17 @@ if(tf_nombre.getText().length()==0
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         });
+    }
+     private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
+    private int desformatear(String num){
+        int numero;
+        num=num.replace(".", "");
+        numero=Integer.parseInt(num);
+        return numero;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

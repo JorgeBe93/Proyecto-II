@@ -539,7 +539,7 @@ private void generarFactLiquidarReserva(){
             entityManager.merge(c);
             entityManager.flush();
             despues=c.toString();
-            registrarAuditoria("Detalle de cobro","Modificación",antes,despues);
+            registrarAuditoria("Consumo P/S","Modificación",antes,despues);
            
         }
         

@@ -336,17 +336,17 @@ public class CategHabitEdit extends javax.swing.JFrame {
         String despues;
         int codigo;
         //verifica nuevamente si esta intentando cambiar por un nombre ya existente
-                        query=entityManager.createNamedQuery("CategHabitacion.findByNombre");
-                        query.setParameter("nombre", tf_nombre.getText().toLowerCase());
-                        List<CategHabitacion> ch= query.getResultList();
-                        if(ch.size()!=0){
-                            codigo=ch.get(0).getCodigoCategoria();
-                             if(Integer.parseInt(tf_codigo.getText())!=codigo){//pregunta si esta intentando cambiar por un nombre ya existente
-                                tf_nombre.setText(null);
-                                tf_nombre.requestFocus();
-                                return;
-                             }
-                        }
+         query=entityManager.createNamedQuery("CategHabitacion.findByNombre");
+         query.setParameter("nombre", tf_nombre.getText().toLowerCase());
+         List<CategHabitacion> ch= query.getResultList();
+         if(ch.size()!=0){
+                 codigo=ch.get(0).getCodigoCategoria();
+                 if(Integer.parseInt(tf_codigo.getText())!=codigo){//pregunta si esta intentando cambiar por un nombre ya existente
+                        tf_nombre.setText(null);
+                        tf_nombre.requestFocus();
+                        return;
+                  }
+          }
          if (tf_nombre.getText().length()==0 || tf_costo.getText().length()==0){
                 JOptionPane.showMessageDialog(null,"No se admiten campos con valores nulos", "Advertencia",JOptionPane.ERROR_MESSAGE);
                 return;

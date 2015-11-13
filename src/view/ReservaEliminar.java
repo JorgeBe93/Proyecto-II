@@ -580,14 +580,18 @@ public class ReservaEliminar extends javax.swing.JFrame {
     private void btn_elimnarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_elimnarActionPerformed
             String valor;
             int i;
+            int codigo;
             Date fecha1=new Date();
             String fecha2;
             DateFormat formato1=new SimpleDateFormat("yyyy-MM-dd");
             fecha2=formato1.format(fecha1);
-            int codigo=reserva.getCodigoReserva();
-            entityManager.getTransaction().begin();
+            if(tf_codigoReserva.getText().length()==0){
+              JOptionPane.showMessageDialog(null,"Seleccione una reserva", "Error",JOptionPane.ERROR_MESSAGE);
+                 return;
+            }
+            codigo=reserva.getCodigoReserva();
          //verificamos si el consumo corresponde a un reserva vigente que aun no ha sido cancelada
-            query=entityManager.createNativeQuery("SELECT * FROM  reserva r "
+          /*  query=entityManager.createNativeQuery("SELECT * FROM  reserva r "
                     + "WHERE (r.checkIn<="
                     +"'"+fecha2+"' "
                     +"AND r.checkOut>="
@@ -599,39 +603,42 @@ public class ReservaEliminar extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Esta reserva aún sigue vigente","Error",JOptionPane.ERROR_MESSAGE );
                 this.dispose();
                 return;
-            }
-            JOptionPane.showMessageDialog(null, "Podrían existir registros de factura y consumo para esta reserva"
-                    + " si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
-        resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
-        if(resp==JOptionPane.YES_OPTION){            
-            //eliminamos las facturas que dependen de dicha reserva
-                query=entityManager.createNativeQuery("SELECT * FROM factura_cobro WHERE "
+            }*/
+             query=entityManager.createNativeQuery("SELECT * FROM factura_cobro WHERE "
                         + "codigoReserva= "
                         + "'"+tf_codigoReserva.getText()+"'",FacturaCobro.class);
                 List<FacturaCobro> f=query.getResultList();
-                if(f.size()>=1){
-                    for(i=0;i<f.size();i++){
-                        valor=f.get(i).toString();
-                        entityManager.remove(f.get(i));
-                        registrarAuditoria("FacturaCobro",valor);
-                    }
-                    entityManager.flush();
-                }
-                //
-                //eliminamos los consumos  que dependen de dicha reserva
-                query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser WHERE "
+             query=entityManager.createNativeQuery("SELECT * FROM consumo_pro_ser WHERE "
                         + "codigoReserva= "
                         + "'"+tf_codigoReserva.getText()+"'",ConsumoProSer.class);
                 List<ConsumoProSer> c=query.getResultList();
-                if(c.size()>=1){
-                    for(i=0;i<c.size();i++){
-                        valor=c.get(i).toString();
-                        entityManager.remove(c.get(i));
-                        registrarAuditoria("Consumo P/S",valor);
-                    }
-                    entityManager.flush();
+                if(f.size()>=1 || c.size()>=1){
+                        JOptionPane.showMessageDialog(null, "Podrían existir registros de factura y consumo para esta reserva"
+                        + " si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
                 }
-                //
+            
+        resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
+        if(resp==JOptionPane.YES_OPTION){            
+            //eliminamos las facturas que dependen de dicha reserva
+                entityManager.getTransaction().begin();
+                     if(f.size()>=1){
+                          for(i=0;i<f.size();i++){
+                                valor=f.get(i).toString();
+                                entityManager.remove(f.get(i));
+                                registrarAuditoria("FacturaCobro",valor);
+                           }
+                           entityManager.flush();
+                     }
+                   
+                //eliminamos los consumos  que dependen de dicha reserva
+                     if( c.size()>=1){
+                         for(i=0;i<c.size();i++){
+                            valor=c.get(i).toString();
+                            entityManager.remove(c.get(i));
+                            registrarAuditoria("Consumo P/S",valor);
+                         }
+                         entityManager.flush();
+                     }
                 //eliminamos la reserva
             Reserva reservaFind=entityManager.find(Reserva.class, reserva.getCodigoReserva() );
             valor=reservaFind.toString();//guardamos el objeto antes de eliminar

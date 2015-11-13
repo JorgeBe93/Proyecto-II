@@ -329,7 +329,7 @@ WHERE
 				<text><![CDATA[Código Prod/Ser]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="3b54ae30-ef79-4298-954d-a06f61cad566" x="146" y="20" width="87" height="20"/>
+				<reportElement uuid="3b54ae30-ef79-4298-954d-a06f61cad566" x="146" y="20" width="65" height="20"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
@@ -351,7 +351,7 @@ WHERE
 				<text><![CDATA[10%]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c778cb89-85af-432b-b82b-5e11e9743be6" x="289" y="20" width="100" height="20"/>
+				<reportElement uuid="c778cb89-85af-432b-b82b-5e11e9743be6" x="265" y="20" width="71" height="20"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
@@ -376,12 +376,12 @@ WHERE
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="91e705bf-efc5-4987-b826-b39afed672e1" x="147" y="0" width="100" height="20"/>
+				<reportElement uuid="91e705bf-efc5-4987-b826-b39afed672e1" x="156" y="0" width="42" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{consumo_pro_ser_cantidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e9285277-1479-40d7-9d8e-9b4a75acf47f" x="289" y="0" width="100" height="20"/>
+				<reportElement uuid="e9285277-1479-40d7-9d8e-9b4a75acf47f" x="237" y="0" width="208" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{producto_servicio_nombre}]]></textFieldExpression>
 			</textField>

@@ -11,6 +11,7 @@ import bean.Cargo;
 import bean.Empleado;
 import java.awt.Image;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,7 @@ public class CargoEliminar extends javax.swing.JFrame {
     Date fecha=new Date();
     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+    DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
 
     /**
      * Creates new form ClienteCreate
@@ -482,17 +484,22 @@ public class CargoEliminar extends javax.swing.JFrame {
         // TODO add your handling code here:
         int i=0;
         String valor;
-                //consultar primero
-               JOptionPane.showMessageDialog(null, "Existen empleados que ocupan este cargo"
-                    + "si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
+        if(tf_codigo.getText().length()==0){
+                JOptionPane.showMessageDialog(null,"Seleccione un cargo", "Advertencia",JOptionPane.ERROR_MESSAGE);
+                return;
+         }
+         query=entityManager.createNativeQuery("SELECT * FROM empleado WHERE "
+                            + "codigoCargo= "
+                            + "'"+tf_codigo.getText()+"'",Empleado.class);
+          List<Empleado> e=query.getResultList();
+         if(e.size()>=1){
+             JOptionPane.showMessageDialog(null, "Existen empleados que ocupan este cargo"
+             + "si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
+         }
                resp=  JOptionPane.showConfirmDialog(null,"¿Desea eliminar el Cargo?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
                if (resp==JOptionPane.YES_OPTION){
                     entityManager.getTransaction().begin();
                     //eliminamos los empleados que ocupan el cargo
-                    query=entityManager.createNativeQuery("SELECT * FROM empleado WHERE "
-                            + "codigoCargo= "
-                            + "'"+tf_codigo.getText()+"'",Empleado.class);
-                    List<Empleado> e=query.getResultList();
                     if(e.size()>=1){
                         for(i=0;i<e.size();i++){
                             valor=e.get(i).toString();
@@ -510,7 +517,6 @@ public class CargoEliminar extends javax.swing.JFrame {
                     entityManager.getTransaction().commit();
                    // entityManager.close();
                     JOptionPane.showMessageDialog(null,"Eliminación exitosa", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
-                    list.clear();
                     list.remove(cargoFind);
                     resetear();
                }else{
@@ -549,13 +555,13 @@ public class CargoEliminar extends javax.swing.JFrame {
                 evt.consume();
             }
         }
-        /* else{
-            ch=evt.getKeyChar();
-            if(Character.isDigit(ch)){
-                getToolkit().beep();
-                evt.consume();
+         if (list_filtros.getSelectedItem()=="Nombre"){
+             ch=evt.getKeyChar();
+             if(Character.isDigit(ch)){
+                   getToolkit().beep();
+                    evt.consume();
             }
-        }*/
+         }
     }//GEN-LAST:event_tf_valorKeyTyped
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
@@ -611,9 +617,8 @@ public class CargoEliminar extends javax.swing.JFrame {
             //ver este
             else if (list_filtros.getSelectedItem()=="Fecha Creación"){
                 query=entityManager.createNativeQuery("SELECT * FROM cargo "
-                    + "WHERE fechaCreacion= STR_TO_DATE("
-                    +"'"+tf_valor.getText()+"'"
-                    +","+"'%d/%m/%Y' )", Cargo.class);
+                         + "WHERE STR_TO_DATE(fechaCreacion, '%Y-%m-%d')= "
+                    +"'"+tf_valor.getText()+"'", Cargo.class);
                 List<Cargo> r = query.getResultList();
                 if (r.isEmpty()){
                     JOptionPane.showMessageDialog(null, "Fecha inexistente","Error",JOptionPane.ERROR_MESSAGE );
@@ -648,7 +653,7 @@ public class CargoEliminar extends javax.swing.JFrame {
             tf_codigo.setText(Integer.toString(cargo.getCodigoCargo()));
             tf_actividad.setText(cargo.getActividades());
             tf_nombre.setText(cargo.getNombre());
-            tf_sueldo.setText(Integer.toString(cargo.getSueldo()));
+            tf_sueldo.setText(formateador(cargo.getSueldo()));
             tf_fechaCreacion.setText(formatoFecha.format(cargo.getFechaCreacion()));
     }
   
@@ -710,7 +715,11 @@ public class CargoEliminar extends javax.swing.JFrame {
             }
         });
     }
-
+     private String formateador(int num){
+        String formateado;
+        formateado=formatea.format(num);
+        return formateado;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar;
