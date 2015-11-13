@@ -6,13 +6,10 @@
 
 package bean;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +23,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 /**
  *
@@ -43,18 +39,9 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Empleado.findByEmail", query = "SELECT e FROM Empleado e WHERE e.email = :email"),
     @NamedQuery(name = "Empleado.findByDireccion", query = "SELECT e FROM Empleado e WHERE e.direccion = :direccion"),
     @NamedQuery(name = "Empleado.findByTelefono", query = "SELECT e FROM Empleado e WHERE e.telefono = :telefono"),
-    @NamedQuery(name = "Empleado.findByFechaNacimiento", query = "SELECT e FROM Empleado e WHERE e.fechaNacimiento = :fechaNacimiento")})
+    @NamedQuery(name = "Empleado.findByFechaNacimiento", query = "SELECT e FROM Empleado e WHERE e.fechaNacimiento = :fechaNacimiento"),
+    @NamedQuery(name = "Empleado.findByFechaIngreso", query = "SELECT e FROM Empleado e WHERE e.fechaIngreso = :fechaIngreso")})
 public class Empleado implements Serializable {
-    @Transient
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEmpleado")
-    private Collection<PlanillaPagoSueldo> planillaPagoSueldoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEmpleado")
-    private Collection<Eventos> eventosCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEmpleado")
-    private Collection<Asistencia> asistenciaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEmpleado")
-    private Collection<SeguimientoActividad> seguimientoActividadCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -83,6 +70,9 @@ public class Empleado implements Serializable {
     @Column(name = "fechaNacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
+    @Basic(optional = false)
+    @Column(name = "fechaIngreso")
+    private String fechaIngreso;
     @OneToMany(mappedBy = "codigoJefe")
     private Collection<Empleado> empleadoCollection;
     @JoinColumn(name = "codigoJefe", referencedColumnName = "codigoEmpleado")
@@ -99,7 +89,7 @@ public class Empleado implements Serializable {
         this.codigoEmpleado = codigoEmpleado;
     }
 
-    public Empleado(Integer codigoEmpleado, String nombre, String apellido, String cedula, String email, String direccion, int telefono, Date fechaNacimiento) {
+    public Empleado(Integer codigoEmpleado, String nombre, String apellido, String cedula, String email, String direccion, int telefono, Date fechaNacimiento, String fechaIngreso) {
         this.codigoEmpleado = codigoEmpleado;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -108,6 +98,7 @@ public class Empleado implements Serializable {
         this.direccion = direccion;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
+        this.fechaIngreso = fechaIngreso;
     }
 
     public Integer getCodigoEmpleado() {
@@ -115,9 +106,7 @@ public class Empleado implements Serializable {
     }
 
     public void setCodigoEmpleado(Integer codigoEmpleado) {
-        Integer oldCodigoEmpleado = this.codigoEmpleado;
         this.codigoEmpleado = codigoEmpleado;
-        changeSupport.firePropertyChange("codigoEmpleado", oldCodigoEmpleado, codigoEmpleado);
     }
 
     public String getNombre() {
@@ -125,9 +114,7 @@ public class Empleado implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        String oldNombre = this.nombre;
         this.nombre = nombre;
-        changeSupport.firePropertyChange("nombre", oldNombre, nombre);
     }
 
     public String getApellido() {
@@ -135,9 +122,7 @@ public class Empleado implements Serializable {
     }
 
     public void setApellido(String apellido) {
-        String oldApellido = this.apellido;
         this.apellido = apellido;
-        changeSupport.firePropertyChange("apellido", oldApellido, apellido);
     }
 
     public String getCedula() {
@@ -145,9 +130,7 @@ public class Empleado implements Serializable {
     }
 
     public void setCedula(String cedula) {
-        String oldCedula = this.cedula;
         this.cedula = cedula;
-        changeSupport.firePropertyChange("cedula", oldCedula, cedula);
     }
 
     public String getEmail() {
@@ -155,9 +138,7 @@ public class Empleado implements Serializable {
     }
 
     public void setEmail(String email) {
-        String oldEmail = this.email;
         this.email = email;
-        changeSupport.firePropertyChange("email", oldEmail, email);
     }
 
     public String getDireccion() {
@@ -165,9 +146,7 @@ public class Empleado implements Serializable {
     }
 
     public void setDireccion(String direccion) {
-        String oldDireccion = this.direccion;
         this.direccion = direccion;
-        changeSupport.firePropertyChange("direccion", oldDireccion, direccion);
     }
 
     public int getTelefono() {
@@ -175,9 +154,7 @@ public class Empleado implements Serializable {
     }
 
     public void setTelefono(int telefono) {
-        int oldTelefono = this.telefono;
         this.telefono = telefono;
-        changeSupport.firePropertyChange("telefono", oldTelefono, telefono);
     }
 
     public Date getFechaNacimiento() {
@@ -185,9 +162,15 @@ public class Empleado implements Serializable {
     }
 
     public void setFechaNacimiento(Date fechaNacimiento) {
-        Date oldFechaNacimiento = this.fechaNacimiento;
         this.fechaNacimiento = fechaNacimiento;
-        changeSupport.firePropertyChange("fechaNacimiento", oldFechaNacimiento, fechaNacimiento);
+    }
+
+    public String getFechaIngreso() {
+        return fechaIngreso;
+    }
+
+    public void setFechaIngreso(String fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
     }
 
     public Collection<Empleado> getEmpleadoCollection() {
@@ -203,9 +186,7 @@ public class Empleado implements Serializable {
     }
 
     public void setCodigoJefe(Empleado codigoJefe) {
-        Empleado oldCodigoJefe = this.codigoJefe;
         this.codigoJefe = codigoJefe;
-        changeSupport.firePropertyChange("codigoJefe", oldCodigoJefe, codigoJefe);
     }
 
     public Cargo getCodigoCargo() {
@@ -213,9 +194,7 @@ public class Empleado implements Serializable {
     }
 
     public void setCodigoCargo(Cargo codigoCargo) {
-        Cargo oldCodigoCargo = this.codigoCargo;
         this.codigoCargo = codigoCargo;
-        changeSupport.firePropertyChange("codigoCargo", oldCodigoCargo, codigoCargo);
     }
 
     @Override
@@ -238,54 +217,11 @@ public class Empleado implements Serializable {
         return true;
     }
 
-    /* @Override
-    public String toString() {
-    return "bean.Empleado[ codigoEmpleado=" + codigoEmpleado + " ]";
-    }*/
     @Override
     public String toString() {
-        return  "codigoEmpleado=" + codigoEmpleado + ", nombre=" + nombre + ", apellido=" + apellido + ", cedula=" + cedula + ", email=" + email + ", direccion=" + direccion + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", codigoJefe=" + codigoJefe + ", codigoCargo=" + codigoCargo;
-    }
-    
-
-    public Collection<SeguimientoActividad> getSeguimientoActividadCollection() {
-        return seguimientoActividadCollection;
+        return "codigoEmpleado=" + codigoEmpleado + ", nombre=" + nombre + ", apellido=" + apellido + ", cedula=" + cedula + ", email=" + email + ", direccion=" + direccion + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", fechaIngreso=" + fechaIngreso + ", codigoJefe=" + codigoJefe + ", codigoCargo=" + codigoCargo;
     }
 
-    public void setSeguimientoActividadCollection(Collection<SeguimientoActividad> seguimientoActividadCollection) {
-        this.seguimientoActividadCollection = seguimientoActividadCollection;
-    }
-
-    public Collection<Asistencia> getAsistenciaCollection() {
-        return asistenciaCollection;
-    }
-
-    public void setAsistenciaCollection(Collection<Asistencia> asistenciaCollection) {
-        this.asistenciaCollection = asistenciaCollection;
-    }
-
-    public Collection<Eventos> getEventosCollection() {
-        return eventosCollection;
-    }
-
-    public void setEventosCollection(Collection<Eventos> eventosCollection) {
-        this.eventosCollection = eventosCollection;
-    }
-
-    public Collection<PlanillaPagoSueldo> getPlanillaPagoSueldoCollection() {
-        return planillaPagoSueldoCollection;
-    }
-
-    public void setPlanillaPagoSueldoCollection(Collection<PlanillaPagoSueldo> planillaPagoSueldoCollection) {
-        this.planillaPagoSueldoCollection = planillaPagoSueldoCollection;
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(listener);
-    }
+   
     
 }

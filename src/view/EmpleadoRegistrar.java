@@ -28,6 +28,9 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
     private int fila;
     private String datos[]=new String[3];
     Empleado empleado = new Empleado();
+    Date fecha=new Date();
+    DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
     /**
      * Creates new form EmpleadoRegistrar
      */
@@ -94,7 +97,7 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
         panel_registrarEmpleado.setBackground(new java.awt.Color(0, 153, 255));
         panel_registrarEmpleado.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        lbl_registrarEmpleado.setFont(new java.awt.Font("Corbel", 1, 25)); // NOI18N
+        lbl_registrarEmpleado.setFont(new java.awt.Font("Corbel", 1, 28)); // NOI18N
         lbl_registrarEmpleado.setForeground(new java.awt.Color(255, 255, 255));
         lbl_registrarEmpleado.setText("Registrar Empleado");
 
@@ -102,17 +105,17 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
         panel_registrarEmpleado.setLayout(panel_registrarEmpleadoLayout);
         panel_registrarEmpleadoLayout.setHorizontalGroup(
             panel_registrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_registrarEmpleadoLayout.createSequentialGroup()
-                .addGap(192, 192, 192)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_registrarEmpleadoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_registrarEmpleado)
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addGap(170, 170, 170))
         );
         panel_registrarEmpleadoLayout.setVerticalGroup(
             panel_registrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_registrarEmpleadoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panel_registrarEmpleadoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lbl_registrarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -408,9 +411,9 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                 .addComponent(lbl_valor)
                 .addGap(18, 18, 18)
                 .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btn_buscar)
-                .addGap(53, 53, 53))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -471,21 +474,20 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 936, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 838, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(57, 57, 57))))
+                        .addGap(71, 71, 71)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 838, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(332, 332, 332)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(192, 192, 192)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panel_registrarEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(167, 167, 167)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(panel_registrarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(19, 19, 19)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 936, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(324, 324, 324)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -495,7 +497,7 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -510,13 +512,17 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
         // TODO add your handling code here:
+        if (obtenerEmpleado(tf_cedula.getText()) != null){
+            tf_cedula.setText("");
+            tf_cedula.requestFocus();
+            return;
+        }
         if ( !tf_nombre.getText().equals("")
                 && !tf_apellido.getText().equals("")
                 && !tf_cedula.getText().equals("")
-                && !tf_email.getText().equals("")
                 && !tf_direccion.getText().equals("")
                 && !tf_telefono.getText().equals("")
-                && !jc_fechaNacimiento.getDate().toString().equals("")
+                && jc_fechaNacimiento.getDate()!=null
                 && !cb_cargo.getSelectedItem().equals(null)){
             int respuesta = JOptionPane.showConfirmDialog(null, "¿Confirma el registro?");
             if(respuesta == JOptionPane.YES_OPTION){
@@ -525,18 +531,27 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                 empleado.setNombre(tf_nombre.getText());
                 empleado.setApellido(tf_apellido.getText());
                 empleado.setCedula(tf_cedula.getText());
-                empleado.setEmail(tf_email.getText());
                 empleado.setDireccion(tf_direccion.getText());
                 empleado.setTelefono(Integer.parseInt(tf_telefono.getText()));
                 empleado.setFechaNacimiento(jc_fechaNacimiento.getDate());
                 empleado.setCodigoCargo(cargo);
+                empleado.setFechaIngreso(form.format(fecha));
+                 System.out.println(" jefe "+ tf_cedJefe.getText());
                 if (!tf_cedJefe.getText().equals("")){
                     empleado.setCodigoJefe(obtenerEmpleado(tf_cedJefe.getText()));
+                    System.out.println("Empleado jefe "+ empleado.getCodigoJefe());
                 }else{
-                    empleado.setCodigoEmpleado(null);
+                    empleado.setCodigoJefe(null);
                 }
+                if (!tf_email.getText().equals("")){
+                    empleado.setEmail(tf_email.getText());
+                }else{
+                    empleado.setEmail(null);
+                }
+               
                 entityManager.persist(empleado);
                 entityManager.flush();
+                 System.out.println("Objeto "+ empleado.toString());
 
                 //auditoria
                 AuditoriaSistema as=new AuditoriaSistema();
@@ -545,8 +560,6 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                 as.setAntes(empleado.toString());
                 as.setDespues("No hay cambios");
                 //trabajamos con la fecha
-                Date fecha=new Date();
-                DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 as.setFechaHora(formato.format(fecha));
                 //as.setUsuario(LoginView.nombreUsuario);  
                 as.setUsuario("Vladimir");
@@ -557,7 +570,10 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                  resetear();
                  list.add(empleado);
                 //enviar al correo del empleado su codigo de empleado
-                enviarDatos();
+                 if(empleado.getEmail()!=null){
+                      enviarDatos();
+                 }
+               
             }else {
                 this.dispose();
             }
@@ -645,7 +661,7 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
 
     private void tf_telefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_telefonoKeyTyped
         // TODO add your handling code here:
-        int limite=11;
+        int limite=10;
         if(tf_telefono.getText().length()==limite){
             getToolkit().beep();
             evt.consume(); //se le ignora
@@ -665,7 +681,7 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
     private void tf_cedulaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_cedulaFocusLost
         // TODO add your handling code here:
         if (obtenerEmpleado(tf_cedula.getText()) != null){
-            JOptionPane.showMessageDialog(null, "¡El empleado ya existe!");
+            JOptionPane.showMessageDialog(null, "La cédula ya está registrada","Error",JOptionPane.ERROR_MESSAGE );
             tf_cedula.setText("");
             tf_cedula.requestFocus();
         }
@@ -680,14 +696,20 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
         // TODO add your handling code here:
         char ch;
         if (list_filtros.getSelectedItem()=="Jefe"
-            || list_filtros.getSelectedItem()=="Empleado"
-            || list_filtros.getSelectedItem()=="Cedula"
-        ){
-            ch=evt.getKeyChar();
-            if(!Character.isDigit(ch)){
-                getToolkit().beep();
-                evt.consume();
-            }
+            || list_filtros.getSelectedItem()=="Empleado" ){
+                ch=evt.getKeyChar();
+                if(!Character.isDigit(ch)){
+                    getToolkit().beep();
+                    evt.consume();
+                }
+        }
+        if (list_filtros.getSelectedItem()=="Nombre"
+            || list_filtros.getSelectedItem()=="Apellido" ){
+                ch=evt.getKeyChar();
+                if(Character.isDigit(ch)){
+                    getToolkit().beep();
+                    evt.consume();
+                }
         }
     }//GEN-LAST:event_tf_valorKeyTyped
 
@@ -756,7 +778,7 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                     +tf_valor.getText() + "%'", Empleado.class);
                 List<Empleado> a=query.getResultList();
                 if(a.isEmpty()){
-                    JOptionPane.showMessageDialog(null,"No se han encontrado registros para la fecha", "Error",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"No se han encontrado registros para el cargo", "Error",JOptionPane.ERROR_MESSAGE);
                     tf_valor.setText(null);
                     return;
                 }
@@ -774,7 +796,7 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                     +tf_valor.getText() + "%'", Empleado.class);
                 List<Empleado> a=query.getResultList();
                 if(a.isEmpty()){
-                    JOptionPane.showMessageDialog(null,"Cedula Inexistente", "Error",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Cedulade jefe inexistente", "Error",JOptionPane.ERROR_MESSAGE);
                     tf_valor.setText(null);
                     return;
                 }
@@ -808,12 +830,18 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_cedJefeFocusLost
     private void enviarDatos(){
         boolean resultado;
-        datos[0]=empleado.getEmail();
+        String jefe;
+        if(empleado.getCodigoJefe()==null){
+            jefe=" ";
+        }else{
+            jefe=empleado.getCodigoJefe().getNombre()+" "+empleado.getCodigoJefe().getApellido();
+        }
+       datos[0]=empleado.getEmail();
        datos[1]="Código de  Empleado";
        datos[2]=" BIENVENIDO AL HOTEL SANTA MARÍA"+"\n "
                +"Usted es el empleado n°: "+empleado.getCodigoEmpleado()+"\n " 
                +"Ocupa el Cargo de: "+" "+empleado.getCodigoCargo().getNombre()+"\n"
-               +"Su jefe es : "+" "+empleado.getCodigoJefe().getNombre()+" "+empleado.getCodigoJefe().getApellido()+"\n"
+               +"Su jefe es : "+jefe+"\n"
                +"Este código es confidencial y deberá utilizarlo para marcar su asistencia al trabajo";
         Correo c=new Correo();
        resultado=c.enviarCorreo(datos);
@@ -827,7 +855,6 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
         tf_email.setText(null);
         tf_telefono.setText(null);
         jc_fechaNacimiento.setDate(null);
-        cb_cargo.setSelectedItem(null);
         tf_cedJefe.setText(null);
         tf_nomApe.setText(null);
     }
@@ -879,7 +906,7 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                 frame.setIconImage(icon);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         });
     }

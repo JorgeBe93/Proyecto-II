@@ -6,9 +6,11 @@
 
 package view;
 
-import ViewAdmHotel.MenuAdminHotel;
 import bean.Empleado;
 import java.awt.Image;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,6 +26,8 @@ import javax.swing.JOptionPane;
  */
 public class EmpleadoBuscar extends javax.swing.JFrame {
     private int fila;
+    Date fecha= new Date(); 
+    DateFormat formato=new SimpleDateFormat("dd-MM-yyyy");
 
     /**
      * Creates new form EmpleadoBuscar
@@ -55,6 +59,7 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
         lbl_filtro = new javax.swing.JLabel();
         list_filtros = new javax.swing.JComboBox();
         btn_buscar = new javax.swing.JButton();
+        btn_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +96,9 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoJefe.cedula}"));
         columnBinding.setColumnName("Jefe");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaIngreso}"));
+        columnBinding.setColumnName("Ingreso");
+        columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -118,10 +126,10 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
         panel_BuscarRol.setLayout(panel_BuscarRolLayout);
         panel_BuscarRolLayout.setHorizontalGroup(
             panel_BuscarRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_BuscarRolLayout.createSequentialGroup()
-                .addGap(271, 271, 271)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_BuscarRolLayout.createSequentialGroup()
+                .addContainerGap(180, Short.MAX_VALUE)
                 .addComponent(lbl_BuscarRol)
-                .addContainerGap(282, Short.MAX_VALUE))
+                .addGap(216, 216, 216))
         );
         panel_BuscarRolLayout.setVerticalGroup(
             panel_BuscarRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,10 +155,13 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
         lbl_filtro.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         lbl_filtro.setText("Buscar por:");
 
-        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Empleado", "Cedula", "Nombre", "Apellido", "Cargo", "Jefe" }));
+        list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Empleado", "Cedula", "Nombre", "Apellido", "Cargo", "Jefe", " " }));
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusLost(evt);
             }
         });
 
@@ -176,13 +187,13 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
                 .addComponent(lbl_filtro)
                 .addGap(18, 18, 18)
                 .addComponent(list_filtros, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78)
+                .addGap(52, 52, 52)
                 .addComponent(lbl_valor)
                 .addGap(18, 18, 18)
                 .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addGap(46, 46, 46)
                 .addComponent(btn_buscar)
-                .addGap(53, 53, 53))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,32 +208,46 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete.png"))); // NOI18N
+        btn_cancelar.setText("Cancelar");
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btn_cancelar)
+                .addGap(387, 387, 387))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1)
-                            .addComponent(panel_BuscarRol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(139, 139, 139)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addGap(55, 55, 55)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 793, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(btn_cancelar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -234,14 +259,20 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
         // TODO add your handling code here:
         char ch;
         if (list_filtros.getSelectedItem()=="Jefe" 
-                || list_filtros.getSelectedItem()=="Empleado"
-                || list_filtros.getSelectedItem()=="Cedula"
-                ){
+                || list_filtros.getSelectedItem()=="Empleado"){
             ch=evt.getKeyChar();
             if(!Character.isDigit(ch)){
                 getToolkit().beep();
                 evt.consume();
             }
+        }
+        if (list_filtros.getSelectedItem()=="Nombre"
+            || list_filtros.getSelectedItem()=="Apellido" ){
+                ch=evt.getKeyChar();
+                if(Character.isDigit(ch)){
+                    getToolkit().beep();
+                    evt.consume();
+                }
         }
 
     }//GEN-LAST:event_tf_valorKeyTyped
@@ -355,6 +386,16 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
 
     }//GEN-LAST:event_list_filtrosFocusGained
 
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    private void list_filtrosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusLost
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_list_filtrosFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -398,6 +439,7 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_cancelar;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

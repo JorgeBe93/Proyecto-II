@@ -82,6 +82,8 @@ public class EmpleadoEditar extends javax.swing.JFrame {
         lbl_codigo = new javax.swing.JLabel();
         tf_codigo = new javax.swing.JTextField();
         tf_jefeNom = new javax.swing.JTextField();
+        lbl_ingreso = new javax.swing.JLabel();
+        tf_ingreso = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btn_modificar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
@@ -101,7 +103,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
         panel_registrarEmpleado.setBackground(new java.awt.Color(0, 153, 255));
         panel_registrarEmpleado.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        lbl_registrarEmpleado.setFont(new java.awt.Font("Corbel", 1, 25)); // NOI18N
+        lbl_registrarEmpleado.setFont(new java.awt.Font("Corbel", 1, 28)); // NOI18N
         lbl_registrarEmpleado.setForeground(new java.awt.Color(255, 255, 255));
         lbl_registrarEmpleado.setText("Modificar Empleado");
 
@@ -239,6 +241,14 @@ public class EmpleadoEditar extends javax.swing.JFrame {
         tf_jefeNom.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tf_jefeNom.setForeground(new java.awt.Color(255, 255, 255));
 
+        lbl_ingreso.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        lbl_ingreso.setText("Fecha Ingreso:");
+
+        tf_ingreso.setEditable(false);
+        tf_ingreso.setBackground(new java.awt.Color(0, 153, 255));
+        tf_ingreso.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_ingreso.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -254,29 +264,35 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tf_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(24, 24, 24)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(103, 103, 103)
-                                .addComponent(jLabel7)
+                                .addComponent(tf_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jc_fechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel6))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(tf_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jc_fechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lbl_ingreso)))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(tf_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cb_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(268, 268, 268))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
+                        .addComponent(cb_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(tf_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -330,13 +346,16 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lbl_codigo)
                                     .addComponent(tf_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jc_fechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addComponent(jc_fechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
-                        .addComponent(cb_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cb_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbl_ingreso)
+                        .addComponent(tf_ingreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -350,7 +369,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
-        btn_modificar.setText("Modificar");
+        btn_modificar.setText("Guardar");
         btn_modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_modificarActionPerformed(evt);
@@ -370,9 +389,9 @@ public class EmpleadoEditar extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(24, 24, 24)
                 .addComponent(btn_modificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(btn_cancelar)
                 .addGap(24, 24, 24))
         );
@@ -465,6 +484,9 @@ public class EmpleadoEditar extends javax.swing.JFrame {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${apellido}"));
         columnBinding.setColumnName("Apellido");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaIngreso}"));
+        columnBinding.setColumnName("Ingreso");
+        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCargo.nombre}"));
         columnBinding.setColumnName("Cargo");
         columnBinding.setColumnClass(String.class);
@@ -488,7 +510,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
         if (masterTable.getColumnModel().getColumnCount() > 0) {
             masterTable.getColumnModel().getColumn(0).setPreferredWidth(40);
             masterTable.getColumnModel().getColumn(1).setPreferredWidth(40);
-            masterTable.getColumnModel().getColumn(7).setPreferredWidth(40);
+            masterTable.getColumnModel().getColumn(8).setPreferredWidth(40);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -498,7 +520,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 927, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1))
                 .addGap(24, 24, 24))
             .addGroup(layout.createSequentialGroup()
@@ -509,7 +531,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(panel_registrarEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(335, 335, 335)
+                        .addGap(348, 348, 348)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -520,9 +542,9 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                 .addComponent(panel_registrarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -536,13 +558,22 @@ public class EmpleadoEditar extends javax.swing.JFrame {
 
     private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
         // TODO add your handling code here:
+        if(tf_codigo.getText().length()==0){
+              JOptionPane.showMessageDialog(null, "Seleccione un empleado","Error",JOptionPane.ERROR_MESSAGE );
+        }
+        Empleado emple = obtenerEmpleado(tf_cedula.getText());
+        if ( emple != null
+                && !emple.getCedula().equals(empleado.getCedula())){
+            tf_cedula.setText(empleado.getCedula());
+            tf_cedula.requestFocus();
+            return;
+        }
         if ( !tf_nombre.getText().equals("")
                 && !tf_apellido.getText().equals("")
                 && !tf_cedula.getText().equals("")
-                && !tf_email.getText().equals("")
                 && !tf_direccion.getText().equals("")
                 && !tf_telefono.getText().equals("")
-                && !jc_fechaNacimiento.getDate().toString().equals("")
+                && jc_fechaNacimiento.getDate()!=null
                  && !cb_cargo.getSelectedItem().equals(null)){
             int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea Confirmar los cambios?");
             if(respuesta == JOptionPane.YES_OPTION){
@@ -553,10 +584,10 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                 empleadoLocal.setNombre(tf_nombre.getText());
                 empleadoLocal.setApellido(tf_apellido.getText());
                 empleadoLocal.setCedula(tf_cedula.getText());
-                empleadoLocal.setEmail(tf_email.getText());
                 empleadoLocal.setDireccion(tf_direccion.getText());
                 empleadoLocal.setTelefono(Integer.parseInt(tf_telefono.getText()));
                 empleadoLocal.setFechaNacimiento(jc_fechaNacimiento.getDate());
+                empleadoLocal.setFechaIngreso(tf_ingreso.getText());
                 empleadoLocal.setCodigoCargo(cargo);
                 System.out.println(empleado.getCodigoEmpleado() +
                         "-->"+empleadoLocal.getCodigoEmpleado());
@@ -564,6 +595,11 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                     empleadoLocal.setCodigoJefe(obtenerEmpleado(tf_jefe.getText()));
                 }else{
                     empleadoLocal.setCodigoJefe(null);
+                }
+                 if (!tf_email.getText().equals("")){
+                    empleadoLocal.setEmail(tf_email.getText());
+                }else{
+                    empleadoLocal.setEmail(null);
                 }
                 entityManager.merge(empleadoLocal);
                 entityManager.flush();
@@ -672,7 +708,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
 
     private void tf_telefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_telefonoKeyTyped
         // TODO add your handling code here:
-        int limite=11;
+        int limite=10;
         if(tf_telefono.getText().length()==limite){
             getToolkit().beep();
             evt.consume(); //se le ignora
@@ -694,7 +730,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
         Empleado emple = obtenerEmpleado(tf_cedula.getText());
         if ( emple != null
                 && !emple.getCedula().equals(empleado.getCedula())){
-            JOptionPane.showMessageDialog(null, "¡El empleado ya existe!");
+            JOptionPane.showMessageDialog(null, "La cédula ya está registrada","Error",JOptionPane.ERROR_MESSAGE );
             tf_cedula.setText(empleado.getCedula());
             tf_cedula.requestFocus();
         }
@@ -709,14 +745,20 @@ public class EmpleadoEditar extends javax.swing.JFrame {
         // TODO add your handling code here:
         char ch;
         if (list_filtros.getSelectedItem()=="Jefe"
-            || list_filtros.getSelectedItem()=="Empleado"
-            || list_filtros.getSelectedItem()=="Cedula"
-        ){
+            || list_filtros.getSelectedItem()=="Empleado"){
             ch=evt.getKeyChar();
             if(!Character.isDigit(ch)){
                 getToolkit().beep();
                 evt.consume();
             }
+        }
+         if (list_filtros.getSelectedItem()=="Nombre"
+            || list_filtros.getSelectedItem()=="Apellido" ){
+                ch=evt.getKeyChar();
+                if(Character.isDigit(ch)){
+                    getToolkit().beep();
+                    evt.consume();
+                }
         }
     }//GEN-LAST:event_tf_valorKeyTyped
 
@@ -885,7 +927,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                 frame.setIconImage(icon);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         });
     }
@@ -915,6 +957,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser jc_fechaNacimiento;
     private javax.swing.JLabel lbl_codigo;
     private javax.swing.JLabel lbl_filtro;
+    private javax.swing.JLabel lbl_ingreso;
     private javax.swing.JLabel lbl_jefeNom;
     private javax.swing.JLabel lbl_registrarEmpleado;
     private javax.swing.JLabel lbl_valor;
@@ -928,6 +971,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
     private javax.swing.JTextField tf_codigo;
     private javax.swing.JTextField tf_direccion;
     private javax.swing.JTextField tf_email;
+    private javax.swing.JTextField tf_ingreso;
     private javax.swing.JTextField tf_jefe;
     private javax.swing.JTextField tf_jefeNom;
     private javax.swing.JTextField tf_nombre;
@@ -973,6 +1017,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
         }
         tf_nombre.setText(empleado.getNombre());
         tf_telefono.setText(Integer.toString(empleado.getTelefono()));
+        tf_ingreso.setText(empleado.getFechaIngreso());
         jc_fechaNacimiento.setDate(empleado.getFechaNacimiento());
         cb_cargo.setSelectedItem(empleado.getCodigoCargo());
     }
@@ -987,6 +1032,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
         tf_nombre.setText(null);
         tf_telefono.setText(null);
         jc_fechaNacimiento.setDate(null);
-        cb_cargo.setSelectedItem(null);
+        tf_ingreso.setText(null);
+      
     }
 }

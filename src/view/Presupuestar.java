@@ -744,6 +744,8 @@ public class Presupuestar extends javax.swing.JFrame {
                 if(!localIn.equals(localOut)){
                     auxIn = jc_checkin.getDate();
                     auxOut = jc_checkout.getDate();
+                    VerEstadodeHabitaciones.llamadaCrearReserva = "";
+                    VerEstadodeHabitaciones.llamadaEditarReserva = "";
                     VerEstadodeHabitaciones.llamadaGenerarPresupuesto = "Invocado";
                     verEstadosHabitaciones();
                 }

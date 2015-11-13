@@ -85,7 +85,7 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
         tf_entidad = new javax.swing.JTextField();
         btn_aceptar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         panel_BuscarRol.setBackground(new java.awt.Color(0, 153, 255));
         panel_BuscarRol.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -518,7 +518,7 @@ private void generarFactLiquidarReserva(){
                 frame.setIconImage(icon);
                 frame.setTitle("Forma de Pago");
                 frame.setLocationRelativeTo(null);
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             }
         });
     }

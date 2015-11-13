@@ -872,7 +872,8 @@ public class ReservaEditar extends javax.swing.JFrame {
                     auxIn = jc_checkin.getDate();
                     auxOut = jc_checkout.getDate();
                     VerEstadodeHabitaciones.llamadaEditarReserva = "Invocado";
-
+                    VerEstadodeHabitaciones.llamadaCrearReserva = "";
+                    VerEstadodeHabitaciones.llamadaGenerarPresupuesto = "";
                     verEstadosHabitaciones();
                 }
                 //creación de ventana
