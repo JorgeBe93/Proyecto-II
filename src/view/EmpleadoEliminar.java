@@ -50,9 +50,9 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
         cargoQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM Cargo c");
         cargoList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : cargoQuery.getResultList();
-        cargoListRenderizar1 = new renderizar.CargoListRenderizar();
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT e FROM Empleado e");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
+        cargoListRenderizar1 = new renderizar.CargoListRenderizar();
         panel_registrarEmpleado = new javax.swing.JPanel();
         lbl_registrarEmpleado = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -577,9 +577,12 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
             String valor;
+            String antes;
+            String despues;
             int i;
             if(tf_codigo.getText().length()==0){
               JOptionPane.showMessageDialog(null, "Seleccione un empleado","Error",JOptionPane.ERROR_MESSAGE );
+              return;
             }
             int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar?");
             if(respuesta == JOptionPane.YES_OPTION){
@@ -593,7 +596,7 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
                     for(i=0;i<u.size();i++){
                         valor=u.get(i).toString();
                         entityManager.remove(u.get(i));
-                        registrarAuditoria("Usuario",valor);
+                        registrarAuditoria("Usuario","Eliminación",valor,"No hay cambios");
                     }
                     entityManager.flush();
                 }
@@ -616,8 +619,11 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
                         e.setFechaIngreso(listemp.get(i).getFechaIngreso());
                         e.setCodigoCargo(listemp.get(i).getCodigoCargo());
                         e.setCodigoJefe(null);
+                        antes=listemp.get(i).toString();
                         entityManager.merge(e);
+                        despues=e.toString();
                         entityManager.flush();
+                        registrarAuditoria("Empleado","Modificación",antes,despues);
                         list.remove(listemp.get(i));
                         list.add(e);
                         
@@ -629,7 +635,7 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
                 Empleado empleadoFind = entityManager.find(Empleado.class, empleado.getCodigoEmpleado());
                 entityManager.remove(empleadoFind);
                 entityManager.flush();
-                registrarAuditoria("Empleado",valor);
+                registrarAuditoria("Empleado","Eliminación",valor,"No hay cambios");
                 entityManager.getTransaction().commit();
                 JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
                  list.remove(empleadoFind);
@@ -757,7 +763,7 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
             }
         }
         if (list_filtros.getSelectedItem()=="Nombre"
-            || list_filtros.getSelectedItem()=="Apellido" ){
+            || list_filtros.getSelectedItem()=="Apellido" || list_filtros.getSelectedItem()=="Cargo" ){
                 ch=evt.getKeyChar();
                 if(Character.isDigit(ch)){
                     getToolkit().beep();
@@ -899,7 +905,7 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
             tf_jefeNom.setText(null);
         }
         tf_nombre.setText(empleado.getNombre());
-        tf_telefono.setText(Integer.toString(empleado.getTelefono()));
+        tf_telefono.setText(empleado.getTelefono());
         jc_fechaNacimiento.setDate(empleado.getFechaNacimiento());
         tf_ingreso.setText(empleado.getFechaIngreso());
         cb_cargo.setSelectedItem(empleado.getCodigoCargo());
@@ -919,14 +925,14 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
         cb_cargo.setSelectedItem(null);
         
     }
-    private void registrarAuditoria(String entidad,String valor){
+    private void registrarAuditoria(String entidad,String accion,String antes, String despues){
          AuditoriaSistema as=new AuditoriaSistema();
-            as.setAccion("Eliminación");
+            as.setAccion(accion);
             as.setTabla(entidad);
             as.setFechaHora(formato.format(fecha));
             as.setUsuario(LoginView.nombreUsuario);
-            as.setAntes(valor);
-            as.setDespues("No hay modificaciones");
+            as.setAntes(antes);
+            as.setDespues(despues);
             entityManager.persist(as);
             entityManager.flush();
     }

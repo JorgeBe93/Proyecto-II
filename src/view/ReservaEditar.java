@@ -665,9 +665,6 @@ public class ReservaEditar extends javax.swing.JFrame {
                                 monto_fac=ReservaEditar.reservaLocal.getMontoAbonado()-reserva.getMontoAbonado();
                                 System.out.println("Monto Factura "+monto_fac);
                                 entityManager.merge(reservaLocal);
-                               
-                                
-                              
                                 entityManager.flush();
                                 //despues de los cambios
                                 despues = reservaLocal.toString();
@@ -772,7 +769,7 @@ public class ReservaEditar extends javax.swing.JFrame {
                            // ema.close();
                             JOptionPane.showMessageDialog(null, "Modificación Exitosa");
                               //actualizamos la tabla
-                                list.clear();
+                                list.remove(reserva);
                                 list.add(reservaLocal);
                             //mostramos la factura
                             if(!"0".equals(tf_montoAbonado.getText()) && monto_fac!=0){

@@ -54,9 +54,9 @@ public class EmpleadoEditar extends javax.swing.JFrame {
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
         cargoQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM Cargo c");
         cargoList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : cargoQuery.getResultList();
-        cargoListRenderizar1 = new renderizar.CargoListRenderizar();
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT e FROM Empleado e");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
+        cargoListRenderizar1 = new renderizar.CargoListRenderizar();
         panel_registrarEmpleado = new javax.swing.JPanel();
         lbl_registrarEmpleado = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -274,7 +274,6 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(24, 24, 24)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(tf_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -558,8 +557,11 @@ public class EmpleadoEditar extends javax.swing.JFrame {
 
     private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
         // TODO add your handling code here:
+        String antes;
+        String despues;
         if(tf_codigo.getText().length()==0){
               JOptionPane.showMessageDialog(null, "Seleccione un empleado","Error",JOptionPane.ERROR_MESSAGE );
+              return;
         }
         Empleado emple = obtenerEmpleado(tf_cedula.getText());
         if ( emple != null
@@ -585,7 +587,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                 empleadoLocal.setApellido(tf_apellido.getText());
                 empleadoLocal.setCedula(tf_cedula.getText());
                 empleadoLocal.setDireccion(tf_direccion.getText());
-                empleadoLocal.setTelefono(Integer.parseInt(tf_telefono.getText()));
+                empleadoLocal.setTelefono(tf_telefono.getText());
                 empleadoLocal.setFechaNacimiento(jc_fechaNacimiento.getDate());
                 empleadoLocal.setFechaIngreso(tf_ingreso.getText());
                 empleadoLocal.setCodigoCargo(cargo);
@@ -601,14 +603,16 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                 }else{
                     empleadoLocal.setEmail(null);
                 }
+                antes=empleado.toString();
+                despues=empleadoLocal.toString();
                 entityManager.merge(empleadoLocal);
                 entityManager.flush();
                 //auditoria
                 AuditoriaSistema as=new AuditoriaSistema();
                 as.setAccion("Modificación");
                 as.setTabla("Empleado");
-                as.setAntes(empleado.toString());
-                as.setDespues(empleadoLocal.toString());
+                as.setAntes(antes);
+                as.setDespues(despues);
                 //trabajamos con la fecha
                 Date fecha=new Date();
                 DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -618,7 +622,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
                 entityManager.persist(as);
                 entityManager.getTransaction().commit();
                 JOptionPane.showMessageDialog(null, "Modificación Exitosa");
-                list.clear();
+                list.remove(empleado);
                 list.add(empleadoLocal);
                 resetear();
             }else {
@@ -708,13 +712,13 @@ public class EmpleadoEditar extends javax.swing.JFrame {
 
     private void tf_telefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_telefonoKeyTyped
         // TODO add your handling code here:
-        int limite=10;
+        int limite=11;
         if(tf_telefono.getText().length()==limite){
             getToolkit().beep();
             evt.consume(); //se le ignora
 
         }
-                ch=evt.getKeyChar();
+        ch=evt.getKeyChar();
         if(!Character.isDigit(ch)){
             getToolkit().beep();
             evt.consume();
@@ -753,7 +757,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
             }
         }
          if (list_filtros.getSelectedItem()=="Nombre"
-            || list_filtros.getSelectedItem()=="Apellido" ){
+            || list_filtros.getSelectedItem()=="Apellido" || list_filtros.getSelectedItem()=="Cargo" ){
                 ch=evt.getKeyChar();
                 if(Character.isDigit(ch)){
                     getToolkit().beep();
@@ -1016,7 +1020,7 @@ public class EmpleadoEditar extends javax.swing.JFrame {
             tf_jefeNom.setText(null);
         }
         tf_nombre.setText(empleado.getNombre());
-        tf_telefono.setText(Integer.toString(empleado.getTelefono()));
+        tf_telefono.setText(empleado.getTelefono());
         tf_ingreso.setText(empleado.getFechaIngreso());
         jc_fechaNacimiento.setDate(empleado.getFechaNacimiento());
         cb_cargo.setSelectedItem(empleado.getCodigoCargo());

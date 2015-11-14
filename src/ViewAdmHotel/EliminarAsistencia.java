@@ -493,7 +493,6 @@ public class EliminarAsistencia extends javax.swing.JFrame {
                 registrarAuditoria("Asistencia",valor);
                 entityManager.getTransaction().commit();
                 JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
-                list.clear();
                 list.remove(a);
                 resetear();
             }else{
@@ -509,7 +508,7 @@ public class EliminarAsistencia extends javax.swing.JFrame {
     private void tf_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_valorKeyTyped
         // TODO add your handling code here:
         char ch;
-        if (list_filtros.getSelectedItem()=="Empleado" || list_filtros.getSelectedItem()=="Horas Trabajadas"){
+        if (list_filtros.getSelectedItem()=="Código Empleado" || list_filtros.getSelectedItem()=="Horas Trabajadas"){
             ch=evt.getKeyChar();
             if(!Character.isDigit(ch)){
                 getToolkit().beep();

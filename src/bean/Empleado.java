@@ -57,7 +57,6 @@ public class Empleado implements Serializable {
     @Basic(optional = false)
     @Column(name = "cedula")
     private String cedula;
-    @Basic(optional = false)
     @Column(name = "email")
     private String email;
     @Basic(optional = false)
@@ -65,7 +64,7 @@ public class Empleado implements Serializable {
     private String direccion;
     @Basic(optional = false)
     @Column(name = "telefono")
-    private int telefono;
+    private String telefono;
     @Basic(optional = false)
     @Column(name = "fechaNacimiento")
     @Temporal(TemporalType.DATE)
@@ -89,12 +88,11 @@ public class Empleado implements Serializable {
         this.codigoEmpleado = codigoEmpleado;
     }
 
-    public Empleado(Integer codigoEmpleado, String nombre, String apellido, String cedula, String email, String direccion, int telefono, Date fechaNacimiento, String fechaIngreso) {
+    public Empleado(Integer codigoEmpleado, String nombre, String apellido, String cedula, String direccion, String telefono, Date fechaNacimiento, String fechaIngreso) {
         this.codigoEmpleado = codigoEmpleado;
         this.nombre = nombre;
         this.apellido = apellido;
         this.cedula = cedula;
-        this.email = email;
         this.direccion = direccion;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
@@ -149,11 +147,11 @@ public class Empleado implements Serializable {
         this.direccion = direccion;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
@@ -219,9 +217,9 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return "codigoEmpleado=" + codigoEmpleado + ", nombre=" + nombre + ", apellido=" + apellido + ", cedula=" + cedula + ", email=" + email + ", direccion=" + direccion + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", fechaIngreso=" + fechaIngreso + ", codigoJefe=" + codigoJefe + ", codigoCargo=" + codigoCargo;
+        return  "codigoEmpleado=" + codigoEmpleado + ", nombre=" + nombre + ", apellido=" + apellido + ", cedula=" + cedula + ", email=" + email + ", direccion=" + direccion + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", fechaIngreso=" + fechaIngreso + ", codigoJefe=" + codigoJefe + ", codigoCargo=" + codigoCargo;
     }
 
-   
+    
     
 }

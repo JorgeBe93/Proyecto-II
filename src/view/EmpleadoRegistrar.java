@@ -27,7 +27,6 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
     private char ch;
     private int fila;
     private String datos[]=new String[3];
-    Empleado empleado = new Empleado();
     Date fecha=new Date();
     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
@@ -528,18 +527,19 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
             if(respuesta == JOptionPane.YES_OPTION){
                 entityManager.getTransaction().begin();
                 Cargo cargo = (Cargo)cb_cargo.getSelectedItem();
+                Empleado empleado=new Empleado();
                 empleado.setNombre(tf_nombre.getText());
                 empleado.setApellido(tf_apellido.getText());
                 empleado.setCedula(tf_cedula.getText());
                 empleado.setDireccion(tf_direccion.getText());
-                empleado.setTelefono(Integer.parseInt(tf_telefono.getText()));
+                empleado.setTelefono(tf_telefono.getText());
                 empleado.setFechaNacimiento(jc_fechaNacimiento.getDate());
                 empleado.setCodigoCargo(cargo);
                 empleado.setFechaIngreso(form.format(fecha));
-                 System.out.println(" jefe "+ tf_cedJefe.getText());
+                 System.out.println(" parametro ced jefe "+ tf_cedJefe.getText());
                 if (!tf_cedJefe.getText().equals("")){
                     empleado.setCodigoJefe(obtenerEmpleado(tf_cedJefe.getText()));
-                    System.out.println("Empleado jefe "+ empleado.getCodigoJefe());
+                    System.out.println("Empleado jefe devuleto de la consulta "+ empleado.getCodigoJefe());
                 }else{
                     empleado.setCodigoJefe(null);
                 }
@@ -548,10 +548,10 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                 }else{
                     empleado.setEmail(null);
                 }
-               
+                 System.out.println("Objeto 1 antes del persist "+ empleado.toString());
                 entityManager.persist(empleado);
                 entityManager.flush();
-                 System.out.println("Objeto "+ empleado.toString());
+                 System.out.println("Objeto 2 despues del persist"+ empleado.toString());
 
                 //auditoria
                 AuditoriaSistema as=new AuditoriaSistema();
@@ -571,9 +571,8 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                  list.add(empleado);
                 //enviar al correo del empleado su codigo de empleado
                  if(empleado.getEmail()!=null){
-                      enviarDatos();
+                      enviarDatos(empleado);
                  }
-               
             }else {
                 this.dispose();
             }
@@ -704,7 +703,7 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
                 }
         }
         if (list_filtros.getSelectedItem()=="Nombre"
-            || list_filtros.getSelectedItem()=="Apellido" ){
+            || list_filtros.getSelectedItem()=="Apellido"   || list_filtros.getSelectedItem()=="Cargo"){
                 ch=evt.getKeyChar();
                 if(Character.isDigit(ch)){
                     getToolkit().beep();
@@ -828,19 +827,20 @@ public class EmpleadoRegistrar extends javax.swing.JFrame {
         // TODO add your handling code here:
       
     }//GEN-LAST:event_tf_cedJefeFocusLost
-    private void enviarDatos(){
-        boolean resultado;
+    private void enviarDatos(Empleado e){
+       boolean resultado;
         String jefe;
-        if(empleado.getCodigoJefe()==null){
+        if(e.getCodigoJefe()==null){
             jefe=" ";
         }else{
-            jefe=empleado.getCodigoJefe().getNombre()+" "+empleado.getCodigoJefe().getApellido();
+            jefe=e.getCodigoJefe().getNombre()+" "+e.getCodigoJefe().getApellido();
         }
-       datos[0]=empleado.getEmail();
+       datos[0]=e.getEmail();
        datos[1]="Código de  Empleado";
        datos[2]=" BIENVENIDO AL HOTEL SANTA MARÍA"+"\n "
-               +"Usted es el empleado n°: "+empleado.getCodigoEmpleado()+"\n " 
-               +"Ocupa el Cargo de: "+" "+empleado.getCodigoCargo().getNombre()+"\n"
+               +"Sr/Sra: "+e.getNombre()+" "+e.getApellido()+"\n " 
+               +"Usted es el empleado n°: "+e.getCodigoEmpleado()+"\n " 
+               +"Ocupa el Cargo de: "+" "+e.getCodigoCargo().getNombre()+"\n"
                +"Su jefe es : "+jefe+"\n"
                +"Este código es confidencial y deberá utilizarlo para marcar su asistencia al trabajo";
         Correo c=new Correo();

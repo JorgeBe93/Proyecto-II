@@ -267,7 +267,7 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
             }
         }
         if (list_filtros.getSelectedItem()=="Nombre"
-            || list_filtros.getSelectedItem()=="Apellido" ){
+            || list_filtros.getSelectedItem()=="Apellido" || list_filtros.getSelectedItem()=="Cargo" ){
                 ch=evt.getKeyChar();
                 if(Character.isDigit(ch)){
                     getToolkit().beep();
@@ -342,7 +342,7 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
                     +tf_valor.getText() + "%'", Empleado.class);
                 List<Empleado> a=query.getResultList();
                 if(a.isEmpty()){
-                    JOptionPane.showMessageDialog(null,"No se han encontrado registros para la fecha", "Error",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"No se han encontrado registros para el cargo", "Error",JOptionPane.ERROR_MESSAGE);
                     tf_valor.setText(null);
                     return;
                 }
