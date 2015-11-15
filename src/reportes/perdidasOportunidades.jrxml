@@ -32,6 +32,9 @@ FROM
 	<variable name="porc_descoup" class="java.lang.Float">
 		<variableExpression><![CDATA[($V{total_desocup}*100)/$P{CantDias}]]></variableExpression>
 	</variable>
+	<variable name="perdida" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -156,6 +159,7 @@ FROM
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<returnValue subreportVariable="desocupacion" toVariable="desocupacion" calculation="Sum"/>
 				<returnValue subreportVariable="habitacion_numero" toVariable="habitacion_numero" calculation="Sum"/>
+				<returnValue subreportVariable="perdida" toVariable="perdida" calculation="Sum"/>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "habitaciones.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
@@ -231,16 +235,6 @@ FROM
 				</textElement>
 				<textFieldExpression><![CDATA[$V{total_desocup}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="b59a4414-392a-4aa5-a4f6-7312f9e5df83" x="24" y="16" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$V{desocupacion}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="4bf25e20-9078-4369-8e1a-30078a4abe36" x="26" y="40" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$V{habitacion_numero}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement uuid="eb47ed8a-988a-4862-b161-528095fef315" x="376" y="0" width="48" height="20" forecolor="#FF0000"/>
 				<textElement>
@@ -276,6 +270,11 @@ FROM
 				</textElement>
 				<text><![CDATA[%]]></text>
 			</staticText>
+			<textField pattern="#,##0">
+				<reportElement uuid="0f129fe6-d19a-4a2b-9845-7af7e4d4c0b5" x="46" y="30" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{perdida}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

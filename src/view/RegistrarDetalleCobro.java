@@ -83,6 +83,7 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
         cb_contado = new javax.swing.JCheckBox();
         cb_tc = new javax.swing.JCheckBox();
         tf_entidad = new javax.swing.JTextField();
+        cb_td = new javax.swing.JCheckBox();
         btn_aceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -99,9 +100,9 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
         panel_BuscarRolLayout.setHorizontalGroup(
             panel_BuscarRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_BuscarRolLayout.createSequentialGroup()
-                .addGap(211, 211, 211)
+                .addGap(177, 177, 177)
                 .addComponent(lbl_BuscarRol)
-                .addContainerGap(252, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
         panel_BuscarRolLayout.setVerticalGroup(
             panel_BuscarRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,6 +156,15 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
             }
         });
 
+        cb_td.setBackground(new java.awt.Color(0, 153, 255));
+        cb_td.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
+        cb_td.setText("Tarjeta Débito");
+        cb_td.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cb_tdFocusGained(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -165,21 +175,22 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cb_contado)
-                        .addGap(52, 52, 52)
-                        .addComponent(cb_tc)
-                        .addGap(44, 44, 44)
-                        .addComponent(cb_cheque)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_numero)
                             .addComponent(lbl_entidad))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tf_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_entidad, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(20, Short.MAX_VALUE))))
+                            .addComponent(tf_entidad, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(cb_contado)
+                        .addGap(52, 52, 52)
+                        .addComponent(cb_tc)
+                        .addGap(33, 33, 33)
+                        .addComponent(cb_td)
+                        .addGap(40, 40, 40)
+                        .addComponent(cb_cheque)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +201,8 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cb_contado)
                             .addComponent(cb_tc)
-                            .addComponent(cb_cheque))
+                            .addComponent(cb_cheque)
+                            .addComponent(cb_td))
                         .addGap(46, 46, 46)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbl_numero)
@@ -220,14 +232,15 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(309, 309, 309)
+                        .addGap(29, 29, 29)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(345, 345, 345)
                         .addComponent(btn_aceptar))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(31, Short.MAX_VALUE))
+                        .addGap(122, 122, 122)
+                        .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,7 +249,7 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
                 .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addComponent(btn_aceptar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -248,35 +261,54 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
         // TODO add your handling code here:
         cb_contado.setSelected(false);
         cb_cheque.setSelected(false);
+        cb_td.setSelected(false);
     }//GEN-LAST:event_cb_tcFocusGained
 
     private void cb_contadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cb_contadoFocusGained
         // TODO add your handling code here:
         cb_tc.setSelected(false);
         cb_cheque.setSelected(false);
+         cb_td.setSelected(false);
     }//GEN-LAST:event_cb_contadoFocusGained
 
     private void cb_chequeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cb_chequeFocusGained
         // TODO add your handling code here:
          cb_tc.setSelected(false);
-          cb_contado.setSelected(false);
+         cb_contado.setSelected(false);
+          cb_td.setSelected(false);
     }//GEN-LAST:event_cb_chequeFocusGained
 
     private void tf_numeroFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_numeroFocusGained
         // TODO add your handling code here:
-     
+        
     }//GEN-LAST:event_tf_numeroFocusGained
 
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
         // TODO add your handling code here:
-        if(cb_tc.isSelected() || cb_cheque.isSelected() || cb_contado.isSelected()){
+        if(cb_tc.isSelected() || cb_td.isSelected() ||cb_cheque.isSelected() || cb_contado.isSelected()){
              if(cb_tc.isSelected() ){
                 if(tf_numero.getText().length()==0 || tf_entidad.getText().length()==0){
-                     JOptionPane.showMessageDialog(null,"Algún campo con valor nulo", "Error",JOptionPane.ERROR_MESSAGE);
+                     JOptionPane.showMessageDialog(null,"No se admiten valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
+                     return;
                 }else{
                      dc.setIdBanco(obtenerBanco(tf_entidad.getText()));
                      dc.setNumeroChTarj(tf_numero.getText());
-                     dc.setForma("Tarjeta Crédito");
+                     dc.setForma("Tarjeta Credito");
+                     entityManager.getTransaction().begin();
+                     entityManager.persist(dc);
+                     entityManager.flush();
+                     registrarAuditoria("Detalle de cobro","Inserción",dc.toString(),null);
+                }
+           
+            }
+             if(cb_td.isSelected() ){
+                if(tf_numero.getText().length()==0 || tf_entidad.getText().length()==0){
+                     JOptionPane.showMessageDialog(null,"No se admiten valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
+                     return;
+                }else{
+                     dc.setIdBanco(obtenerBanco(tf_entidad.getText()));
+                     dc.setNumeroChTarj(tf_numero.getText());
+                     dc.setForma("Tarjeta Debito");
                      entityManager.getTransaction().begin();
                      entityManager.persist(dc);
                      entityManager.flush();
@@ -286,7 +318,8 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
             }
        if(cb_cheque.isSelected()){
             if(tf_numero.getText().length()==0 || tf_entidad.getText().length()==0){
-                 JOptionPane.showMessageDialog(null,"Algún campo con valor nulo", "Error",JOptionPane.ERROR_MESSAGE);
+                 JOptionPane.showMessageDialog(null,"No se admiten valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
+                 return;
             }else{
 
                  dc.setIdBanco(obtenerBanco(tf_entidad.getText()));
@@ -324,6 +357,13 @@ DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
            generarFactLiquidarReserva();
        }
     }//GEN-LAST:event_btn_aceptarActionPerformed
+
+    private void cb_tdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cb_tdFocusGained
+        // TODO add your handling code here:
+         cb_tc.setSelected(false);
+         cb_contado.setSelected(false);
+         cb_cheque.setSelected(false);
+    }//GEN-LAST:event_cb_tdFocusGained
 private void   generarFactCrearReserva(){
            f.setCodigoReserva(CrearReserva.reserva);
            f.setConcepto("anticipo de reserva");
@@ -332,10 +372,11 @@ private void   generarFactCrearReserva(){
            }else{
                    f.setRucCliente(CrearReserva.reserva.getCodigoCliente().getRuc());
                  }
-              f.setFechaEmision(form.format(fecha));
+              f.setFechaEmision(formato.format(fecha));
               f.setTotal(Integer.parseInt(Integer.toString(CrearReserva.reserva.getMontoAbonado())));
              
-               if("Cheque".equals(dc.getForma()) || "Tarjeta Crédito".equals(dc.getForma()) ){
+               if("Cheque".equals(dc.getForma()) || "Tarjeta Credito".equals(dc.getForma())
+                       || "Tarjeta Debito".equals(dc.getForma())){
                      condicion="Crédito";
                                  
                }else{
@@ -384,9 +425,10 @@ private void   generarFactEditarReserva(){
            }else{
                         f.setRucCliente(ReservaEditar.reservaLocal.getCodigoCliente().getRuc());
             }
-            f.setFechaEmision(form.format(fecha));
+            f.setFechaEmision(formato.format(fecha));
             f.setTotal(ReservaEditar.monto_fac);
-            if("Cheque".equals(dc.getForma()) || "Tarjeta Crédito".equals(dc.getForma()) ){
+            if("Cheque".equals(dc.getForma()) || "Tarjeta Credito".equals(dc.getForma())
+                    || "Tarjeta Debito".equals(dc.getForma())){
                              condicion="Crédito";
 
            }else{
@@ -435,8 +477,9 @@ private void generarFactLiquidarReserva(){
                     }else{
                           f.setRucCliente(ConsumoFactura.r.getCodigoCliente().getRuc());
                     }
-                    f.setFechaEmision(form.format(fecha));
-                     if("Cheque".equals(dc.getForma()) || "Tarjeta Crédito".equals(dc.getForma()) ){
+                    f.setFechaEmision(formato.format(fecha));
+                     if("Cheque".equals(dc.getForma()) || "Tarjeta Credito".equals(dc.getForma()) 
+                             || "Tarjeta Debito".equals(dc.getForma())){
                            condicion="Crédito";
 
                      }else{
@@ -582,6 +625,7 @@ private void generarFactLiquidarReserva(){
     private javax.swing.JCheckBox cb_cheque;
     private javax.swing.JCheckBox cb_contado;
     private javax.swing.JCheckBox cb_tc;
+    private javax.swing.JCheckBox cb_td;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

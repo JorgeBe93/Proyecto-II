@@ -7,9 +7,7 @@
 package bean;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -60,13 +57,9 @@ public class Cliente implements Serializable {
     private String direccion;
     @Basic(optional = false)
     @Column(name = "telefono")
-    private int telefono;
+    private String telefono;
     @Column(name = "ruc")
     private String ruc;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoCliente")
-    private Collection<Presupuesto> presupuestoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoCliente")
-    private Collection<Reserva> reservaCollection;
 
     public Cliente() {
     }
@@ -75,7 +68,7 @@ public class Cliente implements Serializable {
         this.codigoCliente = codigoCliente;
     }
 
-    public Cliente(Integer codigoCliente, String cedula, String nombre, String apellido, String email, String direccion, int telefono) {
+    public Cliente(Integer codigoCliente, String cedula, String nombre, String apellido, String email, String direccion, String telefono) {
         this.codigoCliente = codigoCliente;
         this.cedula = cedula;
         this.nombre = nombre;
@@ -133,11 +126,11 @@ public class Cliente implements Serializable {
         this.direccion = direccion;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
@@ -147,22 +140,6 @@ public class Cliente implements Serializable {
 
     public void setRuc(String ruc) {
         this.ruc = ruc;
-    }
-
-    public Collection<Presupuesto> getPresupuestoCollection() {
-        return presupuestoCollection;
-    }
-
-    public void setPresupuestoCollection(Collection<Presupuesto> presupuestoCollection) {
-        this.presupuestoCollection = presupuestoCollection;
-    }
-
-    public Collection<Reserva> getReservaCollection() {
-        return reservaCollection;
-    }
-
-    public void setReservaCollection(Collection<Reserva> reservaCollection) {
-        this.reservaCollection = reservaCollection;
     }
 
     @Override
@@ -187,9 +164,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "codigoCliente=" + codigoCliente + ", cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + ", direccion=" + direccion + ", telefono=" + telefono + ", ruc=" + ruc;
+        return "bean.Cliente[ codigoCliente=" + codigoCliente + " ]";
     }
-
-   
     
 }

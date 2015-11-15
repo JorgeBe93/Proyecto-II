@@ -28,7 +28,7 @@ FROM
      `banco` banco  RIGHT OUTER JOIN `detalle_cobro` detalle_cobro ON banco.`idBanco` = detalle_cobro.`id_banco`
      INNER JOIN `factura_cobro` factura_cobro ON detalle_cobro.`idDetalle` = factura_cobro.`forma_pago`
 WHERE
- factura_cobro.`fechaEmision`=$P{fecha} and  detalle_cobro.`forma`=$P{formaPago}
+ factura_cobro.`fechaEmision` LIKE concat($P{fecha},'%') and  detalle_cobro.`forma`=$P{formaPago}
 order by  banco.`nombre`]]>
 	</queryString>
 	<field name="banco_idBanco" class="java.lang.Integer"/>

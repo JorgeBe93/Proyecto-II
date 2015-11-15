@@ -234,8 +234,8 @@ WHERE
 				<reportElement uuid="de04eef6-188c-4cb9-baf5-99a4ed69013b" x="23" y="24" width="50" height="84"/>
 				<imageExpression><![CDATA["C:\\Proyecto-II\\src\\imagenes\\logo1.jpg"]]></imageExpression>
 			</image>
-			<textField>
-				<reportElement uuid="f9377578-f27d-4a7d-bf3c-d6fcfb266be2" x="120" y="153" width="100" height="20"/>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="f9377578-f27d-4a7d-bf3c-d6fcfb266be2" x="120" y="153" width="69" height="20"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>

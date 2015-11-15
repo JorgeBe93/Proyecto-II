@@ -734,7 +734,7 @@ public class ClienteEliminar extends javax.swing.JFrame {
         tf_cedula.setText(cliente.getCedula());
         tf_ruc.setText(cliente.getRuc());
         tf_direccion.setText(cliente.getDireccion());
-        tf_telef.setText(Integer.toString(cliente.getTelefono()));
+        tf_telef.setText(cliente.getTelefono());
         tf_email.setText(cliente.getEmail());
       
      }   

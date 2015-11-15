@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="311" pageHeight="445" columnWidth="271" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fb4a0f8f-2f0b-4faf-b0d2-456d2409f530">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="400" pageHeight="445" columnWidth="360" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fb4a0f8f-2f0b-4faf-b0d2-456d2409f530">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -21,19 +21,24 @@
 	<queryString>
 		<![CDATA[SELECT
      habitacion.`numero` AS habitacion_numero,
-     habitacion.`codigoCategoria` AS habitacion_codigoCategoria
+     habitacion.`codigoCategoria` AS habitacion_codigoCategoria,
+     categ_habitacion.`costoxnoche` AS categ_habitacion_costoxnoche
 FROM
-     `habitacion` habitacion
+     `categ_habitacion` categ_habitacion INNER JOIN `habitacion` habitacion ON categ_habitacion.`codigoCategoria` = habitacion.`codigoCategoria`
 WHERE
- habitacion.`codigoCategoria`=$P{codigoCategoria}]]>
+     habitacion.`codigoCategoria` = $P{codigoCategoria}]]>
 	</queryString>
 	<field name="habitacion_numero" class="java.lang.Integer"/>
 	<field name="habitacion_codigoCategoria" class="java.lang.Integer"/>
+	<field name="categ_habitacion_costoxnoche" class="java.lang.Integer"/>
 	<variable name="desocupacion" class="java.lang.Integer" calculation="Sum">
 		<initialValueExpression><![CDATA[]]></initialValueExpression>
 	</variable>
 	<variable name="habitacion_numero" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{habitacion_numero}]]></variableExpression>
+	</variable>
+	<variable name="perdida" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{categ_habitacion_costoxnoche}*$V{desocupacion}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -47,10 +52,10 @@ WHERE
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<rectangle>
-				<reportElement uuid="db21c995-9949-4e1d-9d5f-9ab7224d74e5" x="0" y="2" width="271" height="20" backcolor="#CCCCCC"/>
+				<reportElement uuid="db21c995-9949-4e1d-9d5f-9ab7224d74e5" x="0" y="2" width="360" height="20" backcolor="#CCCCCC"/>
 			</rectangle>
 			<staticText>
-				<reportElement uuid="d21ca129-99ce-40bf-bb22-9997fc2b2634" x="15" y="0" width="129" height="20"/>
+				<reportElement uuid="d21ca129-99ce-40bf-bb22-9997fc2b2634" x="93" y="0" width="129" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -96,36 +101,50 @@ WHERE
 	<summary>
 		<band height="20" splitType="Stretch">
 			<rectangle>
-				<reportElement uuid="f80514b0-1bcb-4887-8b92-431d75cfc453" x="0" y="0" width="271" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<reportElement uuid="f80514b0-1bcb-4887-8b92-431d75cfc453" x="0" y="0" width="360" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
 			</rectangle>
 			<textField>
-				<reportElement uuid="bd06598b-9ed4-4e5d-a903-a11858aee142" x="236" y="0" width="25" height="20"/>
+				<reportElement uuid="bd06598b-9ed4-4e5d-a903-a11858aee142" x="203" y="0" width="25" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{desocupacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="404d062e-f757-4ddb-bdc7-86e97f25c113" x="103" y="0" width="21" height="20"/>
+				<reportElement uuid="404d062e-f757-4ddb-bdc7-86e97f25c113" x="90" y="0" width="21" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{habitacion_numero}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="fa376520-93aa-4e4f-b8b7-177716de9068" x="13" y="0" width="90" height="20"/>
+				<reportElement uuid="fa376520-93aa-4e4f-b8b7-177716de9068" x="0" y="0" width="90" height="20"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Habitaciones:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b84d5196-2a9b-4587-b875-05d0f3341722" x="144" y="0" width="92" height="20"/>
+				<reportElement uuid="b84d5196-2a9b-4587-b875-05d0f3341722" x="111" y="0" width="92" height="20"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total desocupación:]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="19d837a1-3709-4a0b-bf73-f2484da2cc1a" x="228" y="0" width="56" height="20"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pérdida Gs.:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement uuid="1cc6491e-d0a7-4c2f-87d3-c8d230afa525" x="284" y="0" width="76" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{categ_habitacion_costoxnoche}*$V{desocupacion}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

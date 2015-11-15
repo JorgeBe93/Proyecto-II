@@ -193,8 +193,9 @@ public class VerEstadodeHabitaciones extends javax.swing.JFrame {
                             "from habitacion h " +
                             "join reserva r " +
                             "on  h.numero=r.numHabitacion " +
-                            "where ((r.checkIn>= '"+fechain+"' and r.checkIn<= '"+fechaout+"' ) or "
-                            + "(r.checkOut> '"+fechain+"' and r.checkOut<= '"+fechaout+"'))"
+                            "where ((r.checkIn>= '"+fechain+"' and r.checkIn< '"+fechaout+"' ) or "
+                            + "(r.checkOut> '"+fechain+"' and r.checkOut<= '"+fechaout+"')or "
+                            +"( '"+fechain+"'>=r.checkIn and '"+fechaout+"'<=r.checkOut) ) "
                             + " and h.numero=ha.numero) order by ha.numero";
                     stm = connection.createStatement();
                     rs = stm.executeQuery(query);

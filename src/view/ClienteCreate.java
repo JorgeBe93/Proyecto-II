@@ -430,7 +430,7 @@ public class ClienteCreate extends javax.swing.JFrame {
 
     private void tf_telefKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_telefKeyTyped
         // TODO add your handling code here:
-        int limite=10;
+        int limite=11;
         if(tf_telef.getText().length()==limite){
             getToolkit().beep();
             evt.consume(); //se le ignora
@@ -483,13 +483,7 @@ public class ClienteCreate extends javax.swing.JFrame {
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         // TODO add your handling code here:
-        if(tf_cedula.getText().length()==0 || tf_nombre.getText().length()==0
-             || tf_apellido.getText().length()==0 || tf_email.getText().length()==0
-              || tf_direccion.getText().length()==0 || tf_telef.getText().length()==0  ){
-             JOptionPane.showMessageDialog(null,"No se permiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
-             return;    
-        }else{
-                //verifica nuevamente que el numero de cedula no este repetido
+        //verifica nuevamente que el numero de cedula no este repetido
                 query=entityManager.createNamedQuery("Cliente.findByCedula");
                 query.setParameter("cedula", tf_cedula.getText());
                 List<Cliente> a=query.getResultList();
@@ -499,14 +493,24 @@ public class ClienteCreate extends javax.swing.JFrame {
                      return;
                  }
                 //verifica nuevamente que el ruc no esté repetido
-                 query=entityManager.createNamedQuery("Cliente.findByRuc");
-                    query.setParameter("ruc", tf_ruc.getText().toLowerCase());
+                if(tf_ruc.getText().length()!=0){
+                    query=entityManager.createNamedQuery("Cliente.findByRuc");
+                    query.setParameter("ruc", tf_ruc.getText());
                     List<Cliente> b=query.getResultList();
                     if(b.size()>=1){
                          tf_ruc.setText(null);
                          tf_ruc.requestFocus();
                          return;
                      } 
+                }
+                 
+        if(tf_cedula.getText().length()==0 || tf_nombre.getText().length()==0
+             || tf_apellido.getText().length()==0
+              || tf_direccion.getText().length()==0 || tf_telef.getText().length()==0  ){
+             JOptionPane.showMessageDialog(null,"No se permiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
+             return;    
+        }else{
+                
                resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar un nuevo Cliente?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );
                if (resp==JOptionPane.YES_OPTION){
                    entityManager.getTransaction().begin();
@@ -515,7 +519,7 @@ public class ClienteCreate extends javax.swing.JFrame {
                    c.setRuc(tf_ruc.getText().toLowerCase());
                    c.setNombre(tf_nombre.getText().toLowerCase());
                    c.setApellido(tf_apellido.getText().toLowerCase());
-                   c.setTelefono(Integer.parseInt(tf_telef.getText()));
+                   c.setTelefono((tf_telef.getText()));
                    c.setDireccion(tf_direccion.getText().toLowerCase());
                    c.setEmail(tf_email.getText().toLowerCase());
                    entityManager.persist(c);

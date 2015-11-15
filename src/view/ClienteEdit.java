@@ -488,7 +488,7 @@ public class ClienteEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_apellidoKeyTyped
 
     private void tf_telefKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_telefKeyTyped
-       int limite=10;
+       int limite=11;
         if(tf_telef.getText().length()==limite){
             getToolkit().beep();
             evt.consume(); //se le ignora
@@ -615,13 +615,7 @@ public class ClienteEdit extends javax.swing.JFrame {
         String antes;
         String despues;
         int codigo;
-          if(tf_cedula.getText().length()==0 || tf_nombre.getText().length()==0
-             || tf_apellido.getText().length()==0 || tf_email.getText().length()==0
-              || tf_direccion.getText().length()==0 || tf_telef.getText().length()==0  ){
-             JOptionPane.showMessageDialog(null,"No se permiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
-             return;    
-        }else{
-                // verifica nuevamente si la cedula no esta repetida
+        // verifica nuevamente si la cedula no esta repetida
               query=entityManager.createNamedQuery("Cliente.findByCedula");
               query.setParameter("cedula", tf_cedula.getText());
               List<Cliente> c=query.getResultList();
@@ -634,7 +628,8 @@ public class ClienteEdit extends javax.swing.JFrame {
                      }
                 }
               //verifica nuevamente si el ruc no esta repetida
-              query=entityManager.createNamedQuery("Cliente.findByRuc");
+              if(tf_ruc.getText().length()!=0){
+                  query=entityManager.createNamedQuery("Cliente.findByRuc");
                     query.setParameter("ruc", tf_ruc.getText().toLowerCase());
                     List<Cliente> clie=query.getResultList();
                     if(clie.size()!=0){
@@ -644,7 +639,15 @@ public class ClienteEdit extends javax.swing.JFrame {
                             tf_ruc.requestFocus();
                             return;
                         }  
-                     }  
+                   }      
+              }
+              
+          if(tf_cedula.getText().length()==0 || tf_nombre.getText().length()==0
+             || tf_apellido.getText().length()==0 
+              || tf_direccion.getText().length()==0 || tf_telef.getText().length()==0  ){
+             JOptionPane.showMessageDialog(null,"No se permiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
+             return;    
+             }          
               resp=  JOptionPane.showConfirmDialog(null,"Desea guardar los cambios?", "Confirmar Modificación",JOptionPane.YES_NO_OPTION );
               if (resp==JOptionPane.YES_OPTION){
                    query=entityManager.createNamedQuery("Cliente.findByCodigoCliente");
@@ -660,7 +663,7 @@ public class ClienteEdit extends javax.swing.JFrame {
                     cli.setApellido(tf_apellido.getText().toLowerCase());
                     cli.setDireccion(tf_direccion.getText().toLowerCase());
                     cli.setEmail(tf_email.getText().toLowerCase());
-                    cli.setTelefono(Integer.parseInt(tf_telef.getText()));
+                    cli.setTelefono(tf_telef.getText());
                     entityManager.getTransaction().begin();
                     entityManager.merge(cli);
                     entityManager.flush();
@@ -683,13 +686,13 @@ public class ClienteEdit extends javax.swing.JFrame {
                      JOptionPane.showMessageDialog(null, "Modificación Exitosa");
                      //actualizamos la tabla
                      resetear();
-                    list.clear();
+                    list.remove(cl.get(0));
                     list.add(cli);
                      
               }else{
                     this.dispose();
               }
-          }
+         
           
     }//GEN-LAST:event_btn_guardarActionPerformed
 
@@ -820,7 +823,7 @@ public class ClienteEdit extends javax.swing.JFrame {
         tf_cedula.setText(cliente.getCedula());
         tf_ruc.setText(cliente.getRuc());
         tf_direccion.setText(cliente.getDireccion());
-        tf_telef.setText(Integer.toString(cliente.getTelefono()));
+        tf_telef.setText(cliente.getTelefono());
         tf_email.setText(cliente.getEmail());
       
      }   
