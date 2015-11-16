@@ -37,8 +37,8 @@ WHERE
 	<variable name="habitacion_numero" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{habitacion_numero}]]></variableExpression>
 	</variable>
-	<variable name="perdida" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{categ_habitacion_costoxnoche}*$V{desocupacion}]]></variableExpression>
+	<variable name="perdida" class="java.lang.Integer" incrementType="Report">
+		<variableExpression><![CDATA[$V{desocupacion}*$F{categ_habitacion_costoxnoche}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -139,7 +139,7 @@ WHERE
 				<text><![CDATA[Pérdida Gs.:]]></text>
 			</staticText>
 			<textField pattern="#,##0">
-				<reportElement uuid="1cc6491e-d0a7-4c2f-87d3-c8d230afa525" x="284" y="0" width="76" height="20"/>
+				<reportElement uuid="03b19b6e-52e3-4148-977e-fb6e336e7aaa" x="284" y="0" width="76" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>

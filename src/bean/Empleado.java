@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -80,6 +82,8 @@ public class Empleado implements Serializable {
     @JoinColumn(name = "codigoCargo", referencedColumnName = "codigoCargo")
     @ManyToOne(optional = false)
     private Cargo codigoCargo;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "empleado")
+    private Usuario usuario;
 
     public Empleado() {
     }
@@ -195,6 +199,14 @@ public class Empleado implements Serializable {
         this.codigoCargo = codigoCargo;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -217,9 +229,7 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return  "codigoEmpleado=" + codigoEmpleado + ", nombre=" + nombre + ", apellido=" + apellido + ", cedula=" + cedula + ", email=" + email + ", direccion=" + direccion + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", fechaIngreso=" + fechaIngreso + ", codigoJefe=" + codigoJefe + ", codigoCargo=" + codigoCargo;
+        return "bean.Empleado[ codigoEmpleado=" + codigoEmpleado + " ]";
     }
-
-    
     
 }

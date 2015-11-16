@@ -14,7 +14,9 @@ package view;
 import bean.Correo;
 import bean.Empleado;
 import bean.Usuario;
+import java.awt.Image;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -238,6 +240,7 @@ public class RecordarContrasenaView extends javax.swing.JFrame {
             List<Usuario> u=query.getResultList();
             if(e.size()==0 ){
                 JOptionPane.showMessageDialog(null,"Identificación de Usuario inexistente", "Error",JOptionPane.ERROR_MESSAGE);
+                tf_codempl.setText(null);
                  return;
             }else{
                 receptor=e.get(0).getEmail();//obtenemos el email del usuario
@@ -267,6 +270,8 @@ public class RecordarContrasenaView extends javax.swing.JFrame {
                frame.setTitle("Recordar Contraseña");
                frame.setLocationRelativeTo(null);
                frame.setVisible(true);
+               Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
+               frame.setIconImage(icon);
                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         });

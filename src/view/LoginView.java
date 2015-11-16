@@ -11,19 +11,15 @@
 
 package view;
 
-import ViewAdmHotel.MenuAdminHotel;
 import bean.AuditoriaSistema;
-import bean.Empleado;
+//import bean.Permiso;
 import bean.Usuario;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -90,6 +86,9 @@ public class LoginView extends javax.swing.JFrame {
         lbl_codempl.setText("Código usuario");
 
         tf_codempl.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_codemplKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_codemplKeyTyped(evt);
             }
@@ -204,7 +203,7 @@ public class LoginView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(77, 77, 77)
+                .addGap(94, 94, 94)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -221,8 +220,10 @@ public class LoginView extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
@@ -247,19 +248,14 @@ public class LoginView extends javax.swing.JFrame {
             }else{
                 if(u.get(0).getPassword().equals(tf_password.getText())){ 
                         //si no tiene asigado ningun rol, no puede ingresar
-                         if(" ".equals(u.get(0).getIdRol().getNombre())){
+                         if(u.get(0).getRolCollection().isEmpty()){
                              JOptionPane.showMessageDialog(null, "No tiene asignado ningun rol, no puede ingresar al sistema","Error",JOptionPane.ERROR_MESSAGE );
                              tf_codempl.setText(null);
                              tf_password.setText(null);
                              return;
                         }
-                        //aqui obtenemos el nombre del usuario para luego almacenarlo en la entidad Auditoria
-                        query=entityManager.createNamedQuery("Empleado.findByCodigoEmpleado");
-                        query.setParameter("codigoEmpleado", codEmpl);
-                        List<Empleado> e = query.getResultList();
-                        nombreUsuario=e.get(0).getNombre();
                         //para evitar que cambie su rol por si mismo
-                        idUsuario=e.get(0).getCodigoEmpleado();
+                        idUsuario=u.get(0).getEmpleado().getCodigoEmpleado();
                         //registramos los datos necesarios para la auditoria
                         AuditoriaSistema as=new AuditoriaSistema();
                         as.setAccion("Inicio Sesion");
@@ -268,38 +264,25 @@ public class LoginView extends javax.swing.JFrame {
                         Date fecha=new Date();
                         DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                         as.setFechaHora(formato.format(fecha));
-                        as.setUsuario(LoginView.nombreUsuario);
+                        as.setUsuario(u.get(0).getEmpleado().getNombre());
                         entityManager.getTransaction().begin();
                         entityManager.persist(as);
                         entityManager.getTransaction().commit();
                         entityManager.close();
-                        //hacemos visible el menu para el usuario segun el rol que tenga asignado
-                        if("administrador del sistema".equals(u.get(0).getIdRol().getNombre())){
-                            String args[]=new String[1];
-                            args[0]="Menu Administrador del Sistema";
-                            MenuAdminSist.main(args);
-                            this.dispose();
-                        }
-                        if("recepcionista".equals(u.get(0).getIdRol().getNombre())){
-                             String args[]=new String[1];
-                            args[0]="Menu Recepcionista";
-                            MenuRecepcionista.main(args);
-                            this.dispose();
-                        }
-                        if("administrador del hotel".equals(u.get(0).getIdRol().getNombre())){
-                             String args[]=new String[1];
-                            args[0]="Menu Administrador del Hotel";
-                            MenuAdminHotel.main(args);
-                            this.dispose();
-                        }
-                                   
+                        JOptionPane.showMessageDialog(null,"Inicio de Sesión "
+                                 + "Exitoso", "Correcto",JOptionPane.INFORMATION_MESSAGE);
+                        String args[]= new String[1];
+                        args[0]  = "Menú del Sistema";
+                         view.MenuGeneral.usuario = u.get(0);
+                        nombreUsuario = u.get(0).getEmpleado().getNombre() + 
+                                " " + u.get(0).getEmpleado().getApellido();
+                         view.MenuGeneral.main(args);
+                        this.dispose();              
                 }else{
                      JOptionPane.showMessageDialog(null,"Contraseña Incorrecta", "Error",JOptionPane.ERROR_MESSAGE);
                      tf_password.setText(null);
                      return;
                 }
-                //AQUI OBTENDREMOS EL NOMBRE DEL USUARIO QUE INICIA SESIÓN 
-
             }
             
         }
@@ -351,6 +334,13 @@ public class LoginView extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_tf_passwordKeyPressed
 
+    private void tf_codemplKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_codemplKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER && !tf_password.getText().equals("")){
+            btn_iniciar.doClick();
+        }
+    }//GEN-LAST:event_tf_codemplKeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -384,5 +374,4 @@ public class LoginView extends javax.swing.JFrame {
     public static javax.swing.JTextField tf_codempl;
     public static javax.swing.JPasswordField tf_password;
     // End of variables declaration//GEN-END:variables
-
 }
