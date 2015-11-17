@@ -99,26 +99,31 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         mItem_editarCH = new javax.swing.JMenuItem();
         mItem_eliminarCH = new javax.swing.JMenuItem();
         mItem_buscar = new javax.swing.JMenuItem();
+        jSeparator9 = new javax.swing.JPopupMenu.Separator();
         menu_Habitacion = new javax.swing.JMenu();
         mItem_crearHabit = new javax.swing.JMenuItem();
         mItem_editarHabit = new javax.swing.JMenuItem();
         mItem_eliminarHabit = new javax.swing.JMenuItem();
         mItem_buscarHabit = new javax.swing.JMenuItem();
+        jSeparator11 = new javax.swing.JPopupMenu.Separator();
         menu_PS = new javax.swing.JMenu();
         mItem_crearPS = new javax.swing.JMenuItem();
         mItem_editarPS = new javax.swing.JMenuItem();
         mItem_eliminarPS = new javax.swing.JMenuItem();
         mItem_buscarPS = new javax.swing.JMenuItem();
+        jSeparator12 = new javax.swing.JPopupMenu.Separator();
         menu_actividad = new javax.swing.JMenu();
         mItem_registrarActividad = new javax.swing.JMenuItem();
         mItem_editarActividad = new javax.swing.JMenuItem();
         mItem_eliminarActividad = new javax.swing.JMenuItem();
         mItem_buscarActividad = new javax.swing.JMenuItem();
+        jSeparator8 = new javax.swing.JPopupMenu.Separator();
         menu_lugar = new javax.swing.JMenu();
         mItem_registrarLugar = new javax.swing.JMenuItem();
         mItem_editarLugar = new javax.swing.JMenuItem();
         mItem_eliminarLugar = new javax.swing.JMenuItem();
         mItem_buscarLugar = new javax.swing.JMenuItem();
+        jSeparator10 = new javax.swing.JPopupMenu.Separator();
         mItem_peridaOportunidades = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         mItem_consumoPS = new javax.swing.JMenuItem();
@@ -133,11 +138,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_RRHH.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_RRHH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/aluno.png"))); // NOI18N
         menu_RRHH.setText("Recursos Humanos");
-        menu_RRHH.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        menu_RRHH.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
 
-        menu_empleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cliente1.png"))); // NOI18N
+        menu_empleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/clientes.png"))); // NOI18N
         menu_empleado.setText("Empleado");
-        menu_empleado.setFont(new java.awt.Font("Candara", 0, 16)); // NOI18N
+        menu_empleado.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
 
         mItem_crearEmpleado.setText("Registrar Empleado");
         mItem_crearEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -174,7 +179,9 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_RRHH.add(menu_empleado);
         menu_RRHH.add(jSeparator1);
 
+        menu_asistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/reloj1.gif"))); // NOI18N
         menu_asistencia.setText("Asistencia de Empleados");
+        menu_asistencia.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
 
         mItem_registrarAsist.setText("Registrar Asistencia");
         mItem_registrarAsist.addActionListener(new java.awt.event.ActionListener() {
@@ -204,6 +211,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_RRHH.add(jSeparator3);
 
         menu_eventos.setText("Eventos");
+        menu_eventos.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
 
         mItem_registrarEvento.setText("Registrar Evento");
         mItem_registrarEvento.addActionListener(new java.awt.event.ActionListener() {
@@ -240,6 +248,8 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_RRHH.add(menu_eventos);
         menu_RRHH.add(jSeparator4);
 
+        mItem_planillaPagos.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
+        mItem_planillaPagos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icon-money.png"))); // NOI18N
         mItem_planillaPagos.setText("Generar Planilla de Sueldos");
         mItem_planillaPagos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -249,6 +259,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_RRHH.add(mItem_planillaPagos);
         menu_RRHH.add(jSeparator5);
 
+        mItem_informeAsist.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
         mItem_informeAsist.setText("Generar Informe de Asistencia");
         mItem_informeAsist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -258,7 +269,9 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_RRHH.add(mItem_informeAsist);
         menu_RRHH.add(jSeparator6);
 
+        menu_cargo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/user-32.png"))); // NOI18N
         menu_cargo.setText("Cargo");
+        menu_cargo.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
 
         mItem_crearCargo.setText("Crear Cargo");
         mItem_crearCargo.addActionListener(new java.awt.event.ActionListener() {
@@ -296,7 +309,9 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_RRHH.add(jSeparator2);
 
         menu_seguimientoA.setBorder(null);
+        menu_seguimientoA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/table.png"))); // NOI18N
         menu_seguimientoA.setText(" Seguimiento Actividades");
+        menu_seguimientoA.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
 
         mItem_registrarSeg.setText("Registrar Seguimiento");
         mItem_registrarSeg.addActionListener(new java.awt.event.ActionListener() {
@@ -341,6 +356,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
 
         menu_CategHabitacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_CategHabitacion.setText("Categoría de Habitación");
+        menu_CategHabitacion.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
 
         mItem_crearCH.setText("Crear Categoría");
         mItem_crearCH.addActionListener(new java.awt.event.ActionListener() {
@@ -375,6 +391,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_CategHabitacion.add(mItem_buscar);
 
         menu_hotel.add(menu_CategHabitacion);
+        menu_hotel.add(jSeparator9);
 
         menu_Habitacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_Habitacion.setText("Habitación");
@@ -417,6 +434,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_Habitacion.add(mItem_buscarHabit);
 
         menu_hotel.add(menu_Habitacion);
+        menu_hotel.add(jSeparator11);
 
         menu_PS.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_PS.setText("Producto/Servicio");
@@ -454,6 +472,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_PS.add(mItem_buscarPS);
 
         menu_hotel.add(menu_PS);
+        menu_hotel.add(jSeparator12);
 
         menu_actividad.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_actividad.setText("Actividad");
@@ -491,8 +510,10 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_actividad.add(mItem_buscarActividad);
 
         menu_hotel.add(menu_actividad);
+        menu_hotel.add(jSeparator8);
 
         menu_lugar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_lugar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ubicacion.png"))); // NOI18N
         menu_lugar.setText("Lugar");
 
         mItem_registrarLugar.setText("Registrar Lugar");
@@ -528,6 +549,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_lugar.add(mItem_buscarLugar);
 
         menu_hotel.add(menu_lugar);
+        menu_hotel.add(jSeparator10);
 
         mItem_peridaOportunidades.setText("Informe de Pérdida de Oportunidades");
         mItem_peridaOportunidades.addActionListener(new java.awt.event.ActionListener() {
@@ -964,12 +986,17 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
+    private javax.swing.JPopupMenu.Separator jSeparator11;
+    private javax.swing.JPopupMenu.Separator jSeparator12;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JPopupMenu.Separator jSeparator7;
+    private javax.swing.JPopupMenu.Separator jSeparator8;
+    private javax.swing.JPopupMenu.Separator jSeparator9;
     private javax.swing.JMenuItem mIem_buscarSeg;
     private javax.swing.JMenuItem mItem_buscar;
     private javax.swing.JMenuItem mItem_buscarActividad;

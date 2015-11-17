@@ -329,7 +329,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
         opcion = 1;
         String args[]=new String[1];
         args[0]="Editar usuario";
-        UsuarioBuscar.main(args);
+        EditarUsuario.main(args);
     }//GEN-LAST:event_mitem_editarusuarioActionPerformed
 
     private void mitem_eliminarusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitem_eliminarusuarioActionPerformed
@@ -338,7 +338,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
         opcion = 2;
         String args[]=new String[1];
         args[0]="Eliminar usuario";
-        UsuarioBuscar.main(args);
+        EliminarUsuario.main(args);
     }//GEN-LAST:event_mitem_eliminarusuarioActionPerformed
 
     private void menu_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_salirActionPerformed

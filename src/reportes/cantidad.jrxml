@@ -15,6 +15,9 @@
 	<parameter name="CantDias" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="Costo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select ha.numero,ifnull(tp.codigoReserva,0) as codigoReserva,ifnull(tp.checkIn,'0000-00-00')as checkIn,ifnull(tp.checkOut,'0000-00-00') as checkOut,ifnull(tp.dif,0) as diferencia
 from habitacion ha left outer join
@@ -27,8 +30,7 @@ on r.numHabitacion=h.numero
 where ((r.checkIn>=$P{FechaDesde} and r.checkIn<=$P{FechaHasta}) or (r.checkOut>=$P{FechaDesde} and r.checkOut<=$P{FechaHasta}) )
 and r.numHabitacion=$P{Habitacion})tp
 on ha.numero=tp.numero
-where ha.numero=$P{Habitacion}
-]]>
+where ha.numero=$P{Habitacion}]]>
 	</queryString>
 	<field name="numero" class="java.lang.Integer"/>
 	<field name="codigoReserva" class="java.lang.Long"/>
@@ -42,6 +44,9 @@ where ha.numero=$P{Habitacion}
 	<variable name="desocupacion" class="java.lang.Integer">
 		<variableExpression><![CDATA[$P{CantDias}-$V{dif_1}.intValue()]]></variableExpression>
 		<initialValueExpression><![CDATA[$P{CantDias}]]></initialValueExpression>
+	</variable>
+	<variable name="perdida" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{desocupacion}*$P{Costo}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -121,6 +126,13 @@ where ha.numero=$P{Habitacion}
 				<reportElement uuid="9bc3ddf4-276a-420f-8ac5-e0614a904c70" x="148" y="0" width="69" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$V{dif_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="675977bc-622e-48f5-aad7-55dca4eacbf9" x="227" y="22" width="21" height="20">
+					<printWhenExpression><![CDATA[$V{perdida}==null]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{desocupacion}*$P{Costo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

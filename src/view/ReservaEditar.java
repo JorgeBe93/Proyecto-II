@@ -45,7 +45,7 @@ public class ReservaEditar extends javax.swing.JFrame {
     public Date auxOut;
     private String datos[]=new String[3];
     FacturaCobro f=new FacturaCobro();
-    public static Reserva reservaLocal = new Reserva();
+   public static Reserva r = new Reserva();
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
     /**
@@ -604,8 +604,9 @@ public class ReservaEditar extends javax.swing.JFrame {
         String antes;
         String despues;
         String letras;
-         DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat form=new SimpleDateFormat("dd-MM-yyyy");
         java.util.Date fecha = new Date();
+        Reserva reservaLocal = new Reserva();
           if(tf_codReserva.getText().length()==0){
               JOptionPane.showMessageDialog(null,"Seleccione una reserva", "Error",JOptionPane.ERROR_MESSAGE);
                  return;
@@ -648,7 +649,6 @@ public class ReservaEditar extends javax.swing.JFrame {
                             reservaLocal.setCheckIn(dateIn);
                             reservaLocal.setCheckOut(dateOut);
                             reservaLocal.setNumPresupuesto(reserva.getNumPresupuesto());
-                            //reserva.setCheckOut(format.parse(format.format(jc_checkout.toString())));
                             reservaLocal.setCodigoCliente(cliente);
                             if (tf_montoAbonado.getText().equals(""))
                                 reservaLocal.setMontoAbonado(0);
@@ -662,10 +662,11 @@ public class ReservaEditar extends javax.swing.JFrame {
                                 reservaLocal.setNumHabitacion(habitacion);
                                 System.out.println("Monto Abonado Ahora "+reservaLocal.getMontoAbonado());
                                 System.out.println("Monto Abonado Antes "+reserva.getMontoAbonado());
-                                monto_fac=ReservaEditar.reservaLocal.getMontoAbonado()-reserva.getMontoAbonado();
-                                System.out.println("Monto Factura "+monto_fac);
+                                monto_fac=reservaLocal.getMontoAbonado()-reserva.getMontoAbonado();
+                                System.out.println("objeto a remover1 "+reserva.toString());
                                 entityManager.merge(reservaLocal);
                                 entityManager.flush();
+                                r=reservaLocal;
                                 //despues de los cambios
                                 despues = reservaLocal.toString();
                                 //guardamos el consumo
@@ -728,30 +729,6 @@ public class ReservaEditar extends javax.swing.JFrame {
                                                 entityManager.flush();
                                          }        
                                 }
-                              
-                                 //generamos la factura en caso de que haya aportado algo
-                              /*  if(monto_fac!=0){
-                                        f.setCodigoReserva(reserva);
-                                        f.setConcepto("anticipo de reserva");
-                                       if("".equals(reserva.getCodigoCliente().getRuc())){
-                                             f.setRucCliente(reserva.getCodigoCliente().getCedula());
-                                       }else{
-                                             f.setRucCliente(reserva.getCodigoCliente().getRuc());
-                                       }
-                                       f.setFechaEmision(form.format(fecha));
-                                       f.setTotal(monto_fac);
-                                       f.setTipoFactura((String) list_pago.getSelectedItem());
-                                       entityManager.persist(f);
-                                       entityManager.flush();
-                                        if("Crédito/Cheque".equals(f.getTipoFactura()) || "Crédito/Tarjeta".equals(f.getTipoFactura()) ){
-                                           condicion="Crédito";
-
-                                       }else{
-                                           condicion="Contado";
-                                       }
-                                }*/
-                               
-
                             }
                             //creacion de auditoria de sistema
                             AuditoriaSistema as=new AuditoriaSistema();
@@ -766,46 +743,19 @@ public class ReservaEditar extends javax.swing.JFrame {
                             entityManager.persist(as);
                             entityManager.flush();
                             entityManager.getTransaction().commit();
-                           // ema.close();
                             JOptionPane.showMessageDialog(null, "Modificación Exitosa");
-                              //actualizamos la tabla
-                                list.remove(reserva);
-                                list.add(reservaLocal);
                             //mostramos la factura
                             if(!"0".equals(tf_montoAbonado.getText()) && monto_fac!=0){
                                
                                  RegistrarDetalleCobro.invoca="Editar Reserva";
                                  formaPago();
-                             /*    try
-                                {
-                                     //convertimos el numero en letras
-                                    NumberToText nt=new NumberToText();
-                                    letras=nt.convertirLetras(f.getTotal());
-                                    System.out.print(letras);
-                                    Class.forName("com.mysql.jdbc.Driver");
-                                    Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
-                                    HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
-                                    Map parametros=new HashMap();
-                                    System.out.print(f.getNumFactura());
-                                    par.put("Letras", letras);
-                                    par.put("NumFactura",f.getNumFactura() );
-                                    par.put("Saldo", diferencia);
-                                    par.put("Condicion", condicion);
-                                    JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/facturaAnticipo.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
-                                    JasperViewer jv = new JasperViewer(jp,false);
-                                    jv.setVisible(true);
-                                     jv.setTitle("Factura de Anticipo de Reserva");
-                                     Image icon = new ImageIcon(getClass().getResource("/imagenes/hotel2.png")).getImage();
-                                    jv.setIconImage(icon);
-                                    jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                                }
-                                catch(Exception e)
-                                {
-                                    e.printStackTrace();
-                                }*/
                             }
+                             System.out.println("objeto a remover "+reserva.toString());
+                             System.out.println("objeto a agregar "+reservaLocal.toString());
+                            list.remove(reserva);
+                            list.add(reservaLocal);
                             resetear();
-                           enviarDatosEmail();
+                            enviarDatosEmail();
                         }
                         else{
                             this.dispose();
@@ -825,6 +775,7 @@ public class ReservaEditar extends javax.swing.JFrame {
 
            
         }
+     
     }//GEN-LAST:event_btn_modificarActionPerformed
      private void formaPago(){
         String args[]=new String[1];
@@ -1175,15 +1126,15 @@ public class ReservaEditar extends javax.swing.JFrame {
         }
   private void enviarDatosEmail(){
         boolean resultado;
-        if(reservaLocal.getCodigoCliente().getEmail()!=null){
+        if(r.getCodigoCliente().getEmail()!=null){
                 datos[0]=reserva.getCodigoCliente().getEmail();
                 datos[1]="Detalles de  Reserva ";
                 datos[2]=" BIENVENIDO AL HOTEL SANTA MARÍA"+"\n "
-                +"SR/SRA: "+reservaLocal.getCodigoCliente().getNombre()+" "+reserva.getCodigoCliente().getApellido()+"\n " 
-               +"Su reserva es la n°: "+reservaLocal.getCodigoReserva()+"\n " 
-               +"Check In: "+" "+format.format(reservaLocal.getCheckIn())+"\n"+"Check Out: "+" "+format.format(reserva.getCheckOut())+"\n "
-               +"Habitación: "+" "+reservaLocal.getNumHabitacion().getNumero()+"\n"+"Categoría: "+" "+reservaLocal.getNumHabitacion().getCodigoCategoria().getNombre()+"\n"
-               +"Monto Habitación: "+" "+formateador(reservaLocal.getNumHabitacion().getCodigoCategoria().getCostoxnoche())+"\n"+"Monto Total: "+" "+formateador(reservaLocal.getMontoTotal())+"\n"+"Monto Abonado: "+" "+formateador(reserva.getMontoAbonado())+"\n"
+                +"SR/SRA: "+r.getCodigoCliente().getNombre()+" "+reserva.getCodigoCliente().getApellido()+"\n " 
+               +"Su reserva es la n°: "+r.getCodigoReserva()+"\n " 
+               +"Check In: "+" "+format.format(r.getCheckIn())+"\n"+"Check Out: "+" "+format.format(reserva.getCheckOut())+"\n "
+               +"Habitación: "+" "+r.getNumHabitacion().getNumero()+"\n"+"Categoría: "+" "+r.getNumHabitacion().getCodigoCategoria().getNombre()+"\n"
+               +"Monto Habitación: "+" "+formateador(r.getNumHabitacion().getCodigoCategoria().getCostoxnoche())+"\n"+"Monto Total: "+" "+formateador(r.getMontoTotal())+"\n"+"Monto Abonado: "+" "+formateador(reserva.getMontoAbonado())+"\n"
                +"Debe abonar el 30% del monto total de la reserva, de lo contrario perderá la misma";
                 Correo c=new Correo();
                 resultado=c.enviarCorreo(datos);

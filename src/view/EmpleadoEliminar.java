@@ -632,7 +632,8 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
                 }
                 //
                 valor=empleado.toString();
-                Empleado empleadoFind = entityManager.find(Empleado.class, empleado.getCodigoEmpleado());
+                Empleado  empleadoFind = entityManager.find(Empleado.class, empleado.getCodigoEmpleado());
+                
                 entityManager.remove(empleadoFind);
                 entityManager.flush();
                 registrarAuditoria("Empleado","Eliminación",valor,"No hay cambios");

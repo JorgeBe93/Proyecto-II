@@ -24,18 +24,18 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Recursos Humanos"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="12" style="0"/>
+              <Font name="Candara" size="15" style="0"/>
             </Property>
           </Properties>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="menu_empleado">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagenes/cliente1.png"/>
+                  <Image iconType="3" name="/imagenes/clientes.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Empleado"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Candara" size="16" style="0"/>
+                  <Font name="Candara" size="15" style="0"/>
                 </Property>
               </Properties>
               <SubComponents>
@@ -77,7 +77,13 @@
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="menu_asistencia">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/reloj1.gif"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Asistencia de Empleados"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Candara" size="15" style="0"/>
+                </Property>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="mItem_registrarAsist">
@@ -111,6 +117,9 @@
             <Menu class="javax.swing.JMenu" name="menu_eventos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eventos"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Candara" size="15" style="0"/>
+                </Property>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="mItem_registrarEvento">
@@ -151,6 +160,12 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mItem_planillaPagos">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Candara" size="15" style="0"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/icon-money.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Generar Planilla de Sueldos"/>
               </Properties>
               <Events>
@@ -161,6 +176,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mItem_informeAsist">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Candara" size="15" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Generar Informe de Asistencia"/>
               </Properties>
               <Events>
@@ -171,7 +189,13 @@
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="menu_cargo">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/user-32.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cargo"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Candara" size="15" style="0"/>
+                </Property>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="mItem_crearCargo">
@@ -215,7 +239,13 @@
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/table.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value=" Seguimiento Actividades"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Candara" size="15" style="0"/>
+                </Property>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="mItem_registrarSeg">
@@ -278,6 +308,9 @@
                   </Border>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Categor&#xed;a de Habitaci&#xf3;n"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Candara" size="15" style="0"/>
+                </Property>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="mItem_crearCH">
@@ -314,6 +347,8 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator9">
+            </MenuItem>
             <Menu class="javax.swing.JMenu" name="menu_Habitacion">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -361,6 +396,8 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator11">
+            </MenuItem>
             <Menu class="javax.swing.JMenu" name="menu_PS">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -405,6 +442,8 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator12">
+            </MenuItem>
             <Menu class="javax.swing.JMenu" name="menu_actividad">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -449,12 +488,17 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator8">
+            </MenuItem>
             <Menu class="javax.swing.JMenu" name="menu_lugar">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
                     <BevelBorder/>
                   </Border>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagenes/ubicacion.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Lugar"/>
               </Properties>
@@ -493,6 +537,8 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator10">
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mItem_peridaOportunidades">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Informe de P&#xe9;rdida de Oportunidades"/>

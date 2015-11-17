@@ -190,7 +190,7 @@ FROM
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="70" splitType="Stretch">
+		<band height="77" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="2c7f795b-3592-41c3-b54c-8ffc052f961b" x="160" y="0" width="69" height="20"/>
 				<textElement>
@@ -269,10 +269,19 @@ FROM
 				<text><![CDATA[%]]></text>
 			</staticText>
 			<textField pattern="#,##0">
-				<reportElement uuid="9d549188-5f95-474a-9bdf-3e6b2f7fcbbb" x="48" y="29" width="100" height="20"/>
-				<textElement/>
+				<reportElement uuid="084256cc-5aad-4ff2-a6ba-045da66389a0" x="300" y="57" width="100" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{perdida}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement uuid="df1f0369-9e0d-4231-88cf-30ca1bca05b9" x="214" y="57" width="86" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pérdida Gs:]]></text>
+			</staticText>
 		</band>
 	</summary>
 </jasperReport>

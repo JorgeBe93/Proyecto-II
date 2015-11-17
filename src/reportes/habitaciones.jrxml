@@ -37,9 +37,7 @@ WHERE
 	<variable name="habitacion_numero" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{habitacion_numero}]]></variableExpression>
 	</variable>
-	<variable name="perdida" class="java.lang.Integer" incrementType="Report">
-		<variableExpression><![CDATA[$V{desocupacion}*$F{categ_habitacion_costoxnoche}]]></variableExpression>
-	</variable>
+	<variable name="perdida" class="java.lang.Integer" calculation="Sum"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -64,7 +62,7 @@ WHERE
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="19" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement uuid="1eda01f6-937d-42eb-821b-17741d7ae915" x="0" y="1" width="38" height="18"/>
 				<textElement>
@@ -77,6 +75,9 @@ WHERE
 				<subreportParameter name="FechaHasta">
 					<subreportParameterExpression><![CDATA[$P{fechaHasta}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="Costo">
+					<subreportParameterExpression><![CDATA[$F{categ_habitacion_costoxnoche}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="Habitacion">
 					<subreportParameterExpression><![CDATA[$F{habitacion_numero}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -88,6 +89,7 @@ WHERE
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<returnValue subreportVariable="desocupacion" toVariable="desocupacion" calculation="Sum"/>
+				<returnValue subreportVariable="perdida" toVariable="perdida" calculation="Sum"/>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cantidad.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
@@ -139,11 +141,11 @@ WHERE
 				<text><![CDATA[Pérdida Gs.:]]></text>
 			</staticText>
 			<textField pattern="#,##0">
-				<reportElement uuid="03b19b6e-52e3-4148-977e-fb6e336e7aaa" x="284" y="0" width="76" height="20"/>
+				<reportElement uuid="b855a076-eccd-43fc-af4b-f9e73a84b616" x="284" y="0" width="76" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{categ_habitacion_costoxnoche}*$V{desocupacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{perdida}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

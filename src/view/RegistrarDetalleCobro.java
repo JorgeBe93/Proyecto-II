@@ -418,12 +418,12 @@ private void   generarFactCrearReserva(){
                         }
 }
 private void   generarFactEditarReserva(){
-            f.setCodigoReserva(ReservaEditar.reservaLocal);
+            f.setCodigoReserva(ReservaEditar.r);
             f.setConcepto("anticipo de reserva");
-            if("".equals(ReservaEditar.reservaLocal.getCodigoCliente().getRuc())){
-                        f.setRucCliente(ReservaEditar.reservaLocal.getCodigoCliente().getCedula());
+            if("".equals(ReservaEditar.r.getCodigoCliente().getRuc())){
+                        f.setRucCliente(ReservaEditar.r.getCodigoCliente().getCedula());
            }else{
-                        f.setRucCliente(ReservaEditar.reservaLocal.getCodigoCliente().getRuc());
+                        f.setRucCliente(ReservaEditar.r.getCodigoCliente().getRuc());
             }
             f.setFechaEmision(formato.format(fecha));
             f.setTotal(ReservaEditar.monto_fac);
@@ -445,7 +445,7 @@ private void   generarFactEditarReserva(){
               //convertimos el numero en letras
               NumberToText nt=new NumberToText();
               letras=nt.convertirLetras(f.getTotal());
-              diferencia=(ReservaEditar.reservaLocal.getMontoTotal()-ReservaEditar.reservaLocal.getMontoAbonado());
+              diferencia=(ReservaEditar.r.getMontoTotal()-ReservaEditar.r.getMontoAbonado());
               System.out.print(letras);
               Class.forName("com.mysql.jdbc.Driver");
               Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");

@@ -611,7 +611,7 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Modificación Exitosa");
             resetear();
              //actualizo el master table
-            List.clear();
+            List.remove(p.get(0));
             List.add(cp);
         }else{
                  this.dispose();

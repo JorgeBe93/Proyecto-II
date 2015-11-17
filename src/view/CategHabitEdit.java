@@ -381,7 +381,7 @@ public class CategHabitEdit extends javax.swing.JFrame {
                         entityManager.getTransaction().commit();
                         //entityManager.close();
                         JOptionPane.showMessageDialog(null, "Modificación Exitosa");
-                        list.clear();
+                        list.remove(c.get(0));
                         list.add(ca);
                         resetear();
                         
