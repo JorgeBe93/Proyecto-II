@@ -12,6 +12,7 @@
 package view;
 
 import bean.AuditoriaSistema;
+import bean.Rol;
 //import bean.Permiso;
 import bean.Usuario;
 import java.awt.Image;
@@ -271,12 +272,58 @@ public class LoginView extends javax.swing.JFrame {
                         entityManager.close();
                         JOptionPane.showMessageDialog(null,"Inicio de Sesión "
                                  + "Exitoso", "Correcto",JOptionPane.INFORMATION_MESSAGE);
-                        String args[]= new String[1];
-                        args[0]  = "Menú del Sistema";
-                         view.MenuGeneral.usuario = u.get(0);
+                        //String args[]= new String[1];
+                        //args[0]  = "Menú del Sistema";
+                        
+                        Object [] roles = obtenerObjectoConRoles((List)u.get(0).getRolCollection());
+                        
+                        // Con JCombobox
+                        Object seleccion = JOptionPane.showInputDialog(
+                           null,
+                           "Seleccione un Rol para Iniciar Sesión",
+                           "Selector de Roles",
+                           JOptionPane.QUESTION_MESSAGE,
+                           null,  // null para icono defecto
+                           roles, 
+                           roles[0]);
+
+                        switch (seleccion.toString()) {
+                        case "Administrador del Sistema":
+                            {
+                                String args[] = new String[1];
+                                args[0] = "Administrador del Sistema";
+                                view.MenuAdminSist.main(args);
+                                //dispose();
+                                break;
+                            }
+                        case "Recepcionista":
+                            {
+                                String args[] = new String[1];
+                                args[0] = "Recepcionista";
+                                view.MenuRecepcionista.main(args);
+                                //dispose();
+                                break;
+                            }
+                        case "Administrador del Hotel":
+                            {
+                                String args[] = new String[1];
+                                args[0] = "Administrador del Hotel";
+                                ViewAdmHotel.MenuAdminHotel.main(args);
+                                //ispose();
+                                break;
+                            }
+                        default:
+                            JOptionPane.showMessageDialog(null, "Sin permisos para "
+                                    + "esta operación", "Acceso denegado", JOptionPane.ERROR_MESSAGE);
+                            break;
+                    }
+                
+            
+                        
+                        /*view.MenuGeneral.usuario = u.get(0);
                         nombreUsuario = u.get(0).getEmpleado().getNombre() + 
                                 " " + u.get(0).getEmpleado().getApellido();
-                         view.MenuGeneral.main(args);
+                         view.MenuGeneral.main(args);*/
                         this.dispose();              
                 }else{
                      JOptionPane.showMessageDialog(null,"Contraseña Incorrecta", "Error",JOptionPane.ERROR_MESSAGE);
@@ -375,4 +422,15 @@ public class LoginView extends javax.swing.JFrame {
     public static javax.swing.JTextField tf_codempl;
     public static javax.swing.JPasswordField tf_password;
     // End of variables declaration//GEN-END:variables
+    private Object[] obtenerObjectoConRoles(List<Rol> rolesDelUsuario ){
+        int tamanho = rolesDelUsuario.size();
+        Object [] rolesAretornar = new Object[tamanho];
+        int i = 0; 
+        for(Rol rol:  rolesDelUsuario){
+            rolesAretornar[i] = rol.getNombre();
+            i++;
+        }
+        return rolesAretornar;
+    }
+
 }
