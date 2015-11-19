@@ -261,6 +261,16 @@ public class UsuarioCreate extends javax.swing.JFrame {
         lbl_filtro.setText("Buscar por:");
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Empleado", "Cedula", "Nombre", "Apellido", "Cargo", "Jefe" }));
+        list_filtros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                list_filtrosActionPerformed(evt);
+            }
+        });
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
+        });
 
         btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
         btn_buscar.setText("Buscar");
@@ -414,7 +424,7 @@ public class UsuarioCreate extends javax.swing.JFrame {
 
                  //fila = masterTable.getSelectedRow();
                  //codEmpleado = Integer.parseInt(masterTable.getValueAt(fila, 0).toString());
-                 Empleado e = obtenerEmpleado(codEmpleado);
+                 //Empleado e = obtenerEmpleado(codEmpleado);
                  
                  //Empleado e=obtenerEmpleado(Integer.parseInt(tf_codigoEmpleado.getText()));
                  EntityManager.getTransaction().begin();
@@ -422,28 +432,29 @@ public class UsuarioCreate extends javax.swing.JFrame {
                  //u.setCodigoEmpleado(codEmpleado);
                  //u.setPassword(generarPassword());   
                  //u.setEmpleado(e);
+                 Empleado empleadoFind = EntityManager.find(Empleado.class, codEmpleado);
                  Rol rol = (Rol)list_rol.getSelectedItem();
-                 Collection<Rol> roles = new ArrayList<Rol>();
+                 Collection<Rol> roles = new ArrayList<>();
                  roles.add(rol);
                  //u.setRolCollection(roles);
-                 e.setUsuario(new Usuario());
-                 e.getUsuario().setEmpleado(e);
-                 e.getUsuario().setCodigoEmpleado(codEmpleado);
-                 e.getUsuario().setPassword(generarPassword());
-                 e.getUsuario().setRolCollection(roles);
+                 empleadoFind.setUsuario(new Usuario());
+                 empleadoFind.getUsuario().setEmpleado(empleadoFind);
+                 empleadoFind.getUsuario().setCodigoEmpleado(codEmpleado);
+                 empleadoFind.getUsuario().setPassword(generarPassword());
+                 empleadoFind.getUsuario().setRolCollection(roles);
                  //EntityManager.persist(u);
                  /**
                   * Se debe actualizar empleado porque el es el dueño de usuario
                   * Mirar en el bean que el join OneToOne esta en Empleado
                   */
-                 EntityManager.merge(e);
+                 EntityManager.merge(empleadoFind);
                  EntityManager.flush();
                  
                  //registramos los datos de la auditoria
                  AuditoriaSistema as=new AuditoriaSistema();
                  as.setAccion("Creación");
                  as.setTabla("Usuario");
-                 as.setAntes(e.getUsuario().toString());
+                 as.setAntes(empleadoFind.getUsuario().toString());
                  as.setDespues("No hay cambios");
                  //trabajmos con la fecha
                  Date fecha=new Date();
@@ -454,16 +465,17 @@ public class UsuarioCreate extends javax.swing.JFrame {
                  EntityManager.flush();
                  EntityManager.getTransaction().commit();
                  //em.close();
-                 datos[0]=e.getEmail();
+                 datos[0]=empleadoFind.getEmail();
                  datos[1]="Creación de cuenta";
-                 datos[2]="Su código de usuario es:"+" "+"'"+e.getCodigoEmpleado()+"'" +" "+
-                         "y su contraseña de acceso es:"+" "+"'"+e.getUsuario().getPassword()+"'";
+                 datos[2]="Su código de usuario es:"+" "+"'"+empleadoFind.getCodigoEmpleado()+"'" +" "+
+                         "y su contraseña de acceso es:"+" "+"'"+empleadoFind.getUsuario().getPassword()+"'";
                  //empleadoList.clear();
                  //empleadoList.add(e);
-                 //enviarPassCorreo();
-                    JOptionPane.showMessageDialog(null, "Usuario Creado Exitosamente");
+                 enviarPassCorreo();
+                 //JOptionPane.showMessageDialog(null, "Usuario Creado Exitosamente");
                  empleadoSinRol();
                  fila = -1;
+                 vaciarCampos();
                }else{
                     this.dispose();
              }    
@@ -486,13 +498,21 @@ public class UsuarioCreate extends javax.swing.JFrame {
 
     private void tf_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_valorKeyTyped
         // TODO add your handling code here:
-        char ch;
+        char letra;
+        int num;
         if (list_filtros.getSelectedItem()=="Jefe"
-            || list_filtros.getSelectedItem()=="Empleado"
-            || list_filtros.getSelectedItem()=="Cedula"
-        ){
-            ch=evt.getKeyChar();
-            if(!Character.isDigit(ch)){
+            || list_filtros.getSelectedItem()=="Empleado"){
+            letra=evt.getKeyChar();
+            if(!Character.isDigit(letra)){
+                getToolkit().beep();
+                evt.consume();
+            }
+        }
+        if(list_filtros.getSelectedItem() == "Nombre" ||
+                list_filtros.getSelectedItem() == "Apellido" ||
+                list_filtros.getSelectedItem() == "Cargo"){
+            num=evt.getKeyChar();
+            if(Character.isDigit(num)){
                 getToolkit().beep();
                 evt.consume();
             }
@@ -618,6 +638,15 @@ public class UsuarioCreate extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_nombreEmpleadoActionPerformed
 
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+        tf_valor.setText("");
+    }//GEN-LAST:event_list_filtrosFocusGained
+
+    private void list_filtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_list_filtrosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_list_filtrosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -647,6 +676,7 @@ public class UsuarioCreate extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 JFrame frame=new UsuarioCreate();
                 frame.setVisible(true);
@@ -686,17 +716,6 @@ public class UsuarioCreate extends javax.swing.JFrame {
     private javax.swing.JTextField tf_valor;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-    private Empleado obtenerEmpleado(int codigoEmpleado){
-        //EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
-        //EntityManager ema = fact.createEntityManager();
-       //  JOptionPane.showMessageDialog(null, codigoEmpleado);
-        Query query = EntityManager.createNamedQuery("Empleado.findByCodigoEmpleado");
-        query.setParameter("codigoEmpleado", codigoEmpleado);
-        Empleado empleado;
-        empleado = (Empleado)query.getSingleResult();
-        System.out.println(empleado.getNombre());
-        return empleado;
-    }
     private String generarPassword(){
         String cadenaLocal = "";
         for(int i=0;i<3;i++){

@@ -67,6 +67,11 @@ public class UsuarioBuscar extends javax.swing.JFrame {
         jLabel1.setText("Buscar por:");
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código", "Nombre", "Apellido" }));
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel2.setText("Valor:");
@@ -338,6 +343,11 @@ public class UsuarioBuscar extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+        tf_valor.setText("");
+    }//GEN-LAST:event_list_filtrosFocusGained
 
     /**
      * @param args the command line arguments

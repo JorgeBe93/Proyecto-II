@@ -588,7 +588,7 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
             if(respuesta == JOptionPane.YES_OPTION){
                 entityManager.getTransaction().begin();
                 //eliminamos el perfil de usuario del empleado
-                query=entityManager.createNativeQuery("SELECT * FROM usuario  WHERE "
+                /*query=entityManager.createNativeQuery("SELECT * FROM usuario  WHERE "
                         + "codigoEmpleado= "
                         + "'"+tf_codigo.getText()+"'",Usuario.class);
                 List<Usuario> u=query.getResultList();
@@ -599,7 +599,7 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
                         registrarAuditoria("Usuario","Eliminación",valor,"No hay cambios");
                     }
                     entityManager.flush();
-                }
+                }*/
                 //actualizamos los subordinados en caso de que sea un jefe
                  query=entityManager.createNativeQuery("SELECT * FROM empleado  WHERE "
                         + "codigoJefe= "
@@ -627,12 +627,15 @@ public class EmpleadoEliminar extends javax.swing.JFrame {
                         list.remove(listemp.get(i));
                         list.add(e);
                         
-                    }
-                    
+                    } 
                 }
                 //
                 valor=empleado.toString();
                 Empleado empleadoFind = entityManager.find(Empleado.class, empleado.getCodigoEmpleado());
+                Usuario usuarioFind = entityManager.find(Usuario.class, empleadoFind.getUsuario().getCodigoEmpleado());
+                entityManager.remove(usuarioFind);
+                entityManager.flush();
+                registrarAuditoria("Usuario","Eliminación",valor,"No hay cambios");
                 entityManager.remove(empleadoFind);
                 entityManager.flush();
                 registrarAuditoria("Empleado","Eliminación",valor,"No hay cambios");

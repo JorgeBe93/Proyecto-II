@@ -384,22 +384,20 @@ public class EliminarUsuario extends javax.swing.JFrame {
                     usuarioQuery.setParameter("codigoEmpleado", codEmpleado);
                     JOptionPane.showMessageDialog(null, codEmpleado + " a guardar");
                     usu = (Usuario)usuarioQuery.getSingleResult();      */
-                    Usuario usuarioFind = entityManager.find(Usuario.class, usu.getCodigoEmpleado());
-                    antes=usu.toString();
-                    empleado = entityManager.find(Empleado.class, usu.getCodigoEmpleado());
-                    
-                    /*JOptionPane.showMessageDialog(null, empleado);
-                    empleado.getUsuario().setEmpleado(null);
-                    entityManager.merge(empleado);
+                    //Empleado empleadoFind = entityManager.find(Empleado.class, usu.getCodigoEmpleado());
+                    //antes=empleadoFind.getUsuario().toString();
+                    antes = usu.toString();
+                    Usuario usuFind = entityManager.find(Usuario.class, usu.getCodigoEmpleado());
+                    Empleado empleadoFind = usuFind.getEmpleado();
+                    empleadoFind.setUsuario(null);
+                    usuFind.setEmpleado(null);
+                    entityManager.merge(empleadoFind);
+                    entityManager.remove(entityManager.merge(usuFind));
                     entityManager.flush();
-                   */
-                    entityManager.remove(usuarioFind);
-                    entityManager.flush();
-                    
                     //suprimirUsuario(codEmpleado);
-                    empleado.setUsuario(null);
-                    entityManager.merge(empleado);
-                    entityManager.flush();
+                    //empleado.setUsuario(null);
+                    //entityManager.merge(empleado);
+                    //entityManager.flush();
                     despues="Sin cambios";
                     //registramos los datos necesarios para la auditoria
                     AuditoriaSistema as=new AuditoriaSistema();
@@ -416,7 +414,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
                     entityManager.getTransaction().commit();
                     //em.close();
                     JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
-                    usuarioList.remove(usuarioFind);
+                    usuarioList.remove(usu);
                     vaciarCampos();
                     
                     fila = -1;

@@ -9,10 +9,12 @@ package bean;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -38,11 +40,23 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "password")
     private String password;
-    @ManyToMany(mappedBy = "usuarioCollection")
+    
+    @JoinTable(name = "usuario_has_rol", joinColumns = {
+        @JoinColumn(name = "codigoEmpleado", referencedColumnName = "codigoEmpleado")}, inverseJoinColumns = {
+        @JoinColumn(name = "idRol", referencedColumnName = "idRol")})
+    @ManyToMany
+    //@ManyToMany(mappedBy = "usuarioCollection")
     private Collection<Rol> rolCollection;
-    @JoinColumn(name = "codigoEmpleado", referencedColumnName = "codigoEmpleado", insertable = false, updatable = false)
+    
+    
+    /*@JoinColumn(name = "codigoEmpleado", referencedColumnName = "codigoEmpleado", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Empleado empleado;
+    */
+    @OneToOne(cascade = {CascadeType.PERSIST, 
+        CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, mappedBy = "usuario")
+    private Empleado empleado;
+    
 
     public Usuario() {
     }

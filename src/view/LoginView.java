@@ -317,14 +317,15 @@ public class LoginView extends javax.swing.JFrame {
         String args[]=new String[1];
         args[0]="Recordar contraseña";
         RecordarContrasenaView.main(args);
+        this.dispose();
     }//GEN-LAST:event_btn_recordarActionPerformed
 
     private void btn_cambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cambiarActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-         String args[]=new String[1];
+        String args[]=new String[1];
         args[0]="Cambiar contraseña";
         CambiarPasswordView.main(args);
+        this.dispose();
     }//GEN-LAST:event_btn_cambiarActionPerformed
 
     private void tf_passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_passwordKeyPressed

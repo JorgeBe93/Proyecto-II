@@ -82,7 +82,12 @@ public class Empleado implements Serializable {
     @JoinColumn(name = "codigoCargo", referencedColumnName = "codigoCargo")
     @ManyToOne(optional = false)
     private Cargo codigoCargo;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "empleado")
+    /*@OneToOne(cascade = CascadeType.ALL, mappedBy = "empleado")
+    private Usuario usuario;
+    */
+    @JoinColumn(name = "codigoEmpleado", referencedColumnName = "codigoEmpleado",
+            insertable = false, updatable = false)
+    @OneToOne(optional = false)
     private Usuario usuario;
 
     public Empleado() {
