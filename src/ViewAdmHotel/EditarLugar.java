@@ -217,6 +217,11 @@ public class EditarLugar extends javax.swing.JFrame {
                 list_filtrosActionPerformed(evt);
             }
         });
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
+        });
 
         btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
         btn_buscar.setText("Buscar");
@@ -349,17 +354,23 @@ public class EditarLugar extends javax.swing.JFrame {
         // TODO add your handling code here:
         String antes;
         String despues;
-        if (tf_nombre.getText().length()==0){
-            JOptionPane.showMessageDialog(null,"Ingrese algún valor para el campo nombre", "Advertencia",JOptionPane.ERROR_MESSAGE);
+        if (tf_codigo.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Seleccion un lugar", "Error",JOptionPane.ERROR_MESSAGE);
             return;
 
-        }else{
+        }
+        if (tf_nombre.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"No se admiten valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
+
+        }
+        else{
             Query=EntityManager.createNamedQuery("Lugar.findByNombre");
             Query.setParameter("nombre", tf_nombre.getText());
             List <Lugar> l=Query.getResultList();
             if(l.size()>=1){
                 JOptionPane.showMessageDialog(null,"Ya existe un lugar con el mismo nombre", "Aviso",JOptionPane.ERROR_MESSAGE);
                 tf_nombre.setText(null);
+                tf_nombre.requestFocus();
                 return;
             }
             resp=  JOptionPane.showConfirmDialog(null,"Desea guardar los cambios?", "Confirmar Modificación",JOptionPane.YES_NO_OPTION );
@@ -389,7 +400,7 @@ public class EditarLugar extends javax.swing.JFrame {
                 EntityManager.persist(as);
                 EntityManager.getTransaction().commit();
                 JOptionPane.showMessageDialog(null, "Modificación Exitosa");
-                List.clear();
+                List.remove(lu.get(0));
                 List.add(lug);
                 resetear();
 
@@ -409,13 +420,7 @@ public class EditarLugar extends javax.swing.JFrame {
                 evt.consume();
             }
         }
-        else{
-            ch=evt.getKeyChar();
-            if(Character.isDigit(ch)){
-                getToolkit().beep();
-                evt.consume();
-            }
-        }
+       
     }//GEN-LAST:event_tf_valorKeyTyped
 
     private void list_filtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_list_filtrosActionPerformed
@@ -470,6 +475,11 @@ public class EditarLugar extends javax.swing.JFrame {
           obtenerLugar(fila);
          inicializarLugar();
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+         tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
        private void obtenerLugar(int fila) {
             Query=EntityManager.createNamedQuery("Lugar.findByCodLugar");
             Query.setParameter("codLugar", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );

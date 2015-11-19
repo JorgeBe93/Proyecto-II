@@ -116,6 +116,9 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
             }
         });
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusLost(evt);
             }
@@ -399,6 +402,11 @@ public class BuscarSeguimiento extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
 
     /**
      * @param args the command line arguments

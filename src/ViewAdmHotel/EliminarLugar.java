@@ -83,16 +83,16 @@ private Lugar lugar;
         panel_EditarLugarLayout.setHorizontalGroup(
             panel_EditarLugarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_EditarLugarLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addGap(72, 72, 72)
                 .addComponent(lbl_EditarLugar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         panel_EditarLugarLayout.setVerticalGroup(
             panel_EditarLugarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_EditarLugarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panel_EditarLugarLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lbl_EditarLugar)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -222,6 +222,11 @@ private Lugar lugar;
                 list_filtrosActionPerformed(evt);
             }
         });
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
+        });
 
         btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
         btn_buscar.setText("Buscar");
@@ -288,27 +293,27 @@ private Lugar lugar;
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(panel_EditarLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(118, 118, 118)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panel_EditarLugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
+                        .addGap(71, 71, 71)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(150, 150, 150)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(42, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(153, 153, 153))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addContainerGap()
                 .addComponent(panel_EditarLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -318,7 +323,7 @@ private Lugar lugar;
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -348,16 +353,24 @@ private Lugar lugar;
         // TODO add your handling code here:
         int i;
         String valor;
-            JOptionPane.showMessageDialog(null, "Existen registros de seguimiento de actividad para este lugar,"
+        if (tf_codigo.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Seleccion un lugar", "Error",JOptionPane.ERROR_MESSAGE);
+            return;
+
+        }
+        Query=EntityManager.createNativeQuery("SELECT * FROM seguimiento_actividad WHERE "
+                        + "lugar= "
+                        + "'"+tf_codigo.getText()+"'",SeguimientoActividad.class);
+                List<SeguimientoActividad> s=Query.getResultList();
+                if(s.size()>=1){
+                    JOptionPane.showMessageDialog(null, "Existen registros de seguimiento de actividad para este lugar,"
                     + "si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
+                }
+            
             resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
             if (resp==JOptionPane.YES_OPTION){
                 EntityManager.getTransaction().begin();
                 //eliminamos los lugares que tienen registros de seguimiento de actividad
-                Query=EntityManager.createNativeQuery("SELECT * FROM seguimiento_actividad WHERE "
-                        + "lugar= "
-                        + "'"+tf_codigo.getText()+"'",SeguimientoActividad.class);
-                List<SeguimientoActividad> s=Query.getResultList();
                 if(s.size()>=1){
                     for(i=0;i<s.size();i++){
                         valor=s.get(i).toString();
@@ -374,7 +387,6 @@ private Lugar lugar;
                 registrarAuditoria("Lugar",valor);
                 EntityManager.getTransaction().commit();
                 JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
-                List.clear();
                 List.remove(l);
                 resetear();
             }else{
@@ -393,13 +405,7 @@ private Lugar lugar;
                 evt.consume();
             }
         }
-        else{
-            ch=evt.getKeyChar();
-            if(Character.isDigit(ch)){
-                getToolkit().beep();
-                evt.consume();
-            }
-        }
+       
     }//GEN-LAST:event_tf_valorKeyTyped
 
     private void list_filtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_list_filtrosActionPerformed
@@ -455,6 +461,11 @@ private Lugar lugar;
          inicializarLugar();
         
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
         private void obtenerLugar(int fila) {
             Query=EntityManager.createNamedQuery("Lugar.findByCodLugar");
             Query.setParameter("codLugar", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );

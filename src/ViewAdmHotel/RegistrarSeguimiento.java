@@ -427,7 +427,7 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         // TODO add your handling code here:
         if(tf_codEmpleado.getText().length()==0 ){
-             JOptionPane.showMessageDialog(null,"Ingrese valor para codigo de empleado", "Advertencia",JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(null,"Seleccione un empleado", "Error",JOptionPane.ERROR_MESSAGE);
                 return;
         }
         resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar una nuevo seguimiento de Actividad?", "Confirmar Registro",JOptionPane.YES_NO_OPTION );
@@ -467,10 +467,18 @@ public class RegistrarSeguimiento extends javax.swing.JFrame {
         char ch;
         if (list_filtros.getSelectedItem()=="Jefe"
             || list_filtros.getSelectedItem()=="Empleado"
-            || list_filtros.getSelectedItem()=="Cedula"
-        ){
+            || list_filtros.getSelectedItem()=="Cedula"){
             ch=evt.getKeyChar();
             if(!Character.isDigit(ch)){
+                getToolkit().beep();
+                evt.consume();
+            }
+        }
+         if (list_filtros.getSelectedItem()=="Nombre"
+            || list_filtros.getSelectedItem()=="Apellido"
+            || list_filtros.getSelectedItem()=="Cargo"){
+            ch=evt.getKeyChar();
+            if(Character.isDigit(ch)){
                 getToolkit().beep();
                 evt.consume();
             }

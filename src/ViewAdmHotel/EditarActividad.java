@@ -225,6 +225,11 @@ public class EditarActividad extends javax.swing.JFrame {
                 list_filtrosActionPerformed(evt);
             }
         });
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
+        });
 
         btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
         btn_buscar.setText("Buscar");
@@ -342,7 +347,11 @@ public class EditarActividad extends javax.swing.JFrame {
         if(tf_nombre.getText().length()==limite){
             getToolkit().beep();
             evt.consume(); //se le ignora
-
+        }
+        ch=evt.getKeyChar();
+        if(Character.isDigit(ch)){
+            getToolkit().beep();
+            evt.consume();
         }
     }//GEN-LAST:event_tf_nombreKeyTyped
 
@@ -355,17 +364,24 @@ public class EditarActividad extends javax.swing.JFrame {
         // TODO add your handling code here:
         String antes;
         String despues;
-         if (tf_nombre.getText().length()==0){
-            JOptionPane.showMessageDialog(null,"Ingrese algún valor para el campo nombre", "Advertencia",JOptionPane.ERROR_MESSAGE);
+         if (tf_codigo.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Seleccione alguna actividad", "Error",JOptionPane.ERROR_MESSAGE);
             return;
              
-         }else{
+         }
+          if (tf_nombre.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"No se admiten valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
+            return;
+             
+         }
+         else{
                  Query=EntityManager.createNamedQuery("Actividad.findByNombre");
                  Query.setParameter("nombre", tf_nombre.getText());
                  List <Actividad> a=Query.getResultList();
                  if(a.size()>=1){
                      JOptionPane.showMessageDialog(null,"Ya existe una actividad con el mismo nombre", "Aviso",JOptionPane.ERROR_MESSAGE);
                      tf_nombre.setText(null);
+                     tf_nombre.requestFocus();
                      return;
                  }
                  resp=  JOptionPane.showConfirmDialog(null,"Desea guardar los cambios?", "Confirmar Modificación",JOptionPane.YES_NO_OPTION );
@@ -395,7 +411,7 @@ public class EditarActividad extends javax.swing.JFrame {
                         EntityManager.persist(as);
                         EntityManager.getTransaction().commit();
                         JOptionPane.showMessageDialog(null, "Modificación Exitosa");
-                        List.clear();
+                        List.remove(ac.get(0));
                         List.add(act);
                         resetear();
                        
@@ -476,6 +492,11 @@ public class EditarActividad extends javax.swing.JFrame {
           obtenerActividad(fila);
          inicializarActividad();
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+          tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
     private void obtenerActividad(int fila) {
             Query=EntityManager.createNamedQuery("Actividad.findByCodActividad");
             Query.setParameter("codActividad", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );

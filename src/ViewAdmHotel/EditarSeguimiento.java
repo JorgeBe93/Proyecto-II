@@ -94,7 +94,7 @@ public class EditarSeguimiento extends javax.swing.JFrame {
         panel_EditarLugar.setBackground(new java.awt.Color(0, 153, 255));
         panel_EditarLugar.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        lbl_EditarLugar.setFont(new java.awt.Font("Corbel", 1, 26)); // NOI18N
+        lbl_EditarLugar.setFont(new java.awt.Font("Corbel", 1, 28)); // NOI18N
         lbl_EditarLugar.setForeground(new java.awt.Color(255, 255, 255));
         lbl_EditarLugar.setText("Editar Seguimiento de Actividad");
 
@@ -292,6 +292,9 @@ public class EditarSeguimiento extends javax.swing.JFrame {
             }
         });
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusLost(evt);
             }
@@ -460,7 +463,7 @@ public class EditarSeguimiento extends javax.swing.JFrame {
         String antes;
         String despues;
          if (tf_codEmpleado.getText().length()==0){
-            JOptionPane.showMessageDialog(null,"Ingrese algún código de empleado", "Advertencia",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Seleccione un seguimiento", "Error",JOptionPane.ERROR_MESSAGE);
             return;
         }else{
               resp=  JOptionPane.showConfirmDialog(null,"Desea guardar los cambios?", "Confirmar Modificación",JOptionPane.YES_NO_OPTION );
@@ -494,7 +497,7 @@ public class EditarSeguimiento extends javax.swing.JFrame {
                  EntityManager.persist(as);
                  EntityManager.getTransaction().commit();
                  JOptionPane.showMessageDialog(null, "Modificación Exitosa");
-                 List.clear();
+                 List.remove(seg.get(0));
                  List.add(se);
                  resetear();
              }else{
@@ -659,6 +662,11 @@ public class EditarSeguimiento extends javax.swing.JFrame {
           obtenerSeguimiento(fila);
          inicializarSeguimiento();
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
        private void obtenerSeguimiento(int fila) {
             Query=EntityManager.createNamedQuery("SeguimientoActividad.findByCodigoSeguimiento");
             Query.setParameter("codigoSeguimiento", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );

@@ -99,6 +99,9 @@ public class BuscarEvento extends javax.swing.JFrame {
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Empleado", "Nombre", "Apellido", "Tipo Evento", "Fecha Inicio", "Fecha Fin" }));
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusLost(evt);
             }
@@ -384,6 +387,11 @@ public class BuscarEvento extends javax.swing.JFrame {
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
         // TODO add your handling code here:     
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
  private Eventos obtenerEvento(int fila){
         query=entityManager.createNamedQuery("Eventos.findByIdEvento");
         query.setParameter("idEvento", masterTable.getValueAt(fila, 0));

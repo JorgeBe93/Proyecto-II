@@ -269,6 +269,9 @@ public class EditarEvento extends javax.swing.JFrame {
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Empleado", "Nombre", "Apellido", "Tipo Evento", "Fecha Inicio", "Fecha Fin" }));
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusLost(evt);
             }
@@ -415,10 +418,14 @@ public class EditarEvento extends javax.swing.JFrame {
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         // TODO add your handling code here:
-         String antes;
+        String antes;
         String despues;
-        if(tf_codEmpleado.getText().length()==0 || dc_fechaInicio.getDate()==null || dc_fechaFin.getDate()==null){
-             JOptionPane.showMessageDialog(null,"Algún campo con valor nulo", "Error",JOptionPane.ERROR_MESSAGE);
+         if(tf_codEmpleado.getText().length()==0){
+              JOptionPane.showMessageDialog(null,"Seleccione un evento", "Error",JOptionPane.ERROR_MESSAGE);
+                return;
+        }
+        if( dc_fechaInicio.getDate()==null || dc_fechaFin.getDate()==null){
+             JOptionPane.showMessageDialog(null,"No se admiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
                 return;
         }
         if(dc_fechaFin.getDate().before(dc_fechaInicio.getDate())){
@@ -462,7 +469,7 @@ public class EditarEvento extends javax.swing.JFrame {
                  entityManager.persist(as);
                  entityManager.getTransaction().commit();
                  JOptionPane.showMessageDialog(null, "Modificación Exitosa");
-                 list.clear();
+                 list.remove(e);
                  list.add(ev);
                  resetear();
              
@@ -614,6 +621,11 @@ public class EditarEvento extends javax.swing.JFrame {
           obtenerEvento(fila);
          inicializarEvento();
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
     private void inicializarEvento(){
         tf_codEvento.setText(Integer.toString(evento.getIdEvento()));
         tf_codEmpleado.setText(Integer.toString(evento.getCodigoEmpleado().getCodigoEmpleado()));

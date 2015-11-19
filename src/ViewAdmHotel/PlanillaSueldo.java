@@ -238,6 +238,7 @@ public class PlanillaSueldo extends javax.swing.JFrame {
         System.out.println(anho);
         periodo=anho+"-"+mes;
         System.out.println("Periodo:"+" "+periodo);
+        int seguro;
         respuesta = JOptionPane.showConfirmDialog(null, "¿Desea Generar la planilla de pagos de sueldos?","Confirmar Creación",JOptionPane.YES_NO_OPTION );
         if (respuesta == JOptionPane.YES_OPTION){
              EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
@@ -248,7 +249,7 @@ public class PlanillaSueldo extends javax.swing.JFrame {
              if(pps.isEmpty()){
                     valor="Pago de sueldo periodo: "+periodo;
                     registrarAuditoria(valor);
-                    Connection(mes,anho);//genero la planilla y despues consulto
+                   seguro= Connection(mes,anho);//genero la planilla y despues consulto
                      try
                     {
                         Class.forName("com.mysql.jdbc.Driver");
@@ -256,6 +257,7 @@ public class PlanillaSueldo extends javax.swing.JFrame {
                         HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
                         par.put("Periodo_q", periodo);
                         par.put("Periodo_i", fechaLetra(mes,anho));
+                        par.put("Seguro", seguro);
                         JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/pagoSueldos.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
                         JasperViewer jv = new JasperViewer(jp,false);
                         jv.setVisible(true);
@@ -298,6 +300,7 @@ public class PlanillaSueldo extends javax.swing.JFrame {
     private void tf_aguinaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_aguinaldoActionPerformed
         // TODO add your handling code here:
         Query q;
+        int extraccion;
          respuesta=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea efectuar el pago de salarios?", "Confirmar Registro",JOptionPane.YES_NO_OPTION );
             if (respuesta==JOptionPane.YES_OPTION){
                 periodo="2015"+"-"+"13";
@@ -307,13 +310,14 @@ public class PlanillaSueldo extends javax.swing.JFrame {
                 if(pps.isEmpty()){
                         valor="Pago de sueldo aguinaldo: "+periodo;
                         registrarAuditoria(valor);
-                        ConnectionAguinaldo(periodo);
+                        extraccion=ConnectionAguinaldo(periodo);
                         try
                         {
                             Class.forName("com.mysql.jdbc.Driver");
                             Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel db", "root", "user");
                             HashMap par = new HashMap();//no definimos ningún parámetro por eso lo dejamos así
                             par.put("Periodo_q", periodo);
+                            par.put("Extraccion", extraccion);
                             JasperPrint jp = JasperFillManager.fillReport("C:/Proyecto-II/src/reportes/pagoAguinaldo.jasper", par,con);//el primer parámetro es el camino del archivo, se cambia esta dirección por la dirección del archivo .jasper
                             JasperViewer jv = new JasperViewer(jp,false);
                             jv.setVisible(true);
@@ -350,32 +354,41 @@ public class PlanillaSueldo extends javax.swing.JFrame {
                    
             }
     }//GEN-LAST:event_tf_aguinaldoActionPerformed
-      private void Connection(int mes, int anho){
+      private int Connection(int mes, int anho){
+          int seguro = 0;
+          int extraccion;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             String BaseDeDatos = "jdbc:mysql://localhost/hotel db?user=root&password=user";
             connection = DriverManager.getConnection(BaseDeDatos);
             if(connection != null){
                 System.out.println("Conexion Exitosa!");
-               CallableStatement st=connection.prepareCall("{call planilla_pago (?,?,?)}");
+               CallableStatement st=connection.prepareCall("{call planilla_pago (?,?,?,?)}");
                //  CallableStatement st=connection.prepareCall("{call planilla_pago }");
                  st.setInt(1, mes);
                  st.setInt(2, anho);
                  st.registerOutParameter(3, java.sql.Types.INTEGER);
                  st.execute();
-                 int extraccion=st.getInt(3);
+                 extraccion=st.getInt(3);
+                 seguro=st.getInt(4);
                  // extraccion es el monto
-                 System.out.println("Extracción: "+extraccion);
+                 System.out.println("Extracción para empleados: "+extraccion);
+                 System.out.println("Extracción para IPS: "+seguro);
                 connection.close();
+               
             }else{
                 System.out.println("Conexion Fallida!");                
             }
+             
         }catch(Exception e){
             e.printStackTrace();
         }
+         return seguro;
+       
         
     }
-    private void  ConnectionAguinaldo(String periodo){
+    private int  ConnectionAguinaldo(String periodo){
+        int extraccion=0;
          try{
             Class.forName("com.mysql.jdbc.Driver");
             String BaseDeDatos = "jdbc:mysql://localhost/hotel db?user=root&password=user";
@@ -387,7 +400,7 @@ public class PlanillaSueldo extends javax.swing.JFrame {
                  st.setString(1, periodo);
                  st.registerOutParameter(2, java.sql.Types.INTEGER);
                  st.execute();
-                 int extraccion=st.getInt(2);
+                 extraccion=st.getInt(2);
                  // extraccion es el monto
                  System.out.println("Extracción para aguinaldo: "+extraccion);
                 connection.close();
@@ -397,6 +410,7 @@ public class PlanillaSueldo extends javax.swing.JFrame {
         }catch(Exception e){
             e.printStackTrace();
         }
+         return extraccion;
    
     }
       private String fechaLetra(int mes,int anho){

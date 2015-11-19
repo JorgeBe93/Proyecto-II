@@ -236,7 +236,7 @@ public class RegistrarLugar extends javax.swing.JFrame {
             if(l.size()>=1){
                 JOptionPane.showMessageDialog(null,"Ya existe una actividad con el mismo nombre", "Aviso",JOptionPane.ERROR_MESSAGE);
                 tf_nombre.setText(null);
-                return;
+                tf_nombre.requestFocus();
             }
             else{
                 resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar un nuevo lugar?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );

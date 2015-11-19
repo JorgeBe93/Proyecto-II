@@ -387,6 +387,7 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="list_filtrosActionPerformed"/>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="list_filtrosFocusGained"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_buscar">

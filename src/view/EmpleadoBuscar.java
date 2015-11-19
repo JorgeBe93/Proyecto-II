@@ -81,6 +81,9 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCargo.nombre}"));
         columnBinding.setColumnName("Cargo");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCargo.sueldo}"));
+        columnBinding.setColumnName("Sueldo");
+        columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaNacimiento}"));
         columnBinding.setColumnName("Nacimiento");
         columnBinding.setColumnClass(java.util.Date.class);
@@ -111,8 +114,8 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
             masterTable.getColumnModel().getColumn(2).setPreferredWidth(150);
             masterTable.getColumnModel().getColumn(3).setPreferredWidth(150);
             masterTable.getColumnModel().getColumn(4).setPreferredWidth(100);
-            masterTable.getColumnModel().getColumn(7).setPreferredWidth(150);
             masterTable.getColumnModel().getColumn(8).setPreferredWidth(150);
+            masterTable.getColumnModel().getColumn(9).setPreferredWidth(150);
         }
 
         panel_BuscarRol.setBackground(new java.awt.Color(0, 153, 255));
@@ -232,9 +235,9 @@ public class EmpleadoBuscar extends javax.swing.JFrame {
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(panel_BuscarRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 793, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(68, Short.MAX_VALUE))
+                        .addGap(40, 40, 40)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -210,16 +210,17 @@ public class RegistrarActividad extends javax.swing.JFrame {
 
     private void tf_nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nombreKeyTyped
         // TODO add your handling code here:
+         char ch;
         if(tf_nombre.getText().length()==limite){
             getToolkit().beep();
             evt.consume(); //se le ignora
 
         }
-    /*    ch=evt.getKeyChar();
+        ch=evt.getKeyChar();
         if(Character.isDigit(ch)){
             getToolkit().beep();
             evt.consume();
-        }*/
+        }
     }//GEN-LAST:event_tf_nombreKeyTyped
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
@@ -237,7 +238,7 @@ public class RegistrarActividad extends javax.swing.JFrame {
                  if(a.size()>=1){
                      JOptionPane.showMessageDialog(null,"Ya existe una actividad con el mismo nombre", "Aviso",JOptionPane.ERROR_MESSAGE);
                      tf_nombre.setText(null);
-                     return;
+                     tf_nombre.requestFocus();
                  }
                  else{
                         resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar una nueva actividad?", "Confirmar Creación",JOptionPane.YES_NO_OPTION );

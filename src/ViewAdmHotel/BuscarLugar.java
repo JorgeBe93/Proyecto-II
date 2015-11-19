@@ -86,6 +86,11 @@ public class BuscarLugar extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setForeground(new java.awt.Color(204, 204, 255));
 
+        tf_valor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_valorActionPerformed(evt);
+            }
+        });
         tf_valor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_valorKeyTyped(evt);
@@ -102,6 +107,11 @@ public class BuscarLugar extends javax.swing.JFrame {
         list_filtros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 list_filtrosActionPerformed(evt);
+            }
+        });
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
             }
         });
 
@@ -223,13 +233,7 @@ public class BuscarLugar extends javax.swing.JFrame {
                 evt.consume();
             }
         }
-        else{
-            ch=evt.getKeyChar();
-            if(Character.isDigit(ch)){
-                getToolkit().beep();
-                evt.consume();
-            }
-        }
+      
     }//GEN-LAST:event_tf_valorKeyTyped
 
     private void list_filtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_list_filtrosActionPerformed
@@ -287,6 +291,15 @@ public class BuscarLugar extends javax.swing.JFrame {
         // TODO add your handling code here:
  
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+         tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
+
+    private void tf_valorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_valorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_valorActionPerformed
 
     /**
      * @param args the command line arguments

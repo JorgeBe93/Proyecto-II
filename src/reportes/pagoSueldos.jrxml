@@ -9,6 +9,9 @@
 	<parameter name="Periodo_i" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="Seguro" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      empleado.`nombre` AS empleado_nombre,
@@ -44,6 +47,10 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 	<field name="planilla_pago_sueldo_descuentoIPS" class="java.lang.Integer"/>
 	<field name="planilla_pago_sueldo_liquidoCobrado" class="java.lang.Integer"/>
 	<field name="empleado_cedula" class="java.lang.String"/>
+	<variable name="planilla_pago_sueldo_liquidoCobrado_2" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{planilla_pago_sueldo_liquidoCobrado}]]></variableExpression>
+	</variable>
+	<variable name="extraer" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -96,7 +103,7 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 				<textElement textAlignment="Justified">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Horas Trabajadas en el mes:  168]]></text>
+				<text><![CDATA[Horas Trabajadas en el mes:  40]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -241,10 +248,10 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 			</textField>
 			<textField pattern="###0.0">
 				<reportElement uuid="038a44d6-011d-4999-a077-a28f821f2950" x="373" y="0" width="60" height="20">
-					<printWhenExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}>168]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}>40]]></printWhenExpression>
 				</reportElement>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}-168]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{planilla_pago_sueldo_total_horas}-40]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -280,6 +287,49 @@ planilla_pago_sueldo.`periodo` = $P{Periodo_q}]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band splitType="Stretch"/>
+		<band height="25" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement uuid="aafff79c-b236-499c-b488-9cbba08b18ba" x="108" y="5" width="100" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{planilla_pago_sueldo_liquidoCobrado_2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="42a169e3-07be-4447-8507-96852288bf58" x="344" y="5" width="100" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Seguro}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="9565b60e-5d94-4555-b675-f05a1edbf54d" x="613" y="5" width="100" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{planilla_pago_sueldo_liquidoCobrado_2}+$P{Seguro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ce8ddf5e-a617-4eb0-9b58-f2038ae67200" x="277" y="5" width="67" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL IPS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ce8ddf5e-a617-4eb0-9b58-f2038ae67200" x="14" y="5" width="94" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL SALARIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ce8ddf5e-a617-4eb0-9b58-f2038ae67200" x="510" y="5" width="103" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL A EXTRAER:]]></text>
+			</staticText>
+		</band>
 	</summary>
 </jasperReport>

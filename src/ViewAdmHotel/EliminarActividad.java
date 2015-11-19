@@ -224,6 +224,11 @@ public class EliminarActividad extends javax.swing.JFrame {
                 list_filtrosActionPerformed(evt);
             }
         });
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
+        });
 
         btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
         btn_buscar.setText("Buscar");
@@ -353,16 +358,24 @@ public class EliminarActividad extends javax.swing.JFrame {
         Query q;
         int i;
         String valor;
-         JOptionPane.showMessageDialog(null, "Existen registros de seguimiento de actividad para esta actividad,"
+         if (tf_codigo.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Seleccione alguna actividad", "Error",JOptionPane.ERROR_MESSAGE);
+            return;
+             
+         }
+         q=EntityManager.createNativeQuery("SELECT * FROM seguimiento_actividad WHERE "
+                        + "actividad= "
+                        + "'"+tf_codigo.getText()+"'",SeguimientoActividad.class);
+                List<SeguimientoActividad> s=q.getResultList();
+                if(s.size()>=1){
+                     JOptionPane.showMessageDialog(null, "Existen registros de seguimiento de actividad para esta actividad,"
                     + "si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
+                }
+        
         resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
         if(resp==JOptionPane.YES_OPTION){
             EntityManager.getTransaction().begin();
              //eliminamos los seguimientos de actividad que depende de dicha actividad
-                q=EntityManager.createNativeQuery("SELECT * FROM seguimiento_actividad WHERE "
-                        + "actividad= "
-                        + "'"+tf_codigo.getText()+"'",SeguimientoActividad.class);
-                List<SeguimientoActividad> s=q.getResultList();
                 if(s.size()>=1){
                     for(i=0;i<s.size();i++){
                         valor=s.get(i).toString();
@@ -379,7 +392,6 @@ public class EliminarActividad extends javax.swing.JFrame {
             registrarAuditoria("Actividad",valor);
             EntityManager.getTransaction().commit();
             JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
-            List.clear();
             List.remove(a);
             resetear();
         }else{
@@ -459,6 +471,11 @@ public class EliminarActividad extends javax.swing.JFrame {
          inicializarActividad();
         
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+          tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
      private void obtenerActividad(int fila) {
             Query=EntityManager.createNamedQuery("Actividad.findByCodActividad");
             Query.setParameter("codActividad", Integer.parseInt(masterTable.getValueAt(fila, 0).toString()) );

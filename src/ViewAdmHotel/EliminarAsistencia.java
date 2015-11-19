@@ -111,7 +111,7 @@ public class EliminarAsistencia extends javax.swing.JFrame {
         panel_EditarLugar1.setBackground(new java.awt.Color(0, 153, 255));
         panel_EditarLugar1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        lbl_EditarLugar1.setFont(new java.awt.Font("Corbel", 1, 26)); // NOI18N
+        lbl_EditarLugar1.setFont(new java.awt.Font("Corbel", 1, 28)); // NOI18N
         lbl_EditarLugar1.setForeground(new java.awt.Color(255, 255, 255));
         lbl_EditarLugar1.setText("Eliminar Asistencia");
 
@@ -322,6 +322,9 @@ public class EliminarAsistencia extends javax.swing.JFrame {
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Empleado", "Nombre", "Apellido", "Fecha", "Horas Trabajadas" }));
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusLost(evt);
             }
@@ -431,9 +434,9 @@ public class EliminarAsistencia extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap()
                 .addComponent(panel_EditarLugar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(11, 11, 11)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -468,16 +471,24 @@ public class EliminarAsistencia extends javax.swing.JFrame {
         // TODO add your handling code here:
         int cod;
         String valor;
+        if(tf_codEmpleado.getText().length()==0){
+             JOptionPane.showMessageDialog(null,"Seleccione una asistencia", "Error",JOptionPane.ERROR_MESSAGE);
+             return;
+        }
         cod=Integer.parseInt(tf_codEmpleado.getText());
-        JOptionPane.showMessageDialog(null, "Existen registros de eventos para esta asistencia,"
-                    + "si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
-            resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
-            if (resp==JOptionPane.YES_OPTION){
-                entityManager.getTransaction().begin();
-                query=entityManager.createNativeQuery("SELECT * FROM eventos WHERE "
+        query=entityManager.createNativeQuery("SELECT * FROM eventos WHERE "
                         + "codigoEmpleado= "
                         +cod+" AND fecha_inicio="+"'"+tf_fechaAsist.getText()+"'",Eventos.class);
                 List<Eventos> e=query.getResultList();
+                if(e.size()>=1){
+                    JOptionPane.showMessageDialog(null, "Existen registros de eventos para esta asistencia,"
+                    + "si elimina perderá dichos registros","Aviso",JOptionPane.INFORMATION_MESSAGE );
+                  
+                }
+        
+            resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
+            if (resp==JOptionPane.YES_OPTION){
+                entityManager.getTransaction().begin();
                 if(e.size()>=1){
                     for(int i=0;i<e.size();i++){
                         valor=e.get(i).toString();
@@ -637,6 +648,11 @@ public class EliminarAsistencia extends javax.swing.JFrame {
          inicializarAsistencia();
 
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
     private void inicializarAsistencia(){
        tf_codEmpleado.setText(Integer.toString(asistencia.getCodigoEmpleado().getCodigoEmpleado()));
        tf_datosEmp.setText(asistencia.getCodigoEmpleado().getNombre()+" "+asistencia.getCodigoEmpleado().getApellido());

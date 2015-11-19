@@ -283,6 +283,9 @@ public class EliminarEvento extends javax.swing.JFrame {
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Empleado", "Nombre", "Apellido", "Tipo Evento", "Fecha Inicio", "Fecha Fin" }));
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusLost(evt);
             }
@@ -428,6 +431,10 @@ public class EliminarEvento extends javax.swing.JFrame {
         // TODO add your handling code here:
         int cod;
         String valor;
+        if(tf_codEvento.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Seleccione algún evento", "Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         cod=Integer.parseInt(tf_codEvento.getText());
             resp=  JOptionPane.showConfirmDialog(null,"Esta seguro que desea eliminar?", "Confirmar Eliminación",JOptionPane.YES_NO_OPTION );
             if (resp==JOptionPane.YES_OPTION){
@@ -447,7 +454,6 @@ public class EliminarEvento extends javax.swing.JFrame {
                 entityManager.persist(as);
                 entityManager.getTransaction().commit();
                 JOptionPane.showMessageDialog(null, "Eliminación Exitosa");
-                list.clear();
                 list.remove(e);
                 resetear();
             }else{
@@ -598,6 +604,11 @@ public class EliminarEvento extends javax.swing.JFrame {
           obtenerEvento(fila);
          inicializarEvento();
     }//GEN-LAST:event_masterTableMouseClicked
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
     private void inicializarEvento(){
         tf_codEvento.setText(Integer.toString(evento.getIdEvento()));
         tf_codEmpleado.setText(Integer.toString(evento.getCodigoEmpleado().getCodigoEmpleado()));

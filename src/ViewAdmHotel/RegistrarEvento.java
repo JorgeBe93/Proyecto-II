@@ -89,7 +89,6 @@ public class RegistrarEvento extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btn_cancelar = new javax.swing.JButton();
         btn_guardar = new javax.swing.JButton();
-        btn_nuevo = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         tf_valor = new javax.swing.JTextField();
         lbl_valor = new javax.swing.JLabel();
@@ -115,7 +114,7 @@ public class RegistrarEvento extends javax.swing.JFrame {
             .addGroup(panel_regActividadLayout.createSequentialGroup()
                 .addGap(185, 185, 185)
                 .addComponent(lbl_registrarActividad)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(212, Short.MAX_VALUE))
         );
         panel_regActividadLayout.setVerticalGroup(
             panel_regActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,24 +317,14 @@ public class RegistrarEvento extends javax.swing.JFrame {
             }
         });
 
-        btn_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/arrow-up.png"))); // NOI18N
-        btn_nuevo.setText("Nuevo");
-        btn_nuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_nuevoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_nuevo)
-                .addGap(28, 28, 28)
+                .addGap(25, 25, 25)
                 .addComponent(btn_guardar)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(btn_cancelar)
                 .addGap(19, 19, 19))
         );
@@ -345,8 +334,7 @@ public class RegistrarEvento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_cancelar)
-                    .addComponent(btn_nuevo))
+                    .addComponent(btn_cancelar))
                 .addContainerGap())
         );
 
@@ -368,6 +356,9 @@ public class RegistrarEvento extends javax.swing.JFrame {
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código Empleado", "Nombre", "Apellido", "Fecha", "Horas Trabajadas" }));
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusLost(evt);
             }
@@ -458,23 +449,24 @@ public class RegistrarEvento extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 33, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panel_regActividad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(82, 82, 82)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(249, 249, 249)
+                        .addGap(303, 303, 303)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                        .addGap(119, 119, 119)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panel_regActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -505,8 +497,12 @@ public class RegistrarEvento extends javax.swing.JFrame {
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         // TODO add your handling code here:
         int id;
-        if(tf_codEmpleado.getText().length()==0 || dc_fechaInicio.getDate()==null || dc_fechaFin.getDate()==null){
-             JOptionPane.showMessageDialog(null,"Algún campo con valor nulo", "Error",JOptionPane.ERROR_MESSAGE);
+        if(tf_codEmpleado.getText().length()==0){
+              JOptionPane.showMessageDialog(null,"Seleccione una asistencia", "Error",JOptionPane.ERROR_MESSAGE);
+                return;
+        }
+        if(dc_fechaInicio.getDate()==null || dc_fechaFin.getDate()==null){
+             JOptionPane.showMessageDialog(null,"No se admiten campos con valores nulos", "Error",JOptionPane.ERROR_MESSAGE);
                 return;
         }
         if(dc_fechaFin.getDate().before(dc_fechaInicio.getDate())){
@@ -544,6 +540,12 @@ public class RegistrarEvento extends javax.swing.JFrame {
             }        
          }
         System.out.println(dc_fechaFin.getDate());
+        System.out.println(tf_fechaAsist.getText());
+        System.out.println(fecha2);
+        if( tf_fechaAsist.getText().equals(fecha2) && list_tipoEvento.getSelectedItem()!="Horas Extras"){
+                JOptionPane.showMessageDialog(null,"Tipo de Evento incorrecto", "Error",JOptionPane.ERROR_MESSAGE);
+                return;
+        }
         resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar un nuevo evento?", "Confirmar Registro",JOptionPane.YES_NO_OPTION );
         if (resp==JOptionPane.YES_OPTION){        
                 Eventos e=new Eventos();
@@ -576,10 +578,7 @@ public class RegistrarEvento extends javax.swing.JFrame {
                  this.dispose();
         } 
        
-        tf_descripcionE.setText(null);
-        dc_fechaInicio.setDate(null);
-        dc_fechaFin.setDate(null);
-        tf_datosEmp.setText(null);
+        resetear();
        
     }//GEN-LAST:event_btn_guardarActionPerformed
 
@@ -632,7 +631,7 @@ public class RegistrarEvento extends javax.swing.JFrame {
     private void tf_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_valorKeyTyped
         // TODO add your handling code here:
         char ch;
-        if (list_filtros.getSelectedItem()=="Empleado" || list_filtros.getSelectedItem()=="Horas Trabajadas"){
+        if (list_filtros.getSelectedItem()=="Código Empleado" || list_filtros.getSelectedItem()=="Horas Trabajadas"){
             ch=evt.getKeyChar();
             if(!Character.isDigit(ch)){
                 getToolkit().beep();
@@ -764,12 +763,16 @@ public class RegistrarEvento extends javax.swing.JFrame {
         tf_fechaAsist.setText(fec);
         tf_horaEntrada.setText((String) masterTable.getValueAt(fila, 5));
         tf_horaSalida.setText((String) masterTable.getValueAt(fila, 6));
-      
+        dc_fechaInicio.setDate((Date) masterTable.getValueAt(fila, 4));
+         dc_fechaFin.setDate((Date) masterTable.getValueAt(fila, 4));
     }//GEN-LAST:event_masterTableMouseClicked
 
-    private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
         // TODO add your handling code here:
-         tf_codEmpleado.setText(null);
+        tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
+    private void resetear(){
+        tf_codEmpleado.setText(null);
         tf_descripcionE.setText(null);
         dc_fechaInicio.setDate(null);
         dc_fechaFin.setDate(null);
@@ -777,7 +780,7 @@ public class RegistrarEvento extends javax.swing.JFrame {
         tf_fechaAsist.setText(null);
         tf_horaEntrada.setText(null);
         tf_horaSalida.setText(null);
-    }//GEN-LAST:event_btn_nuevoActionPerformed
+    }
     public int calcularDias(){
             float decimal;
             String d;
@@ -886,7 +889,6 @@ public class RegistrarEvento extends javax.swing.JFrame {
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_guardar;
-    private javax.swing.JButton btn_nuevo;
     private com.toedter.calendar.JDateChooser dc_fechaFin;
     private com.toedter.calendar.JDateChooser dc_fechaInicio;
     private javax.swing.JPanel jPanel1;
