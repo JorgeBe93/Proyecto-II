@@ -7,13 +7,17 @@
 package view;
 
 import bean.AuditoriaSistema;
+import bean.Rol;
+import bean.Usuario;
 import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -34,6 +38,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
      */
     public MenuRecepcionista() {
         initComponents();
+        generarMenuRolOpciones(obtenerRolesUsuario(LoginView.idUsuario));
     }
 
     /**
@@ -87,14 +92,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         mItem_generarFactura = new javax.swing.JMenuItem();
         jSeparator15 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarFactura = new javax.swing.JMenuItem();
-        menu_estilos = new javax.swing.JMenu();
-        mItem_win = new javax.swing.JMenuItem();
-        jSeparator18 = new javax.swing.JPopupMenu.Separator();
-        mItem_liquid = new javax.swing.JMenuItem();
-        jSeparator17 = new javax.swing.JPopupMenu.Separator();
-        mItem_metal = new javax.swing.JMenuItem();
-        jSeparator16 = new javax.swing.JPopupMenu.Separator();
-        mItem_nimbus = new javax.swing.JMenuItem();
+        menu_roles = new javax.swing.JMenu();
         menu_salir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -354,47 +352,11 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
         jMenuBar1.add(menu_factura);
 
-        menu_estilos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_estilos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ventana2.png"))); // NOI18N
-        menu_estilos.setText("Estilos");
-        menu_estilos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        mItem_win.setText("Windows");
-        mItem_win.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_winActionPerformed(evt);
-            }
-        });
-        menu_estilos.add(mItem_win);
-        menu_estilos.add(jSeparator18);
-
-        mItem_liquid.setText("Liquid");
-        mItem_liquid.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_liquidActionPerformed(evt);
-            }
-        });
-        menu_estilos.add(mItem_liquid);
-        menu_estilos.add(jSeparator17);
-
-        mItem_metal.setText("Metal");
-        mItem_metal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_metalActionPerformed(evt);
-            }
-        });
-        menu_estilos.add(mItem_metal);
-        menu_estilos.add(jSeparator16);
-
-        mItem_nimbus.setText("Nimbus");
-        mItem_nimbus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_nimbusActionPerformed(evt);
-            }
-        });
-        menu_estilos.add(mItem_nimbus);
-
-        jMenuBar1.add(menu_estilos);
+        menu_roles.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_roles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ventana2.png"))); // NOI18N
+        menu_roles.setText("Roles");
+        menu_roles.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jMenuBar1.add(menu_roles);
 
         menu_salir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/login.png"))); // NOI18N
@@ -622,30 +584,6 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         args[0]="Resumen de consumo del cliente";
         ConsumoResumen.main(args);
     }//GEN-LAST:event_mItem_resumenConsumoActionPerformed
-
-    private void mItem_metalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_metalActionPerformed
-        // TODO add your handling code here:
-        set_look = "javax.swing.plaf.metal.MetalLookAndFeel";
-        lookandfeel();  
-    }//GEN-LAST:event_mItem_metalActionPerformed
-
-    private void mItem_nimbusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_nimbusActionPerformed
-        // TODO add your handling code here:
-        set_look = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
-        lookandfeel();
-    }//GEN-LAST:event_mItem_nimbusActionPerformed
-
-    private void mItem_liquidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_liquidActionPerformed
-        // TODO add your handling code here:
-        set_look = "com.birosoft.liquid.LiquidLookAndFeel";
-        lookandfeel();
-    }//GEN-LAST:event_mItem_liquidActionPerformed
-
-    private void mItem_winActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_winActionPerformed
-        // TODO add your handling code here:
-         set_look = "com.birosoft.windows.WindowsLookAndFeel";
-        lookandfeel();
-    }//GEN-LAST:event_mItem_winActionPerformed
     public void lookandfeel()
     {
         try
@@ -710,9 +648,6 @@ public class MenuRecepcionista extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator13;
     private javax.swing.JPopupMenu.Separator jSeparator14;
     private javax.swing.JPopupMenu.Separator jSeparator15;
-    private javax.swing.JPopupMenu.Separator jSeparator16;
-    private javax.swing.JPopupMenu.Separator jSeparator17;
-    private javax.swing.JPopupMenu.Separator jSeparator18;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -737,20 +672,66 @@ public class MenuRecepcionista extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_eliminarReserva;
     private javax.swing.JMenuItem mItem_generarFactura;
     private javax.swing.JMenuItem mItem_generarPre;
-    private javax.swing.JMenuItem mItem_liquid;
-    private javax.swing.JMenuItem mItem_metal;
     private javax.swing.JMenuItem mItem_modificarConsumo;
-    private javax.swing.JMenuItem mItem_nimbus;
     private javax.swing.JMenuItem mItem_registrarConsumo2;
     private javax.swing.JMenuItem mItem_registrarReserva;
     private javax.swing.JMenuItem mItem_resumenConsumo;
-    private javax.swing.JMenuItem mItem_win;
     private javax.swing.JMenu menu_cliente;
     private javax.swing.JMenu menu_consumo;
-    private javax.swing.JMenu menu_estilos;
     private javax.swing.JMenu menu_factura;
     private javax.swing.JMenu menu_presupuesto;
     private javax.swing.JMenu menu_reserva;
+    private javax.swing.JMenu menu_roles;
     private javax.swing.JMenu menu_salir;
     // End of variables declaration//GEN-END:variables
+    private void generarMenuRolOpciones(Collection<Rol> nombreRoles){
+        if(nombreRoles.size() > 1){
+            for(final Rol rol : nombreRoles){
+                javax.swing.JMenuItem menuItem = new javax.swing.JMenuItem();
+                menuItem.setText(rol.getNombre());
+                //creación de acctionlisteners para los menus
+                menuItem.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        switch (rol.getNombre()) {
+                            case "Administrador del Sistema":
+                                {
+                                    String args[] = new String[1];
+                                    args[0] = "Administrador del Sistema";
+                                    view.MenuAdminSist.main(args);
+                                    dispose();
+                                    break;
+                                }
+                            case "Administrador del Hotel":
+                                {
+                                    String args[] = new String[1];
+                                    args[0] = "Administrador del Hotel";
+                                    ViewAdmHotel.MenuAdminHotel.main(args);
+                                    dispose();
+                                    break;
+                                }
+                            default:
+                                JOptionPane.showMessageDialog(null, "Sin permisos para "
+                                        + "esta operación", "Acceso denegado", JOptionPane.ERROR_MESSAGE);
+                                break;
+                        }
+                    }
+                });
+                if(!menuItem.getText().equals("Recepcionista")){
+                    menu_roles.add(menuItem);
+                }
+            }
+        }else{
+            menu_roles.setEnabled(false);
+        }
+        
+    }
+     private Collection<Rol> obtenerRolesUsuario(int codigoUsuario){
+         EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
+         EntityManager ema = fact.createEntityManager();
+         Query query = ema.createNamedQuery("Usuario.findByCodigoEmpleado");
+         query.setParameter("codigoEmpleado", codigoUsuario);
+         Usuario usu = (Usuario)query.getSingleResult();
+         return usu.getRolCollection();
+     }
 }

@@ -91,7 +91,7 @@ public class RecordarContrasenaView extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
         lbl_nombreEmpleado.setFont(new java.awt.Font("Candara", 1, 13)); // NOI18N
-        lbl_nombreEmpleado.setText("Nombre:");
+        lbl_nombreEmpleado.setText("Empleado: ");
         lbl_nombreEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 lbl_nombreEmpleadoKeyPressed(evt);
@@ -108,12 +108,12 @@ public class RecordarContrasenaView extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(54, Short.MAX_VALUE)
                 .addComponent(lbl_nombreEmpleado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,7 +329,10 @@ public class RecordarContrasenaView extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             obtenerUsuario();
-            lbl_nombreEmpleado.setVisible(true);
+        }
+        if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE){
+            lbl_nombreEmpleado.setVisible(false);
+            lbl_nombre.setText(null);
         }
     }//GEN-LAST:event_tf_codemplKeyPressed
 
@@ -369,9 +372,16 @@ public class RecordarContrasenaView extends javax.swing.JFrame {
     private void obtenerUsuario(){
         query = entityManager.createNamedQuery("Empleado.findByCodigoEmpleado");
         query.setParameter("codigoEmpleado", Integer.parseInt(tf_codempl.getText()));
-        Empleado empleado = (Empleado)query.getSingleResult();
-        if(empleado != null){
-            lbl_nombre.setText(empleado.getNombre() + " " + empleado.getApellido());    
+        try{
+            Empleado empleado = (Empleado)query.getSingleResult();
+            lbl_nombre.setText(empleado.getNombre() + " " + empleado.getApellido());
+            lbl_nombreEmpleado.setVisible(true);
+        }catch(javax.persistence.NoResultException e){
+            JOptionPane.showMessageDialog(null, "Código de empleado inexistente",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            lbl_nombreEmpleado.setVisible(false);
+            lbl_nombre.setText(null);
         }
+            
     }
 }

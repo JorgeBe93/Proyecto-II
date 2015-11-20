@@ -13,19 +13,19 @@ package view;
 
 import bean.AuditoriaSistema;
 import bean.Rol;
+import bean.Usuario;
 import java.awt.Image;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import static view.RolEliminar.tf_identi;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,6 +37,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
     /** Creates new form MenuAdminSist */
     public MenuAdminSist() {
         initComponents();
+        generarMenuRolOpciones(obtenerRolesUsuario(LoginView.idUsuario));
     }
 
     /** This method is called from within the constructor to
@@ -63,7 +64,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
         menu_auditoria = new javax.swing.JMenu();
         mItem_buscarRegistros = new javax.swing.JMenuItem();
         mItem_informeAud = new javax.swing.JMenuItem();
-        menu_estilos = new javax.swing.JMenu();
+        menu_roles = new javax.swing.JMenu();
         menu_salir = new javax.swing.JMenu();
 
         jMenu1.setText("File");
@@ -159,14 +160,19 @@ public class MenuAdminSist extends javax.swing.JFrame {
 
         jMenuBar1.add(menu_auditoria);
 
-        menu_estilos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ventana2.png"))); // NOI18N
-        menu_estilos.setText("Estilos");
-        menu_estilos.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jMenuBar1.add(menu_estilos);
+        menu_roles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ventana2.png"))); // NOI18N
+        menu_roles.setText("Roles");
+        menu_roles.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        menu_roles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_rolesMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menu_roles);
 
         menu_salir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/excluded.png"))); // NOI18N
-        menu_salir.setText("Salir");
+        menu_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/login.png"))); // NOI18N
+        menu_salir.setText("Cerrar Sesión");
         menu_salir.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         menu_salir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -186,7 +192,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 538, Short.MAX_VALUE)
+            .addGap(0, 609, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,6 +283,11 @@ public class MenuAdminSist extends javax.swing.JFrame {
         InformeAuditoria.main(args);
     }//GEN-LAST:event_mItem_informeAudActionPerformed
 
+    private void menu_rolesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_rolesMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_menu_rolesMouseClicked
+
     /**
     * @param args the command line arguments
     */
@@ -305,7 +316,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_buscarRegistros;
     private javax.swing.JMenuItem mItem_informeAud;
     private javax.swing.JMenu menu_auditoria;
-    private javax.swing.JMenu menu_estilos;
+    private javax.swing.JMenu menu_roles;
     private javax.swing.JMenu menu_salir;
     private javax.swing.JMenu menu_usuario;
     private javax.swing.JMenuItem miItem_buscarUsuario;
@@ -313,5 +324,54 @@ public class MenuAdminSist extends javax.swing.JFrame {
     private javax.swing.JMenuItem mitem_eliminarusuario;
     private javax.swing.JMenuItem mitem_regis_usuario;
     // End of variables declaration//GEN-END:variables
-
+    private void generarMenuRolOpciones(Collection<Rol> nombreRoles){
+        if(nombreRoles.size() > 1){
+            for(final Rol rol : nombreRoles){
+                javax.swing.JMenuItem menuItem = new javax.swing.JMenuItem();
+                menuItem.setText(rol.getNombre());
+                //creación de acctionlisteners para los menus
+                menuItem.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        switch (rol.getNombre()) {
+                            case "Recepcionista":
+                                {
+                                    String args[] = new String[1];
+                                    args[0] = "Recepcionista";
+                                    view.MenuRecepcionista.main(args);
+                                    dispose();
+                                    break;
+                                }
+                            case "Administrador del Hotel":
+                                {
+                                    String args[] = new String[1];
+                                    args[0] = "Administrador del Hotel";
+                                    ViewAdmHotel.MenuAdminHotel.main(args);
+                                    dispose();
+                                    break;
+                                }
+                            default:
+                                JOptionPane.showMessageDialog(null, "Sin permisos para "
+                                        + "esta operación", "Acceso denegado", JOptionPane.ERROR_MESSAGE);
+                                break;
+                        }
+                    }
+                });
+                if(!menuItem.getText().equals("Administrador del Sistema")){
+                    menu_roles.add(menuItem);
+                }
+            }
+        }else{
+            menu_roles.setEnabled(false);
+        }
+        
+    }
+     private Collection<Rol> obtenerRolesUsuario(int codigoUsuario){
+         EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
+         EntityManager ema = fact.createEntityManager();
+         Query query = ema.createNamedQuery("Usuario.findByCodigoEmpleado");
+         query.setParameter("codigoEmpleado", codigoUsuario);
+         Usuario usu = (Usuario)query.getSingleResult();
+         return usu.getRolCollection();
+     }
 }

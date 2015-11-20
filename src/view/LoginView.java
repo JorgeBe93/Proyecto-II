@@ -265,13 +265,13 @@ public class LoginView extends javax.swing.JFrame {
                         Date fecha=new Date();
                         DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                         as.setFechaHora(formato.format(fecha));
-                        as.setUsuario(u.get(0).getEmpleado().getNombre());
+                        as.setUsuario(nombreUsuario);
                         entityManager.getTransaction().begin();
                         entityManager.persist(as);
                         entityManager.getTransaction().commit();
                         entityManager.close();
-                        JOptionPane.showMessageDialog(null,"Inicio de Sesión "
-                                 + "Exitoso", "Correcto",JOptionPane.INFORMATION_MESSAGE);
+                       // JOptionPane.showMessageDialog(null,"Inicio de Sesión "
+                        //         + "Exitoso", "Correcto",JOptionPane.INFORMATION_MESSAGE);
                         //String args[]= new String[1];
                         //args[0]  = "Menú del Sistema";
                         
@@ -286,14 +286,12 @@ public class LoginView extends javax.swing.JFrame {
                            null,  // null para icono defecto
                            roles, 
                            roles[0]);
-
                         switch (seleccion.toString()) {
                         case "Administrador del Sistema":
                             {
                                 String args[] = new String[1];
                                 args[0] = "Administrador del Sistema";
                                 view.MenuAdminSist.main(args);
-                                //dispose();
                                 break;
                             }
                         case "Recepcionista":
@@ -301,7 +299,6 @@ public class LoginView extends javax.swing.JFrame {
                                 String args[] = new String[1];
                                 args[0] = "Recepcionista";
                                 view.MenuRecepcionista.main(args);
-                                //dispose();
                                 break;
                             }
                         case "Administrador del Hotel":
@@ -309,7 +306,6 @@ public class LoginView extends javax.swing.JFrame {
                                 String args[] = new String[1];
                                 args[0] = "Administrador del Hotel";
                                 ViewAdmHotel.MenuAdminHotel.main(args);
-                                //ispose();
                                 break;
                             }
                         default:
@@ -317,13 +313,6 @@ public class LoginView extends javax.swing.JFrame {
                                     + "esta operación", "Acceso denegado", JOptionPane.ERROR_MESSAGE);
                             break;
                     }
-                
-            
-                        
-                        /*view.MenuGeneral.usuario = u.get(0);
-                        nombreUsuario = u.get(0).getEmpleado().getNombre() + 
-                                " " + u.get(0).getEmpleado().getApellido();
-                         view.MenuGeneral.main(args);*/
                         this.dispose();              
                 }else{
                      JOptionPane.showMessageDialog(null,"Contraseña Incorrecta", "Error",JOptionPane.ERROR_MESSAGE);
@@ -393,6 +382,28 @@ public class LoginView extends javax.swing.JFrame {
     * @param args the command line arguments
     */
     public static void main(final String args[]) {
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                JFrame frame= new LoginView();
