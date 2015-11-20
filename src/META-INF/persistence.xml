@@ -27,6 +27,16 @@
     <class>bean.MovimientoStock</class>
     <class>bean.DetalleCobro</class>
     <class>bean.Banco</class>
+    <class>bean.ExtraccionDeposito</class>
+    <class>bean.DetalleFacturacompra</class>
+    <class>bean.CategoriaArticulo</class>
+    <class>bean.CuentaBancaria</class>
+    <class>bean.FacturaPago</class>
+    <class>bean.DetalleOrdenCompra</class>
+    <class>bean.DetallePago</class>
+    <class>bean.Caja</class>
+    <class>bean.Pago</class>
+    <class>bean.CategoriaArticulo_1</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hotel db?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value="user"/>

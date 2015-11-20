@@ -902,7 +902,11 @@ public class ConsumoPSEdit extends javax.swing.JFrame {
         art.setNombre(prod.get(0).getNombre());
         art.setCantidadMinima(prod.get(0).getCantidadMinima());
         //ATENCION CON EL PROVEEDOR
-        art.setCodigoProveedor(prod.get(0).getCodigoProveedor());
+        art.setCantidadMaxima(prod.get(0).getCantidadMaxima());
+        art.setCosto(prod.get(0).getCosto());
+        art.setPrecio(prod.get(0).getPrecio());
+        art.setTipo(prod.get(0).getTipo());
+        art.setCodCategoria(prod.get(0).getCodCategoria());
         antes=prod.get(0).toString();
         entityManager.merge(art);
         entityManager.flush();

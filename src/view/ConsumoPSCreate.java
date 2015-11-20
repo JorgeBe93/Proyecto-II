@@ -933,13 +933,18 @@ DecimalFormat formatea = new DecimalFormat("###,###,###,###,###.##");
         Articulo art=new Articulo();
         art.setCodigoArticulo(cod);
         art.setNombre(ar.get(0).getNombre());
+        art.setCantidadMaxima(ar.get(0).getCantidadMaxima());
         art.setCantidadMinima(ar.get(0).getCantidadMinima());
         // ATENCION CON EL PROVEEDOR
-        art.setCodigoProveedor(ar.get(0).getCodigoProveedor());
         art.setCantidadStock(ar.get(0).getCantidadStock()-cantidad);
+        art.setCosto(ar.get(0).getCosto());
+        art.setPrecio(ar.get(0).getPrecio());
+        art.setTipo(ar.get(0).getTipo());
+        art.setCodCategoria(ar.get(0).getCodCategoria());
         entityManager.merge(art);
         entityManager.flush();
        registrarAuditoria("articulo","Modificación",ar.toString(),art.toString());
+       //agregar lo de orden de compra
  }
         private void inicializarListaReserva(){
         Query=entityManager.createNativeQuery("select * from reserva  "

@@ -7,9 +7,7 @@
 package bean;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -33,7 +30,11 @@ import javax.persistence.Table;
     @NamedQuery(name = "Articulo.findByCodigoArticulo", query = "SELECT a FROM Articulo a WHERE a.codigoArticulo = :codigoArticulo"),
     @NamedQuery(name = "Articulo.findByNombre", query = "SELECT a FROM Articulo a WHERE a.nombre = :nombre"),
     @NamedQuery(name = "Articulo.findByCantidadStock", query = "SELECT a FROM Articulo a WHERE a.cantidadStock = :cantidadStock"),
-    @NamedQuery(name = "Articulo.findByCantidadMinima", query = "SELECT a FROM Articulo a WHERE a.cantidadMinima = :cantidadMinima")})
+    @NamedQuery(name = "Articulo.findByCantidadMinima", query = "SELECT a FROM Articulo a WHERE a.cantidadMinima = :cantidadMinima"),
+    @NamedQuery(name = "Articulo.findByCantidadMaxima", query = "SELECT a FROM Articulo a WHERE a.cantidadMaxima = :cantidadMaxima"),
+    @NamedQuery(name = "Articulo.findByCosto", query = "SELECT a FROM Articulo a WHERE a.costo = :costo"),
+    @NamedQuery(name = "Articulo.findByPrecio", query = "SELECT a FROM Articulo a WHERE a.precio = :precio"),
+    @NamedQuery(name = "Articulo.findByTipo", query = "SELECT a FROM Articulo a WHERE a.tipo = :tipo")})
 public class Articulo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,11 +51,18 @@ public class Articulo implements Serializable {
     @Basic(optional = false)
     @Column(name = "cantidadMinima")
     private int cantidadMinima;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoArticulo")
-    private Collection<MovimientoStock> movimientoStockCollection;
-    @JoinColumn(name = "codigoProveedor", referencedColumnName = "codigoProveedor")
+    @Basic(optional = false)
+    @Column(name = "cantidadMaxima")
+    private int cantidadMaxima;
+    @Column(name = "costo")
+    private Integer costo;
+    @Column(name = "precio")
+    private Integer precio;
+    @Column(name = "tipo")
+    private String tipo;
+    @JoinColumn(name = "cod_categoria", referencedColumnName = "cod_categoria")
     @ManyToOne(optional = false)
-    private Proveedor codigoProveedor;
+    private CategoriaArticulo codCategoria;
 
     public Articulo() {
     }
@@ -63,11 +71,12 @@ public class Articulo implements Serializable {
         this.codigoArticulo = codigoArticulo;
     }
 
-    public Articulo(Integer codigoArticulo, String nombre, int cantidadStock, int cantidadMinima) {
+    public Articulo(Integer codigoArticulo, String nombre, int cantidadStock, int cantidadMinima, int cantidadMaxima) {
         this.codigoArticulo = codigoArticulo;
         this.nombre = nombre;
         this.cantidadStock = cantidadStock;
         this.cantidadMinima = cantidadMinima;
+        this.cantidadMaxima = cantidadMaxima;
     }
 
     public Integer getCodigoArticulo() {
@@ -102,20 +111,44 @@ public class Articulo implements Serializable {
         this.cantidadMinima = cantidadMinima;
     }
 
-    public Collection<MovimientoStock> getMovimientoStockCollection() {
-        return movimientoStockCollection;
+    public int getCantidadMaxima() {
+        return cantidadMaxima;
     }
 
-    public void setMovimientoStockCollection(Collection<MovimientoStock> movimientoStockCollection) {
-        this.movimientoStockCollection = movimientoStockCollection;
+    public void setCantidadMaxima(int cantidadMaxima) {
+        this.cantidadMaxima = cantidadMaxima;
     }
 
-    public Proveedor getCodigoProveedor() {
-        return codigoProveedor;
+    public Integer getCosto() {
+        return costo;
     }
 
-    public void setCodigoProveedor(Proveedor codigoProveedor) {
-        this.codigoProveedor = codigoProveedor;
+    public void setCosto(Integer costo) {
+        this.costo = costo;
+    }
+
+    public Integer getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Integer precio) {
+        this.precio = precio;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public CategoriaArticulo getCodCategoria() {
+        return codCategoria;
+    }
+
+    public void setCodCategoria(CategoriaArticulo codCategoria) {
+        this.codCategoria = codCategoria;
     }
 
     @Override
@@ -138,14 +171,9 @@ public class Articulo implements Serializable {
         return true;
     }
 
-    /* @Override
-    public String toString() {
-    return "bean.Articulo[ codigoArticulo=" + codigoArticulo + " ]";
-    }*/
     @Override
     public String toString() {
-        return "codigoArticulo=" + codigoArticulo + ", nombre=" + nombre + ", cantidadStock=" + cantidadStock + ", cantidadMinima=" + cantidadMinima;
+        return "bean.Articulo[ codigoArticulo=" + codigoArticulo + " ]";
     }
-    
     
 }

@@ -32,6 +32,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "Banco.findByNombre", query = "SELECT b FROM Banco b WHERE b.nombre = :nombre"),
     @NamedQuery(name = "Banco.findByTipoEntidad", query = "SELECT b FROM Banco b WHERE b.tipoEntidad = :tipoEntidad")})
 public class Banco implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idBanco")
+    private Collection<CuentaBancaria> cuentaBancariaCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -115,6 +117,14 @@ public class Banco implements Serializable {
     @Override
     public String toString() {
         return "bean.Banco[ idBanco=" + idBanco + " ]";
+    }
+
+    public Collection<CuentaBancaria> getCuentaBancariaCollection() {
+        return cuentaBancariaCollection;
+    }
+
+    public void setCuentaBancariaCollection(Collection<CuentaBancaria> cuentaBancariaCollection) {
+        this.cuentaBancariaCollection = cuentaBancariaCollection;
     }
     
 }

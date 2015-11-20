@@ -28,7 +28,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "MovimientoStock.findAll", query = "SELECT m FROM MovimientoStock m"),
     @NamedQuery(name = "MovimientoStock.findByCodigoMovimiento", query = "SELECT m FROM MovimientoStock m WHERE m.codigoMovimiento = :codigoMovimiento"),
-    @NamedQuery(name = "MovimientoStock.findByCantidadExtraida", query = "SELECT m FROM MovimientoStock m WHERE m.cantidadExtraida = :cantidadExtraida"),
+    @NamedQuery(name = "MovimientoStock.findByCantidad", query = "SELECT m FROM MovimientoStock m WHERE m.cantidad = :cantidad"),
     @NamedQuery(name = "MovimientoStock.findByFechaHora", query = "SELECT m FROM MovimientoStock m WHERE m.fechaHora = :fechaHora")})
 public class MovimientoStock implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -38,8 +38,8 @@ public class MovimientoStock implements Serializable {
     @Column(name = "codigoMovimiento")
     private Integer codigoMovimiento;
     @Basic(optional = false)
-    @Column(name = "cantidadExtraida")
-    private int cantidadExtraida;
+    @Column(name = "cantidad")
+    private int cantidad;
     @Basic(optional = false)
     @Column(name = "fechaHora")
     private String fechaHora;
@@ -54,9 +54,9 @@ public class MovimientoStock implements Serializable {
         this.codigoMovimiento = codigoMovimiento;
     }
 
-    public MovimientoStock(Integer codigoMovimiento, int cantidadExtraida, String fechaHora) {
+    public MovimientoStock(Integer codigoMovimiento, int cantidad, String fechaHora) {
         this.codigoMovimiento = codigoMovimiento;
-        this.cantidadExtraida = cantidadExtraida;
+        this.cantidad = cantidad;
         this.fechaHora = fechaHora;
     }
 
@@ -68,12 +68,12 @@ public class MovimientoStock implements Serializable {
         this.codigoMovimiento = codigoMovimiento;
     }
 
-    public int getCantidadExtraida() {
-        return cantidadExtraida;
+    public int getCantidad() {
+        return cantidad;
     }
 
-    public void setCantidadExtraida(int cantidadExtraida) {
-        this.cantidadExtraida = cantidadExtraida;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     public String getFechaHora() {
@@ -112,14 +112,9 @@ public class MovimientoStock implements Serializable {
         return true;
     }
 
-    /*   @Override
-    public String toString() {
-    return "bean.MovimientoStock[ codigoMovimiento=" + codigoMovimiento + " ]";
-    }*/
     @Override
     public String toString() {
-        return  "codigoMovimiento=" + codigoMovimiento + ", cantidadExtraida=" + cantidadExtraida + ", fechaHora=" + fechaHora + ", codigoArticulo=" + codigoArticulo;
+        return "bean.MovimientoStock[ codigoMovimiento=" + codigoMovimiento + " ]";
     }
-    
     
 }

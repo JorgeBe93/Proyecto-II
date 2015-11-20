@@ -799,10 +799,14 @@ public class ConsumoPSEliminar extends javax.swing.JFrame {
         Articulo art=new Articulo();
         System.out.println("Cantidad "+cantidad);
         art.setCantidadStock(artic.get(0).getCantidadStock()+cantidad);
+        art.setCantidadMaxima(artic.get(0).getCantidadMaxima());
         art.setCodigoArticulo(artic.get(0).getCodigoArticulo());
         art.setNombre(artic.get(0).getNombre());
         art.setCantidadMinima(artic.get(0).getCantidadMinima());
-        art.setCodigoProveedor(artic.get(0).getCodigoProveedor());
+        art.setCosto(artic.get(0).getCosto());
+        art.setPrecio(artic.get(0).getPrecio());
+        art.setTipo(artic.get(0).getTipo());
+        art.setCodCategoria(artic.get(0).getCodCategoria());
         antes=artic.get(0).toString();
         entityManager.merge(art);
         entityManager.flush();

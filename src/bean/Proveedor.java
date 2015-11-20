@@ -15,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -45,7 +47,7 @@ public class Proveedor implements Serializable {
     private Integer codigoProveedor;
     @Basic(optional = false)
     @Column(name = "tipo")
-    private char tipo;
+    private String tipo;
     @Basic(optional = false)
     @Column(name = "razonSocial")
     private String razonSocial;
@@ -62,8 +64,15 @@ public class Proveedor implements Serializable {
     @Basic(optional = false)
     @Column(name = "telefono")
     private int telefono;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoProveedor")
-    private Collection<Articulo> articuloCollection;
+    @OneToMany(mappedBy = "codProveedor")
+    private Collection<FacturaPago> facturaPagoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codProveedor")
+    private Collection<Pago> pagoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codProveedor")
+    private Collection<DetalleOrdenCompra> detalleOrdenCompraCollection;
+    @JoinColumn(name = "codigoCategoria", referencedColumnName = "cod_categoria")
+    @ManyToOne(optional = false)
+    private CategoriaArticulo codigoCategoria;
 
     public Proveedor() {
     }
@@ -72,7 +81,7 @@ public class Proveedor implements Serializable {
         this.codigoProveedor = codigoProveedor;
     }
 
-    public Proveedor(Integer codigoProveedor, char tipo, String razonSocial, String email, String direccion, int telefono) {
+    public Proveedor(Integer codigoProveedor, String tipo, String razonSocial, String email, String direccion, int telefono) {
         this.codigoProveedor = codigoProveedor;
         this.tipo = tipo;
         this.razonSocial = razonSocial;
@@ -89,11 +98,11 @@ public class Proveedor implements Serializable {
         this.codigoProveedor = codigoProveedor;
     }
 
-    public char getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(char tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
@@ -145,12 +154,36 @@ public class Proveedor implements Serializable {
         this.telefono = telefono;
     }
 
-    public Collection<Articulo> getArticuloCollection() {
-        return articuloCollection;
+    public Collection<FacturaPago> getFacturaPagoCollection() {
+        return facturaPagoCollection;
     }
 
-    public void setArticuloCollection(Collection<Articulo> articuloCollection) {
-        this.articuloCollection = articuloCollection;
+    public void setFacturaPagoCollection(Collection<FacturaPago> facturaPagoCollection) {
+        this.facturaPagoCollection = facturaPagoCollection;
+    }
+
+    public Collection<Pago> getPagoCollection() {
+        return pagoCollection;
+    }
+
+    public void setPagoCollection(Collection<Pago> pagoCollection) {
+        this.pagoCollection = pagoCollection;
+    }
+
+    public Collection<DetalleOrdenCompra> getDetalleOrdenCompraCollection() {
+        return detalleOrdenCompraCollection;
+    }
+
+    public void setDetalleOrdenCompraCollection(Collection<DetalleOrdenCompra> detalleOrdenCompraCollection) {
+        this.detalleOrdenCompraCollection = detalleOrdenCompraCollection;
+    }
+
+    public CategoriaArticulo getCodigoCategoria() {
+        return codigoCategoria;
+    }
+
+    public void setCodigoCategoria(CategoriaArticulo codigoCategoria) {
+        this.codigoCategoria = codigoCategoria;
     }
 
     @Override

@@ -45,7 +45,6 @@ public class MenuRecepcionista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menu_cliente = new javax.swing.JMenu();
         mItem_crearC = new javax.swing.JMenuItem();
@@ -87,19 +86,9 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         mItem_generarFactura = new javax.swing.JMenuItem();
         jSeparator15 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarFactura = new javax.swing.JMenuItem();
-        menu_estilos = new javax.swing.JMenu();
-        mItem_win = new javax.swing.JMenuItem();
-        jSeparator18 = new javax.swing.JPopupMenu.Separator();
-        mItem_liquid = new javax.swing.JMenuItem();
-        jSeparator17 = new javax.swing.JPopupMenu.Separator();
-        mItem_metal = new javax.swing.JMenuItem();
-        jSeparator16 = new javax.swing.JPopupMenu.Separator();
-        mItem_nimbus = new javax.swing.JMenuItem();
         menu_salir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/campana2.png"))); // NOI18N
 
         jMenuBar1.setBackground(new java.awt.Color(0, 153, 255));
 
@@ -113,6 +102,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
 
+        mItem_crearC.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_crearC.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_crearC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icon-student.png"))); // NOI18N
         mItem_crearC.setText("Registrar Cliente");
         mItem_crearC.addActionListener(new java.awt.event.ActionListener() {
@@ -123,6 +114,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_cliente.add(mItem_crearC);
         menu_cliente.add(jSeparator6);
 
+        mItem_editarC.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_editarC.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_editarC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/editarusuario.png"))); // NOI18N
         mItem_editarC.setText("Editar Cliente");
         mItem_editarC.addActionListener(new java.awt.event.ActionListener() {
@@ -133,6 +126,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_cliente.add(mItem_editarC);
         menu_cliente.add(jSeparator5);
 
+        mItem_eliminarC.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_eliminarC.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_eliminarC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarC.setText("Eliminar Cliente");
         mItem_eliminarC.addActionListener(new java.awt.event.ActionListener() {
@@ -143,6 +138,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_cliente.add(mItem_eliminarC);
         menu_cliente.add(jSeparator4);
 
+        mItem_buscarC.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_buscarC.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_buscarC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarC.setText("Buscar Cliente");
         mItem_buscarC.addActionListener(new java.awt.event.ActionListener() {
@@ -165,6 +162,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
 
+        mItem_registrarReserva.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_registrarReserva.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_registrarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         mItem_registrarReserva.setText("Registrar Reserva");
         mItem_registrarReserva.addActionListener(new java.awt.event.ActionListener() {
@@ -175,6 +174,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_reserva.add(mItem_registrarReserva);
         menu_reserva.add(jSeparator9);
 
+        mItem_editarReserva.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_editarReserva.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_editarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/refrescar.png"))); // NOI18N
         mItem_editarReserva.setText("Editar Reserva");
         mItem_editarReserva.addActionListener(new java.awt.event.ActionListener() {
@@ -185,6 +186,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_reserva.add(mItem_editarReserva);
         menu_reserva.add(jSeparator10);
 
+        mItem_eliminarReserva.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_eliminarReserva.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_eliminarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarReserva.setText("Eliminar Reserva");
         mItem_eliminarReserva.addActionListener(new java.awt.event.ActionListener() {
@@ -195,6 +198,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_reserva.add(mItem_eliminarReserva);
         menu_reserva.add(jSeparator8);
 
+        mItem_buscarReserva2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_buscarReserva2.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_buscarReserva2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarReserva2.setText("Buscar Reserva");
         mItem_buscarReserva2.addActionListener(new java.awt.event.ActionListener() {
@@ -205,6 +210,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_reserva.add(mItem_buscarReserva2);
         menu_reserva.add(jSeparator7);
 
+        mItem_contrato.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_contrato.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_contrato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pdf.png"))); // NOI18N
         mItem_contrato.setText("Generar Contrato de Reserva");
         mItem_contrato.addActionListener(new java.awt.event.ActionListener() {
@@ -226,6 +233,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
 
+        mItem_generarPre.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_generarPre.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_generarPre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pdf.png"))); // NOI18N
         mItem_generarPre.setText("Generar Presupuesto");
         mItem_generarPre.addActionListener(new java.awt.event.ActionListener() {
@@ -236,6 +245,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_presupuesto.add(mItem_generarPre);
         menu_presupuesto.add(jSeparator3);
 
+        mItem_confirmarPre.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_confirmarPre.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_confirmarPre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/accept.png"))); // NOI18N
         mItem_confirmarPre.setText("Confirmar Presupuesto");
         mItem_confirmarPre.addActionListener(new java.awt.event.ActionListener() {
@@ -246,6 +257,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_presupuesto.add(mItem_confirmarPre);
         menu_presupuesto.add(jSeparator2);
 
+        mItem_eliminarPres.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_eliminarPres.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_eliminarPres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarPres.setText("Eliminar Presupuesto");
         mItem_eliminarPres.addActionListener(new java.awt.event.ActionListener() {
@@ -256,6 +269,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_presupuesto.add(mItem_eliminarPres);
         menu_presupuesto.add(jSeparator1);
 
+        mItem_buscarPre.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_buscarPre.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_buscarPre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarPre.setText("Buscar Presupuesto");
         mItem_buscarPre.addActionListener(new java.awt.event.ActionListener() {
@@ -272,6 +287,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_consumo.setText("Consumos");
         menu_consumo.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
 
+        mItem_registrarConsumo2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_registrarConsumo2.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_registrarConsumo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         mItem_registrarConsumo2.setText("Registrar Consumo");
         mItem_registrarConsumo2.addActionListener(new java.awt.event.ActionListener() {
@@ -282,6 +299,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_consumo.add(mItem_registrarConsumo2);
         menu_consumo.add(jSeparator13);
 
+        mItem_modificarConsumo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_modificarConsumo.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_modificarConsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/refrescar.png"))); // NOI18N
         mItem_modificarConsumo.setText("Modificar Consumo");
         mItem_modificarConsumo.addActionListener(new java.awt.event.ActionListener() {
@@ -292,6 +311,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_consumo.add(mItem_modificarConsumo);
         menu_consumo.add(jSeparator14);
 
+        mItem_eliminarConsumo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_eliminarConsumo.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_eliminarConsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarConsumo.setText("Eliminar Consumo");
         mItem_eliminarConsumo.addActionListener(new java.awt.event.ActionListener() {
@@ -302,6 +323,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_consumo.add(mItem_eliminarConsumo);
         menu_consumo.add(jSeparator12);
 
+        mItem_buscarConsumo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_buscarConsumo.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_buscarConsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarConsumo.setText("Buscar Consumo");
         mItem_buscarConsumo.addActionListener(new java.awt.event.ActionListener() {
@@ -312,6 +335,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_consumo.add(mItem_buscarConsumo);
         menu_consumo.add(jSeparator11);
 
+        mItem_resumenConsumo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_resumenConsumo.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_resumenConsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pdf.png"))); // NOI18N
         mItem_resumenConsumo.setText("Resumen de Consumo");
         mItem_resumenConsumo.addActionListener(new java.awt.event.ActionListener() {
@@ -333,6 +358,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
             }
         });
 
+        mItem_generarFactura.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_generarFactura.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_generarFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/table.png"))); // NOI18N
         mItem_generarFactura.setText("Generar Factura");
         mItem_generarFactura.addActionListener(new java.awt.event.ActionListener() {
@@ -343,6 +370,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_factura.add(mItem_generarFactura);
         menu_factura.add(jSeparator15);
 
+        mItem_buscarFactura.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_buscarFactura.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_buscarFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarFactura.setText("Buscar Facturas");
         mItem_buscarFactura.addActionListener(new java.awt.event.ActionListener() {
@@ -353,48 +382,6 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_factura.add(mItem_buscarFactura);
 
         jMenuBar1.add(menu_factura);
-
-        menu_estilos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_estilos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ventana2.png"))); // NOI18N
-        menu_estilos.setText("Estilos");
-        menu_estilos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        mItem_win.setText("Windows");
-        mItem_win.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_winActionPerformed(evt);
-            }
-        });
-        menu_estilos.add(mItem_win);
-        menu_estilos.add(jSeparator18);
-
-        mItem_liquid.setText("Liquid");
-        mItem_liquid.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_liquidActionPerformed(evt);
-            }
-        });
-        menu_estilos.add(mItem_liquid);
-        menu_estilos.add(jSeparator17);
-
-        mItem_metal.setText("Metal");
-        mItem_metal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_metalActionPerformed(evt);
-            }
-        });
-        menu_estilos.add(mItem_metal);
-        menu_estilos.add(jSeparator16);
-
-        mItem_nimbus.setText("Nimbus");
-        mItem_nimbus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItem_nimbusActionPerformed(evt);
-            }
-        });
-        menu_estilos.add(mItem_nimbus);
-
-        jMenuBar1.add(menu_estilos);
 
         menu_salir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/login.png"))); // NOI18N
@@ -413,17 +400,11 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(jLabel1)
-                .addContainerGap(589, Short.MAX_VALUE))
+            .addGap(0, 848, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+            .addGap(0, 367, Short.MAX_VALUE)
         );
 
         pack();
@@ -622,30 +603,6 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         args[0]="Resumen de consumo del cliente";
         ConsumoResumen.main(args);
     }//GEN-LAST:event_mItem_resumenConsumoActionPerformed
-
-    private void mItem_metalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_metalActionPerformed
-        // TODO add your handling code here:
-        set_look = "javax.swing.plaf.metal.MetalLookAndFeel";
-        lookandfeel();  
-    }//GEN-LAST:event_mItem_metalActionPerformed
-
-    private void mItem_nimbusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_nimbusActionPerformed
-        // TODO add your handling code here:
-        set_look = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
-        lookandfeel();
-    }//GEN-LAST:event_mItem_nimbusActionPerformed
-
-    private void mItem_liquidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_liquidActionPerformed
-        // TODO add your handling code here:
-        set_look = "com.birosoft.liquid.LiquidLookAndFeel";
-        lookandfeel();
-    }//GEN-LAST:event_mItem_liquidActionPerformed
-
-    private void mItem_winActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItem_winActionPerformed
-        // TODO add your handling code here:
-         set_look = "com.birosoft.windows.WindowsLookAndFeel";
-        lookandfeel();
-    }//GEN-LAST:event_mItem_winActionPerformed
     public void lookandfeel()
     {
         try
@@ -701,7 +658,6 @@ public class MenuRecepcionista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
@@ -710,9 +666,6 @@ public class MenuRecepcionista extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator13;
     private javax.swing.JPopupMenu.Separator jSeparator14;
     private javax.swing.JPopupMenu.Separator jSeparator15;
-    private javax.swing.JPopupMenu.Separator jSeparator16;
-    private javax.swing.JPopupMenu.Separator jSeparator17;
-    private javax.swing.JPopupMenu.Separator jSeparator18;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -737,17 +690,12 @@ public class MenuRecepcionista extends javax.swing.JFrame {
     private javax.swing.JMenuItem mItem_eliminarReserva;
     private javax.swing.JMenuItem mItem_generarFactura;
     private javax.swing.JMenuItem mItem_generarPre;
-    private javax.swing.JMenuItem mItem_liquid;
-    private javax.swing.JMenuItem mItem_metal;
     private javax.swing.JMenuItem mItem_modificarConsumo;
-    private javax.swing.JMenuItem mItem_nimbus;
     private javax.swing.JMenuItem mItem_registrarConsumo2;
     private javax.swing.JMenuItem mItem_registrarReserva;
     private javax.swing.JMenuItem mItem_resumenConsumo;
-    private javax.swing.JMenuItem mItem_win;
     private javax.swing.JMenu menu_cliente;
     private javax.swing.JMenu menu_consumo;
-    private javax.swing.JMenu menu_estilos;
     private javax.swing.JMenu menu_factura;
     private javax.swing.JMenu menu_presupuesto;
     private javax.swing.JMenu menu_reserva;
