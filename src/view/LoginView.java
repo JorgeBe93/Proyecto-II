@@ -12,6 +12,7 @@
 package view;
 
 import bean.AuditoriaSistema;
+import bean.Rol;
 //import bean.Permiso;
 import bean.Usuario;
 import java.awt.Image;
@@ -264,19 +265,54 @@ public class LoginView extends javax.swing.JFrame {
                         Date fecha=new Date();
                         DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                         as.setFechaHora(formato.format(fecha));
-                        as.setUsuario(u.get(0).getEmpleado().getNombre());
+                        as.setUsuario(nombreUsuario);
                         entityManager.getTransaction().begin();
                         entityManager.persist(as);
                         entityManager.getTransaction().commit();
                         entityManager.close();
-                        JOptionPane.showMessageDialog(null,"Inicio de Sesión "
-                                 + "Exitoso", "Correcto",JOptionPane.INFORMATION_MESSAGE);
-                        String args[]= new String[1];
-                        args[0]  = "Menú del Sistema";
-                         view.MenuGeneral.usuario = u.get(0);
-                        nombreUsuario = u.get(0).getEmpleado().getNombre() + 
-                                " " + u.get(0).getEmpleado().getApellido();
-                         view.MenuGeneral.main(args);
+                       // JOptionPane.showMessageDialog(null,"Inicio de Sesión "
+                        //         + "Exitoso", "Correcto",JOptionPane.INFORMATION_MESSAGE);
+                        //String args[]= new String[1];
+                        //args[0]  = "Menú del Sistema";
+                        
+                        Object [] roles = obtenerObjectoConRoles((List)u.get(0).getRolCollection());
+                        
+                        // Con JCombobox
+                        Object seleccion = JOptionPane.showInputDialog(
+                           null,
+                           "Seleccione un Rol para Iniciar Sesión",
+                           "Selector de Roles",
+                           JOptionPane.QUESTION_MESSAGE,
+                           null,  // null para icono defecto
+                           roles, 
+                           roles[0]);
+                        switch (seleccion.toString()) {
+                        case "Administrador del Sistema":
+                            {
+                                String args[] = new String[1];
+                                args[0] = "Administrador del Sistema";
+                                view.MenuAdminSist.main(args);
+                                break;
+                            }
+                        case "Recepcionista":
+                            {
+                                String args[] = new String[1];
+                                args[0] = "Recepcionista";
+                                view.MenuRecepcionista.main(args);
+                                break;
+                            }
+                        case "Administrador del Hotel":
+                            {
+                                String args[] = new String[1];
+                                args[0] = "Administrador del Hotel";
+                                ViewAdmHotel.MenuAdminHotel.main(args);
+                                break;
+                            }
+                        default:
+                            JOptionPane.showMessageDialog(null, "Sin permisos para "
+                                    + "esta operación", "Acceso denegado", JOptionPane.ERROR_MESSAGE);
+                            break;
+                    }
                         this.dispose();              
                 }else{
                      JOptionPane.showMessageDialog(null,"Contraseña Incorrecta", "Error",JOptionPane.ERROR_MESSAGE);
@@ -318,14 +354,15 @@ public class LoginView extends javax.swing.JFrame {
         String args[]=new String[1];
         args[0]="Recordar contraseña";
         RecordarContrasenaView.main(args);
+        this.dispose();
     }//GEN-LAST:event_btn_recordarActionPerformed
 
     private void btn_cambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cambiarActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-         String args[]=new String[1];
+        String args[]=new String[1];
         args[0]="Cambiar contraseña";
         CambiarPasswordView.main(args);
+        this.dispose();
     }//GEN-LAST:event_btn_cambiarActionPerformed
 
     private void tf_passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_passwordKeyPressed
@@ -346,6 +383,28 @@ public class LoginView extends javax.swing.JFrame {
     * @param args the command line arguments
     */
     public static void main(final String args[]) {
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                JFrame frame= new LoginView();
@@ -375,4 +434,15 @@ public class LoginView extends javax.swing.JFrame {
     public static javax.swing.JTextField tf_codempl;
     public static javax.swing.JPasswordField tf_password;
     // End of variables declaration//GEN-END:variables
+    private Object[] obtenerObjectoConRoles(List<Rol> rolesDelUsuario ){
+        int tamanho = rolesDelUsuario.size();
+        Object [] rolesAretornar = new Object[tamanho];
+        int i = 0; 
+        for(Rol rol:  rolesDelUsuario){
+            rolesAretornar[i] = rol.getNombre();
+            i++;
+        }
+        return rolesAretornar;
+    }
+
 }

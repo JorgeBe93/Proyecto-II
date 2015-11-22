@@ -16,6 +16,7 @@ import bean.Correo;
 import bean.Empleado;
 import bean.Usuario;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -86,6 +87,11 @@ public class CambiarPasswordView extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
+        tf_codempl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_codemplActionPerformed(evt);
+            }
+        });
         tf_codempl.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 tf_codemplFocusLost(evt);
@@ -109,6 +115,9 @@ public class CambiarPasswordView extends javax.swing.JFrame {
             }
         });
         tf_actual.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_actualKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_actualKeyTyped(evt);
             }
@@ -179,6 +188,9 @@ public class CambiarPasswordView extends javax.swing.JFrame {
             }
         });
         tf_nueva2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_nueva2KeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tf_nueva2KeyTyped(evt);
             }
@@ -188,7 +200,7 @@ public class CambiarPasswordView extends javax.swing.JFrame {
         lbl_nueva.setText("Nueva contraseña:");
 
         lbl_nueva2.setFont(new java.awt.Font("Candara", 1, 14)); // NOI18N
-        lbl_nueva2.setText("Vuelva a escribir la contraseña:");
+        lbl_nueva2.setText("Confirmar Contraseña");
 
         jLabel3.setFont(new java.awt.Font("Candara", 0, 10)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 51, 51));
@@ -199,22 +211,22 @@ public class CambiarPasswordView extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbl_nueva2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tf_nueva2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 60, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
-                        .addComponent(lbl_nueva)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tf_nueva, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lbl_nueva2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tf_nueva2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lbl_nueva)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                                .addComponent(tf_nueva, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,7 +258,7 @@ public class CambiarPasswordView extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,22 +342,21 @@ public class CambiarPasswordView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(135, 135, 135))
+                        .addGap(118, 118, 118))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(148, 148, 148))))
+                        .addGap(120, 120, 120))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,9 +369,9 @@ public class CambiarPasswordView extends javax.swing.JFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -386,64 +397,84 @@ public class CambiarPasswordView extends javax.swing.JFrame {
 
     private void btn_cambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cambiarActionPerformed
         // TODO add your handling code here:
-        if(tf_nueva.getText().length()==0 || tf_nueva2.getText().length()==0){
-            JOptionPane.showMessageDialog(null,"No ha ingresado valor para la nueva contraseña", "Error",JOptionPane.ERROR_MESSAGE);
+        if(tf_nueva.getText().length()==0 && tf_nueva2.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Ingresar la nueva contraseña y su "
+                    + "confirmación", "Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }else if(tf_nueva2.getText().length() == 0){
+            JOptionPane.showMessageDialog(null,"Debe confirmar la contraseña", "Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }else if(tf_nueva.getText().length() == 0){
+            JOptionPane.showMessageDialog(null,"Ingresar la contraseña nueva", "Error",JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if(tf_nueva.getText().equals(tf_nueva2.getText())){
-           
-                entityManager.getTransaction().begin();
-                /*Usuario usu =new Usuario();
-                usu.setCodigoEmpleado(u.get(0).getCodigoEmpleado());
-                usu.setPassword(tf_nueva.getText());
-                usu.setRolCollection(u.get(0).getRolCollection());*/
-                Usuario usu = entityManager.find(Usuario.class, u.get(0).getCodigoEmpleado());
-                usu.setPassword(tf_nueva.getText());
-                entityManager.merge(usu);
-                //registramos los datos necesarios para la auditoria
-                query=entityManager.createNamedQuery("Empleado.findByCodigoEmpleado");
-                query.setParameter("codigoEmpleado", u.get(0).getCodigoEmpleado());
-                List<Empleado> e = query.getResultList();
-                nombre=e.get(0).getNombre();
-                AuditoriaSistema as=new AuditoriaSistema();
-                as.setAccion("Cambio su contraseña");
-                as.setTabla("Ninguna");
-                //trabajamos con la fecha
-                Date fecha=new Date();
-                DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                as.setFechaHora(formato.format(fecha));
-                as.setUsuario(nombre);
-                entityManager.persist(as);
-                entityManager.getTransaction().commit();
-                entityManager.close();
-                datos[0]=e.get(0).getEmail();
-                datos[1]="Modificación de Contraseña";
-                datos[2]="Su nueva contraseña de acceso al sistema es:"+" "+"'"+usu.getPassword()+"'";
-                 Correo c=new Correo();
-                     if(c.enviarCorreo(datos)){
-                         JOptionPane.showMessageDialog(null,"Modificacion Exitosa, su nueva contraseña fue enviada a su email", "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                         this.dispose();
+        if(!tf_nueva.equals(tf_actual)){
+            if(tf_nueva.getText().length() >= 6){
+                if(tf_nueva.getText().equals(tf_nueva2.getText())){
+                    entityManager.getTransaction().begin();
+                    /*Usuario usu =new Usuario();
+                    usu.setCodigoEmpleado(u.get(0).getCodigoEmpleado());
+                    usu.setPassword(tf_nueva.getText());
+                    usu.setRolCollection(u.get(0).getRolCollection());*/
+                    Usuario usu = entityManager.find(Usuario.class, u.get(0).getCodigoEmpleado());
+                    usu.setPassword(tf_nueva.getText());
+                    entityManager.merge(usu);
+                    //registramos los datos necesarios para la auditoria
+                    query=entityManager.createNamedQuery("Empleado.findByCodigoEmpleado");
+                    query.setParameter("codigoEmpleado", u.get(0).getCodigoEmpleado());
+                    List<Empleado> e = query.getResultList();
+                    nombre=e.get(0).getNombre();
+                    AuditoriaSistema as=new AuditoriaSistema();
+                    as.setAccion("Cambio su contraseña");
+                    as.setTabla("Ninguna");
+                    //trabajamos con la fecha
+                    Date fecha=new Date();
+                    DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    as.setFechaHora(formato.format(fecha));
+                    as.setUsuario(nombre);
+                    entityManager.persist(as);
+                    entityManager.getTransaction().commit();
+                    entityManager.close();
+                    datos[0]=e.get(0).getEmail();
+                    datos[1]="Modificación de Contraseña";
+                    datos[2]="Su nueva contraseña de acceso al sistema es:"+" "+"'"+usu.getPassword()+"'";
+                     Correo c=new Correo();
+                         if(c.enviarCorreo(datos)){
+                             JOptionPane.showMessageDialog(null,"Modificacion Exitosa, su nueva contraseña fue enviada a su email", "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                             //this.dispose();
+                         }else{
+                             JOptionPane.showMessageDialog(null,"Modificación Exitosa,su nueva contraseña no pudo ser enviada; verifique su dirrecion de email", "Error",JOptionPane.ERROR_MESSAGE);
+                             //this.dispose();
+                         }       
+
                          String args[]=new String[1];
                          args[0]="Ingreso al Sistema";
                          LoginView.main(args);
-                         
-                     }else{
-                         JOptionPane.showMessageDialog(null,"Modificación Exitosa,su nueva contraseña no pudo ser enviada; verifique su dirrecion de email", "Error",JOptionPane.ERROR_MESSAGE);
                          this.dispose();
-                     }       
-        }
-        else{
-            JOptionPane.showMessageDialog(null,"Las Contraseñas no coiciden", "Error",JOptionPane.ERROR_MESSAGE);
-            tf_nueva2.setText(null);
-            cantidad++;
-            if(cantidad==3){
-               this.dispose();
-               cantidad=0;
-               String args[]=new String[1];
-               args[0]="Ingreso al Sistema";
-               LoginView.main(args);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Las Contraseñas no coiciden", "Error",JOptionPane.ERROR_MESSAGE);
+                    tf_nueva2.setText(null);
+                    cantidad++;
+                    if(cantidad==3){
+                       cantidad=0;
+                       String args[]=new String[1];
+                       args[0]="Ingreso al Sistema";
+                       LoginView.main(args);
+                       this.dispose();
+                    }
+                    //return;
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "La contraseña debe tener como mínimo "
+                        + "6 caracteres");
+                tf_nueva.setText(null);
+                tf_nueva2.setText(null);
             }
-            return;
+        }else{
+            JOptionPane.showMessageDialog(null, "La contraseña introducida "
+                    + "es igual a la actual. Ingrese una distinta.", "Aviso", 
+                    JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_cambiarActionPerformed
 
@@ -477,7 +508,10 @@ public class CambiarPasswordView extends javax.swing.JFrame {
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+        String args[]=new String[1];
+        args[0]="Ingreso al Sistema";
+        LoginView.main(args);
+        this.dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void tf_nueva2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_nueva2ActionPerformed
@@ -486,27 +520,30 @@ public class CambiarPasswordView extends javax.swing.JFrame {
 
     private void tf_nuevaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_nuevaFocusLost
         // TODO add your handling code here:
-        if(tf_nueva.getText().length()<longitud){
+        /*if(tf_nueva.getText().length()<longitud){
             JOptionPane.showMessageDialog(null,"La contraseña debe tener 6 caracteres como mínimo", "Error",JOptionPane.ERROR_MESSAGE);
             return;
-        }
+        }*/
         
     }//GEN-LAST:event_tf_nuevaFocusLost
 
     private void tf_codemplFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tf_codemplFocusLost
         // TODO add your handling code here:
-        if(tf_codempl.getText().length()==0){
+        /*if(tf_codempl.getText().length()==0){
              JOptionPane.showMessageDialog(null,"No ha ingresado su codigo de usuario", "Error",JOptionPane.ERROR_MESSAGE);
             
-        }
+        }*/
     }//GEN-LAST:event_tf_codemplFocusLost
 
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
         // TODO add your handling code here:
-         if( tf_actual.getText().length()==0 || tf_codempl.getText().length()==0){
+        if(tf_codempl.getText().length()==0 && tf_actual.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Ingresar el código de Usuario y "
+                    + "Contraseña", "Error",JOptionPane.ERROR_MESSAGE);
+        }else if( tf_actual.getText().length()==0 ){
             JOptionPane.showMessageDialog(null,"No ha ingresado su contraseña actual", "Error",JOptionPane.ERROR_MESSAGE);
-            return;
-
+        }else if(tf_codempl.getText().length()==0){
+            JOptionPane.showMessageDialog(null,"Ingresar código de Usuario", "Error",JOptionPane.ERROR_MESSAGE);
         }else{
             codEmpl=Integer.parseInt(tf_codempl.getText());
             query = entityManager.createNamedQuery( "Usuario.findByCodigoEmpleado");
@@ -516,7 +553,6 @@ public class CambiarPasswordView extends javax.swing.JFrame {
                  JOptionPane.showMessageDialog(null,"Código de empleado Inexistente", "Error",JOptionPane.ERROR_MESSAGE);
                  tf_codempl.setText(null);
                  tf_codempl.requestFocus();
-                 return;
             }else{
                 if(u.get(0).getPassword().equals(tf_actual.getText())){
                     tf_actual.setEnabled(false);
@@ -537,17 +573,35 @@ public class CambiarPasswordView extends javax.swing.JFrame {
                          args[0]="Ingreso al Sistema";
                          LoginView.main(args);
                      }
-                     return;
                 }
              }
            }
     }//GEN-LAST:event_btn_aceptarActionPerformed
+
+    private void tf_codemplActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_codemplActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_codemplActionPerformed
+
+    private void tf_actualKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_actualKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER && !tf_actual.getText().equals("")){
+            btn_aceptar.doClick();
+        }
+    }//GEN-LAST:event_tf_actualKeyPressed
+
+    private void tf_nueva2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_nueva2KeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER && !tf_nueva.getText().equals("")){
+            btn_cambiar.doClick();
+        }
+    }//GEN-LAST:event_tf_nueva2KeyPressed
 
     /**
     * @param args the command line arguments
     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 JFrame frame=new CambiarPasswordView();
                 frame.setVisible(true);

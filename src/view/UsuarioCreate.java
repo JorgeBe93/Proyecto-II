@@ -60,7 +60,6 @@ public class UsuarioCreate extends javax.swing.JFrame {
         EntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
         Query = java.beans.Beans.isDesignTime() ? null : EntityManager.createQuery("SELECT r FROM Rol r");
         List = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(Query.getResultList());
-        rolListRenderizar1 = new renderizar.RolListRenderizar();
         empleadoQuery = java.beans.Beans.isDesignTime() ? null : EntityManager.createQuery("SELECT e FROM Empleado e");
         empleadoList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(empleadoQuery.getResultList());
         jPanel1 = new javax.swing.JPanel();
@@ -84,15 +83,11 @@ public class UsuarioCreate extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
 
-        rolListRenderizar1.setText("rolListRenderizar1");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setForeground(new java.awt.Color(204, 204, 255));
-
-        list_rol.setRenderer(rolListRenderizar1);
 
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, List, list_rol);
         bindingGroup.addBinding(jComboBoxBinding);
@@ -145,14 +140,15 @@ public class UsuarioCreate extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbl_codempl)
-                        .addGap(56, 56, 56)
+                        .addGap(41, 41, 41)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tf_apellidoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(tf_codigoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tf_nombreEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(list_rol, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(list_rol, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(tf_apellidoEmpleado, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(tf_codigoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(tf_nombreEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addComponent(lbl_rol, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -261,6 +257,11 @@ public class UsuarioCreate extends javax.swing.JFrame {
         lbl_filtro.setText("Buscar por:");
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Empleado", "Cedula", "Nombre", "Apellido", "Cargo", "Jefe" }));
+        list_filtros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                list_filtrosActionPerformed(evt);
+            }
+        });
         list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 list_filtrosFocusGained(evt);
@@ -369,25 +370,28 @@ public class UsuarioCreate extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 802, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(216, 216, 216))
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panel_crearUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(224, 224, 224)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 216, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel_crearUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(120, 120, 120))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panel_crearUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(panel_crearUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
@@ -414,7 +418,7 @@ public class UsuarioCreate extends javax.swing.JFrame {
 
                  //fila = masterTable.getSelectedRow();
                  //codEmpleado = Integer.parseInt(masterTable.getValueAt(fila, 0).toString());
-                 Empleado e = obtenerEmpleado(codEmpleado);
+                 //Empleado e = obtenerEmpleado(codEmpleado);
                  
                  //Empleado e=obtenerEmpleado(Integer.parseInt(tf_codigoEmpleado.getText()));
                  EntityManager.getTransaction().begin();
@@ -422,28 +426,29 @@ public class UsuarioCreate extends javax.swing.JFrame {
                  //u.setCodigoEmpleado(codEmpleado);
                  //u.setPassword(generarPassword());   
                  //u.setEmpleado(e);
+                 Empleado empleadoFind = EntityManager.find(Empleado.class, codEmpleado);
                  Rol rol = (Rol)list_rol.getSelectedItem();
-                 Collection<Rol> roles = new ArrayList<Rol>();
+                 Collection<Rol> roles = new ArrayList<>();
                  roles.add(rol);
                  //u.setRolCollection(roles);
-                 e.setUsuario(new Usuario());
-                 e.getUsuario().setEmpleado(e);
-                 e.getUsuario().setCodigoEmpleado(codEmpleado);
-                 e.getUsuario().setPassword(generarPassword());
-                 e.getUsuario().setRolCollection(roles);
+                 empleadoFind.setUsuario(new Usuario());
+                 empleadoFind.getUsuario().setEmpleado(empleadoFind);
+                 empleadoFind.getUsuario().setCodigoEmpleado(codEmpleado);
+                 empleadoFind.getUsuario().setPassword(generarPassword());
+                 empleadoFind.getUsuario().setRolCollection(roles);
                  //EntityManager.persist(u);
                  /**
                   * Se debe actualizar empleado porque el es el dueño de usuario
                   * Mirar en el bean que el join OneToOne esta en Empleado
                   */
-                 EntityManager.merge(e);
+                 EntityManager.merge(empleadoFind);
                  EntityManager.flush();
                  
                  //registramos los datos de la auditoria
                  AuditoriaSistema as=new AuditoriaSistema();
                  as.setAccion("Creación");
                  as.setTabla("Usuario");
-                 as.setAntes(e.getUsuario().toString());
+                 as.setAntes(empleadoFind.getUsuario().toString());
                  as.setDespues("No hay cambios");
                  //trabajmos con la fecha
                  Date fecha=new Date();
@@ -454,14 +459,19 @@ public class UsuarioCreate extends javax.swing.JFrame {
                  EntityManager.flush();
                  EntityManager.getTransaction().commit();
                  //em.close();
-                 datos[0]=e.getEmail();
+                 datos[0]=empleadoFind.getEmail();
                  datos[1]="Creación de cuenta";
-                 datos[2]="Su código de usuario es:"+" "+"'"+e.getCodigoEmpleado()+"'" +" "+
-                         "y su contraseña de acceso es:"+" "+"'"+e.getUsuario().getPassword()+"'";
-                    JOptionPane.showMessageDialog(null, "Usuario Creado Exitosamente");
+
+                 datos[2]="Su código de usuario es:"+" "+"'"+empleadoFind.getCodigoEmpleado()+"'" +" "+
+                         "y su contraseña de acceso es:"+" "+"'"+empleadoFind.getUsuario().getPassword()+"'";
+                 //empleadoList.clear();
+                 //empleadoList.add(e);
+                 enviarPassCorreo();
+                 //JOptionPane.showMessageDialog(null, "Usuario Creado Exitosamente");
+
                  empleadoSinRol();
                  fila = -1;
-                 enviarPassCorreo();
+
                  vaciarCampos();
                }else{
                     this.dispose();
@@ -485,13 +495,21 @@ public class UsuarioCreate extends javax.swing.JFrame {
 
     private void tf_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_valorKeyTyped
         // TODO add your handling code here:
-        char ch;
+        char letra;
+        int num;
         if (list_filtros.getSelectedItem()=="Jefe"
-            || list_filtros.getSelectedItem()=="Empleado"
-            || list_filtros.getSelectedItem()=="Cedula"
-        ){
-            ch=evt.getKeyChar();
-            if(!Character.isDigit(ch)){
+            || list_filtros.getSelectedItem()=="Empleado"){
+            letra=evt.getKeyChar();
+            if(!Character.isDigit(letra)){
+                getToolkit().beep();
+                evt.consume();
+            }
+        }
+        if(list_filtros.getSelectedItem() == "Nombre" ||
+                list_filtros.getSelectedItem() == "Apellido" ||
+                list_filtros.getSelectedItem() == "Cargo"){
+            num=evt.getKeyChar();
+            if(Character.isDigit(num)){
                 getToolkit().beep();
                 evt.consume();
             }
@@ -619,8 +637,16 @@ public class UsuarioCreate extends javax.swing.JFrame {
 
     private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
         // TODO add your handling code here:
+
         tf_valor.setText(null);
+    }                                        
+
     }//GEN-LAST:event_list_filtrosFocusGained
+
+    private void list_filtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_list_filtrosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_list_filtrosActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -651,6 +677,7 @@ public class UsuarioCreate extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 JFrame frame=new UsuarioCreate();
                 frame.setVisible(true);
@@ -683,24 +710,12 @@ public class UsuarioCreate extends javax.swing.JFrame {
     private javax.swing.JComboBox list_rol;
     private javax.swing.JTable masterTable;
     private javax.swing.JPanel panel_crearUsuario;
-    private renderizar.RolListRenderizar rolListRenderizar1;
     private javax.swing.JTextField tf_apellidoEmpleado;
     private javax.swing.JTextField tf_codigoEmpleado;
     private javax.swing.JTextField tf_nombreEmpleado;
     private javax.swing.JTextField tf_valor;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-    private Empleado obtenerEmpleado(int codigoEmpleado){
-        //EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
-        //EntityManager ema = fact.createEntityManager();
-       //  JOptionPane.showMessageDialog(null, codigoEmpleado);
-        Query query = EntityManager.createNamedQuery("Empleado.findByCodigoEmpleado");
-        query.setParameter("codigoEmpleado", codigoEmpleado);
-        Empleado empleado;
-        empleado = (Empleado)query.getSingleResult();
-        System.out.println(empleado.getNombre());
-        return empleado;
-    }
     private String generarPassword(){
         String cadenaLocal = "";
         for(int i=0;i<3;i++){

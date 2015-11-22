@@ -6,6 +6,8 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -25,6 +27,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -44,6 +47,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Empleado.findByFechaNacimiento", query = "SELECT e FROM Empleado e WHERE e.fechaNacimiento = :fechaNacimiento"),
     @NamedQuery(name = "Empleado.findByFechaIngreso", query = "SELECT e FROM Empleado e WHERE e.fechaIngreso = :fechaIngreso")})
 public class Empleado implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,8 +87,15 @@ public class Empleado implements Serializable {
     @JoinColumn(name = "codigoCargo", referencedColumnName = "codigoCargo")
     @ManyToOne(optional = false)
     private Cargo codigoCargo;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "empleado")
+    /*@OneToOne(cascade = CascadeType.ALL, mappedBy = "empleado")
     private Usuario usuario;
+    */
+    @JoinColumn(name = "codigoEmpleado", referencedColumnName = "codigoEmpleado",
+            insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Usuario usuario;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoEmpleado")
+    private Collection<Asistencia> asistenciaCollection;
 
     public Empleado() {
     }
@@ -108,7 +120,9 @@ public class Empleado implements Serializable {
     }
 
     public void setCodigoEmpleado(Integer codigoEmpleado) {
+        Integer oldCodigoEmpleado = this.codigoEmpleado;
         this.codigoEmpleado = codigoEmpleado;
+        changeSupport.firePropertyChange("codigoEmpleado", oldCodigoEmpleado, codigoEmpleado);
     }
 
     public String getNombre() {
@@ -116,7 +130,9 @@ public class Empleado implements Serializable {
     }
 
     public void setNombre(String nombre) {
+        String oldNombre = this.nombre;
         this.nombre = nombre;
+        changeSupport.firePropertyChange("nombre", oldNombre, nombre);
     }
 
     public String getApellido() {
@@ -124,7 +140,9 @@ public class Empleado implements Serializable {
     }
 
     public void setApellido(String apellido) {
+        String oldApellido = this.apellido;
         this.apellido = apellido;
+        changeSupport.firePropertyChange("apellido", oldApellido, apellido);
     }
 
     public String getCedula() {
@@ -132,7 +150,9 @@ public class Empleado implements Serializable {
     }
 
     public void setCedula(String cedula) {
+        String oldCedula = this.cedula;
         this.cedula = cedula;
+        changeSupport.firePropertyChange("cedula", oldCedula, cedula);
     }
 
     public String getEmail() {
@@ -140,7 +160,9 @@ public class Empleado implements Serializable {
     }
 
     public void setEmail(String email) {
+        String oldEmail = this.email;
         this.email = email;
+        changeSupport.firePropertyChange("email", oldEmail, email);
     }
 
     public String getDireccion() {
@@ -148,7 +170,9 @@ public class Empleado implements Serializable {
     }
 
     public void setDireccion(String direccion) {
+        String oldDireccion = this.direccion;
         this.direccion = direccion;
+        changeSupport.firePropertyChange("direccion", oldDireccion, direccion);
     }
 
     public String getTelefono() {
@@ -156,7 +180,9 @@ public class Empleado implements Serializable {
     }
 
     public void setTelefono(String telefono) {
+        String oldTelefono = this.telefono;
         this.telefono = telefono;
+        changeSupport.firePropertyChange("telefono", oldTelefono, telefono);
     }
 
     public Date getFechaNacimiento() {
@@ -164,7 +190,9 @@ public class Empleado implements Serializable {
     }
 
     public void setFechaNacimiento(Date fechaNacimiento) {
+        Date oldFechaNacimiento = this.fechaNacimiento;
         this.fechaNacimiento = fechaNacimiento;
+        changeSupport.firePropertyChange("fechaNacimiento", oldFechaNacimiento, fechaNacimiento);
     }
 
     public String getFechaIngreso() {
@@ -172,7 +200,9 @@ public class Empleado implements Serializable {
     }
 
     public void setFechaIngreso(String fechaIngreso) {
+        String oldFechaIngreso = this.fechaIngreso;
         this.fechaIngreso = fechaIngreso;
+        changeSupport.firePropertyChange("fechaIngreso", oldFechaIngreso, fechaIngreso);
     }
 
     public Collection<Empleado> getEmpleadoCollection() {
@@ -188,7 +218,9 @@ public class Empleado implements Serializable {
     }
 
     public void setCodigoJefe(Empleado codigoJefe) {
+        Empleado oldCodigoJefe = this.codigoJefe;
         this.codigoJefe = codigoJefe;
+        changeSupport.firePropertyChange("codigoJefe", oldCodigoJefe, codigoJefe);
     }
 
     public Cargo getCodigoCargo() {
@@ -196,7 +228,9 @@ public class Empleado implements Serializable {
     }
 
     public void setCodigoCargo(Cargo codigoCargo) {
+        Cargo oldCodigoCargo = this.codigoCargo;
         this.codigoCargo = codigoCargo;
+        changeSupport.firePropertyChange("codigoCargo", oldCodigoCargo, codigoCargo);
     }
 
     public Usuario getUsuario() {
@@ -230,6 +264,22 @@ public class Empleado implements Serializable {
     @Override
     public String toString() {
         return "bean.Empleado[ codigoEmpleado=" + codigoEmpleado + " ]";
+    }
+
+    public Collection<Asistencia> getAsistenciaCollection() {
+        return asistenciaCollection;
+    }
+
+    public void setAsistenciaCollection(Collection<Asistencia> asistenciaCollection) {
+        this.asistenciaCollection = asistenciaCollection;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

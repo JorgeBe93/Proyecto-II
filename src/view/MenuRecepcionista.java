@@ -7,13 +7,17 @@
 package view;
 
 import bean.AuditoriaSistema;
+import bean.Rol;
+import bean.Usuario;
 import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -34,6 +38,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
      */
     public MenuRecepcionista() {
         initComponents();
+        generarMenuRolOpciones(obtenerRolesUsuario(LoginView.idUsuario));
     }
 
     /**
@@ -86,6 +91,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         mItem_generarFactura = new javax.swing.JMenuItem();
         jSeparator15 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarFactura = new javax.swing.JMenuItem();
+        menu_roles = new javax.swing.JMenu();
         menu_salir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -382,6 +388,12 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         menu_factura.add(mItem_buscarFactura);
 
         jMenuBar1.add(menu_factura);
+
+        menu_roles.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menu_roles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ventana2.png"))); // NOI18N
+        menu_roles.setText("Roles");
+        menu_roles.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jMenuBar1.add(menu_roles);
 
         menu_salir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/login.png"))); // NOI18N
@@ -699,6 +711,57 @@ public class MenuRecepcionista extends javax.swing.JFrame {
     private javax.swing.JMenu menu_factura;
     private javax.swing.JMenu menu_presupuesto;
     private javax.swing.JMenu menu_reserva;
+    private javax.swing.JMenu menu_roles;
     private javax.swing.JMenu menu_salir;
     // End of variables declaration//GEN-END:variables
+    private void generarMenuRolOpciones(Collection<Rol> nombreRoles){
+        if(nombreRoles.size() > 1){
+            for(final Rol rol : nombreRoles){
+                javax.swing.JMenuItem menuItem = new javax.swing.JMenuItem();
+                menuItem.setText(rol.getNombre());
+                //creación de acctionlisteners para los menus
+                menuItem.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        switch (rol.getNombre()) {
+                            case "Administrador del Sistema":
+                                {
+                                    String args[] = new String[1];
+                                    args[0] = "Administrador del Sistema";
+                                    view.MenuAdminSist.main(args);
+                                    dispose();
+                                    break;
+                                }
+                            case "Administrador del Hotel":
+                                {
+                                    String args[] = new String[1];
+                                    args[0] = "Administrador del Hotel";
+                                    ViewAdmHotel.MenuAdminHotel.main(args);
+                                    dispose();
+                                    break;
+                                }
+                            default:
+                                JOptionPane.showMessageDialog(null, "Sin permisos para "
+                                        + "esta operación", "Acceso denegado", JOptionPane.ERROR_MESSAGE);
+                                break;
+                        }
+                    }
+                });
+                if(!menuItem.getText().equals("Recepcionista")){
+                    menu_roles.add(menuItem);
+                }
+            }
+        }else{
+            menu_roles.setEnabled(false);
+        }
+        
+    }
+     private Collection<Rol> obtenerRolesUsuario(int codigoUsuario){
+         EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
+         EntityManager ema = fact.createEntityManager();
+         Query query = ema.createNamedQuery("Usuario.findByCodigoEmpleado");
+         query.setParameter("codigoEmpleado", codigoUsuario);
+         Usuario usu = (Usuario)query.getSingleResult();
+         return usu.getRolCollection();
+     }
 }

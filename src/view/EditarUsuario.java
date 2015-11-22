@@ -29,6 +29,10 @@ public class EditarUsuario extends javax.swing.JFrame {
     private char ch;
    // private RolesDialogParaUsuario ventana = new RolesDialogParaUsuario(this, true);
     private Usuario usuario;
+    private int fila = -1;
+    private List<Rol> lista;
+    private int bandUseLimpiar = 0;
+    private int filaRol = -1;
 
     /**
      * Creates new form EditarUsuario
@@ -78,9 +82,9 @@ public class EditarUsuario extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         rolTable = new javax.swing.JTable();
         btn_agregarRol = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btn_limpiar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        btn_limpiar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -130,7 +134,7 @@ public class EditarUsuario extends javax.swing.JFrame {
                             .addComponent(tf_nombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tf_idEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tf_apellidoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,12 +225,15 @@ public class EditarUsuario extends javax.swing.JFrame {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoEmpleado}"));
         columnBinding.setColumnName("Codigo");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${empleado.nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${empleado.apellido}"));
         columnBinding.setColumnName("Apellido");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterTableUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -244,6 +251,11 @@ public class EditarUsuario extends javax.swing.JFrame {
         jLabel2.setText("Buscar por:");
 
         list_filtros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código", "Nombre", "Apellido" }));
+        list_filtros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                list_filtrosFocusGained(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         jLabel4.setText("Valor:");
@@ -306,6 +318,11 @@ public class EditarUsuario extends javax.swing.JFrame {
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
+        rolTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rolTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(rolTable);
         if (rolTable.getColumnModel().getColumnCount() > 0) {
             rolTable.getColumnModel().getColumn(0).setMinWidth(60);
@@ -320,83 +337,96 @@ public class EditarUsuario extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Limpiar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_limpiar.setText("Sacar Todos");
+        btn_limpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_limpiarActionPerformed(evt);
             }
         });
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel6.setText("Roles");
 
-        jLabel7.setText("Mantenga presionado la tecla CTRL");
+        btn_limpiar1.setText("Sacar Rol");
+        btn_limpiar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_limpiar1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 70, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(panel_editarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(64, 64, 64))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_agregarRol)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_limpiar1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_limpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(138, 138, 138)
+                                .addComponent(jLabel6)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(28, 28, 28))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(118, 118, 118)
-                                .addComponent(jLabel6))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(20, 20, 20))))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(370, 370, 370)
-                        .addComponent(btn_agregarRol)
-                        .addGap(31, 31, 31)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(108, 108, 108)
+                        .addComponent(panel_editarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(163, 163, 163))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btn_agregarRol, btn_limpiar});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panel_editarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addGap(4, 4, 4)
+                        .addGap(10, 10, 10)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel7)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_agregarRol)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_agregarRol)
+                            .addComponent(btn_limpiar)
+                            .addComponent(btn_limpiar1))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7))
+                .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btn_agregarRol, btn_limpiar});
 
         bindingGroup.bind();
 
@@ -413,34 +443,38 @@ public class EditarUsuario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No puede cambiar su rol usted mismo");
                 
             } */
-            if (resp==JOptionPane.YES_OPTION && !tf_idEmpleado.getText().equals("")){
+            if (resp==JOptionPane.YES_OPTION && !tf_idEmpleado.getText().equals("")
+                    && fila != (-1)){
                     //usar mismo entitymanager
                     //EntityManagerFactory fact=Persistence.createEntityManagerFactory("proyectoPU");
                     //EntityManager em=fact.createEntityManager();
                     //em.getTransaction().begin();
                     int idEmpleadoAux = Integer.parseInt(tf_idEmpleado.getText());
-                    Empleado empleado = obtenerEmpleado(idEmpleadoAux);
+                    //Empleado empleado = obtenerEmpleado(idEmpleadoAux);
                     entityManager.getTransaction().begin();
-                    Usuario usu;// = new Usuario();     
-                    usuarioQuery = entityManager.createNamedQuery("Usuario.findByCodigoEmpleado");
-                    usuarioQuery.setParameter("codigoEmpleado", idEmpleadoAux);
-                    usu= (Usuario)usuarioQuery.getSingleResult();
-                    String pass = usu.getPassword();
-                    antes=usu.toString();
-                    Usuario u=new Usuario();
+                    Usuario usuarioFind = entityManager.find(Usuario.class, idEmpleadoAux);
+                    usuarioList.remove(usuarioFind);
+                    /*usuarioQuery = entityManager.createNamedQuery("Usuario.findByCodigoEmpleado");
+                    usuarioQuery.setParameter("codigoEmpleado", idEmpleadoAux);*/
+                    //usu= (Usuario)usuarioQuery.getSingleResult();
+                    usuarioFind.setRolCollection(obtenerRolesUsuario());
+                    //String pass = usuarioFind.getPassword();
+                    antes=usuarioFind.toString();
+                    /*Usuario u=new Usuario();
                     u.setEmpleado(empleado);
-                    u.setCodigoEmpleado(usu.getCodigoEmpleado());
+                    u.setCodigoEmpleado(usuarioFind.getCodigoEmpleado());
                     u.setPassword(pass);
                     u.setRolCollection(null);
                     u.setRolCollection(obtenerRolesUsuario());
-                    u.setEmpleado(empleado);
-                    empleado.setUsuario(u);
+                    u.setEmpleado(empleado);*/
+                    //empleado.setUsuario(u);
                     //usuarioList.clear();
                     //usuarioList.remove(usuario);
                     //usuarioList.add(u);
-                    entityManager.merge(empleado);
+                    //entityManager.merge(empleado);
+                    entityManager.merge(usuarioFind);
                     entityManager.flush();
-                    despues=u.toString();
+                    despues=usuarioFind.toString();
                     //registramos los datos necesarios para la auditoria
                     AuditoriaSistema as=new AuditoriaSistema();
                     as.setAccion("Modificación");
@@ -457,15 +491,17 @@ public class EditarUsuario extends javax.swing.JFrame {
                     //em.close();
                     JOptionPane.showMessageDialog(null, "Modificación Exitosa");
                     
-                    usuarioList.clear();
-                    usuarioList.add(u);
+                    //usuarioList.clear();
+                    usuarioList.add(usuarioFind);
                     //entityManager.refresh(u);
-                    vaciarCampos();
+                    fila = -1;
+                    
             }else{
-                this.dispose();
+                //this.dispose();
+                vaciarCampos();
             }
             //this.dispose();
-            //vaciarCampos();
+            vaciarCampos();
     }//GEN-LAST:event_btn_guardarActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
@@ -475,7 +511,7 @@ public class EditarUsuario extends javax.swing.JFrame {
 
     private void masterTableUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableUsuarioMouseClicked
         // TODO add your handling code here:
-        int fila = masterTableUsuario.getSelectedRow();
+        fila = masterTableUsuario.getSelectedRow();
         int codigo = Integer.parseInt(masterTableUsuario.getValueAt(fila, 0).toString());
         rolQuery = entityManager.createNamedQuery("Usuario.findByCodigoEmpleado");
         rolQuery.setParameter("codigoEmpleado", codigo);
@@ -567,9 +603,18 @@ public class EditarUsuario extends javax.swing.JFrame {
 
     private void btn_agregarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarRolActionPerformed
         rolQuery = entityManager.createNamedQuery("Rol.findAll");
-        List<Rol> lista = rolQuery.getResultList();
+        lista = (List<Rol>) rolQuery.getResultList();
         rolList.clear();
         rolList.addAll(lista);
+        for(Rol rolUsuario : usuario.getRolCollection()){
+            for(Rol rolLista : (List<Rol>) rolQuery.getResultList()){
+                if(rolLista.equals(rolUsuario)){
+                   rolList.remove(rolLista);
+                }
+            }
+        }
+        //rolList.clear();
+        //rolList.addAll(lista);
         /*        // TODO add your handling code here:
         
         this.setEnabled(false);
@@ -584,10 +629,39 @@ public class EditarUsuario extends javax.swing.JFrame {
         this.setEnabled(true);*/
     }//GEN-LAST:event_btn_agregarRolActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpiarActionPerformed
         // TODO add your handling code here:
+        bandUseLimpiar  = 1;
         rolList.clear();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_limpiarActionPerformed
+
+    private void list_filtrosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_list_filtrosFocusGained
+        // TODO add your handling code here:
+        tf_valor.setText(null);
+    }//GEN-LAST:event_list_filtrosFocusGained
+
+    private void btn_limpiar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpiar1ActionPerformed
+        // TODO add your handling code here:
+        try{
+            if (filaRol != -1 ){
+                int idRol = Integer.parseInt(rolTable.getValueAt(filaRol, 0).toString());
+                //Rol rolLocal = (Rol)rolTable.getValueAt(filaRol, 0);//
+                Rol rolLocal = obtenerRol(idRol);
+                usuario.getRolCollection().remove(rolLocal);
+                rolList.remove(rolLocal);
+            }    
+        }catch(IndexOutOfBoundsException e){
+            bandUseLimpiar = 1;
+        }
+        
+        filaRol = -1;
+        
+    }//GEN-LAST:event_btn_limpiar1ActionPerformed
+
+    private void rolTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rolTableMouseClicked
+        // TODO add your handling code here:
+        filaRol = rolTable.getSelectedRow();
+    }//GEN-LAST:event_rolTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -634,15 +708,15 @@ public class EditarUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_guardar;
+    private javax.swing.JButton btn_limpiar;
+    private javax.swing.JButton btn_limpiar1;
     private javax.persistence.EntityManager entityManager;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -663,59 +737,30 @@ public class EditarUsuario extends javax.swing.JFrame {
     private javax.persistence.Query usuarioQuery;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-   /* private List<Rol> obtenerRolesAsignar(Collection<Rol> rolesDeUsuario, List<Rol> rolesSeleccionados){ 
-        List<Rol> lista = new ArrayList<Rol>();
-        for(Rol rolDeUsuario : rolesDeUsuario){
-            for(Rol rolSeleccionado: rolesSeleccionados){
-                if(rolDeUsuario.equals(rolSeleccionado)){
-                    rolesSeleccionados.remove(rolSeleccionado);
-                }
-            }
-        }
-        rolesDeUsuario.addAll(rolesSeleccionados);
-        lista.addAll(rolesDeUsuario);
-        return lista;
-    }   
-    
-    private List<Rol> generarLista(){
-        List<Rol> lista = new ArrayList<Rol>();
-        Rol rol ;
-        for(int fila : rolTable.getSelectedRows()){
-            rol = obtenerRol(Integer.parseInt(rolTable.getValueAt(fila, 0).toString()));
-            
-            lista.add(rol);
-        }
-        return lista;
-    }*/
-    
     private Rol obtenerRol(int idRol){
         rolQuery = entityManager.createNamedQuery("Rol.findByIdRol");
         rolQuery.setParameter("idRol", idRol);
         Rol rol = (Rol)rolQuery.getSingleResult();
-        return rol;
+        return rol; 
     }
     private List<Rol> obtenerRolesUsuario(){
-        List<Rol> lista = new ArrayList<Rol>();
-        Rol rol;
-        for(int fila : rolTable.getSelectedRows()){
-            rol = obtenerRol(Integer.parseInt(rolTable.getValueAt(fila, 0).toString()));
-            lista.add(rol);
+        List<Rol> listaRol = new ArrayList<Rol>();
+        if(bandUseLimpiar != 1){
+            listaRol.addAll(usuario.getRolCollection());   
         }
-        return lista;
+        bandUseLimpiar = 0;
+        Rol rol;
+        for(int filaLocal : rolTable.getSelectedRows()){
+            rol = obtenerRol(Integer.parseInt(rolTable.getValueAt(filaLocal, 0).toString()));
+            listaRol.add(rol);
+        }
+        return listaRol;
     }
     private void vaciarCampos(){
         tf_apellidoUsuario.setText(null);
         tf_nombreUsuario.setText(null);
         tf_idEmpleado.setText(null);
-    }
-    private Empleado obtenerEmpleado(int codigoEmpleado){
-        //EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
-        //EntityManager ema = fact.createEntityManager();
-        Query empleadoQuery = entityManager.createNamedQuery("Empleado.findByCodigoEmpleado");
-        empleadoQuery.setParameter("codigoEmpleado", codigoEmpleado);
-        Empleado empleado;
-        empleado = (Empleado)empleadoQuery.getSingleResult();
-        return empleado;
+        rolList.clear();
     }
     private void sacarEmpleadoLoggueado(){
         Usuario e;
