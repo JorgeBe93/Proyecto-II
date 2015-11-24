@@ -9,6 +9,7 @@ package ViewAdmHotel;
 import bean.AuditoriaSistema;
 import bean.Rol;
 import bean.Usuario;
+import bean.data;
 import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -46,6 +47,7 @@ import view.ProdSerEliminar;
  */
 public class MenuAdminHotel extends javax.swing.JFrame {
     public static int opcion=0;
+    data mostrar_datos;
    
 
     /**
@@ -53,7 +55,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
      */
     public MenuAdminHotel() {
         initComponents();
-        generarMenuRolOpciones(obtenerRolesUsuario(LoginView.idUsuario));
+        mostrar_datos = new data();
+        mostrar_datos.el_dato();//primero tengo que ejecutar este metodo para después ejecutar el resto
+        lbl_fecha.setText(mostrar_datos.dia_semana+ " "+mostrar_datos.dia+" de "+mostrar_datos.mes+" del año "+mostrar_datos.anho);
+        timer1.start();
+       // generarMenuRolOpciones(obtenerRolesUsuario(LoginView.idUsuario));
     }
 
     /**
@@ -65,23 +71,35 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        timer1 = new org.netbeans.examples.lib.timerbean.Timer();
+        lbl_fecha = new javax.swing.JLabel();
+        lbl_hora = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menu_RRHH = new javax.swing.JMenu();
         menu_empleado = new javax.swing.JMenu();
         mItem_crearEmpleado = new javax.swing.JMenuItem();
+        jSeparator15 = new javax.swing.JPopupMenu.Separator();
         mItem_editarEmpleado = new javax.swing.JMenuItem();
+        jSeparator14 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarEmpleado = new javax.swing.JMenuItem();
+        jSeparator13 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarEmpleado = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         menu_asistencia = new javax.swing.JMenu();
         mItem_registrarAsist = new javax.swing.JMenuItem();
+        jSeparator32 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarAsist = new javax.swing.JMenuItem();
+        jSeparator31 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarAsist = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         menu_eventos = new javax.swing.JMenu();
         mItem_registrarEvento = new javax.swing.JMenuItem();
+        jSeparator35 = new javax.swing.JPopupMenu.Separator();
         mItem_editarEvento = new javax.swing.JMenuItem();
+        jSeparator34 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarEvento = new javax.swing.JMenuItem();
+        jSeparator33 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarEvento = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         mItem_planillaPagos = new javax.swing.JMenuItem();
@@ -90,44 +108,65 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         menu_cargo = new javax.swing.JMenu();
         mItem_crearCargo = new javax.swing.JMenuItem();
+        jSeparator38 = new javax.swing.JPopupMenu.Separator();
         mItem_editarCargo = new javax.swing.JMenuItem();
+        jSeparator37 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarCargo = new javax.swing.JMenuItem();
+        jSeparator36 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarCargo = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         menu_seguimientoA = new javax.swing.JMenu();
         mItem_registrarSeg = new javax.swing.JMenuItem();
+        jSeparator41 = new javax.swing.JPopupMenu.Separator();
         mItem_modificarSeg = new javax.swing.JMenuItem();
+        jSeparator40 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarSeg = new javax.swing.JMenuItem();
+        jSeparator39 = new javax.swing.JPopupMenu.Separator();
         mIem_buscarSeg = new javax.swing.JMenuItem();
         menu_hotel = new javax.swing.JMenu();
         menu_CategHabitacion = new javax.swing.JMenu();
         mItem_crearCH = new javax.swing.JMenuItem();
+        jSeparator18 = new javax.swing.JPopupMenu.Separator();
         mItem_editarCH = new javax.swing.JMenuItem();
+        jSeparator17 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarCH = new javax.swing.JMenuItem();
+        jSeparator16 = new javax.swing.JPopupMenu.Separator();
         mItem_buscar = new javax.swing.JMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
         menu_Habitacion = new javax.swing.JMenu();
         mItem_crearHabit = new javax.swing.JMenuItem();
+        jSeparator21 = new javax.swing.JPopupMenu.Separator();
         mItem_editarHabit = new javax.swing.JMenuItem();
+        jSeparator20 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarHabit = new javax.swing.JMenuItem();
+        jSeparator19 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarHabit = new javax.swing.JMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         menu_PS = new javax.swing.JMenu();
         mItem_crearPS = new javax.swing.JMenuItem();
+        jSeparator24 = new javax.swing.JPopupMenu.Separator();
         mItem_editarPS = new javax.swing.JMenuItem();
+        jSeparator23 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarPS = new javax.swing.JMenuItem();
+        jSeparator22 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarPS = new javax.swing.JMenuItem();
         jSeparator12 = new javax.swing.JPopupMenu.Separator();
         menu_actividad = new javax.swing.JMenu();
         mItem_registrarActividad = new javax.swing.JMenuItem();
+        jSeparator27 = new javax.swing.JPopupMenu.Separator();
         mItem_editarActividad = new javax.swing.JMenuItem();
+        jSeparator26 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarActividad = new javax.swing.JMenuItem();
+        jSeparator25 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarActividad = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
         menu_lugar = new javax.swing.JMenu();
         mItem_registrarLugar = new javax.swing.JMenuItem();
+        jSeparator30 = new javax.swing.JPopupMenu.Separator();
         mItem_editarLugar = new javax.swing.JMenuItem();
+        jSeparator29 = new javax.swing.JPopupMenu.Separator();
         mItem_eliminarLugar = new javax.swing.JMenuItem();
+        jSeparator28 = new javax.swing.JPopupMenu.Separator();
         mItem_buscarLugar = new javax.swing.JMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
         mItem_peridaOportunidades = new javax.swing.JMenuItem();
@@ -136,9 +175,26 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_roles = new javax.swing.JMenu();
         menu_salir = new javax.swing.JMenu();
 
+        timer1.addTimerListener(new org.netbeans.examples.lib.timerbean.TimerListener() {
+            public void onTime(java.awt.event.ActionEvent evt) {
+                timer1OnTime(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jMenuBar1.setBackground(new java.awt.Color(51, 153, 255));
+        lbl_fecha.setFont(new java.awt.Font("Lucida Console", 0, 14)); // NOI18N
+        lbl_fecha.setForeground(new java.awt.Color(0, 51, 102));
+        lbl_fecha.setText("jLabel1");
+
+        lbl_hora.setFont(new java.awt.Font("Lucida Console", 0, 14)); // NOI18N
+        lbl_hora.setForeground(new java.awt.Color(0, 51, 102));
+        lbl_hora.setText("jLabel1");
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/azul.jpg"))); // NOI18N
+        jLabel2.setText("jLabel2");
+
+        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
         jMenuBar1.setForeground(new java.awt.Color(255, 255, 255));
 
         menu_RRHH.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -150,6 +206,9 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_empleado.setText("Empleado");
         menu_empleado.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
 
+        mItem_crearEmpleado.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, 0));
+        mItem_crearEmpleado.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_crearEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icon-student.png"))); // NOI18N
         mItem_crearEmpleado.setText("Registrar Empleado");
         mItem_crearEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,7 +216,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_empleado.add(mItem_crearEmpleado);
+        menu_empleado.add(jSeparator15);
 
+        mItem_editarEmpleado.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, 0));
+        mItem_editarEmpleado.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_editarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/editarusuario.png"))); // NOI18N
         mItem_editarEmpleado.setText("Editar Empleado");
         mItem_editarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,7 +228,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_empleado.add(mItem_editarEmpleado);
+        menu_empleado.add(jSeparator14);
 
+        mItem_eliminarEmpleado.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, 0));
+        mItem_eliminarEmpleado.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_eliminarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarEmpleado.setText("Eliminar Empleado");
         mItem_eliminarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,7 +240,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_empleado.add(mItem_eliminarEmpleado);
+        menu_empleado.add(jSeparator13);
 
+        mItem_buscarEmpleado.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
+        mItem_buscarEmpleado.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_buscarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarEmpleado.setText("Buscar Empleado");
         mItem_buscarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,10 +256,13 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_RRHH.add(menu_empleado);
         menu_RRHH.add(jSeparator1);
 
-        menu_asistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/reloj3.png"))); // NOI18N
+        menu_asistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/hora2.png"))); // NOI18N
         menu_asistencia.setText("Asistencia de Empleados");
         menu_asistencia.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
 
+        mItem_registrarAsist.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, 0));
+        mItem_registrarAsist.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_registrarAsist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/reloj1.gif"))); // NOI18N
         mItem_registrarAsist.setText("Registrar Asistencia");
         mItem_registrarAsist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,7 +270,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_asistencia.add(mItem_registrarAsist);
+        menu_asistencia.add(jSeparator32);
 
+        mItem_eliminarAsist.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, 0));
+        mItem_eliminarAsist.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_eliminarAsist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarAsist.setText("Eliminar Asistencia");
         mItem_eliminarAsist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,7 +282,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_asistencia.add(mItem_eliminarAsist);
+        menu_asistencia.add(jSeparator31);
 
+        mItem_buscarAsist.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
+        mItem_buscarAsist.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_buscarAsist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarAsist.setText("Buscar Asistencia");
         mItem_buscarAsist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,6 +302,9 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_eventos.setText("Eventos");
         menu_eventos.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
 
+        mItem_registrarEvento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, 0));
+        mItem_registrarEvento.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_registrarEvento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         mItem_registrarEvento.setText("Registrar Evento");
         mItem_registrarEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,7 +312,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_eventos.add(mItem_registrarEvento);
+        menu_eventos.add(jSeparator35);
 
+        mItem_editarEvento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, 0));
+        mItem_editarEvento.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_editarEvento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/actualizar.png"))); // NOI18N
         mItem_editarEvento.setText("Editar Evento");
         mItem_editarEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,7 +324,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_eventos.add(mItem_editarEvento);
+        menu_eventos.add(jSeparator34);
 
+        mItem_eliminarEvento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, 0));
+        mItem_eliminarEvento.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_eliminarEvento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarEvento.setText("Eliminar  Evento");
         mItem_eliminarEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,7 +336,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_eventos.add(mItem_eliminarEvento);
+        menu_eventos.add(jSeparator33);
 
+        mItem_buscarEvento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
+        mItem_buscarEvento.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_buscarEvento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarEvento.setText("Buscar Evento");
         mItem_buscarEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -283,6 +380,9 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_cargo.setText("Cargo");
         menu_cargo.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
 
+        mItem_crearCargo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, 0));
+        mItem_crearCargo.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_crearCargo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         mItem_crearCargo.setText("Crear Cargo");
         mItem_crearCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -290,7 +390,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_cargo.add(mItem_crearCargo);
+        menu_cargo.add(jSeparator38);
 
+        mItem_editarCargo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, 0));
+        mItem_editarCargo.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_editarCargo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/actualizar.png"))); // NOI18N
         mItem_editarCargo.setText("EditarCargo");
         mItem_editarCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -298,7 +402,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_cargo.add(mItem_editarCargo);
+        menu_cargo.add(jSeparator37);
 
+        mItem_eliminarCargo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, 0));
+        mItem_eliminarCargo.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_eliminarCargo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarCargo.setText("Eliminar Cargo");
         mItem_eliminarCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -306,7 +414,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_cargo.add(mItem_eliminarCargo);
+        menu_cargo.add(jSeparator36);
 
+        mItem_buscarCargo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
+        mItem_buscarCargo.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_buscarCargo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarCargo.setText("Buscar Cargo");
         mItem_buscarCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -323,6 +435,9 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_seguimientoA.setText(" Seguimiento Actividades");
         menu_seguimientoA.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
 
+        mItem_registrarSeg.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, 0));
+        mItem_registrarSeg.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_registrarSeg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         mItem_registrarSeg.setText("Registrar Seguimiento");
         mItem_registrarSeg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -330,7 +445,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_seguimientoA.add(mItem_registrarSeg);
+        menu_seguimientoA.add(jSeparator41);
 
+        mItem_modificarSeg.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, 0));
+        mItem_modificarSeg.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_modificarSeg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/actualizar.png"))); // NOI18N
         mItem_modificarSeg.setText("Modificar Seguimiento");
         mItem_modificarSeg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -338,7 +457,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_seguimientoA.add(mItem_modificarSeg);
+        menu_seguimientoA.add(jSeparator40);
 
+        mItem_eliminarSeg.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, 0));
+        mItem_eliminarSeg.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_eliminarSeg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarSeg.setText("Eliminar Seguimiento");
         mItem_eliminarSeg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -346,7 +469,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_seguimientoA.add(mItem_eliminarSeg);
+        menu_seguimientoA.add(jSeparator39);
 
+        mIem_buscarSeg.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
+        mIem_buscarSeg.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mIem_buscarSeg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mIem_buscarSeg.setText("Buscar Seguimiento");
         mIem_buscarSeg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -365,10 +492,13 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_hotel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         menu_CategHabitacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_CategHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casa1.png"))); // NOI18N
+        menu_CategHabitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cama.gif"))); // NOI18N
         menu_CategHabitacion.setText("Categoría de Habitación");
         menu_CategHabitacion.setFont(new java.awt.Font("Candara", 0, 15)); // NOI18N
 
+        mItem_crearCH.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, 0));
+        mItem_crearCH.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_crearCH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         mItem_crearCH.setText("Crear Categoría");
         mItem_crearCH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -376,7 +506,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_CategHabitacion.add(mItem_crearCH);
+        menu_CategHabitacion.add(jSeparator18);
 
+        mItem_editarCH.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, 0));
+        mItem_editarCH.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_editarCH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/actualizar.png"))); // NOI18N
         mItem_editarCH.setText("Editar Categoría");
         mItem_editarCH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -384,7 +518,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_CategHabitacion.add(mItem_editarCH);
+        menu_CategHabitacion.add(jSeparator17);
 
+        mItem_eliminarCH.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, 0));
+        mItem_eliminarCH.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_eliminarCH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarCH.setText("Eliminar Categoría");
         mItem_eliminarCH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -392,7 +530,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_CategHabitacion.add(mItem_eliminarCH);
+        menu_CategHabitacion.add(jSeparator16);
 
+        mItem_buscar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
+        mItem_buscar.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscar.setText("Buscar Categoría");
         mItem_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -405,7 +547,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_hotel.add(jSeparator9);
 
         menu_Habitacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        menu_Habitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cama.gif"))); // NOI18N
+        menu_Habitacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/casa.png"))); // NOI18N
         menu_Habitacion.setText("Habitación");
         menu_Habitacion.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         menu_Habitacion.addActionListener(new java.awt.event.ActionListener() {
@@ -414,6 +556,9 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
 
+        mItem_crearHabit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, 0));
+        mItem_crearHabit.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_crearHabit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         mItem_crearHabit.setText("Crear Habitación");
         mItem_crearHabit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -421,7 +566,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_Habitacion.add(mItem_crearHabit);
+        menu_Habitacion.add(jSeparator21);
 
+        mItem_editarHabit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, 0));
+        mItem_editarHabit.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_editarHabit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/actualizar.png"))); // NOI18N
         mItem_editarHabit.setText("Editar Habitación");
         mItem_editarHabit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -429,7 +578,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_Habitacion.add(mItem_editarHabit);
+        menu_Habitacion.add(jSeparator20);
 
+        mItem_eliminarHabit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, 0));
+        mItem_eliminarHabit.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_eliminarHabit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarHabit.setText("Eliminar Habitación");
         mItem_eliminarHabit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -437,7 +590,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_Habitacion.add(mItem_eliminarHabit);
+        menu_Habitacion.add(jSeparator19);
 
+        mItem_buscarHabit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
+        mItem_buscarHabit.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_buscarHabit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarHabit.setText("Buscar Habitación");
         mItem_buscarHabit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -454,30 +611,45 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_PS.setText("Producto/Servicio");
         menu_PS.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
 
-        mItem_crearPS.setText("Registrar P/S");
+        mItem_crearPS.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, 0));
+        mItem_crearPS.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_crearPS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
+        mItem_crearPS.setText("Registrar Servicio");
         mItem_crearPS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mItem_crearPSActionPerformed(evt);
             }
         });
         menu_PS.add(mItem_crearPS);
+        menu_PS.add(jSeparator24);
 
-        mItem_editarPS.setText("Editar P/S");
+        mItem_editarPS.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, 0));
+        mItem_editarPS.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_editarPS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/actualizar.png"))); // NOI18N
+        mItem_editarPS.setText("Editar Servicio");
         mItem_editarPS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mItem_editarPSActionPerformed(evt);
             }
         });
         menu_PS.add(mItem_editarPS);
+        menu_PS.add(jSeparator23);
 
-        mItem_eliminarPS.setText("Eliminar P/S");
+        mItem_eliminarPS.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, 0));
+        mItem_eliminarPS.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_eliminarPS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
+        mItem_eliminarPS.setText("Eliminar Servicio");
         mItem_eliminarPS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mItem_eliminarPSActionPerformed(evt);
             }
         });
         menu_PS.add(mItem_eliminarPS);
+        menu_PS.add(jSeparator22);
 
+        mItem_buscarPS.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
+        mItem_buscarPS.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_buscarPS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarPS.setText("Buscar P/S");
         mItem_buscarPS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -494,6 +666,9 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_actividad.setText("Actividad");
         menu_actividad.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
 
+        mItem_registrarActividad.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, 0));
+        mItem_registrarActividad.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_registrarActividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         mItem_registrarActividad.setText("Registrar Actividad");
         mItem_registrarActividad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -501,7 +676,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_actividad.add(mItem_registrarActividad);
+        menu_actividad.add(jSeparator27);
 
+        mItem_editarActividad.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, 0));
+        mItem_editarActividad.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_editarActividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/actualizar.png"))); // NOI18N
         mItem_editarActividad.setText("Editar Actividad");
         mItem_editarActividad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -509,7 +688,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_actividad.add(mItem_editarActividad);
+        menu_actividad.add(jSeparator26);
 
+        mItem_eliminarActividad.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, 0));
+        mItem_eliminarActividad.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_eliminarActividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarActividad.setText("Eliminar Actividad");
         mItem_eliminarActividad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -517,7 +700,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_actividad.add(mItem_eliminarActividad);
+        menu_actividad.add(jSeparator25);
 
+        mItem_buscarActividad.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
+        mItem_buscarActividad.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_buscarActividad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarActividad.setText("Buscar Actividad");
         mItem_buscarActividad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -534,6 +721,9 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         menu_lugar.setText("Lugar");
         menu_lugar.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
 
+        mItem_registrarLugar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, 0));
+        mItem_registrarLugar.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_registrarLugar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/add.png"))); // NOI18N
         mItem_registrarLugar.setText("Registrar Lugar");
         mItem_registrarLugar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -541,7 +731,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_lugar.add(mItem_registrarLugar);
+        menu_lugar.add(jSeparator30);
 
+        mItem_editarLugar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, 0));
+        mItem_editarLugar.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_editarLugar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/actualizar.png"))); // NOI18N
         mItem_editarLugar.setText("Modificar Lugar");
         mItem_editarLugar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -549,7 +743,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_lugar.add(mItem_editarLugar);
+        menu_lugar.add(jSeparator29);
 
+        mItem_eliminarLugar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, 0));
+        mItem_eliminarLugar.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_eliminarLugar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basurero.gif"))); // NOI18N
         mItem_eliminarLugar.setText("Eliminar Lugar");
         mItem_eliminarLugar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -557,7 +755,11 @@ public class MenuAdminHotel extends javax.swing.JFrame {
             }
         });
         menu_lugar.add(mItem_eliminarLugar);
+        menu_lugar.add(jSeparator28);
 
+        mItem_buscarLugar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
+        mItem_buscarLugar.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mItem_buscarLugar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarLugar.setText("Buscar Lugar");
         mItem_buscarLugar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -617,11 +819,27 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 614, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(347, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lbl_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lbl_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 357, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(55, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(lbl_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(lbl_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -966,6 +1184,12 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         InformeConsumoPS.main(args);
     }//GEN-LAST:event_mItem_consumoPSActionPerformed
 
+    private void timer1OnTime(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timer1OnTime
+        // TODO add your handling code here:
+         mostrar_datos.leer_hora();
+        lbl_hora.setText("Hora actual: "+mostrar_datos.hora);
+    }//GEN-LAST:event_timer1OnTime
+
     /**
      * @param args the command line arguments
      */
@@ -1008,19 +1232,51 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
     private javax.swing.JPopupMenu.Separator jSeparator12;
+    private javax.swing.JPopupMenu.Separator jSeparator13;
+    private javax.swing.JPopupMenu.Separator jSeparator14;
+    private javax.swing.JPopupMenu.Separator jSeparator15;
+    private javax.swing.JPopupMenu.Separator jSeparator16;
+    private javax.swing.JPopupMenu.Separator jSeparator17;
+    private javax.swing.JPopupMenu.Separator jSeparator18;
+    private javax.swing.JPopupMenu.Separator jSeparator19;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator20;
+    private javax.swing.JPopupMenu.Separator jSeparator21;
+    private javax.swing.JPopupMenu.Separator jSeparator22;
+    private javax.swing.JPopupMenu.Separator jSeparator23;
+    private javax.swing.JPopupMenu.Separator jSeparator24;
+    private javax.swing.JPopupMenu.Separator jSeparator25;
+    private javax.swing.JPopupMenu.Separator jSeparator26;
+    private javax.swing.JPopupMenu.Separator jSeparator27;
+    private javax.swing.JPopupMenu.Separator jSeparator28;
+    private javax.swing.JPopupMenu.Separator jSeparator29;
     private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator30;
+    private javax.swing.JPopupMenu.Separator jSeparator31;
+    private javax.swing.JPopupMenu.Separator jSeparator32;
+    private javax.swing.JPopupMenu.Separator jSeparator33;
+    private javax.swing.JPopupMenu.Separator jSeparator34;
+    private javax.swing.JPopupMenu.Separator jSeparator35;
+    private javax.swing.JPopupMenu.Separator jSeparator36;
+    private javax.swing.JPopupMenu.Separator jSeparator37;
+    private javax.swing.JPopupMenu.Separator jSeparator38;
+    private javax.swing.JPopupMenu.Separator jSeparator39;
     private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator40;
+    private javax.swing.JPopupMenu.Separator jSeparator41;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
+    private javax.swing.JLabel lbl_fecha;
+    private javax.swing.JLabel lbl_hora;
     private javax.swing.JMenuItem mIem_buscarSeg;
     private javax.swing.JMenuItem mItem_buscar;
     private javax.swing.JMenuItem mItem_buscarActividad;
@@ -1078,6 +1334,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
     private javax.swing.JMenu menu_roles;
     private javax.swing.JMenu menu_salir;
     private javax.swing.JMenu menu_seguimientoA;
+    private org.netbeans.examples.lib.timerbean.Timer timer1;
     // End of variables declaration//GEN-END:variables
     private void generarMenuRolOpciones(Collection<Rol> nombreRoles){
         if(nombreRoles.size() > 1){
@@ -1121,12 +1378,12 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         }
         
     }
-     private Collection<Rol> obtenerRolesUsuario(int codigoUsuario){
+  /*   private Collection<Rol> obtenerRolesUsuario(int codigoUsuario){
          EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
          EntityManager ema = fact.createEntityManager();
          Query query = ema.createNamedQuery("Usuario.findByCodigoEmpleado");
          query.setParameter("codigoEmpleado", codigoUsuario);
          Usuario usu = (Usuario)query.getSingleResult();
          return usu.getRolCollection();
-     }
+     }*/
 }

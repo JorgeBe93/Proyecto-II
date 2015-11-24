@@ -258,7 +258,7 @@ public class RegistrarActividad extends javax.swing.JFrame {
                              Date fecha=new Date();
                              DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                              as.setFechaHora(formato.format(fecha));
-                             as.setUsuario("nadie"); 
+                             as.setUsuario(LoginView.nombreUsuario); 
                              ema.persist(as);
                              ema.getTransaction().commit();
                              JOptionPane.showMessageDialog(null,"Creación exitosa", "Confirmación",JOptionPane.INFORMATION_MESSAGE);

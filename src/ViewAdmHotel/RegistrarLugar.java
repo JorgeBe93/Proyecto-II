@@ -21,6 +21,7 @@ import javax.persistence.Query;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import view.LoginView;
 
 /**
  *
@@ -256,7 +257,7 @@ public class RegistrarLugar extends javax.swing.JFrame {
                     Date fecha=new Date();
                     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     as.setFechaHora(formato.format(fecha));
-                    as.setUsuario("nadie");
+                    as.setUsuario(LoginView.nombreUsuario);
                     ema.persist(as);
                     ema.getTransaction().commit();
                     JOptionPane.showMessageDialog(null,"Creación exitosa", "Confirmación",JOptionPane.INFORMATION_MESSAGE);

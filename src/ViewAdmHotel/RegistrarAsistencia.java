@@ -617,15 +617,15 @@ public class RegistrarAsistencia extends javax.swing.JFrame {
                                      asis.setHorasTrabajadas(horasTrabajadas());
                                      entityManager.merge(asis);
                                       //Auditoria de Sistema
-                                     AuditoriaSistema as=new AuditoriaSistema();
-                                     as.setAccion("Registro de Salida");
-                                     as.setTabla("Asistencia");
+                                     AuditoriaSistema au=new AuditoriaSistema();
+                                     au.setAccion("Registro de Salida");
+                                     au.setTabla("Asistencia");
                                      DateFormat form=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                                     as.setFechaHora(form.format(fecha));
-                                     as.setUsuario("nadie");
-                                     as.setAntes(asis.toString());
-                                     as.setDespues("No hay modificaciones");
-                                     entityManager.persist(as);
+                                     au.setFechaHora(form.format(fecha));
+                                     au.setUsuario(as.get(0).getCodigoEmpleado().getNombre());
+                                     au.setAntes(asis.toString());
+                                     au.setDespues("No hay modificaciones");
+                                     entityManager.persist(au);
                                      entityManager.flush();
                                      entityManager.getTransaction().commit();
                                      emitirSonidoCorrecto();
@@ -667,7 +667,7 @@ public class RegistrarAsistencia extends javax.swing.JFrame {
                                     as.setTabla("Asistencia");
                                     DateFormat form=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                                     as.setFechaHora(form.format(fecha));
-                                    as.setUsuario("nadie");
+                                    as.setUsuario(e.get(0).getNombre());
                                     as.setAntes(a.toString());
                                     as.setDespues("No hay modificaciones");
                                     entityManager.persist(as);

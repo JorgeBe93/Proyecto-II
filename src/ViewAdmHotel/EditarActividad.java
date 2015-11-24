@@ -278,9 +278,11 @@ public class EditarActividad extends javax.swing.JFrame {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codActividad}"));
         columnBinding.setColumnName(" Actividad");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -410,7 +412,7 @@ public class EditarActividad extends javax.swing.JFrame {
                         Date fecha=new Date();
                         DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                         as.setFechaHora(formato.format(fecha));    
-                        as.setUsuario("nadie");
+                        as.setUsuario(LoginView.nombreUsuario); ;
                         EntityManager.persist(as);
                         EntityManager.getTransaction().commit();
                         JOptionPane.showMessageDialog(null, "Modificación Exitosa");
