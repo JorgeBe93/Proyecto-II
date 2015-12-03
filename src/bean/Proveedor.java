@@ -39,6 +39,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "Proveedor.findByDireccion", query = "SELECT p FROM Proveedor p WHERE p.direccion = :direccion"),
     @NamedQuery(name = "Proveedor.findByTelefono", query = "SELECT p FROM Proveedor p WHERE p.telefono = :telefono")})
 public class Proveedor implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codProveedor")
+    private Collection<OrdenCompra> ordenCompraCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -209,6 +211,14 @@ public class Proveedor implements Serializable {
     @Override
     public String toString() {
         return "bean.Proveedor[ codigoProveedor=" + codigoProveedor + " ]";
+    }
+
+    public Collection<OrdenCompra> getOrdenCompraCollection() {
+        return ordenCompraCollection;
+    }
+
+    public void setOrdenCompraCollection(Collection<OrdenCompra> ordenCompraCollection) {
+        this.ordenCompraCollection = ordenCompraCollection;
     }
     
 }

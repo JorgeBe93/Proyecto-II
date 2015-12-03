@@ -6,6 +6,7 @@
 
 package ViewAdmHotel;
 
+import viewAdmSist.LoginView;
 import bean.Asistencia;
 import bean.AuditoriaSistema;
 import bean.Eventos;

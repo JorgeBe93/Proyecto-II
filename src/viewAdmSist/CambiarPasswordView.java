@@ -11,7 +11,6 @@
 
 package viewAdmSist;
 
-import ViewAdmHotel.LoginView;
 import bean.AuditoriaSistema;
 import bean.Correo;
 import bean.Empleado;
@@ -28,7 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import static ViewAdmHotel.LoginView.nombreUsuario;
+import static viewAdmSist.LoginView.nombreUsuario;
 
 /**
  *

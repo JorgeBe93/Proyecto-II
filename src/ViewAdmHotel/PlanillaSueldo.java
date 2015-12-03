@@ -6,6 +6,7 @@
 
 package ViewAdmHotel;
 
+import viewAdmSist.LoginView;
 import bean.AuditoriaSistema;
 import java.awt.Image;
 import java.sql.CallableStatement;

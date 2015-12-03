@@ -36,6 +36,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "FacturaPago.findByMontoTotalIva", query = "SELECT f FROM FacturaPago f WHERE f.montoTotalIva = :montoTotalIva"),
     @NamedQuery(name = "FacturaPago.findByFechaVence", query = "SELECT f FROM FacturaPago f WHERE f.fechaVence = :fechaVence")})
 public class FacturaPago implements Serializable {
+    @OneToMany(mappedBy = "nroFactura")
+    private Collection<Informerecepcion> informerecepcionCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -179,6 +181,14 @@ public class FacturaPago implements Serializable {
     @Override
     public String toString() {
         return "bean.FacturaPago[ numFactura=" + numFactura + " ]";
+    }
+
+    public Collection<Informerecepcion> getInformerecepcionCollection() {
+        return informerecepcionCollection;
+    }
+
+    public void setInformerecepcionCollection(Collection<Informerecepcion> informerecepcionCollection) {
+        this.informerecepcionCollection = informerecepcionCollection;
     }
     
 }

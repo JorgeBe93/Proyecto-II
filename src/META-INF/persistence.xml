@@ -37,6 +37,8 @@
     <class>bean.Caja</class>
     <class>bean.Pago</class>
     <class>bean.CategoriaArticulo_1</class>
+    <class>bean.Informerecepcion</class>
+    <class>bean.OrdenCompra</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hotel db?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value="user"/>

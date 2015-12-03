@@ -5,7 +5,7 @@
  */
 
 package ViewAdmHotel;
-import ViewAdmHotel.LoginView;
+import viewAdmSist.LoginView;
 import bean.AuditoriaSistema;
 import bean.ProductoServicio;
 import java.awt.Image;

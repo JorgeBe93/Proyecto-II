@@ -11,7 +11,6 @@
 
 package viewAdmSist;
 
-import ViewAdmHotel.LoginView;
 import bean.Correo;
 import bean.Empleado;
 import bean.Usuario;

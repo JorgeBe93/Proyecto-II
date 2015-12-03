@@ -31,6 +31,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "CategoriaArticulo.findByCodCategoria", query = "SELECT c FROM CategoriaArticulo c WHERE c.codCategoria = :codCategoria"),
     @NamedQuery(name = "CategoriaArticulo.findByDescripcion", query = "SELECT c FROM CategoriaArticulo c WHERE c.descripcion = :descripcion")})
 public class CategoriaArticulo implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoCategoria")
+    private Collection<Proveedor> proveedorCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -102,6 +104,14 @@ public class CategoriaArticulo implements Serializable {
     @Override
     public String toString() {
         return "bean.CategoriaArticulo[ codCategoria=" + codCategoria + " ]";
+    }
+
+    public Collection<Proveedor> getProveedorCollection() {
+        return proveedorCollection;
+    }
+
+    public void setProveedorCollection(Collection<Proveedor> proveedorCollection) {
+        this.proveedorCollection = proveedorCollection;
     }
     
 }

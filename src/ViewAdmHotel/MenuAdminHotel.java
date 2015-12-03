@@ -6,6 +6,7 @@
 
 package ViewAdmHotel;
 
+import viewAdmSist.LoginView;
 import bean.AuditoriaSistema;
 import bean.Rol;
 import bean.Usuario;

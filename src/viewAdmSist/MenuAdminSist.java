@@ -11,7 +11,6 @@
 
 package viewAdmSist;
 
-import ViewAdmHotel.LoginView;
 import viewAdmSist.UsuarioBuscar;
 import viewAdmSist.UsuarioCreate;
 import viewAdmSist.VerAuditoriaSistema;

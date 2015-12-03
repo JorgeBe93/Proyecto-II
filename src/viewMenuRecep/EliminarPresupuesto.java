@@ -6,7 +6,7 @@
 
 package viewMenuRecep;
 
-import ViewAdmHotel.LoginView;
+import viewAdmSist.LoginView;
 import bean.AuditoriaSistema;
 import bean.Presupuesto;
 import bean.Reserva;

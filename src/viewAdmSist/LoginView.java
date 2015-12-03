@@ -9,7 +9,7 @@
  * Created on 20/07/2015, 10:39:37 AM
  */
 
-package ViewAdmHotel;
+package viewAdmSist;
 
 import viewAdmSist.CambiarPasswordView;
 import bean.AuditoriaSistema;
