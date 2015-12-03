@@ -22,24 +22,6 @@ import javax.persistence.Query;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import view.CategHabitBuscar;
-import view.CategHabitCreate;
-import view.CategHabitEdit;
-import view.CategHabitEliminar;
-import view.EmpleadoBuscar;
-import view.EmpleadoEditar;
-import view.EmpleadoEliminar;
-import view.EmpleadoRegistrar;
-import view.HabitacionBuscar;
-import view.HabitacionCreate;
-import view.HabitacionEdit;
-import view.HabitacionEliminar;
-import view.LoginView;
-import view.PerdidaOportunidades;
-import view.ProdSerBuscar;
-import view.ProdSerCreate;
-import view.ProdSerEdit;
-import view.ProdSerEliminar;
 
 /**
  *
@@ -59,7 +41,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         mostrar_datos.el_dato();//primero tengo que ejecutar este metodo para después ejecutar el resto
         lbl_fecha.setText(mostrar_datos.dia_semana+ " "+mostrar_datos.dia+" de "+mostrar_datos.mes+" del año "+mostrar_datos.anho);
         timer1.start();
-       // generarMenuRolOpciones(obtenerRolesUsuario(LoginView.idUsuario));
+        generarMenuRolOpciones(obtenerRolesUsuario(LoginView.idUsuario));
     }
 
     /**
@@ -820,26 +802,23 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(347, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lbl_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lbl_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addContainerGap(407, Short.MAX_VALUE)
+                .addComponent(lbl_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60))
             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lbl_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(55, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(48, 48, 48))
         );
 
         pack();
@@ -1350,7 +1329,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
                                 {
                                     String args[] = new String[1];
                                     args[0] = "Administrador del Sistema";
-                                    view.MenuAdminSist.main(args);
+                                    viewAdmSist.MenuAdminSist.main(args);
                                     dispose();
                                     break;
                                 }
@@ -1358,7 +1337,7 @@ public class MenuAdminHotel extends javax.swing.JFrame {
                                 {
                                     String args[] = new String[1];
                                     args[0] = "Recepcionista";
-                                    view.MenuRecepcionista.main(args);
+                                    viewMenuRecep.MenuRecepcionista.main(args);
                                     dispose();
                                     break;
                                 }
@@ -1378,12 +1357,12 @@ public class MenuAdminHotel extends javax.swing.JFrame {
         }
         
     }
-  /*   private Collection<Rol> obtenerRolesUsuario(int codigoUsuario){
+   private Collection<Rol> obtenerRolesUsuario(int codigoUsuario){
          EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
          EntityManager ema = fact.createEntityManager();
          Query query = ema.createNamedQuery("Usuario.findByCodigoEmpleado");
          query.setParameter("codigoEmpleado", codigoUsuario);
          Usuario usu = (Usuario)query.getSingleResult();
          return usu.getRolCollection();
-     }*/
+     }
 }
