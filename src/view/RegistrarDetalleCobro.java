@@ -599,7 +599,7 @@ private void generarFactLiquidarReserva(){
                     }
                     //trabajamos con la fecha
                     as.setFechaHora(formato.format(fecha));
-                    as.setUsuario("nadie");
+                    as.setUsuario(LoginView.nombreUsuario);
                     entityManager.persist(as);
                     entityManager.flush();
    }

@@ -38,7 +38,7 @@ public class MenuRecepcionista extends javax.swing.JFrame {
      */
     public MenuRecepcionista() {
         initComponents();
-        generarMenuRolOpciones(obtenerRolesUsuario(LoginView.idUsuario));
+     //   generarMenuRolOpciones(obtenerRolesUsuario(LoginView.idUsuario));
     }
 
     /**
@@ -457,7 +457,8 @@ public class MenuRecepcionista extends javax.swing.JFrame {
 
     private void menu_salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_salirMouseClicked
         // TODO add your handling code here:
-           EntityManagerFactory fact=Persistence.createEntityManagerFactory("proyectoPU");
+            
+            EntityManagerFactory fact=Persistence.createEntityManagerFactory("proyectoPU");
             EntityManager ema= fact.createEntityManager();
             ema.getTransaction().begin();
             //registramos los datos necesarios para la auditoria
@@ -756,12 +757,12 @@ public class MenuRecepcionista extends javax.swing.JFrame {
         }
         
     }
-     private Collection<Rol> obtenerRolesUsuario(int codigoUsuario){
+  /*   private Collection<Rol> obtenerRolesUsuario(int codigoUsuario){
          EntityManagerFactory fact = Persistence.createEntityManagerFactory("proyectoPU");
          EntityManager ema = fact.createEntityManager();
          Query query = ema.createNamedQuery("Usuario.findByCodigoEmpleado");
          query.setParameter("codigoEmpleado", codigoUsuario);
          Usuario usu = (Usuario)query.getSingleResult();
          return usu.getRolCollection();
-     }
+     }*/
 }

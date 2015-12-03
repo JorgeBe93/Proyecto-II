@@ -265,7 +265,7 @@ public class HabitacionCreate extends javax.swing.JFrame {
                     Date fecha=new Date();
                     DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     as.setFechaHora((formato.format(fecha)));
-                    as.setUsuario("nadie");
+                    as.setUsuario(LoginView.nombreUsuario);
                     EntityManager.persist(as);
                     EntityManager.getTransaction().commit();
                    // em.close();

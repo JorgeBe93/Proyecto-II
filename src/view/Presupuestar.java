@@ -462,24 +462,31 @@ public class Presupuestar extends javax.swing.JFrame {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCliente}"));
         columnBinding.setColumnName("Cliente");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${cedula}"));
         columnBinding.setColumnName("Cedula");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${apellido}"));
         columnBinding.setColumnName("Apellido");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${ruc}"));
         columnBinding.setColumnName("Ruc");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${telefono}"));
         columnBinding.setColumnName("Telefono");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${email}"));
         columnBinding.setColumnName("Email");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -601,6 +608,9 @@ public class Presupuestar extends javax.swing.JFrame {
                          entityManager.getTransaction().commit();
                          JOptionPane.showMessageDialog(null, "Registro Exitoso");
                          resetear();
+                         if(reserva.getCodigoCliente().getEmail()!=null){
+                                enviarDatosEmail();
+                          }
                            //volvemos a preguntar si aporto algo y se genera la factura
                          try
                         {
@@ -640,9 +650,7 @@ public class Presupuestar extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Datos Invalidos o Incompletos "
                    + "impiden el registro");  
      }
-      if(reserva.getCodigoCliente().getEmail()!=null){
-          enviarDatosEmail();
-      }
+      
     }//GEN-LAST:event_btn_registrarActionPerformed
      private void registrarAuditoria(String Entidad,String valor){
                     AuditoriaSistema as=new AuditoriaSistema();
@@ -651,7 +659,7 @@ public class Presupuestar extends javax.swing.JFrame {
                    as.setAntes(valor);
                    as.setDespues("No hay cambios");
                    as.setFechaHora((formato.format(fecha)));
-                   as.setUsuario("nadie");
+                   as.setUsuario(LoginView.nombreUsuario);
                    entityManager.persist(as);
                    entityManager.flush();
     }

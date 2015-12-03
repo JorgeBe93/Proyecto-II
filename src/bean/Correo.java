@@ -13,6 +13,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
+import view.ProgressBar;
 
 /**
  *
@@ -21,8 +22,10 @@ import javax.swing.JOptionPane;
 public class Correo {
 
     public Correo() {
+        
     }
     public boolean enviarCorreo(String [] args){
+        
        Properties props =System.getProperties();
         //Properties props =new Properties();
         props.put("mail.smtp.host","smtp.gmail.com");
@@ -51,6 +54,8 @@ public class Correo {
             System.err.println(e.getMessage());
             return false;
         }
+        
+        
     }
-
+   
 }

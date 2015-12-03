@@ -277,12 +277,15 @@ public class ProdSerEdit extends javax.swing.JFrame {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoPS}"));
         columnBinding.setColumnName("Codigo PS");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${costo}"));
         columnBinding.setColumnName("Costo");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -392,7 +395,7 @@ public class ProdSerEdit extends javax.swing.JFrame {
                      Date fecha=new Date();
                      DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                      as.setFechaHora(formato.format(fecha));    
-                     as.setUsuario("nadie");
+                     as.setUsuario(LoginView.nombreUsuario);
                      as.setAntes(antes);
                      as.setDespues(despues);
                      entityManager.persist(as);

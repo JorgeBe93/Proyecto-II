@@ -267,12 +267,15 @@ public class HabitacionEdit extends javax.swing.JFrame {
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${numero}"));
         columnBinding.setColumnName("Numero");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCategoria.codigoCategoria}"));
         columnBinding.setColumnName("Codigo Categoria");
         columnBinding.setColumnClass(Integer.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCategoria.nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         masterTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -397,7 +400,7 @@ public class HabitacionEdit extends javax.swing.JFrame {
                      Date fecha=new Date();
                      DateFormat formato=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                      as.setFechaHora(formato.format(fecha));    
-                     as.setUsuario("nadie");
+                     as.setUsuario(LoginView.nombreUsuario);
                      as.setAntes(antes);
                      as.setDespues(despues);
                      entityManager.persist(as);

@@ -100,8 +100,12 @@ public class Prueba extends javax.swing.JFrame {
     private void btn_convertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_convertirActionPerformed
         String letras;
         NumberToText tx=new NumberToText();
+        String args[]=new String[1];
+        args[0]="Forma de Pago";
+        ProgressBar.main(args);
         letras= tx.convertirLetras(Integer.parseInt(tf_numero.getText()));
         tf_letras.setText(letras);
+        
     }//GEN-LAST:event_btn_convertirActionPerformed
 
     /**
