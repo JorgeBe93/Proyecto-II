@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="proyectoPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>bean.Rol</class>
+    <class>bean.AuditoriaSistema</class>
+    <class>bean.Empleado</class>
+    <class>bean.Usuario</class>
+    <class>bean.Cargo</class>
+    <class>bean.Cliente</class>
+    <class>bean.Reserva</class>
+    <class>bean.CategHabitacion</class>
+    <class>bean.Habitacion</class>
+    <class>bean.ProductoServicio</class>
+    <class>bean.ConsumoProSer</class>
+    <class>bean.FacturaCobro</class>
+    <class>bean.Asistencia</class>
+    <class>bean.Presupuesto</class>
+    <class>bean.Actividades</class>
+    <class>bean.Lugar</class>
+    <class>bean.SeguimientoActividad</class>
+    <class>bean.Actividad</class>
+    <class>bean.Eventos</class>
+    <class>bean.PlanillaPagoSueldo</class>
+    <class>bean.Proveedor</class>
+    <class>bean.Articulo</class>
+    <class>bean.MovimientoStock</class>
+    <class>bean.DetalleCobro</class>
+    <class>bean.Banco</class>
+    <class>bean.ExtraccionDeposito</class>
+    <class>bean.DetalleFacturacompra</class>
+    <class>bean.CategoriaArticulo</class>
+    <class>bean.CuentaBancaria</class>
+    <class>bean.FacturaPago</class>
+    <class>bean.DetalleOrdenCompra</class>
+    <class>bean.DetallePago</class>
+    <class>bean.Caja</class>
+    <class>bean.Pago</class>
+    <class>bean.CategoriaArticulo_1</class>
+    <class>bean.Informerecepcion</class>
+    <class>bean.OrdenCompra</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hotel db?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.password" value="user"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+    </properties>
+  </persistence-unit>
+</persistence>
