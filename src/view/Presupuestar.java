@@ -546,6 +546,7 @@ public class Presupuestar extends javax.swing.JFrame {
         //JOptionPane.showConfirmDialog(null, fecha);
         if(tf_cedulaCliente.getText().length()==0){
              JOptionPane.showMessageDialog(null,"Seleccione un cliente", "Error",JOptionPane.ERROR_MESSAGE);
+             return;
         }
         if ((jc_checkin.getDate() != null) 
                 && (jc_checkout.getDate() != null) 

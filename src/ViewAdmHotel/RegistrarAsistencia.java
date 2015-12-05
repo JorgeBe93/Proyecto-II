@@ -638,10 +638,14 @@ public class RegistrarAsistencia extends javax.swing.JFrame {
                              Object fec=query.getSingleResult();
                              System.out.println("fecha devuelta"+" "+fec);
                              System.out.println("fecha sistema"+" "+fecha2);
-                             if(fecha2.equals(formato.format(fec))){
-                                 JOptionPane.showMessageDialog(null,"Ya se ha marcado la entrada y salida en la fecha", "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                                    tf_codigoEmpleado.setText(null);
-                             }else{
+                             if(fec!=null){
+                                     if(fecha2.equals(formato.format(fec))){
+                                            JOptionPane.showMessageDialog(null,"Ya se ha marcado la entrada y salida en la fecha", "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                                             tf_codigoEmpleado.setText(null);
+                                             return;
+                                     }
+                             }
+                            //else{
                                     //se marca la entrada
                                     lbl_empleado.setText(e.get(0).getNombre().toUpperCase()+" "+e.get(0).getApellido().toUpperCase());
                                     horaE=formatoHora.format(fecha);
@@ -670,7 +674,7 @@ public class RegistrarAsistencia extends javax.swing.JFrame {
                                     entityManager.getTransaction().commit();
                                     emitirSonidoCorrecto();
                                   // JOptionPane.showMessageDialog(null,"Registro de Entrada Exitoso", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
-                             }
+                           //  }
                             
                          }
                 }

@@ -5,9 +5,7 @@
  */
 
 package view;
-
 import bean.AuditoriaSistema;
-import bean.CategoriaProdSer;
 import bean.ProductoServicio;
 import java.awt.Image;
 import java.text.DateFormat;
@@ -43,10 +41,9 @@ public class ProdSerCreate extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        categProdSerRenderizar1 = new renderizar.CategProdSerRenderizar();
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
-        query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM CategoriaProdSer c");
-        list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : query.getResultList();
+        query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM ProductoServicio c");
+        list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
         panel_registrarPS = new javax.swing.JPanel();
         lbl_registrarPS = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -57,8 +54,6 @@ public class ProdSerCreate extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         btn_guardar = new javax.swing.JButton();
-
-        categProdSerRenderizar1.setText("categProdSerRenderizar1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -266,8 +261,6 @@ public class ProdSerCreate extends javax.swing.JFrame {
                    ProductoServicio p=new ProductoServicio();
                    p.setNombre(tf_nombrePS.getText().toLowerCase());
                    p.setCosto(desformatear(tf_costo.getText()));
-                 /*  CategoriaProdSer c=(CategoriaProdSer) list_categoriaPS.getSelectedItem();
-                   p.setCodigoCategoria(c);*/
                    entityManager.getTransaction().begin();
                    entityManager.persist(p);
                    entityManager.flush();
@@ -284,7 +277,6 @@ public class ProdSerCreate extends javax.swing.JFrame {
                     as.setUsuario("nadie");
                     entityManager.persist(as);
                     entityManager.getTransaction().commit();
-                    //entityManager.close();
                     JOptionPane.showMessageDialog(null,"Creación exitosa", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
                     resetear();
                }else{
@@ -378,7 +370,6 @@ public class ProdSerCreate extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_guardar;
-    private renderizar.CategProdSerRenderizar categProdSerRenderizar1;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
@@ -386,7 +377,7 @@ public class ProdSerCreate extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_costo;
     private javax.swing.JLabel lbl_nombrePS;
     private javax.swing.JLabel lbl_registrarPS;
-    private java.util.List<bean.CategoriaProdSer> list;
+    private java.util.List<bean.ProductoServicio> list;
     private javax.swing.JPanel panel_registrarPS;
     private javax.persistence.Query query;
     private javax.swing.JTextField tf_costo;

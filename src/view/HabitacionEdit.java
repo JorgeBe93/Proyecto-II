@@ -404,7 +404,7 @@ public class HabitacionEdit extends javax.swing.JFrame {
                      entityManager.getTransaction().commit();
                     // entityManager.close();
                      JOptionPane.showMessageDialog(null, "Modificación Exitosa");
-                     List.clear();
+                     List.remove(hab.get(0));
                      List.add(ha);
                      resetear();
              }else{

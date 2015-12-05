@@ -583,9 +583,9 @@
                 <BindingParameter name="NAME" value="Email"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>
-              <Subbinding sourcePath="${codigoJefe}">
+              <Subbinding sourcePath="${codigoJefe.codigoEmpleado}">
                 <BindingParameter name="NAME" value="Codigo Jefe"/>
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="bean.Empleado.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
               </Subbinding>
             </BindingProperty>
           </BindingProperties>

@@ -490,7 +490,7 @@ public class ConfirmarPresupuesto extends javax.swing.JFrame {
                      entityManager.persist(as);
                      entityManager.getTransaction().commit();
                      JOptionPane.showMessageDialog(null, "Modificación Exitosa");
-                     list.clear();
+                     list.remove(p.get(0));
                      list.add(pre);
                      resetear();
               }else{

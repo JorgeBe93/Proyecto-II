@@ -47,7 +47,6 @@ public class ProdSerEdit extends javax.swing.JFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        categProdSerRenderizar1 = new renderizar.CategProdSerRenderizar();
         entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("proyectoPU").createEntityManager();
         query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT p FROM ProductoServicio p");
         list = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(query.getResultList());
@@ -72,8 +71,6 @@ public class ProdSerEdit extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
 
-        categProdSerRenderizar1.setText("categProdSerRenderizar1");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         panel_modificarPS.setBackground(new java.awt.Color(0, 153, 255));
@@ -87,10 +84,10 @@ public class ProdSerEdit extends javax.swing.JFrame {
         panel_modificarPS.setLayout(panel_modificarPSLayout);
         panel_modificarPSLayout.setHorizontalGroup(
             panel_modificarPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_modificarPSLayout.createSequentialGroup()
-                .addGap(127, 127, 127)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_modificarPSLayout.createSequentialGroup()
+                .addContainerGap(143, Short.MAX_VALUE)
                 .addComponent(lbl_modificarPS)
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addGap(141, 141, 141))
         );
         panel_modificarPSLayout.setVerticalGroup(
             panel_modificarPSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -351,6 +348,10 @@ public class ProdSerEdit extends javax.swing.JFrame {
         String antes;
         String despues;
         int codigo;
+          if(tf_codigoPS.getText().length()==0){
+              JOptionPane.showMessageDialog(null,"Seleccione un servicio", "Error",JOptionPane.ERROR_MESSAGE);
+                 return;
+           }
         query=entityManager.createNamedQuery("ProductoServicio.findByNombre");
         query.setParameter("nombre", tf_nombrePS.getText().toLowerCase());
         List<ProductoServicio> ps=query.getResultList();
@@ -398,7 +399,7 @@ public class ProdSerEdit extends javax.swing.JFrame {
                      entityManager.getTransaction().commit();
                     // entityManager.close();
                      JOptionPane.showMessageDialog(null, "Modificación Exitosa");
-                     list.clear();
+                     list.remove(p.get(0));
                      list.add(pser);
                      resetear();
                  }else{
@@ -633,7 +634,6 @@ public class ProdSerEdit extends javax.swing.JFrame {
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_guardar;
-    private renderizar.CategProdSerRenderizar categProdSerRenderizar1;
     private javax.persistence.EntityManager entityManager;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

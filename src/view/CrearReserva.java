@@ -578,6 +578,7 @@ public class CrearReserva extends javax.swing.JFrame {
          String letras;
         if(tf_cedulaCliente.getText().length()==0){
              JOptionPane.showMessageDialog(null,"Seleccione un cliente", "Error",JOptionPane.ERROR_MESSAGE);
+             return;
         }
         if ((jc_checkin.getDate() != null) 
                 && (jc_checkout.getDate() != null) 

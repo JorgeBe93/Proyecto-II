@@ -483,10 +483,12 @@ public class CargoEditar extends javax.swing.JFrame {
          query.setParameter("nombre",tf_nombre.getText().toLowerCase());
          List<Cargo> cli=query.getResultList();
          if(cli.size()>=1){
-             tf_nombre.setText(null);
-             tf_nombre.requestFocus();
-             return;
-          }
+                 if(Integer.parseInt(tf_codigo.getText())!=cli.get(0).getCodigoCargo()){
+                         tf_nombre.setText(null);
+                        tf_nombre.requestFocus();
+                        return;
+                 }    
+         }
         if(tf_nombre.getText().length()==0
              || tf_actividad.getText().length()==0 
               || tf_fechaCreacion.getText().length()==0 || tf_sueldo.getText().length()==0  ){
@@ -524,7 +526,7 @@ public class CargoEditar extends javax.swing.JFrame {
                     entityManager.persist(as);
                     entityManager.getTransaction().commit();
                     JOptionPane.showMessageDialog(null,"Modificación exitosa", "Confirmación",JOptionPane.INFORMATION_MESSAGE);
-                    list.clear();
+                    list.remove(cargo);
                     list.add(c);
                     resetear();
                }else{
@@ -657,13 +659,16 @@ public class CargoEditar extends javax.swing.JFrame {
             tf_nombre.requestFocus();
             return;
         }
+       
         query = entityManager.createNamedQuery( "Cargo.findByNombre");
         query.setParameter("nombre",tf_nombre.getText().toLowerCase());
                 List<Cargo> cli=query.getResultList();
                 if(cli.size()>=1){
-                    JOptionPane.showMessageDialog(null,"El nombre cargo ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
-                    tf_nombre.setText(null);
-                    tf_nombre.requestFocus();
+                    if(Integer.parseInt(tf_codigo.getText())!=cli.get(0).getCodigoCargo()){
+                         JOptionPane.showMessageDialog(null,"El nombre cargo ya ha sido registrado", "Error",JOptionPane.ERROR_MESSAGE);
+                                tf_nombre.setText(null);
+                                tf_nombre.requestFocus();
+                    }             
                  }
     }//GEN-LAST:event_tf_nombreFocusLost
 
@@ -701,7 +706,7 @@ public class CargoEditar extends javax.swing.JFrame {
           tf_actividad.setText(null);
           tf_nombre.setText(null);
           tf_sueldo.setText(null);
-          tf_fechaCreacion.setText(formatoFecha.format(fecha));
+          tf_fechaCreacion.setText(null);
     }
     /**
      * @param args the command line arguments

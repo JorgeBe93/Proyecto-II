@@ -368,10 +368,12 @@ public class EditarLugar extends javax.swing.JFrame {
             Query.setParameter("nombre", tf_nombre.getText());
             List <Lugar> l=Query.getResultList();
             if(l.size()>=1){
-                JOptionPane.showMessageDialog(null,"Ya existe un lugar con el mismo nombre", "Aviso",JOptionPane.ERROR_MESSAGE);
-                tf_nombre.setText(null);
-                tf_nombre.requestFocus();
-                return;
+                if(Integer.parseInt(tf_codigo.getText())!=l.get(0).getCodLugar()){
+                        JOptionPane.showMessageDialog(null,"Ya existe un lugar con el mismo nombre", "Aviso",JOptionPane.ERROR_MESSAGE);
+                        tf_nombre.setText(null);
+                        tf_nombre.requestFocus();
+                        return;
+                }  
             }
             resp=  JOptionPane.showConfirmDialog(null,"Desea guardar los cambios?", "Confirmar Modificación",JOptionPane.YES_NO_OPTION );
             if (resp==JOptionPane.YES_OPTION){
