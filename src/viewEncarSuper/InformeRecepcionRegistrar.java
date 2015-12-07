@@ -32,6 +32,7 @@ import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
+import viewAdmSist.LoginView;
 
 /**
  *

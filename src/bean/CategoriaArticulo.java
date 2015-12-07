@@ -6,10 +6,11 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,20 +20,22 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
- * @author Jorge
+ * @author tammy
  */
 @Entity
 @Table(name = "categoria_articulo")
 @NamedQueries({
     @NamedQuery(name = "CategoriaArticulo.findAll", query = "SELECT c FROM CategoriaArticulo c"),
     @NamedQuery(name = "CategoriaArticulo.findByCodCategoria", query = "SELECT c FROM CategoriaArticulo c WHERE c.codCategoria = :codCategoria"),
-    @NamedQuery(name = "CategoriaArticulo.findByDescripcion", query = "SELECT c FROM CategoriaArticulo c WHERE c.descripcion = :descripcion")})
+    @NamedQuery(name = "CategoriaArticulo.findByDescripcion", query = "SELECT c FROM CategoriaArticulo c WHERE c.descripcion = :descripcion")
+  })
 public class CategoriaArticulo implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoCategoria")
-    private Collection<Proveedor> proveedorCollection;
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,9 +45,6 @@ public class CategoriaArticulo implements Serializable {
     @Basic(optional = false)
     @Column(name = "descripcion")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codCategoria")
-    private Collection<Articulo> articuloCollection;
-
     public CategoriaArticulo() {
     }
 
@@ -52,9 +52,11 @@ public class CategoriaArticulo implements Serializable {
         this.codCategoria = codCategoria;
     }
 
-    public CategoriaArticulo(Integer codCategoria, String descripcion) {
+    public CategoriaArticulo(Integer codCategoria, String descripcion
+    ) {
         this.codCategoria = codCategoria;
         this.descripcion = descripcion;
+    
     }
 
     public Integer getCodCategoria() {
@@ -62,7 +64,9 @@ public class CategoriaArticulo implements Serializable {
     }
 
     public void setCodCategoria(Integer codCategoria) {
+        Integer oldCodCategoria = this.codCategoria;
         this.codCategoria = codCategoria;
+        changeSupport.firePropertyChange("codCategoria", oldCodCategoria, codCategoria);
     }
 
     public String getDescripcion() {
@@ -70,17 +74,10 @@ public class CategoriaArticulo implements Serializable {
     }
 
     public void setDescripcion(String descripcion) {
+        String oldDescripcion = this.descripcion;
         this.descripcion = descripcion;
+        changeSupport.firePropertyChange("descripcion", oldDescripcion, descripcion);
     }
-
-    public Collection<Articulo> getArticuloCollection() {
-        return articuloCollection;
-    }
-
-    public void setArticuloCollection(Collection<Articulo> articuloCollection) {
-        this.articuloCollection = articuloCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -106,12 +103,12 @@ public class CategoriaArticulo implements Serializable {
         return "bean.CategoriaArticulo[ codCategoria=" + codCategoria + " ]";
     }
 
-    public Collection<Proveedor> getProveedorCollection() {
-        return proveedorCollection;
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
     }
 
-    public void setProveedorCollection(Collection<Proveedor> proveedorCollection) {
-        this.proveedorCollection = proveedorCollection;
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

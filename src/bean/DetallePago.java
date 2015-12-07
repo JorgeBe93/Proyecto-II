@@ -6,6 +6,8 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,32 +20,39 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
- * @author Jorge
+ * @author pc
  */
 @Entity
 @Table(name = "detalle_pago")
 @NamedQueries({
     @NamedQuery(name = "DetallePago.findAll", query = "SELECT d FROM DetallePago d"),
-    @NamedQuery(name = "DetallePago.findByIddetallePago", query = "SELECT d FROM DetallePago d WHERE d.iddetallePago = :iddetallePago")})
+    @NamedQuery(name = "DetallePago.findByIddetallePago", query = "SELECT d FROM DetallePago d WHERE d.iddetallePago = :iddetallePago"),
+    @NamedQuery(name = "DetallePago.findByIdPago", query = "SELECT d FROM DetallePago d WHERE d.idPago = :idPago"),
+    @NamedQuery(name = "DetallePago.findByNumFactura", query = "SELECT d FROM DetallePago d WHERE d.numFactura = :numFactura"),
+    @NamedQuery(name = "DetallePago.findByIdExtraccion", query = "SELECT d FROM DetallePago d WHERE d.idExtraccion = :idExtraccion")
+})
 public class DetallePago implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "iddetalle_pago")
     private Integer iddetallePago;
-    @JoinColumn(name = "num_factura", referencedColumnName = "num_factura")
-    @ManyToOne
-    private FacturaPago numFactura;
-    @JoinColumn(name = "id_extraccion", referencedColumnName = "codigoExtraccionDeposito")
-    @ManyToOne
-    private ExtraccionDeposito idExtraccion;
     @JoinColumn(name = "id_pago", referencedColumnName = "codigo_pago")
     @ManyToOne
     private Pago idPago;
+    @JoinColumn(name = "num_factura", referencedColumnName = "num_factura")
+   @ManyToOne
+   private FacturaPago numFactura;
+    @JoinColumn(name = "id_extraccion", referencedColumnName = "codigoExtraccionDeposito")
+    @ManyToOne
+    private ExtraccionDeposito idExtraccion;
 
     public DetallePago() {
     }
@@ -57,7 +66,38 @@ public class DetallePago implements Serializable {
     }
 
     public void setIddetallePago(Integer iddetallePago) {
+        Integer oldIddetallePago = this.iddetallePago;
         this.iddetallePago = iddetallePago;
+        changeSupport.firePropertyChange("iddetallePago", oldIddetallePago, iddetallePago);
+    }
+
+   /* public Integer getMonto() {
+        return monto;
+    }
+
+    public void setMonto(Integer monto) {
+        this.monto = monto;
+    }*/
+
+    public ExtraccionDeposito getIdExtraccion() {
+        return idExtraccion;
+    }
+
+    public void setIdExtraccion(ExtraccionDeposito idExtraccion) {
+        ExtraccionDeposito oldIdExtraccion = this.idExtraccion;
+        this.idExtraccion = idExtraccion;
+        changeSupport.firePropertyChange("idExtraccion", oldIdExtraccion, idExtraccion);
+    }
+
+
+    public Pago getIdPago() {
+        return idPago;
+    }
+
+    public void setIdPago(Pago idPago) {
+        Pago oldIdPago = this.idPago;
+        this.idPago = idPago;
+        changeSupport.firePropertyChange("idPago", oldIdPago, idPago);
     }
 
     public FacturaPago getNumFactura() {
@@ -65,24 +105,18 @@ public class DetallePago implements Serializable {
     }
 
     public void setNumFactura(FacturaPago numFactura) {
+        FacturaPago oldNumFactura = this.numFactura;
         this.numFactura = numFactura;
+        changeSupport.firePropertyChange("numFactura", oldNumFactura, numFactura);
     }
 
-    public ExtraccionDeposito getIdExtraccion() {
-        return idExtraccion;
+ /*   public CuentaBancaria getIdCuenta() {
+        return idCuenta;
     }
 
-    public void setIdExtraccion(ExtraccionDeposito idExtraccion) {
-        this.idExtraccion = idExtraccion;
-    }
-
-    public Pago getIdPago() {
-        return idPago;
-    }
-
-    public void setIdPago(Pago idPago) {
-        this.idPago = idPago;
-    }
+    public void setIdCuenta(CuentaBancaria idCuenta) {
+        this.idCuenta = idCuenta;
+    }*/
 
     @Override
     public int hashCode() {
@@ -107,6 +141,14 @@ public class DetallePago implements Serializable {
     @Override
     public String toString() {
         return "bean.DetallePago[ iddetallePago=" + iddetallePago + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

@@ -229,7 +229,7 @@ public class PlanillaSueldo extends javax.swing.JFrame {
 
     private void btn_generarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generarActionPerformed
         // TODO add your handling code here:
-  
+        int devuelto;
         Query q;
         mes=jm_mes.getMonth();
         mes=mes+1;
@@ -246,9 +246,12 @@ public class PlanillaSueldo extends javax.swing.JFrame {
                      + "periodo= "+"'"+periodo+"'");
              List<bean.PlanillaPagoSueldo>pps=q.getResultList();
              if(pps.isEmpty()){
+                    /*devuelto=ConnectionConsulta(mes,anho);
+                    ACA CONSULTO SI EL VALOR DEVUELTO PUEDE SER EXTRAIDO SINO RETURN
+                     */
+                    Connection(mes,anho);//genero la planilla y despues consulto
                     valor="Pago de sueldo periodo: "+periodo;
                     registrarAuditoria(valor);
-                   Connection(mes,anho);//genero la planilla y despues consulto
                      try
                     {
                         Class.forName("com.mysql.jdbc.Driver");
@@ -305,6 +308,9 @@ public class PlanillaSueldo extends javax.swing.JFrame {
                      + "periodo= "+"'"+periodo+"'");
                  List<bean.PlanillaPagoSueldo>pps=q.getResultList();
                 if(pps.isEmpty()){
+                        /*devuelto=ConnectionAguinaldoConsulta(mes,anho);
+                    ACA CONSULTO SI EL VALOR DEVUELTO PUEDE SER EXTRAIDO SINO RETURN
+                     */
                         valor="Pago de sueldo aguinaldo: "+periodo;
                         registrarAuditoria(valor);
                         ConnectionAguinaldo(periodo);
@@ -350,7 +356,39 @@ public class PlanillaSueldo extends javax.swing.JFrame {
                    
             }
     }//GEN-LAST:event_tf_aguinaldoActionPerformed
-      private void Connection(int mes, int anho){
+   /*  private int ConnectionConsulta(int mes, int anho){
+          int seguro=0;
+          int extraccion=0;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String BaseDeDatos = "jdbc:mysql://localhost/hotel db?user=root&password=user";
+            connection = DriverManager.getConnection(BaseDeDatos);
+            if(connection != null){
+                System.out.println("Conexion Exitosa!");
+               CallableStatement st=connection.prepareCall("{call sueldo_consulta (?,?,?,?)}");
+               //  CallableStatement st=connection.prepareCall("{call planilla_pago }");
+                 st.setInt(1, mes);
+                 st.setInt(2, anho);
+                 st.registerOutParameter(3, java.sql.Types.INTEGER);
+                 st.execute();
+                 extraccion=st.getInt(3);
+                 seguro=st.getInt(4);
+                 // extraccion es el monto
+                 System.out.println("Extracción para empleados: "+extraccion);
+                 System.out.println("Extracción para IPS: "+seguro);
+                connection.close();
+               
+            }else{
+                System.out.println("Conexion Fallida!");                
+            }
+             
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+       return(extraccion+seguro);
+        
+    }*/
+    private void Connection(int mes, int anho){
           int seguro;
           int extraccion;
         try{
@@ -406,6 +444,31 @@ public class PlanillaSueldo extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    /* private int  ConnectionAguinaldoConsulta(String periodo){
+        int extraccion=0;
+         try{
+            Class.forName("com.mysql.jdbc.Driver");
+            String BaseDeDatos = "jdbc:mysql://localhost/hotel db?user=root&password=user";
+            connection = DriverManager.getConnection(BaseDeDatos);
+            if(connection != null){
+                System.out.println("Conexion Exitosa!");
+                CallableStatement st=connection.prepareCall("{call aguinaldo_consulta (?,?)}");
+               //  CallableStatement st=connection.prepareCall("{call planilla_pago }");
+                 st.setString(1, periodo);
+                 st.registerOutParameter(2, java.sql.Types.INTEGER);
+                 st.execute();
+                 extraccion=st.getInt(2);
+                 // extraccion es el monto
+                 System.out.println("Extracción para aguinaldo: "+extraccion);
+                connection.close();
+            }else{
+                System.out.println("Conexion Fallida!");                
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+         return extraccion;
+    }*/
       private String fechaLetra(int mes,int anho){
           String fechaLetra=" ";
           switch(mes){

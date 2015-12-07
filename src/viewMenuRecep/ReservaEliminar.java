@@ -10,6 +10,7 @@ import viewAdmSist.LoginView;
 import bean.AuditoriaSistema;
 import bean.ConsumoProSer;
 import bean.FacturaCobro;
+import bean.Presupuesto;
 import bean.Reserva;
 import java.awt.Image;
 import java.text.DateFormat;
@@ -594,6 +595,7 @@ public class ReservaEliminar extends javax.swing.JFrame {
             String valor;
             int i;
             int codigo;
+            int pre=0;
             Date fecha1=new Date();
             String fecha2;
             DateFormat formato1=new SimpleDateFormat("yyyy-MM-dd");
@@ -655,9 +657,20 @@ public class ReservaEliminar extends javax.swing.JFrame {
                 //eliminamos la reserva
             Reserva reservaFind=entityManager.find(Reserva.class, reserva.getCodigoReserva() );
             valor=reservaFind.toString();//guardamos el objeto antes de eliminar
+            pre=reservaFind.getNumPresupuesto().getNumPresupuesto();
             entityManager.remove(reservaFind);
             entityManager.flush();
             registrarAuditoria("Reserva",valor);
+            //eliminamos el presupuesto
+            if(pre!=0){
+                 query=entityManager.createNativeQuery("SELECT * FROM presupuesto WHERE "
+                        + "numPresupuesto= "
+                        + "'"+pre+"'",Presupuesto.class);
+                Presupuesto p =(Presupuesto)query.getSingleResult();
+                    entityManager.remove(p);
+                    entityManager.flush();
+                
+             }
             entityManager.getTransaction().commit();
            // ema.close();
             JOptionPane.showMessageDialog(null, "Eliminación Exitosa");

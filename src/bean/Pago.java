@@ -6,8 +6,9 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,12 +19,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
- * @author Jorge
+ * @author tammy
  */
 @Entity
 @Table(name = "pago")
@@ -31,8 +32,11 @@ import javax.persistence.Table;
     @NamedQuery(name = "Pago.findAll", query = "SELECT p FROM Pago p"),
     @NamedQuery(name = "Pago.findByCodigoPago", query = "SELECT p FROM Pago p WHERE p.codigoPago = :codigoPago"),
     @NamedQuery(name = "Pago.findByFecha", query = "SELECT p FROM Pago p WHERE p.fecha = :fecha"),
+    @NamedQuery(name = "Pago.findByCodProveedor", query = "SELECT p FROM Pago p WHERE p.codProveedor = :codProveedor"),
     @NamedQuery(name = "Pago.findByMontoTotal", query = "SELECT p FROM Pago p WHERE p.montoTotal = :montoTotal")})
 public class Pago implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,11 +50,8 @@ public class Pago implements Serializable {
     @Column(name = "monto_total")
     private int montoTotal;
     @JoinColumn(name = "cod_proveedor", referencedColumnName = "codigoProveedor")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Proveedor codProveedor;
-    @OneToMany(mappedBy = "idPago")
-    private Collection<DetallePago> detallePagoCollection;
-
     public Pago() {
     }
 
@@ -69,23 +70,9 @@ public class Pago implements Serializable {
     }
 
     public void setCodigoPago(Integer codigoPago) {
+        Integer oldCodigoPago = this.codigoPago;
         this.codigoPago = codigoPago;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-    public int getMontoTotal() {
-        return montoTotal;
-    }
-
-    public void setMontoTotal(int montoTotal) {
-        this.montoTotal = montoTotal;
+        changeSupport.firePropertyChange("codigoPago", oldCodigoPago, codigoPago);
     }
 
     public Proveedor getCodProveedor() {
@@ -93,15 +80,29 @@ public class Pago implements Serializable {
     }
 
     public void setCodProveedor(Proveedor codProveedor) {
+        Proveedor oldCodProveedor = this.codProveedor;
         this.codProveedor = codProveedor;
+        changeSupport.firePropertyChange("codProveedor", oldCodProveedor, codProveedor);
     }
 
-    public Collection<DetallePago> getDetallePagoCollection() {
-        return detallePagoCollection;
+    public String getFecha() {
+        return fecha;
     }
 
-    public void setDetallePagoCollection(Collection<DetallePago> detallePagoCollection) {
-        this.detallePagoCollection = detallePagoCollection;
+    public void setFecha(String fecha) {
+        String oldFecha = this.fecha;
+        this.fecha = fecha;
+        changeSupport.firePropertyChange("fecha", oldFecha, fecha);
+    }
+
+    public int getMontoTotal() {
+        return montoTotal;
+    }
+
+    public void setMontoTotal(int montoTotal) {
+        int oldMontoTotal = this.montoTotal;
+        this.montoTotal = montoTotal;
+        changeSupport.firePropertyChange("montoTotal", oldMontoTotal, montoTotal);
     }
 
     @Override
@@ -127,6 +128,14 @@ public class Pago implements Serializable {
     @Override
     public String toString() {
         return "bean.Pago[ codigoPago=" + codigoPago + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

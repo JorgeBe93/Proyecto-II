@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b41385c-117d-4dc3-99e3-55ab72c814be">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="FechaDesde" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FechaHasta" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CodigoEmp" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     seguimiento_actividad.`codigoSeguimiento` AS seguimiento_actividad_codigoSeguimiento,
+     seguimiento_actividad.`actividad` AS seguimiento_actividad_actividad,
+     seguimiento_actividad.`lugar` AS seguimiento_actividad_lugar,
+     seguimiento_actividad.`fechaHora` AS seguimiento_actividad_fechaHora,
+     seguimiento_actividad.`codigoEmpleado` AS seguimiento_actividad_codigoEmpleado,
+     empleado.`nombre` AS empleado_nombre,
+     empleado.`apellido` AS empleado_apellido,
+     empleado.`codigoCargo` AS empleado_codigoCargo,
+     empleado.`codigoJefe` AS empleado_codigoJefe,
+     cargo.`nombre` AS cargo_nombre,
+     empleado.`codigoEmpleado` AS empleado_codigoEmpleado,
+     actividad.`nombre` AS actividad_nombre,
+     lugar.`nombre` AS lugar_nombre
+FROM
+     `empleado` empleado INNER JOIN `seguimiento_actividad` seguimiento_actividad ON empleado.`codigoEmpleado` = seguimiento_actividad.`codigoEmpleado`
+     INNER JOIN `cargo` cargo ON empleado.`codigoCargo` = cargo.`codigoCargo`
+     INNER JOIN `actividad` actividad ON seguimiento_actividad.`actividad` = actividad.`codActividad`
+     INNER JOIN `lugar` lugar ON seguimiento_actividad.`lugar` = lugar.`codLugar`
+WHERE
+     str_to_date(fechaHora,'%d-%m-%Y') >= str_to_date($P{FechaDesde},'%d-%m-%Y')
+     and str_to_date(fechaHora,'%d-%m-%Y') <= str_to_date($P{FechaHasta},'%d-%m-%Y')
+     and empleado.`codigoEmpleado` = $P{CodigoEmp}]]>
+	</queryString>
+	<field name="seguimiento_actividad_codigoSeguimiento" class="java.lang.Integer"/>
+	<field name="seguimiento_actividad_actividad" class="java.lang.Integer"/>
+	<field name="seguimiento_actividad_lugar" class="java.lang.Integer"/>
+	<field name="seguimiento_actividad_fechaHora" class="java.lang.String"/>
+	<field name="seguimiento_actividad_codigoEmpleado" class="java.lang.Integer"/>
+	<field name="empleado_nombre" class="java.lang.String"/>
+	<field name="empleado_apellido" class="java.lang.String"/>
+	<field name="empleado_codigoCargo" class="java.lang.Integer"/>
+	<field name="empleado_codigoJefe" class="java.lang.Integer"/>
+	<field name="cargo_nombre" class="java.lang.String"/>
+	<field name="empleado_codigoEmpleado" class="java.lang.Integer"/>
+	<field name="actividad_nombre" class="java.lang.String"/>
+	<field name="lugar_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="86" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8e4c1bfb-7d17-48c3-8aca-2bc530a330c4" x="200" y="0" width="191" height="30" forecolor="#FF0000"/>
+				<textElement>
+					<font fontName="MV Boli" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hotel Santa María]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eee25c77-7d75-4ef1-bd64-7254e6791b12" x="189" y="30" width="230" height="20" forecolor="#999999"/>
+				<textElement>
+					<font size="14" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[SEGUIMIENTO DE ACTIVIDADES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="240cdf69-283f-4682-a1e8-48ae7320115f" x="288" y="65" width="42" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2bd59d85-c8fd-4182-99f7-4dcf661daf87" x="430" y="65" width="25" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9c21d3a9-4e1b-4035-9644-46976e7cd40f" x="330" y="65" width="100" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FechaDesde}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="471bc6f3-cdcf-4dde-b9fe-357c2212ac99" x="455" y="65" width="100" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FechaHasta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d39e18ac-b01b-4b99-bc5b-53307cd1ae09" x="0" y="65" width="74" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empleado:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b51a6527-17f6-495a-a465-cd3e7c59218b" x="74" y="65" width="39" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empleado_codigoEmpleado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1f73ea8e-dd03-4a7d-9802-b0098002ba8b" x="113" y="65" width="76" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empleado_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6671d30b-375d-4397-8701-ad36efdcfd32" x="189" y="66" width="73" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empleado_apellido}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="00fadaab-367a-4d3f-af7b-6d927cfa0dc2" x="113" y="0" width="44" height="50"/>
+				<imageExpression><![CDATA["C:\\Proyecto-II\\src\\imagenes\\logo1.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="7e92264d-6287-4121-8193-a9eb03f1878d" x="3" y="0" width="549" height="20" backcolor="#CCCCCC"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="bc71f3bc-a034-436a-89e5-93e69c910ae4" x="3" y="0" width="71" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Seguimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="aa6f7df4-5a76-49d5-89a1-e658e0a346df" x="113" y="0" width="62" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Actividad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e3517c7a-2219-44f2-8ce7-407fa56611de" x="230" y="0" width="51" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lugar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ae9ea273-4f39-4e50-a490-fb648584f908" x="330" y="0" width="73" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha/Hora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="58e67171-cc7e-4a4f-b4c4-a7fec4c29194" x="470" y="0" width="35" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cargo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement uuid="313f4f7d-eb42-42ca-9d05-82b2cc14750f" x="3" y="0" width="71" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{seguimiento_actividad_codigoSeguimiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="96bee94d-40e5-42ef-88f8-27c497b934e9" x="89" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{actividad_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d0bf5fac-9101-4e16-a8bf-d83add3ae861" x="200" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{lugar_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="042d5ac6-8d8c-4b26-aed9-2f51a6bdda48" x="430" y="0" width="115" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cargo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e573bdc1-d556-4839-aecc-06fc40165392" x="319" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{seguimiento_actividad_fechaHora}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement uuid="3aa31718-8776-4382-9f18-5c61aa372407" x="425" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="4091ab74-2d9a-4553-8bfc-e63806b55681" x="505" y="0" width="40" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="74f0f1a7-05c9-46e9-a758-c688b3acca1a" x="0" y="2" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm a">
+				<reportElement uuid="b8af0650-90c5-43d1-86ce-3fb082b9398b" x="100" y="2" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

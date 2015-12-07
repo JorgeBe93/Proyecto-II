@@ -533,6 +533,7 @@ public class RegistrarEvento extends javax.swing.JFrame {
             if(!ev.isEmpty()){
                 JOptionPane.showMessageDialog(null,"Evento:"+" "+ev.get(0).getTipoEvento()+" "+
                          " registrado en dichas fechas, No puede registrar otro evento!", "Error",JOptionPane.ERROR_MESSAGE);
+                resetear();
                 return;
             }
         //verificar si se ha marcado para confirmar la hora extra
@@ -555,6 +556,14 @@ public class RegistrarEvento extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Tipo de Evento incorrecto", "Error",JOptionPane.ERROR_MESSAGE);
                 return;
         }
+        //otra validacion
+         /* Query=EntityManager.createNativeQuery("SELECT MAX(fechaAsistencia)"
+                                 + "FROM asistencia where codigoEmpleado="+id+" )", Asistencia.class);
+          Asistencia asistencia=(Asistencia)Query.getSingleResult();
+          if( asistencia.getFechaAsistencia().before(fecha) && list_tipoEvento.getSelectedItem()!="Horas Extras"){
+                JOptionPane.showMessageDialog(null,"Tipo de Evento incorrecto", "Error",JOptionPane.ERROR_MESSAGE);
+                return;
+        }*/
         resp=  JOptionPane.showConfirmDialog(null,"Desea Registrar un nuevo evento?", "Confirmar Registro",JOptionPane.YES_NO_OPTION );
         if (resp==JOptionPane.YES_OPTION){        
                 Eventos e=new Eventos();

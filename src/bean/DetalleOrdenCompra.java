@@ -6,6 +6,8 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,10 +20,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
- * @author Jorge
+ * @author tammy
  */
 @Entity
 @Table(name = "detalle_orden_compra")
@@ -29,31 +32,44 @@ import javax.persistence.Table;
     @NamedQuery(name = "DetalleOrdenCompra.findAll", query = "SELECT d FROM DetalleOrdenCompra d"),
     @NamedQuery(name = "DetalleOrdenCompra.findByCodDetalle", query = "SELECT d FROM DetalleOrdenCompra d WHERE d.codDetalle = :codDetalle"),
     @NamedQuery(name = "DetalleOrdenCompra.findByCantidadPedida", query = "SELECT d FROM DetalleOrdenCompra d WHERE d.cantidadPedida = :cantidadPedida"),
-    @NamedQuery(name = "DetalleOrdenCompra.findByEstado", query = "SELECT d FROM DetalleOrdenCompra d WHERE d.estado = :estado"),
+    @NamedQuery(name = "DetalleOrdenCompra.findByCantidadRecibida", query = "SELECT d FROM DetalleOrdenCompra d WHERE d.cantidadRecibida = :cantidadRecibida"),
+    @NamedQuery(name = "DetalleOrdenCompra.findByCodArticulo", query = "SELECT d FROM DetalleOrdenCompra d WHERE d.codArticulo = :codArticulo"),
+   // @NamedQuery(name = "DetalleOrdenCompra.findByCodProveedor", query = "SELECT d FROM DetalleOrdenCompra d WHERE d.codProveedor = :codProveedor"),
     @NamedQuery(name = "DetalleOrdenCompra.findByCodOrden", query = "SELECT d FROM DetalleOrdenCompra d WHERE d.codOrden = :codOrden"),
-    @NamedQuery(name = "DetalleOrdenCompra.findByCantidadRecibida", query = "SELECT d FROM DetalleOrdenCompra d WHERE d.cantidadRecibida = :cantidadRecibida")})
+    @NamedQuery(name = "DetalleOrdenCompra.findByEstado", query = "SELECT d FROM DetalleOrdenCompra d WHERE d.estado = :estado")})
 public class DetalleOrdenCompra implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "cod_detalle")
     private Integer codDetalle;
+   // @Basic(optional = false)
+    //@Column(name = "cod_orden")
+   // private Integer codOrden;
+    
     @Basic(optional = false)
     @Column(name = "cantidadPedida")
     private int cantidadPedida;
+     @Basic(optional = false)
+    @Column(name = "cantidadRecibida")
+    private int cantidadRecibida;
     @Column(name = "estado")
     private String estado;
-    @Column(name = "cod_orden")
-    private Integer codOrden;
-    @Column(name = "cantidadRecibida")
-    private Integer cantidadRecibida;
-    @JoinColumn(name = "cod_proveedor", referencedColumnName = "codigoProveedor")
-    @ManyToOne(optional = false)
-    private Proveedor codProveedor;
+    /*@JoinColumn(name = "cod_proveedor", referencedColumnName = "codigoProveedor")
+    @ManyToOne
+    private Proveedor codProveedor;*/
+    @JoinColumn(name = "cod_orden", referencedColumnName = "cod_orden")
+    @ManyToOne
+    private OrdenCompra codOrden;
     @JoinColumn(name = "cod_articulo", referencedColumnName = "codigoArticulo")
-    @ManyToOne(optional = false)
-    private Articulo codArticulo;
+   @ManyToOne
+   private Articulo codArticulo;
+
+
+
 
     public DetalleOrdenCompra() {
     }
@@ -72,7 +88,9 @@ public class DetalleOrdenCompra implements Serializable {
     }
 
     public void setCodDetalle(Integer codDetalle) {
+        Integer oldCodDetalle = this.codDetalle;
         this.codDetalle = codDetalle;
+        changeSupport.firePropertyChange("codDetalle", oldCodDetalle, codDetalle);
     }
 
     public int getCantidadPedida() {
@@ -80,7 +98,9 @@ public class DetalleOrdenCompra implements Serializable {
     }
 
     public void setCantidadPedida(int cantidadPedida) {
+        int oldCantidadPedida = this.cantidadPedida;
         this.cantidadPedida = cantidadPedida;
+        changeSupport.firePropertyChange("cantidadPedida", oldCantidadPedida, cantidadPedida);
     }
 
     public String getEstado() {
@@ -88,39 +108,39 @@ public class DetalleOrdenCompra implements Serializable {
     }
 
     public void setEstado(String estado) {
+        String oldEstado = this.estado;
         this.estado = estado;
+        changeSupport.firePropertyChange("estado", oldEstado, estado);
     }
 
-    public Integer getCodOrden() {
-        return codOrden;
-    }
-
-    public void setCodOrden(Integer codOrden) {
-        this.codOrden = codOrden;
-    }
-
-    public Integer getCantidadRecibida() {
-        return cantidadRecibida;
-    }
-
-    public void setCantidadRecibida(Integer cantidadRecibida) {
-        this.cantidadRecibida = cantidadRecibida;
-    }
-
-    public Proveedor getCodProveedor() {
+   /* public Proveedor getCodProveedor() {
         return codProveedor;
     }
 
     public void setCodProveedor(Proveedor codProveedor) {
+        Proveedor oldCodProveedor = this.codProveedor;
         this.codProveedor = codProveedor;
-    }
+        changeSupport.firePropertyChange("codProveedor", oldCodProveedor, codProveedor);
+    }*/
 
     public Articulo getCodArticulo() {
         return codArticulo;
     }
 
     public void setCodArticulo(Articulo codArticulo) {
+        Articulo oldCodArticulo = this.codArticulo;
         this.codArticulo = codArticulo;
+        changeSupport.firePropertyChange("codArticulo", oldCodArticulo, codArticulo);
+    }
+
+    public int getCantidadRecibida() {
+        return cantidadRecibida;
+    }
+
+    public void setCantidadRecibida(int cantidadRecibida) {
+        int oldCantidadRecibida = this.cantidadRecibida;
+        this.cantidadRecibida = cantidadRecibida;
+        changeSupport.firePropertyChange("cantidadRecibida", oldCantidadRecibida, cantidadRecibida);
     }
 
     @Override
@@ -146,6 +166,32 @@ public class DetalleOrdenCompra implements Serializable {
     @Override
     public String toString() {
         return "bean.DetalleOrdenCompra[ codDetalle=" + codDetalle + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
+    }
+
+    /*  public Integer getCodOrden() {
+    return codOrden;
+    }
+    public void setCodOrden(Integer codOrden) {
+    Integer oldCodOrden = this.codOrden;
+    this.codOrden = codOrden;
+    changeSupport.firePropertyChange("codOrden", oldCodOrden, codOrden);
+    }*/
+    public OrdenCompra getCodOrden() {
+        return codOrden;
+    }
+
+    public void setCodOrden(OrdenCompra codOrden) {
+        OrdenCompra oldCodOrden = this.codOrden;
+        this.codOrden = codOrden;
+        changeSupport.firePropertyChange("codOrden", oldCodOrden, codOrden);
     }
     
 }

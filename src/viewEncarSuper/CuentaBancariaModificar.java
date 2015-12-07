@@ -22,6 +22,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import viewMenuRecep.ClienteBuscar;
 
 /**
  *

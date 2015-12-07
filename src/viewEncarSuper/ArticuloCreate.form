@@ -360,11 +360,6 @@
           </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="combocat">
-          <Properties>
-            <Property name="renderer" type="javax.swing.ListCellRenderer" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="default"/>
-            </Property>
-          </Properties>
           <BindingProperties>
             <BindingProperty name="elements" source="categoriaArticuloList" target="combocat" targetPath="elements" updateStrategy="0" immediately="false"/>
           </BindingProperties>

@@ -6,10 +6,11 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,10 +22,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
- * @author Jorge
+ * @author tammy
  */
 @Entity
 @Table(name = "proveedor")
@@ -37,10 +39,11 @@ import javax.persistence.Table;
     @NamedQuery(name = "Proveedor.findByCedula", query = "SELECT p FROM Proveedor p WHERE p.cedula = :cedula"),
     @NamedQuery(name = "Proveedor.findByEmail", query = "SELECT p FROM Proveedor p WHERE p.email = :email"),
     @NamedQuery(name = "Proveedor.findByDireccion", query = "SELECT p FROM Proveedor p WHERE p.direccion = :direccion"),
-    @NamedQuery(name = "Proveedor.findByTelefono", query = "SELECT p FROM Proveedor p WHERE p.telefono = :telefono")})
+    @NamedQuery(name = "Proveedor.findByTelefono", query = "SELECT p FROM Proveedor p WHERE p.telefono = :telefono"),
+    @NamedQuery(name = "Proveedor.findByCodigoCategoria", query = "SELECT p FROM Proveedor p WHERE p.codigoCategoria = :codigoCategoria")})
 public class Proveedor implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codProveedor")
-    private Collection<OrdenCompra> ordenCompraCollection;
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,16 +69,9 @@ public class Proveedor implements Serializable {
     @Basic(optional = false)
     @Column(name = "telefono")
     private int telefono;
-    @OneToMany(mappedBy = "codProveedor")
-    private Collection<FacturaPago> facturaPagoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codProveedor")
-    private Collection<Pago> pagoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codProveedor")
-    private Collection<DetalleOrdenCompra> detalleOrdenCompraCollection;
-    @JoinColumn(name = "codigoCategoria", referencedColumnName = "cod_categoria")
-    @ManyToOne(optional = false)
+ @JoinColumn(name = "codigoCategoria", referencedColumnName = "cod_categoria")
+    @ManyToOne
     private CategoriaArticulo codigoCategoria;
-
     public Proveedor() {
     }
 
@@ -83,13 +79,14 @@ public class Proveedor implements Serializable {
         this.codigoProveedor = codigoProveedor;
     }
 
-    public Proveedor(Integer codigoProveedor, String tipo, String razonSocial, String email, String direccion, int telefono) {
+    public Proveedor(Integer codigoProveedor, String tipo, String razonSocial, String email, String direccion, int telefono, CategoriaArticulo codigoCategoria) {
         this.codigoProveedor = codigoProveedor;
         this.tipo = tipo;
         this.razonSocial = razonSocial;
         this.email = email;
         this.direccion = direccion;
         this.telefono = telefono;
+        this.codigoCategoria = codigoCategoria;
     }
 
     public Integer getCodigoProveedor() {
@@ -97,7 +94,9 @@ public class Proveedor implements Serializable {
     }
 
     public void setCodigoProveedor(Integer codigoProveedor) {
+        Integer oldCodigoProveedor = this.codigoProveedor;
         this.codigoProveedor = codigoProveedor;
+        changeSupport.firePropertyChange("codigoProveedor", oldCodigoProveedor, codigoProveedor);
     }
 
     public String getTipo() {
@@ -105,7 +104,9 @@ public class Proveedor implements Serializable {
     }
 
     public void setTipo(String tipo) {
+        String oldTipo = this.tipo;
         this.tipo = tipo;
+        changeSupport.firePropertyChange("tipo", oldTipo, tipo);
     }
 
     public String getRazonSocial() {
@@ -113,7 +114,9 @@ public class Proveedor implements Serializable {
     }
 
     public void setRazonSocial(String razonSocial) {
+        String oldRazonSocial = this.razonSocial;
         this.razonSocial = razonSocial;
+        changeSupport.firePropertyChange("razonSocial", oldRazonSocial, razonSocial);
     }
 
     public String getRuc() {
@@ -121,7 +124,9 @@ public class Proveedor implements Serializable {
     }
 
     public void setRuc(String ruc) {
+        String oldRuc = this.ruc;
         this.ruc = ruc;
+        changeSupport.firePropertyChange("ruc", oldRuc, ruc);
     }
 
     public String getCedula() {
@@ -129,7 +134,9 @@ public class Proveedor implements Serializable {
     }
 
     public void setCedula(String cedula) {
+        String oldCedula = this.cedula;
         this.cedula = cedula;
+        changeSupport.firePropertyChange("cedula", oldCedula, cedula);
     }
 
     public String getEmail() {
@@ -137,7 +144,9 @@ public class Proveedor implements Serializable {
     }
 
     public void setEmail(String email) {
+        String oldEmail = this.email;
         this.email = email;
+        changeSupport.firePropertyChange("email", oldEmail, email);
     }
 
     public String getDireccion() {
@@ -145,7 +154,9 @@ public class Proveedor implements Serializable {
     }
 
     public void setDireccion(String direccion) {
+        String oldDireccion = this.direccion;
         this.direccion = direccion;
+        changeSupport.firePropertyChange("direccion", oldDireccion, direccion);
     }
 
     public int getTelefono() {
@@ -153,41 +164,19 @@ public class Proveedor implements Serializable {
     }
 
     public void setTelefono(int telefono) {
+        int oldTelefono = this.telefono;
         this.telefono = telefono;
+        changeSupport.firePropertyChange("telefono", oldTelefono, telefono);
     }
-
-    public Collection<FacturaPago> getFacturaPagoCollection() {
-        return facturaPagoCollection;
-    }
-
-    public void setFacturaPagoCollection(Collection<FacturaPago> facturaPagoCollection) {
-        this.facturaPagoCollection = facturaPagoCollection;
-    }
-
-    public Collection<Pago> getPagoCollection() {
-        return pagoCollection;
-    }
-
-    public void setPagoCollection(Collection<Pago> pagoCollection) {
-        this.pagoCollection = pagoCollection;
-    }
-
-    public Collection<DetalleOrdenCompra> getDetalleOrdenCompraCollection() {
-        return detalleOrdenCompraCollection;
-    }
-
-    public void setDetalleOrdenCompraCollection(Collection<DetalleOrdenCompra> detalleOrdenCompraCollection) {
-        this.detalleOrdenCompraCollection = detalleOrdenCompraCollection;
-    }
-
-    public CategoriaArticulo getCodigoCategoria() {
+        public CategoriaArticulo getCodigoCategoria() {
         return codigoCategoria;
     }
 
     public void setCodigoCategoria(CategoriaArticulo codigoCategoria) {
+        CategoriaArticulo oldCodigoCategoria = this.codigoCategoria;
         this.codigoCategoria = codigoCategoria;
+        changeSupport.firePropertyChange("codigoCategoria", oldCodigoCategoria, codigoCategoria);
     }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -213,12 +202,11 @@ public class Proveedor implements Serializable {
         return "bean.Proveedor[ codigoProveedor=" + codigoProveedor + " ]";
     }
 
-    public Collection<OrdenCompra> getOrdenCompraCollection() {
-        return ordenCompraCollection;
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
     }
 
-    public void setOrdenCompraCollection(Collection<OrdenCompra> ordenCompraCollection) {
-        this.ordenCompraCollection = ordenCompraCollection;
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
-    
 }

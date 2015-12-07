@@ -6,8 +6,11 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,20 +21,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
- * @author Jorge
+ * @author tammy
  */
 @Entity
 @Table(name = "orden_compra")
 @NamedQueries({
     @NamedQuery(name = "OrdenCompra.findAll", query = "SELECT o FROM OrdenCompra o"),
     @NamedQuery(name = "OrdenCompra.findByCodOrden", query = "SELECT o FROM OrdenCompra o WHERE o.codOrden = :codOrden"),
-    @NamedQuery(name = "OrdenCompra.findByFecha", query = "SELECT o FROM OrdenCompra o WHERE o.fecha = :fecha")})
-public class OrdenCompra implements Serializable {
+    @NamedQuery(name = "OrdenCompra.findByFecha", query = "SELECT o FROM OrdenCompra o WHERE o.fecha = :fecha"),
+    @NamedQuery(name = "OrdenCompra.findByCodProveedor", query = "SELECT o FROM OrdenCompra o WHERE o.codProveedor = :codProveedor")})
+ public class OrdenCompra implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,11 +48,8 @@ public class OrdenCompra implements Serializable {
     @Column(name = "fecha")
     private String fecha;
     @JoinColumn(name = "cod_proveedor", referencedColumnName = "codigoProveedor")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Proveedor codProveedor;
-    @OneToMany(mappedBy = "codOC")
-    private Collection<Informerecepcion> informerecepcionCollection;
-
     public OrdenCompra() {
     }
 
@@ -64,15 +67,13 @@ public class OrdenCompra implements Serializable {
     }
 
     public void setCodOrden(Integer codOrden) {
+        Integer oldCodOrden = this.codOrden;
         this.codOrden = codOrden;
+        changeSupport.firePropertyChange("codOrden", oldCodOrden, codOrden);
     }
 
     public String getFecha() {
         return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
     }
 
     public Proveedor getCodProveedor() {
@@ -80,17 +81,16 @@ public class OrdenCompra implements Serializable {
     }
 
     public void setCodProveedor(Proveedor codProveedor) {
+        Proveedor oldCodProveedor = this.codProveedor;
         this.codProveedor = codProveedor;
+        changeSupport.firePropertyChange("codProveedor", oldCodProveedor, codProveedor);
     }
 
-    public Collection<Informerecepcion> getInformerecepcionCollection() {
-        return informerecepcionCollection;
+    public void setFecha(String fecha) {
+        String oldFecha = this.fecha;
+        this.fecha = fecha;
+        changeSupport.firePropertyChange("fecha", oldFecha, fecha);
     }
-
-    public void setInformerecepcionCollection(Collection<Informerecepcion> informerecepcionCollection) {
-        this.informerecepcionCollection = informerecepcionCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -114,6 +114,14 @@ public class OrdenCompra implements Serializable {
     @Override
     public String toString() {
         return "bean.OrdenCompra[ codOrden=" + codOrden + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

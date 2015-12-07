@@ -423,8 +423,8 @@ public class ArticuloCreate extends javax.swing.JFrame {
                   
                 
                        Proveedor p1=(Proveedor) obtenerProveedor(tf_proveedor.getText()) ;
-                    // ATENCION  
-                   //a.setCodigoProveedor(p1);
+                   
+                   a.setCodigoProveedor(p1);
                    a.setCantidadStock(cantS);
                    entityManager.getTransaction().begin();
                    entityManager.persist(a);

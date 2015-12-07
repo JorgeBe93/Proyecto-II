@@ -36,7 +36,6 @@
     <class>bean.DetallePago</class>
     <class>bean.Caja</class>
     <class>bean.Pago</class>
-    <class>bean.CategoriaArticulo_1</class>
     <class>bean.Informerecepcion</class>
     <class>bean.OrdenCompra</class>
     <properties>

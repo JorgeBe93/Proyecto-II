@@ -6,6 +6,8 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,10 +18,11 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
- * @author Jorge
+ * @author pc
  */
 @Entity
 @Table(name = "caja")
@@ -31,6 +34,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "Caja.findByMontoFinal", query = "SELECT c FROM Caja c WHERE c.montoFinal = :montoFinal"),
     @NamedQuery(name = "Caja.findByEstado", query = "SELECT c FROM Caja c WHERE c.estado = :estado")})
 public class Caja implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,7 +71,9 @@ public class Caja implements Serializable {
     }
 
     public void setCodigoCaja(Integer codigoCaja) {
+        Integer oldCodigoCaja = this.codigoCaja;
         this.codigoCaja = codigoCaja;
+        changeSupport.firePropertyChange("codigoCaja", oldCodigoCaja, codigoCaja);
     }
 
     public String getFechaHora() {
@@ -74,7 +81,9 @@ public class Caja implements Serializable {
     }
 
     public void setFechaHora(String fechaHora) {
+        String oldFechaHora = this.fechaHora;
         this.fechaHora = fechaHora;
+        changeSupport.firePropertyChange("fechaHora", oldFechaHora, fechaHora);
     }
 
     public int getMontoInicial() {
@@ -82,7 +91,9 @@ public class Caja implements Serializable {
     }
 
     public void setMontoInicial(int montoInicial) {
+        int oldMontoInicial = this.montoInicial;
         this.montoInicial = montoInicial;
+        changeSupport.firePropertyChange("montoInicial", oldMontoInicial, montoInicial);
     }
 
     public Integer getMontoFinal() {
@@ -90,7 +101,9 @@ public class Caja implements Serializable {
     }
 
     public void setMontoFinal(Integer montoFinal) {
+        Integer oldMontoFinal = this.montoFinal;
         this.montoFinal = montoFinal;
+        changeSupport.firePropertyChange("montoFinal", oldMontoFinal, montoFinal);
     }
 
     public Character getEstado() {
@@ -98,7 +111,9 @@ public class Caja implements Serializable {
     }
 
     public void setEstado(Character estado) {
+        Character oldEstado = this.estado;
         this.estado = estado;
+        changeSupport.firePropertyChange("estado", oldEstado, estado);
     }
 
     @Override
@@ -124,6 +139,14 @@ public class Caja implements Serializable {
     @Override
     public String toString() {
         return "bean.Caja[ codigoCaja=" + codigoCaja + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

@@ -33,6 +33,7 @@ public class EditarEvento extends javax.swing.JFrame {
     private int fila;
     private int resp;
     DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+    DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Creates new form EditarEvento
@@ -121,6 +122,7 @@ public class EditarEvento extends javax.swing.JFrame {
         lbl_descripcion.setText("Descripción:");
 
         list_tipoEvento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Suspensión", "Permiso Justificado", "Vacaciones", "Horas Extras" }));
+        list_tipoEvento.setEnabled(false);
 
         tf_datosEmpl.setEditable(false);
         tf_datosEmpl.setBackground(new java.awt.Color(0, 153, 255));
@@ -430,6 +432,7 @@ public class EditarEvento extends javax.swing.JFrame {
         // TODO add your handling code here:
         String antes;
         String despues;
+        int id;
          if(tf_codEmpleado.getText().length()==0){
               JOptionPane.showMessageDialog(null,"Seleccione un evento", "Error",JOptionPane.ERROR_MESSAGE);
                 return;
@@ -442,6 +445,23 @@ public class EditarEvento extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null,"Fechas incorrectas", "Error",JOptionPane.ERROR_MESSAGE);
              return;
         }
+        id=Integer.parseInt(tf_codEmpleado.getText());
+         query=entityManager.createNativeQuery("SELECT * FROM eventos WHERE codigoEmpleado="
+                        +id
+                        + " AND idEvento<>"
+                        +tf_codEvento.getText()
+                        + " AND ((fecha_inicio<= "
+                        +"'"+formato.format(dc_fechaInicio.getDate())+"'"
+                        +"AND fecha_fin>= "
+                        +"'"+formato.format(dc_fechaInicio.getDate())+"' )"
+                        +"OR (fecha_inicio<= "+"'"+formato.format(dc_fechaFin.getDate())+"' AND "
+                        +"fecha_fin>= "+"'"+formato.format(dc_fechaFin.getDate())+"' ))", Eventos.class);
+            List<Eventos> even=query.getResultList();
+            if(!even.isEmpty()){
+                JOptionPane.showMessageDialog(null,"Evento:"+" "+even.get(0).getTipoEvento()+" "+
+                         " registrado en dichas fechas, No puede registrar otro evento!", "Error",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
          resp=  JOptionPane.showConfirmDialog(null,"Desea guardar los cambios?", "Confirmar Modificación",JOptionPane.YES_NO_OPTION );
          if (resp==JOptionPane.YES_OPTION){
                  entityManager.getTransaction().begin();

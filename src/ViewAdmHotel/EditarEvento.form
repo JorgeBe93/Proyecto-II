@@ -281,6 +281,7 @@
                 <StringItem index="3" value="Horas Extras"/>
               </StringArray>
             </Property>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="dc_fechaFin">

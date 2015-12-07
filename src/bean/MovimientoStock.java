@@ -6,6 +6,8 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,10 +20,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
- * @author Jorge
+ * @author tammy
  */
 @Entity
 @Table(name = "movimiento_stock")
@@ -29,8 +32,12 @@ import javax.persistence.Table;
     @NamedQuery(name = "MovimientoStock.findAll", query = "SELECT m FROM MovimientoStock m"),
     @NamedQuery(name = "MovimientoStock.findByCodigoMovimiento", query = "SELECT m FROM MovimientoStock m WHERE m.codigoMovimiento = :codigoMovimiento"),
     @NamedQuery(name = "MovimientoStock.findByCantidad", query = "SELECT m FROM MovimientoStock m WHERE m.cantidad = :cantidad"),
-    @NamedQuery(name = "MovimientoStock.findByFechaHora", query = "SELECT m FROM MovimientoStock m WHERE m.fechaHora = :fechaHora")})
+    @NamedQuery(name = "MovimientoStock.findByCodigoArticulo", query = "SELECT m FROM MovimientoStock m WHERE m.codigoArticulo = :codigoArticulo"),
+    @NamedQuery(name = "MovimientoStock.findByFechaHora", query = "SELECT m FROM MovimientoStock m WHERE m.fechaHora = :fechaHora")
+})
 public class MovimientoStock implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,9 +51,8 @@ public class MovimientoStock implements Serializable {
     @Column(name = "fechaHora")
     private String fechaHora;
     @JoinColumn(name = "codigoArticulo", referencedColumnName = "codigoArticulo")
-    @ManyToOne(optional = false)
-    private Articulo codigoArticulo;
-
+     @ManyToOne
+     private Articulo codigoArticulo;
     public MovimientoStock() {
     }
 
@@ -54,9 +60,13 @@ public class MovimientoStock implements Serializable {
         this.codigoMovimiento = codigoMovimiento;
     }
 
-    public MovimientoStock(Integer codigoMovimiento, int cantidad, String fechaHora) {
+    public MovimientoStock(Integer codigoMovimiento, int cantidad, 
+          //int codigoArticulo, int codigoEmpleado) {
+            Articulo codigoArticulo,String fechaHora) {
+        
         this.codigoMovimiento = codigoMovimiento;
         this.cantidad = cantidad;
+        this.codigoArticulo = codigoArticulo;
         this.fechaHora = fechaHora;
     }
 
@@ -65,7 +75,9 @@ public class MovimientoStock implements Serializable {
     }
 
     public void setCodigoMovimiento(Integer codigoMovimiento) {
+        Integer oldCodigoMovimiento = this.codigoMovimiento;
         this.codigoMovimiento = codigoMovimiento;
+        changeSupport.firePropertyChange("codigoMovimiento", oldCodigoMovimiento, codigoMovimiento);
     }
 
     public int getCantidad() {
@@ -73,7 +85,18 @@ public class MovimientoStock implements Serializable {
     }
 
     public void setCantidad(int cantidad) {
+        int oldCantidad = this.cantidad;
         this.cantidad = cantidad;
+        changeSupport.firePropertyChange("cantidad", oldCantidad, cantidad);
+    }
+    public Articulo getCodigoArticulo() {
+        return codigoArticulo;
+    }
+
+    public void setCodigoArticulo(Articulo codigoArticulo) {
+        Articulo oldCodigoArticulo = this.codigoArticulo;
+        this.codigoArticulo = codigoArticulo;
+        changeSupport.firePropertyChange("codigoArticulo", oldCodigoArticulo, codigoArticulo);
     }
 
     public String getFechaHora() {
@@ -82,14 +105,6 @@ public class MovimientoStock implements Serializable {
 
     public void setFechaHora(String fechaHora) {
         this.fechaHora = fechaHora;
-    }
-
-    public Articulo getCodigoArticulo() {
-        return codigoArticulo;
-    }
-
-    public void setCodigoArticulo(Articulo codigoArticulo) {
-        this.codigoArticulo = codigoArticulo;
     }
 
     @Override
@@ -115,6 +130,14 @@ public class MovimientoStock implements Serializable {
     @Override
     public String toString() {
         return "bean.MovimientoStock[ codigoMovimiento=" + codigoMovimiento + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

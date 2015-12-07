@@ -6,6 +6,8 @@
 
 package bean;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -21,10 +23,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
- * @author Jorge
+ * @author Vladimir
  */
 @Entity
 @Table(name = "cuenta_bancaria")
@@ -37,6 +40,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "CuentaBancaria.findByTipoMoneda", query = "SELECT c FROM CuentaBancaria c WHERE c.tipoMoneda = :tipoMoneda"),
     @NamedQuery(name = "CuentaBancaria.findByNumeroCuenta", query = "SELECT c FROM CuentaBancaria c WHERE c.numeroCuenta = :numeroCuenta")})
 public class CuentaBancaria implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,16 +56,17 @@ public class CuentaBancaria implements Serializable {
     @Basic(optional = false)
     @Column(name = "titular")
     private String titular;
+    @Basic(optional = false)
     @Column(name = "tipo_moneda")
     private String tipoMoneda;
     @Basic(optional = false)
     @Column(name = "numero_cuenta")
     private String numeroCuenta;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCuentaBancaria")
+    private Collection<ExtraccionDeposito> extraccionDepositoCollection;
     @JoinColumn(name = "idBanco", referencedColumnName = "idBanco")
     @ManyToOne(optional = false)
     private Banco idBanco;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCuentaBancaria")
-    private Collection<ExtraccionDeposito> extraccionDepositoCollection;
 
     public CuentaBancaria() {
     }
@@ -69,10 +75,11 @@ public class CuentaBancaria implements Serializable {
         this.idCuentaBancaria = idCuentaBancaria;
     }
 
-    public CuentaBancaria(Integer idCuentaBancaria, String tipoCuenta, String titular, String numeroCuenta) {
+    public CuentaBancaria(Integer idCuentaBancaria, String tipoCuenta, String titular, String tipoMoneda, String numeroCuenta) {
         this.idCuentaBancaria = idCuentaBancaria;
         this.tipoCuenta = tipoCuenta;
         this.titular = titular;
+        this.tipoMoneda = tipoMoneda;
         this.numeroCuenta = numeroCuenta;
     }
 
@@ -81,7 +88,9 @@ public class CuentaBancaria implements Serializable {
     }
 
     public void setIdCuentaBancaria(Integer idCuentaBancaria) {
+        Integer oldIdCuentaBancaria = this.idCuentaBancaria;
         this.idCuentaBancaria = idCuentaBancaria;
+        changeSupport.firePropertyChange("idCuentaBancaria", oldIdCuentaBancaria, idCuentaBancaria);
     }
 
     public String getTipoCuenta() {
@@ -89,7 +98,9 @@ public class CuentaBancaria implements Serializable {
     }
 
     public void setTipoCuenta(String tipoCuenta) {
+        String oldTipoCuenta = this.tipoCuenta;
         this.tipoCuenta = tipoCuenta;
+        changeSupport.firePropertyChange("tipoCuenta", oldTipoCuenta, tipoCuenta);
     }
 
     public Integer getMontoActual() {
@@ -97,7 +108,9 @@ public class CuentaBancaria implements Serializable {
     }
 
     public void setMontoActual(Integer montoActual) {
+        Integer oldMontoActual = this.montoActual;
         this.montoActual = montoActual;
+        changeSupport.firePropertyChange("montoActual", oldMontoActual, montoActual);
     }
 
     public String getTitular() {
@@ -105,7 +118,9 @@ public class CuentaBancaria implements Serializable {
     }
 
     public void setTitular(String titular) {
+        String oldTitular = this.titular;
         this.titular = titular;
+        changeSupport.firePropertyChange("titular", oldTitular, titular);
     }
 
     public String getTipoMoneda() {
@@ -113,7 +128,9 @@ public class CuentaBancaria implements Serializable {
     }
 
     public void setTipoMoneda(String tipoMoneda) {
+        String oldTipoMoneda = this.tipoMoneda;
         this.tipoMoneda = tipoMoneda;
+        changeSupport.firePropertyChange("tipoMoneda", oldTipoMoneda, tipoMoneda);
     }
 
     public String getNumeroCuenta() {
@@ -121,15 +138,9 @@ public class CuentaBancaria implements Serializable {
     }
 
     public void setNumeroCuenta(String numeroCuenta) {
+        String oldNumeroCuenta = this.numeroCuenta;
         this.numeroCuenta = numeroCuenta;
-    }
-
-    public Banco getIdBanco() {
-        return idBanco;
-    }
-
-    public void setIdBanco(Banco idBanco) {
-        this.idBanco = idBanco;
+        changeSupport.firePropertyChange("numeroCuenta", oldNumeroCuenta, numeroCuenta);
     }
 
     public Collection<ExtraccionDeposito> getExtraccionDepositoCollection() {
@@ -138,6 +149,16 @@ public class CuentaBancaria implements Serializable {
 
     public void setExtraccionDepositoCollection(Collection<ExtraccionDeposito> extraccionDepositoCollection) {
         this.extraccionDepositoCollection = extraccionDepositoCollection;
+    }
+
+    public Banco getIdBanco() {
+        return idBanco;
+    }
+
+    public void setIdBanco(Banco idBanco) {
+        Banco oldIdBanco = this.idBanco;
+        this.idBanco = idBanco;
+        changeSupport.firePropertyChange("idBanco", oldIdBanco, idBanco);
     }
 
     @Override
@@ -162,7 +183,18 @@ public class CuentaBancaria implements Serializable {
 
     @Override
     public String toString() {
-        return "bean.CuentaBancaria[ idCuentaBancaria=" + idCuentaBancaria + " ]";
+        return "Codigo Cuenta: " + idCuentaBancaria +", Numero de Cuenta: "
+                +numeroCuenta+", Tipo Cuenta: "+tipoCuenta
+                +", Banco: " +idBanco.getNombre()
+                +", Titular: "+titular+", Monto: "+montoActual+", Tipo Moneda: "
+                +tipoMoneda;
     }
-    
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
+    }
 }

@@ -58,14 +58,19 @@ public class MenuAdminSist extends javax.swing.JFrame {
         jMenuBar3 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menu_usuario = new javax.swing.JMenu();
         mitem_regis_usuario = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         mitem_editarusuario = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         mitem_eliminarusuario = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         miItem_buscarUsuario = new javax.swing.JMenuItem();
         menu_auditoria = new javax.swing.JMenu();
         mItem_buscarRegistros = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
         mItem_informeAud = new javax.swing.JMenuItem();
         menu_roles = new javax.swing.JMenu();
         menu_salir = new javax.swing.JMenu();
@@ -85,15 +90,19 @@ public class MenuAdminSist extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Menu Administrador del Sistema");
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/azul10.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+
         jMenuBar1.setBackground(new java.awt.Color(204, 204, 204));
         jMenuBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         menu_usuario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/aluno.png"))); // NOI18N
         menu_usuario.setText("Administrar Usuario");
-        menu_usuario.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        menu_usuario.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
 
         mitem_regis_usuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, 0));
+        mitem_regis_usuario.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mitem_regis_usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icon-student.png"))); // NOI18N
         mitem_regis_usuario.setText("Registrar Usuario");
         mitem_regis_usuario.addActionListener(new java.awt.event.ActionListener() {
@@ -102,8 +111,10 @@ public class MenuAdminSist extends javax.swing.JFrame {
             }
         });
         menu_usuario.add(mitem_regis_usuario);
+        menu_usuario.add(jSeparator3);
 
         mitem_editarusuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, 0));
+        mitem_editarusuario.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mitem_editarusuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/editarusuario.png"))); // NOI18N
         mitem_editarusuario.setText("Editar Usuario");
         mitem_editarusuario.addActionListener(new java.awt.event.ActionListener() {
@@ -112,9 +123,11 @@ public class MenuAdminSist extends javax.swing.JFrame {
             }
         });
         menu_usuario.add(mitem_editarusuario);
+        menu_usuario.add(jSeparator2);
 
         mitem_eliminarusuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, 0));
-        mitem_eliminarusuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete.png"))); // NOI18N
+        mitem_eliminarusuario.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        mitem_eliminarusuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/trash.png"))); // NOI18N
         mitem_eliminarusuario.setText("Eliminar Usuario");
         mitem_eliminarusuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,8 +135,10 @@ public class MenuAdminSist extends javax.swing.JFrame {
             }
         });
         menu_usuario.add(mitem_eliminarusuario);
+        menu_usuario.add(jSeparator1);
 
         miItem_buscarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
+        miItem_buscarUsuario.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         miItem_buscarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/zoom.png"))); // NOI18N
         miItem_buscarUsuario.setText("Buscar Usuario");
         miItem_buscarUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -138,7 +153,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
         menu_auditoria.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_auditoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pc2.png"))); // NOI18N
         menu_auditoria.setText("Auditoría de Sistema");
-        menu_auditoria.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        menu_auditoria.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         menu_auditoria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menu_auditoriaMouseClicked(evt);
@@ -151,6 +166,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
         });
 
         mItem_buscarRegistros.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
+        mItem_buscarRegistros.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_buscarRegistros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
         mItem_buscarRegistros.setText("Buscar Registros");
         mItem_buscarRegistros.addActionListener(new java.awt.event.ActionListener() {
@@ -160,7 +176,11 @@ public class MenuAdminSist extends javax.swing.JFrame {
         });
         menu_auditoria.add(mItem_buscarRegistros);
 
+        jMenu2.setText("jMenu2");
+        menu_auditoria.add(jMenu2);
+
         mItem_informeAud.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, 0));
+        mItem_informeAud.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         mItem_informeAud.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icono-listado.gif"))); // NOI18N
         mItem_informeAud.setText("Informe de Auditoría");
         mItem_informeAud.addActionListener(new java.awt.event.ActionListener() {
@@ -185,7 +205,7 @@ public class MenuAdminSist extends javax.swing.JFrame {
         menu_salir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menu_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/login.png"))); // NOI18N
         menu_salir.setText("Cerrar Sesión");
-        menu_salir.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
+        menu_salir.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         menu_salir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menu_salirMouseClicked(evt);
@@ -204,11 +224,17 @@ public class MenuAdminSist extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 609, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 260, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         pack();
@@ -318,13 +344,18 @@ public class MenuAdminSist extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JMenuItem mItem_buscarRegistros;
     private javax.swing.JMenuItem mItem_informeAud;
     private javax.swing.JMenu menu_auditoria;
